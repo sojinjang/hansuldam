@@ -22,7 +22,7 @@ categoryRouter.post(
 
 //카테고리 삭제
 categoryRouter.delete(
-    "/del/:catg",
+    "/:catg",
   //   adminRequired,
     async (req, res, next) => {
       try {

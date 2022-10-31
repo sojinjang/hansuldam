@@ -48,6 +48,6 @@ class CategoryService {
     }
 }
 
-const categoryService = new CategoryService();
+const categoryService = new CategoryService(categoryModel);
 
 export { categoryService }
