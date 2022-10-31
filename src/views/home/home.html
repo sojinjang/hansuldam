@@ -3,76 +3,152 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>쇼핑-n팀</title>
-    <!-- 아이콘 -->
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="/elice-rabbit-favicon.png"
-    />
-    <!-- bulma css -->
+    <title>Liquor Store 🍸</title>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
     />
-    <!-- 폰트 어썸: 아이콘 -->
     <script
       defer
       src="https://kit.fontawesome.com/9daa42bcef.js"
       crossorigin="anonymous"
     ></script>
-    <!-- 커스텀 css, js -->
     <link rel="stylesheet" href="home.css" />
     <script src="home.js" type="module" defer></script>
   </head>
   <body>
-    <!-- 헤더 -->
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-      <div class="container mt-3">
-        <div class="navbar-brand">
-          <a class="navbar-item" href="/">
-            <img src="/elice-rabbit.png" width="30" height="30" />
-            <span class="has-text-link">쇼핑-n팀</span>
-          </a>
+     <!-- todo: 스크롤 내리면 로고, 검색창 등 작아지게 만들기 -->
+     <header> 
+      <div class="header-container">
+        <section class="navigation-menu">
+          <div class="company-logo-wrapper">
+            <img class="company-logo" src="../img/logo.png">
+          </div>
+          <div class="searchbar">
+            <img class="search-img" src="../img/search-icon.png" alt="나는 돋보기">
+            <span class="search-text">제품검색</span>
+          </div>
+        </section>
+        <section class="user-menu">
+          <ul class="user-list">
+            <li class="login"><a href="">로그인</a></li>
+            <li class="join"><a href="">회원가입</a></li>
+            <div class="basket">
+              <a href=""><img src="../img/shopping-bag.png"></a>
+            </div>
+          </ul>
+        </section>
+      </div>
+      <div class="header-menu-wrapper">
+        <ul class="menu-list">
+          <li>
+            <div class="menu-label"><a>전체상품</a></div>
+          </li>
+          <li>
+            <div class="menu-label"><a>신상품</a></div>
+          </li>
+          <li>
+            <div class="menu-label"><a>베스트</a></div>
+          </li>
+          <li>
+            <div class="menu-label"><a>밀키트</a></div>
+          </li>
+        </ul>
+      </div>
+    </header>
 
-          <a
-            role="button"
-            class="navbar-burger"
-            aria-label="menu"
-            aria-expanded="false"
-            data-target="navbarBasicExample"
-          >
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-          </a>
-        </div>
-
-        <div class="navbar-end breadcrumb my-auto" aria-label="breadcrumbs">
-          <ul id="navbar">
-            <li><a href="/login">로그인</a></li>
-            <li><a href="/register">회원가입</a></li>
-            <li>
-              <a href="#cart" aria-current="page">
-                <span class="icon">
-                  <i class="fas fa-cart-shopping"></i>
-                </span>
-                <span>카트</span>
-              </a>
+    <section class="body-container">
+      <div class="section-container">
+        <div class="carousel-wrapper">
+          <ul class="carousel-wrapper-list">
+            <li class="carousel-item">
+              <img src="../img/carousel.jpg" alt="나는 캐러셀">
             </li>
           </ul>
         </div>
+        <div class="sool-list">
+          <div class="sool-item">
+            <a><img src="../img/icon_takju.png"></a>
+            <label>전통주</label>
+          </div>
+          <div class="sool-item">
+            <a><img src="../img/icon_takju.png"></a>
+            <label>탁주</label>
+          </div>
+          <div class="sool-item">
+            <a><img src="../img/icon_takju.png"></a>
+            <label>과실주</label>
+          </div>
+          <div class="sool-item">
+            <a><img src="../img/icon_takju.png"></a>
+            <label>밀키트</label>
+          </div>
+        </div>
+        <div class="container-slider-header">
+          <div class="slider-header-title">
+            <div class="main-title">금주의 PICK 🍶</div>
+            <div class="sub-title">[상호명]이가 추천드려요!</div>
+          </div>
+          <div class="slider-header-tilte-button">
+            <a href="#">더 보기</a>
+          </div>
+        </div>
+        <div class="container-slider-image">
+          <div class="container-slider-image-button">
+            <button><img src="../img/left-arrow.png"></button>
+          </div>
+          <div class="container-products-images">
+            <div class="products-image-list">
+              <div><img src="https://d38cxpfv0ljg7q.cloudfront.net/admin_contents/thumbnail/Xp8J-1666763020027-1011ssgp_9241.jpg"></div>
+              <span>주류이름 어쩌고</span>
+            </div>
+            <div class="products-image-list">
+              <div><img src="https://d38cxpfv0ljg7q.cloudfront.net/admin_contents/thumbnail/Xp8J-1666763020027-1011ssgp_9241.jpg"></div>
+              <span>주류이름 어쩌고</span>
+            </div>
+            <div class="products-image-list">
+              <div><img src="https://d38cxpfv0ljg7q.cloudfront.net/admin_contents/thumbnail/Xp8J-1666763020027-1011ssgp_9241.jpg"></div>
+              <span>주류이름 어쩌고</span>
+            </div>
+            <div class="products-image-list">
+              <div><img src="https://d38cxpfv0ljg7q.cloudfront.net/admin_contents/thumbnail/Xp8J-1666763020027-1011ssgp_9241.jpg"></div>
+              <span>주류이름 어쩌고</span>
+            </div>
+          </div>
+          <div class="container-slider-image-button">
+            <button><img src="../img/right-arrow.png"></button>
+          </div>
+        </div>
       </div>
-    </nav>
+    </section>
 
-    <div class="div-container">
-      <div class="landing" id="landingDiv">
-        <h1>랜딩 페이지</h1>
+    <footer>
+      <div class="footer-container">
+        <ul class="footer-policy">
+          <li class="policy__item">
+            <a href="" class="policy__item__link footer-item-text">이용 약관</a>
+            <a href="" class="policy__item__link footer-item-text">개인정보 처리방침</a>
+            <a href="" class="policy__item__link footer-item-text">취소 및 환불 정책</a>
+          </li>
+        </ul>
+        <ul class="footer-info">
+          <li class="info__item">
+            <span class="info__item__text footer-item-text">
+              <b>[상호명]</b> | 대표 노숙취 | 개인정보보호책임자 노숙취 | 사업자등록번호 231-07-81350
+            </span>
+          </li>
+          <li>
+            <span class="info__item__text footer-item-text">
+              주소 서울특별시 송파구 올림픽로 300, 777층 | 이메일 tipsyboy@gogle.com | 마케팅/제휴 문의 drunk@gogle.com
+            </span>
+          </li>
+          <li>
+            <span class="footer-item-text">
+              [상호명]는 통신판매중개자로서 통신판매 당사자가 아니며, 판매자가 등록한 상품정보 및 거래에 대해 [상호명]는 책임을 지지 않습니다.
+            </span>
+          </li>
+        </ul>
       </div>
-      <div class="greeting" id="greetingDiv">
-        <h1>안녕하세요!</h1>
-      </div>
-    </div>
+    </footer>
   </body>
 </html>
