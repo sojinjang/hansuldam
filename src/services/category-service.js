@@ -1,57 +1,69 @@
-const {categoryModel} = require('../db/models/category-model');
+import { categoryModel } from "../db";
 
 class CategoryService {
-    
-    constructor(categoryModel){
-        this.categoryModel = categoryModel;
+  constructor(categoryModel) {
+    this.categoryModel = categoryModel;
+  }
+
+  async addCategory(categoryInfo) {
+    const { name } = categoryInfo;
+
+    //상품 중복 확인
+    const category = await this.categoryModel.findByName(name);
+    if (category) {
+      throw new Error("같은 이름의 카테고리가 있습니다. 다시 확인해주세요");
     }
 
-    // 1. 카테고리 생성
-    async createCategory(categoryInfo){
+    // db에 저장
+    const createdNewCategory = await this.categoryModel.create(categoryInfo);
+    return createdNewCategory;
+  }
 
-        const {name, products} = categoryInfo;
+  async getCategories() {
+    const categories = await this.categoryModel.findAll();
+    return categories;
+  }
 
-        const isCategoryExist = await this.categoryModel.findByCategoryName(name);
-        
-        if (isCategoryExist){
-            throw new Error('이미 존재하는 카테고리입니다.');
-        }
+  async getCategoryById(categoryId) {
+    const category = await this.categoryModel.findById(categoryId);
+    return category;
+  }
 
-        const createdCategory = await this.categoryModel.createCategory({name: name, products: products});
+  async updateCategory(categoryId, toUpdate) {
+    // 우선 해당 id의 상품이 db에 있는지 확인
+    let category = await this.categoryModel.findById(categoryId);
 
-        return createdCategory;
+    // db에서 찾지 못한 경우, 에러 메시지 반환
+    if (!category) {
+      res.status(404);
+      throw new Error("일치하는 카테고리가 없습니다. 다시 한 번 확인해 주세요.");
     }
 
-    // 2. 카테고리 삭제
-    async deleteCategory(categoryId){
-        
-        const deletedCategory = await this.categoryModel.deleteCategory(categoryId);
-        return deletedCategory;
+    // 업데이트 진행
+    category = await this.categoryModel.update({
+      productId,
+      toUpdate,
+    });
+
+    return category;
+  }
+
+  async deleteCategory(categoryId) {
+    // 우선 해당 id의 상품이 db에 있는지 확인
+    let category = await this.categoryModel.findById(categoryId);
+
+    // db에서 찾지 못한 경우, 에러 메시지 반환
+    if (!category) {
+      res.status(404);
+      throw new Error("일치하는 카테고리가 없습니다. 다시 한 번 확인해 주세요.");
     }
 
-    // 3. 카테고리 전체 조회
-    async findCategories(){
-        const categories = await this.categoryModel.findCategories();
-        return categories;
-    }
-    // 4. 카테고리 이름 검색
-    async findByCategoryName(name){
-        const categoryName = await this.categoryModel.findByCategoryName(name);
-        return categoryName;
-    }
-    // 5. 카테고리 id 검색
-    async findByCategoryId(categoryId){
-        const catgId = await categoryModel.findByCategoryId(categoryId);
-        return catgId;
-    }
-
-    // 6. 카테고리 수정
-    async updateCategory(categoryId, name){
-        const updatedCategory = await this.categoryModel.updateCategory(categoryId, name);
-        return updatedCategory;
-    }
+    // 업데이트 진행
+    const deletedCategory = await this.categoryModel.delete({categoryId});
+    return deletedCategory;
+  }
 }
 
 const categoryService = new CategoryService(categoryModel);
 
-export { categoryService }
+export { categoryService };
