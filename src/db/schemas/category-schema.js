@@ -10,7 +10,7 @@ const CategorySchema = new Schema(
             {
                 type: Schema.Types.ObjectId,
                 ref: 'products',
-                required: true,
+                required: false,
             },
         ],
 

@@ -6,10 +6,10 @@ class CategoryService {
         this.categoryModel = categoryModel;
     }
 
-    // 1. create Category
+    // 1. 카테고리 생성
     async createCategory(categoryInfo){
 
-        const {name} = categoryInfo;
+        const {name, products} = categoryInfo;
 
         const isCategoryExist = await this.categoryModel.findByCategoryName(name);
         
@@ -17,34 +17,38 @@ class CategoryService {
             throw new Error('이미 존재하는 카테고리입니다.');
         }
 
-        const newCategory = await this.categoryModel.createCategory(categoryInfo);
+        const createdCategory = await this.categoryModel.createCategory({name: name, products: products});
 
-        return newCategory;
+        return createdCategory;
     }
 
-    // 2. delete Category
+    // 2. 카테고리 삭제
     async deleteCategory(categoryId){
         
-        const deleteCategory = await this.categoryModel.deleteCategory(categoryId);
-        return deleteCategory;
+        const deletedCategory = await this.categoryModel.deleteCategory(categoryId);
+        return deletedCategory;
     }
 
-    // 3. read all Categories
-    async findAllCategories(){
-        const categorylist = await this.categoryModel.findAllCategories();
-        return categorylist;
+    // 3. 카테고리 전체 조회
+    async findCategories(){
+        const categories = await this.categoryModel.findCategories();
+        return categories;
+    }
+    // 4. 카테고리 이름 검색
+    async findByCategoryName(name){
+        const categoryName = await this.categoryModel.findByCategoryName(name);
+        return categoryName;
+    }
+    // 5. 카테고리 id 검색
+    async findByCategoryId(categoryId){
+        const catgId = await categoryModel.findByCategoryId(categoryId);
+        return catgId;
     }
 
-    // 4. read Category name 
-    async findByCategoryName(categoryName){
-        const category = await this.categoryModel.findByCategoryName(categoryName);
-        return category;
-    }
-
-    // 5. update Category
+    // 6. 카테고리 수정
     async updateCategory(categoryId, name){
-        const updateCategory = await this.categoryModel.updateCategory(categoryId, name);
-        return updateCategory;
+        const updatedCategory = await this.categoryModel.updateCategory(categoryId, name);
+        return updatedCategory;
     }
 }
 

@@ -5,35 +5,40 @@ const Category = model('category', CategorySchema);
 
 export class CategoryModel {
 
-    // 1. create
+    // 1. 카테고리 생성
     async createCategory(categoryInfo){
-        const newCategory = await Category.create(categoryInfo);
-        return newCategory;
+        const createdCategory = await Category.create(categoryInfo);
+        return createdCategory;
     }
-    // 2. delete
+    // 2. 카테고리 삭제
     async deleteCategory(categoryId){
-        const deleteCategory = await Category.deleteOne({_id: categoryId});
-        return deleteCategory;
+        const deletedCategory = await CategorydeleteOne({_id: categoryId});
+        return deletedCategory;
     }
-    // 3. read all
-    async findAllCategories(){
-        const categorylist = await Category.find({})
-        return categorylist;
+    // 3. 카테고리 전체 조회
+    async findCategories(){
+        const categories = await Category.find({})
+        return categories;
     }
-    // 4. read name
-    async findByCategoryName(categoryName){
-        const category = await Category.findOne({name: categoryName});
-        return category;
+    // 4. 카테고리 이름 검색
+    async findByCategoryName(name){
+        const categoryName = await Category.findOne({name: name});
+        return categoryName;
     }
-
-    // 5. update
+    // 5. 카테고리 id 검색
+    async findByCategoryId(categoryId){
+        const catgId = await Category.findById(categoryId)
+        return catgId;
+    }
+    // 6. 카테고리 수정
     async updateCategory({categoryId, name}){
         const filter = {_id: categoryId};
         const update = {name: name};
         const option = { returnOriginal: false };
-        const updateCategory = await Category.updateOne(filter, update, option);
-        return updateCategory;
+        const updatedCategory = await Category.updateOne(filter, update, option);
+        return updatedCategory;
     }
+    
 }
 
 const categoryModel = new CategoryModel();

@@ -1,17 +1,36 @@
 import { Router } from "express";
-import { categoryService } from "../services";
+import { categoryService } from "../services/category-service";
 
 
 const categoryRouter = Router();
 
-// 카테고리 추가
+//  전체 카테고리 조회
+categoryRouter.get("/category", async (req, res, next) => {
+  try {
+    const categories = await categoryService.findCategories();
+    res.status(200).json(categories); 
+  } catch (err) {
+    next(err);
+  }
+});
+
+// 카테고리 별 제품 조회
+categoryRouter.get("/category/:categoryId", async (req, res, next) => {
+  try {
+    const categoryId = req.params;
+    const category = await categoryService.findByCategoryId(categoryId);
+    res.status(200).json(category); 
+  } catch (err) {
+    next(err);
+  }
+
+// 카테고리 추가 - 어드민
 categoryRouter.post(
-    "/:catg",
-  //   Required,
+    "/admin/category",
     async (req, res, next) => {
       try {
-        const { catg } = req.params;
-        const newCategory = await categoryService.createCategory(catg);
+        const {name}  = req.body;
+        const newCategory = await categoryService.createCategory({name});
   
         res.status(201).json(newCategory);
       } catch (err) {
@@ -19,57 +38,32 @@ categoryRouter.post(
       }
     }
   );
-
-//카테고리 삭제
+//카테고리 삭제 - 어드민
 categoryRouter.delete(
-    "/:catg",
-  //   adminRequired,
+    "/admin/category/:categoryId",
     async (req, res, next) => {
       try {
-        const { catg } = req.params;
+        const { categoryId } = req.params;
   
-        const deleteCategory = await categoryService.deleteCategory(catg);
-        res.status(201).json(deleteCategory);
+        const deletedCategory = await categoryService.deleteCategory(categoryId);
+        res.status(201).json(deletedCategory);
       } catch (err) {
         next(err);
       }
     }
   );
-
-//  전체 카테고리 조회
-categoryRouter.get("/categorylist", async (req, res, next) => {
-  try {
-    const categories = await categoryService.findAllCategories();
-    res.status(200).json(categories); 
-  } catch (err) {
-    next(err);
-  }
-});
-
-// 카테고리 이름으로 얻기
-categoryRouter.get("/:catg", async (req, res, next) => {
-  try {
-    const categoryName = req.params;
-    const category = await categoryService.findByCategoryName(categoryName);
-    res.status(200).json(category); 
-  } catch (err) {
-    next(err);
-  }
-});
-
-
-// 카테고리 업데이트
+  
+// 카테고리 업데이트 - admin에 갈때 어차피 다시해야함
 categoryRouter.put(
-  "/edit/:catg",
-//   adminRequired,
+  "/admin/category/:categoryId",
   async (req, res, next) => {
     try {
-      const { catg } = req.params;
+      const { categoryId } = req.params;
 
       const name = req.body.name;
 
       const updatedCategoryInfo = await categoryService.updateCategory(
-        catg,
+        categoryId,
         name
       );
 
@@ -79,5 +73,7 @@ categoryRouter.put(
     }
   }
 );
+
+});
 
 export { categoryRouter };
