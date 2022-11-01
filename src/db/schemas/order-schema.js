@@ -6,7 +6,7 @@ const OrderSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'users',
             required: true,
-        },   
+        },
         fullName: {
         type: String,
         required: true,
@@ -34,17 +34,17 @@ const OrderSchema = new Schema(
             default: "상품준비중",
         },
         priceSum: {
-
-        },      
-        orderedproducts: [
+            type: Number,
+            required: true,
+        },
+        productList: [
             {
-              type: Schema.Types.ObjectId,
-              ref: 'orderedproducts',
-              required: true,
-            },
-            {
-                _id: false,
-            },
+                productId: {
+                    type: Schema.Types.ObjectId,
+                    ref: 'products',
+                    required: true,
+                },
+              },
         ],
     },
     {

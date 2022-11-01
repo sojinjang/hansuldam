@@ -9,7 +9,7 @@ const ProductSchema = new Schema(
             type: String,
             required: true,
         },
-        productName: {
+        name: {
             type: String,
             required: true,
             index: true,
@@ -18,31 +18,31 @@ const ProductSchema = new Schema(
             type: Number,
             required: true,
         },
+            // 이하 나중에 구현할?
         volume: {
             type: Number,
-            required: true,
+            required: false,
         },
-        // 이하 나중에 구현할?
         quantity: { 
             type: Number,
-            required: true,
+            required: false,
         },
         img: {
             type: String,
-            required: true,
+            required: false,
         },
         sold: {
             type: Number,
-            required: true,
+            required: false,
             default: 0,
         },
         alcoholType: {
             type: String,
-            required: true,
+            required: false,
         },
         alcoholDegree: {
             type: Number,
-            required: true,
+            required: false,
         },
         manufacturedDate: {
             type: Date,
