@@ -29,7 +29,7 @@ categoryRouter.post("/admin/category", async (req, res, next) => {
 });
 
 // 카테고리 정보 수정
-categoryRouter.patch("/admin/category/:?categoryName", async (req, res, next) => {
+categoryRouter.patch("/admin/category/:categoryId", async (req, res, next) => {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
@@ -37,12 +37,12 @@ categoryRouter.patch("/admin/category/:?categoryName", async (req, res, next) =>
       );
     }
     
-    const { categoryName } = req.params;
+    const { categoryId } = req.params;
 
     const { name } = req.body;
 
     // 위 데이터를 카테고리 db에 추가하기
-    const updateCategory = await categoryService.updateCategory(categoryName, {
+    const updateCategory = await categoryService.updateCategory(categoryId, {
       name,
     });
 
@@ -54,11 +54,11 @@ categoryRouter.patch("/admin/category/:?categoryName", async (req, res, next) =>
 });
 
 // 카테고리 삭제(관리자)
-categoryRouter.delete("/admin/category?_id=categoryId}", async (req, res, next) => {
+categoryRouter.delete("/admin/category/:categoryId", async (req, res, next) => {
   try {
-    const { categoryName } = req.params;
+    const { categoryId } = req.params;
 
-    const category = await categoryService.deleteCategory(categoryName);
+    const category = await categoryService.deleteCategory(categoryId);
 
     res.status(200).json(category);
   } catch (error) {
@@ -67,7 +67,7 @@ categoryRouter.delete("/admin/category?_id=categoryId}", async (req, res, next) 
 });
 
 // 전체 카테고리 목록을 가져옴 (배열 형태)
-categoryRouter.get("/category", async (req, res, next) => {
+categoryRouter.get("/", async (req, res, next) => {
   try {
     // 전체 카테고리 목록을 얻음
     const category = await categoryService.getCategories();
@@ -80,7 +80,7 @@ categoryRouter.get("/category", async (req, res, next) => {
 });
 
 // 카테고리 상세 정보를 가져옴 (배열 형태)
-categoryRouter.get("/category/:categoryId", async (req, res, next) => {
+categoryRouter.get("/:categoryId", async (req, res, next) => {
   try {
     const { categoryId } = req.params;
 

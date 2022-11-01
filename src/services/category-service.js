@@ -29,28 +29,28 @@ class CategoryService {
     return category;
   }
 
-  async updateCategory(categoryName, toUpdate) {
+  async updateCategory(categoryId, toUpdate) {
     // 우선 해당 id의 상품이 db에 있는지 확인
-    const category = await this.categoryModel.findByName(categoryName);
+    let category = await this.categoryModel.findById(categoryId);
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!category) {
       res.status(404);
       throw new Error("일치하는 카테고리가 없습니다. 다시 한 번 확인해 주세요.");
     }
-    const { name } = toUpdate
+    
     // 업데이트 진행
-    const updatedcategory = await this.categoryModel.update({
-        categoryName,
-      name,
+    category = await this.categoryModel.update({
+      categoryId,
+      update: toUpdate,
     });
 
-    return updatedcategory;
+    return category;
   }
 
-  async deleteCategory(categoryName) {
+  async deleteCategory(categoryId) {
     // 우선 해당 id의 상품이 db에 있는지 확인
-    const category = await this.categoryModel.findByName(categoryName);
+    let category = await this.categoryModel.findById(categoryId);
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!category) {
@@ -59,7 +59,7 @@ class CategoryService {
     }
 
     // 업데이트 진행
-    const deletedCategory = await this.categoryModel.delete({categoryName});
+    const deletedCategory = await this.categoryModel.delete({categoryId});
     return deletedCategory;
   }
 }

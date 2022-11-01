@@ -15,16 +15,16 @@ export class CategoryModel {
     return categories;
   }
 
-  async update({ categoryName, changeName }) {
-    const filter = { categoryName };
-    const update = { name: changeName };
-    const updatedCategory = await Category.findOneAndUpdate(filter, update);
+  async update({ categoryId, update }) {
+    const filter = { _id: categoryId };
+    const option = { returnOriginal: false };
+    const updatedCategory = await Category.findOneAndUpdate(filter, update, option);
     return updatedCategory;
   }
   
-  async delete({ categoryName }) {
-    const filter = { name: categoryName };
-    const deletedCategory = await Category.findOneAndRemove(filter);
+  async delete({ categoryId }) {
+    const filter = { _id: categoryId };
+    const deletedCategory = await Category.deleteOne(filter);
     return deletedCategory;
   }
 
