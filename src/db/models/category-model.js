@@ -15,16 +15,16 @@ export class CategoryModel {
     return categories;
   }
 
-  async update({ categoryId, changeName }) {
-    const filter = { _id: categoryId };
+  async update({ categoryName, changeName }) {
+    const filter = { categoryName };
     const update = { name: changeName };
     const updatedCategory = await Category.findOneAndUpdate(filter, update);
     return updatedCategory;
   }
   
-  async delete({ categoryId }) {
-    const filter = { _id: categoryId };
-    const deletedCategory = await Category.deleteOne(filter);
+  async delete({ categoryName }) {
+    const filter = { name: categoryName };
+    const deletedCategory = await Category.findOneAndRemove(filter);
     return deletedCategory;
   }
 
@@ -34,7 +34,7 @@ export class CategoryModel {
   }
 
   async findById(categoryId) {
-    const category = await Category.findOne({ categoryId });
+    const category = await Category.findOne({ _id: categoryId });
     return category;
   }
   

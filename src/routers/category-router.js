@@ -7,7 +7,7 @@ const categoryRouter = Router();
 
 // 카테고리 추가 (관리자)
 categoryRouter.post("/admin/category", async (req, res, next) => {
-  try {// body가 아닌 req.name? 안되면!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  try {
     if (is.emptyObject(req.body)) {
       throw new Error(
         "headers의 Content-Type을 application/json으로 설정해주세요"
@@ -29,7 +29,7 @@ categoryRouter.post("/admin/category", async (req, res, next) => {
 });
 
 // 카테고리 정보 수정
-categoryRouter.patch("/admin/category/:categoryId", async (req, res, next) => {
+categoryRouter.patch("/admin/category/:?categoryName", async (req, res, next) => {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
@@ -37,12 +37,12 @@ categoryRouter.patch("/admin/category/:categoryId", async (req, res, next) => {
       );
     }
     
-    const { categoryId } = req.params;
+    const { categoryName } = req.params;
 
     const { name } = req.body;
 
     // 위 데이터를 카테고리 db에 추가하기
-    const updateCategory = await categoryService.updateCategory(categoryId, {
+    const updateCategory = await categoryService.updateCategory(categoryName, {
       name,
     });
 
@@ -54,11 +54,11 @@ categoryRouter.patch("/admin/category/:categoryId", async (req, res, next) => {
 });
 
 // 카테고리 삭제(관리자)
-categoryRouter.delete("/admin/category/:categoryId}", async (req, res, next) => {
+categoryRouter.delete("/admin/category?_id=categoryId}", async (req, res, next) => {
   try {
-    const { categoryId } = req.params;
+    const { categoryName } = req.params;
 
-    const category = await categoryService.deleteCategory(categoryId);
+    const category = await categoryService.deleteCategory(categoryName);
 
     res.status(200).json(category);
   } catch (error) {
@@ -84,7 +84,7 @@ categoryRouter.get("/category/:categoryId", async (req, res, next) => {
   try {
     const { categoryId } = req.params;
 
-    const category = await categoryService.getProductById(categoryId);
+    const category = await categoryService.getCategoryById(categoryId);
 
     // 카테고리 목록(배열)을 JSON 형태로 프론트에 보냄
     res.status(200).json(category);
