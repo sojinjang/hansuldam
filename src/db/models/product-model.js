@@ -4,16 +4,20 @@ import { ProductSchema } from "../schemas/product-schema";
 const Product = model("products", ProductSchema);
 
 export class ProductModel { 
-  
-  //-- 관리자 권한 필요
+
   async create(productInfo) {
     const createdNewProduct = await Product.create(productInfo);
     return createdNewProduct;
   }
 
+  async findAll() {
+    const products = await Product.find();
+    return products;
+  }
+
   async update({ productId, update }) {
     const filter = { _id: productId };
-    const updatedProduct = await Product.findOneAndUpdate(filter, update, option);
+    const updatedProduct = await Product.findOneAndUpdate(filter, update);
     return updatedProduct;
   }
   
@@ -21,6 +25,16 @@ export class ProductModel {
     const filter = { _id: productId };
     const deletedProduct = await Product.deleteOne(filter);
     return deletedProduct;
+  }
+
+  async findByName(name) {
+    const product = await Product.findOne({ name });
+    return product;
+  }
+
+  async findById(productId) {
+    const product = await Product.findOne({ productId });
+    return product;
   }
   
 }
