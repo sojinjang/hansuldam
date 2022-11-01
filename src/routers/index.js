@@ -4,4 +4,9 @@
 export * from "./views-router";
 export * from "./user-router";
 export * from "./category-router";
+<<<<<<< HEAD
 export * from "./product-router";
+=======
+export * from "./product-router";
+export * from "./admin-router";
+>>>>>>> c158cc95b6854a9a1986ffb0dcb40a6fb2f93b28

@@ -2,7 +2,7 @@ import { Schema } from 'mongoose';
 const ProductSchema = new Schema(
     {
         category: {
-            type: Schema.Types.ObjectId,
+            type: Schema.Types.String,
             ref: 'categories',
         },
         brand: {

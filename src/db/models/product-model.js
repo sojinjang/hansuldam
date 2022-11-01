@@ -33,7 +33,11 @@ export class ProductModel {
   }
 
   async findById(productId) {
+<<<<<<< HEAD
     const product = await Product.findOne({ productId });
+=======
+    const product = await Product.findOne({ _id: productId });
+>>>>>>> c158cc95b6854a9a1986ffb0dcb40a6fb2f93b28
     return product;
   }
   
