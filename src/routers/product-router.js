@@ -5,7 +5,6 @@ import { productService } from "../services";
 
 const productRouter = Router();
 
-// 권한 체크 로직 추가필요
 // 제품 추가 (관리자)
 productRouter.post("/admin/products", async (req, res, next) => {
   try {
@@ -43,7 +42,7 @@ productRouter.patch("/admin/products/:productId", async (req, res, next) => {
         "headers의 Content-Type을 application/json으로 설정해주세요"
       );
     }
-    
+
     const { productId } = req.params;
 
     const { name, price, category, image, brand, content } = req.body;
@@ -92,14 +91,15 @@ productRouter.get("/products", async (req, res, next) => {
   }
 });
 
-// 상품 상세 정보를 가져옴 (배열 형태)
+// 상품 상세 정보를 가져옴
 productRouter.get("/products/:productId", async (req, res, next) => {
   try {
     const { productId } = req.params;
-
+    console.log(productId)
     const product = await productService.getProductById(productId);
+    console.log(product)
 
-    // 상품 목록(배열)을 JSON 형태로 프론트에 보냄
+    // 상품 목록을 JSON 형태로 프론트에 보냄
     res.status(200).json(product);
   } catch (error) {
     next(error);
