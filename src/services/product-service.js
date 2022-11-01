@@ -34,28 +34,19 @@ class ProductService {
     // 우선 해당 id의 상품이 db에 있는지 확인
     console.log('1111111')
     let product = await this.productModel.findById(productId);
-<<<<<<< HEAD
-    console.log('2222222')
-
-=======
     console.log(product)
     
->>>>>>> c158cc95b6854a9a1986ffb0dcb40a6fb2f93b28
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!product) {
       console.log('333333')
       res.status(404);
       throw new Error("일치하는 상품이 없습니다. 다시 한 번 확인해 주세요.");
     }
-<<<<<<< HEAD
-
-=======
     //상품 이름 중복 확인
     product = await this.productModel.findByName(product.name);
     if (product) {
       throw new Error("수정한 이름과 같은 이름의 상품이 있습니다. 다시 확인해주세요");
     }
->>>>>>> c158cc95b6854a9a1986ffb0dcb40a6fb2f93b28
     // 업데이트 진행
     product = await this.productModel.update({
       productId,
