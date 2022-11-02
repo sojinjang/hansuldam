@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Liquor Store 🍸</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    />
+    <script
+      defer
+      src="https://kit.fontawesome.com/9daa42bcef.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="./product-detail.css" />
+    <link rel="stylesheet" href="../template/footer/footer.css" />
+    <link rel="stylesheet" href="../template/header/header.css" />
+  </head>
+  <body>
+    
+    <!-- todo: 스크롤 내리면 로고, 검색창 등 작아지게 만들기 -->
+    <main class="body-container">
+      <section>
+        <!-- API요청 후 이곳에서 제품을 불러옵니다. -->
+        <div class="product-container">
+          <div class="image-warpper">
+            <img src="../img/ricewine_icon.png" alt="">
+          </div>
+          <div class="content__container">
+            <div class="content__info">
+              <p class="content__item content__name">제목</p>
+              <p class="content__item content__price">가격</p>
+              <p class="content__desc">정보</p>
+            </div>
+            <div class="content__quantity-wrapper">
+              <p class="content__item content__quantity">수량</p>
+            </div>
+            <div class="content__info-detail">
+              <p class="content__item content__sold">판매량</p>
+              <p class="content__item content__alcoholType">종류</p>
+              <p class="content__item content__alcoholDegree">도수</p>
+              <p class="content__item content__volume">용량</p>
+              <p class="content__item content__manufacturedDate">제조일자</p>
+            </div>
+            <div class="button-container">
+              <button class="button is-info ml-2" id="order-button">주문하기</button>
+              <button class="button" id="basket-button">장바구니 담기</button>
+            </div>
+          </div>
+        </div>
+        
+        <script type="module" src="getHeaderFooter.js"></script>
+        <script src="product-detail.js"></script>
+      </section>
+    </main>
+  </body>
+  </html>
