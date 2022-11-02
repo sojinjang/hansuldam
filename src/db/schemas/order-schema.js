@@ -2,10 +2,10 @@ import { Schema } from 'mongoose';
 
 const OrderSchema = new Schema(
     {
-        userId: { // 회원으로 검색했을 때
+        userId: {
             type: Schema.Types.ObjectId,
             ref: 'users',
-            required: true,
+            required: false,
         },
         fullName: {
         type: String,
@@ -26,12 +26,25 @@ const OrderSchema = new Schema(
                 _id: false,
             }
             ),
-            required: true,
+            required: false,
         },
         status: {
             type: String,
             enum: ["상품준비중", "상품배송중", "배송완료"],
             default: "상품준비중",
+            required: false,
+        },
+        shipping: {
+            type: String,
+            required: false,
+        },
+        paymentMethod: {
+            type: String,
+            required: false,
+        },
+        paymentDetail: {
+            type: String,
+            required: false,
         },
         priceSum: {
             type: Number,
@@ -42,7 +55,7 @@ const OrderSchema = new Schema(
                 productId: {
                     type: Schema.Types.ObjectId,
                     ref: 'products',
-                    required: true,
+                    required: false,
                 },
               },
         ],
