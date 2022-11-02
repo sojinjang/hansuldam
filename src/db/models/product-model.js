@@ -3,8 +3,7 @@ import { ProductSchema } from "../schemas/product-schema";
 
 const Product = model("products", ProductSchema);
 
-export class ProductModel { 
-
+export class ProductModel {
   async create(productInfo) {
     const createdNewProduct = await Product.create(productInfo);
     return createdNewProduct;
@@ -20,8 +19,8 @@ export class ProductModel {
     const updatedProduct = await Product.findOneAndUpdate(filter, update);
     return updatedProduct;
   }
-  
-  async delete({ productId}) {
+
+  async delete(productId) {
     const filter = { _id: productId };
     const deletedProduct = await Product.deleteOne(filter);
     return deletedProduct;
@@ -36,7 +35,6 @@ export class ProductModel {
     const product = await Product.findOne({ _id: productId });
     return product;
   }
-  
 }
 
 const productModel = new ProductModel();
