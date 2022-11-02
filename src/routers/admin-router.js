@@ -1,7 +1,7 @@
 import { Router } from "express";
 import is from "@sindresorhus/is";
 
-import { productService } from "../services";
+import { productService , userService } from "../services";
 
 const adminRouter = Router();
 
@@ -17,7 +17,7 @@ adminRouter.post("/products", async (req, res, next) => {
 
     // req (request)의 body 에서 데이터 가져오기
     // 논의 필요
-    const { name, price, category, image, brand, content } = req.body;
+    const { name, price, category, image, brand } = req.body;
 
     // 위 데이터를 상품 db에 추가하기
     const newProduct = await productService.addProduct({
@@ -26,7 +26,6 @@ adminRouter.post("/products", async (req, res, next) => {
       category,
       image,
       brand,
-      content,
     });
 
     res.status(201).json(newProduct);
@@ -46,7 +45,7 @@ adminRouter.patch("/products/:productId", async (req, res, next) => {
 
     const { productId } = req.params;
 
-    const { name, price, category, image, brand, content } = req.body;
+    const { name, price, category, image, brand } = req.body;
 
     // 위 데이터를 상품 db에 추가하기
     const updateProduct = await productService.updateProduct(productId, {
@@ -54,8 +53,7 @@ adminRouter.patch("/products/:productId", async (req, res, next) => {
       price,
       category,
       image,
-      brand,
-      content,
+      brand
     });
 
     // 업데이트 이후의 데이터를 프론트에 보내 줌
@@ -78,5 +76,20 @@ adminRouter.delete("/products/:productId", async (req, res, next) => {
     next(error);
   }
 });
+
+//-----유저
+// 전체 유저 목록을 가져옴 (배열 형태임)
+adminRouter.get("/users", async (req, res, next) => {
+  try {
+    // 전체 사용자 목록을 얻음
+    const users = await userService.getUsers();
+
+    // 사용자 목록(배열)을 JSON 형태로 프론트에 보냄
+    res.status(200).json(users);
+  } catch (error) {
+    next(error);
+  }
+});
+
 
 export { adminRouter };

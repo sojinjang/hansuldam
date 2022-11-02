@@ -32,13 +32,11 @@ class ProductService {
 
   async updateProduct(productId, toUpdate) {
     // 우선 해당 id의 상품이 db에 있는지 확인
-    console.log('1111111')
     let product = await this.productModel.findById(productId);
     console.log(product)
     
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!product) {
-      console.log('333333')
       res.status(404);
       throw new Error("일치하는 상품이 없습니다. 다시 한 번 확인해 주세요.");
     }
@@ -67,7 +65,7 @@ class ProductService {
     }
 
     // 업데이트 진행
-    const deletedProduct = await this.productModel.delete({productId});
+    const deletedProduct = await this.productModel.delete(productId);
     return deletedProduct;
   }
 }
