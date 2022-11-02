@@ -14,7 +14,7 @@
       crossorigin="anonymous"
     ></script>
     <link rel="stylesheet" href="home.css" />
-    <script src="home.js" type="module" defer></script>
+    <!-- <script src="home.js" type="module" defer></script> -->
   </head>
   <body>
      <!-- todo: 스크롤 내리면 로고, 검색창 등 작아지게 만들기 -->
@@ -57,14 +57,40 @@
       </div>
     </header>
 
-    <section class="body-container">
+    <main class="body-container">
       <div class="section-container">
-        <div class="carousel-wrapper">
-          <ul class="carousel-wrapper-list">
-            <li class="carousel-item">
-              <img src="../img/carousel.jpg" alt="나는 캐러셀">
-            </li>
-          </ul>
+        <div class="carousel-container">
+          <div class="carousel-dots-container">
+            <ul>
+              <li class="carousel-dot">
+                <div>
+                </div>
+              </li>
+              <li class="carousel-dot">
+                <div>
+                </div>
+              </li>
+              <li class="carousel-dot">
+                <div>
+                </div>
+              </li>
+              <li class="carousel-dot">
+                <div>
+                </div>
+              </li>
+              <li class="carousel-dot">
+                <div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="carousel-slide">
+            <img src="../img/carousel1.png" alt="나는 캐러셀">
+            <img src="../img/carousel2.png" alt="나는 캐러셀">
+            <img src="../img/carousel3.png" alt="나는 캐러셀">
+            <img src="../img/carousel4.png" alt="나는 캐러셀">
+            <img src="../img/carousel5.png" alt="나는 캐러셀">
+          </div>
         </div>
         <div class="sool-list">
           <div class="sool-item">
@@ -84,43 +110,45 @@
             <label>밀키트</label>
           </div>
         </div>
-        <div class="container-slider-header">
-          <div class="slider-header-title">
-            <div class="main-title">금주의 PICK 🍶</div>
-            <div class="sub-title">[상호명]이가 추천드려요!</div>
-          </div>
-          <div class="slider-header-tilte-button">
-            <a href="#">더 보기</a>
-          </div>
-        </div>
-        <div class="container-slider-image">
-          <div class="container-slider-image-button">
-            <button><img src="../img/left-arrow.png"></button>
-          </div>
-          <div class="container-products-images">
-            <div class="products-image-list">
-              <div><img src="https://d38cxpfv0ljg7q.cloudfront.net/admin_contents/thumbnail/Xp8J-1666763020027-1011ssgp_9241.jpg"></div>
-              <span>주류이름 어쩌고</span>
+        <section class="container-row">
+          <div class="container-slider-header">
+            <div class="slider-header-title">
+              <div class="main-title">금주의 PICK 🍶</div>
+              <div class="sub-title">[상호명]이가 추천드려요!</div>
             </div>
-            <div class="products-image-list">
-              <div><img src="https://d38cxpfv0ljg7q.cloudfront.net/admin_contents/thumbnail/Xp8J-1666763020027-1011ssgp_9241.jpg"></div>
-              <span>주류이름 어쩌고</span>
-            </div>
-            <div class="products-image-list">
-              <div><img src="https://d38cxpfv0ljg7q.cloudfront.net/admin_contents/thumbnail/Xp8J-1666763020027-1011ssgp_9241.jpg"></div>
-              <span>주류이름 어쩌고</span>
-            </div>
-            <div class="products-image-list">
-              <div><img src="https://d38cxpfv0ljg7q.cloudfront.net/admin_contents/thumbnail/Xp8J-1666763020027-1011ssgp_9241.jpg"></div>
-              <span>주류이름 어쩌고</span>
+            <div class="slider-header-tilte-button">
+              <a href="#">더 보기</a>
             </div>
           </div>
-          <div class="container-slider-image-button">
-            <button><img src="../img/right-arrow.png"></button>
+          <div class="container-slider-image">
+            <div class="container-slider-image-button">
+              <button class="slider-left-button"><img src="../img/left-arrow.png"></button>
+            </div>
+            <div class="container-products-images">
+              <div class="products-image-list">
+                <div><img src="https://d38cxpfv0ljg7q.cloudfront.net/admin_contents/thumbnail/Xp8J-1666763020027-1011ssgp_9241.jpg"></div>
+                <span>주류이름 어쩌고</span>
+              </div>
+              <div class="products-image-list">
+                <div><img src="https://d38cxpfv0ljg7q.cloudfront.net/admin_contents/thumbnail/Xp8J-1666763020027-1011ssgp_9241.jpg"></div>
+                <span>주류이름 어쩌고</span>
+              </div>
+              <div class="products-image-list">
+                <div><img src="https://d38cxpfv0ljg7q.cloudfront.net/admin_contents/thumbnail/Xp8J-1666763020027-1011ssgp_9241.jpg"></div>
+                <span>주류이름 어쩌고</span>
+              </div>
+              <div class="products-image-list">
+                <div><img src="https://d38cxpfv0ljg7q.cloudfront.net/admin_contents/thumbnail/Xp8J-1666763020027-1011ssgp_9241.jpg"></div>
+                <span>주류이름 어쩌고</span>
+              </div>
+            </div>
+            <div class="container-slider-image-button">
+              <button class="btn2"><img src="../img/right-arrow.png"></button>
+            </div>
           </div>
-        </div>
+        </section>
       </div>
-    </section>
+    </main>
 
     <footer>
       <div class="footer-container">
@@ -150,5 +178,7 @@
         </ul>
       </div>
     </footer>
+
+    <script src="home.js"></script>
   </body>
 </html>
