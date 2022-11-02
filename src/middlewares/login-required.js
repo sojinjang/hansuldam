@@ -21,10 +21,11 @@ function loginRequired(req, res, next) {
     const secretKey = process.env.JWT_SECRET_KEY || "secret-key";
     const jwtDecoded = jwt.verify(userToken, secretKey);
 
-    const userId = jwtDecoded.userId;
+    const userId = jwtDecoded.userId;  // 식별 id ( _id)
+    const userRole = jwtDecoded.role;
 
     // 라우터에서 req.currentUserId를 통해 유저의 id에 접근 가능하게 됨
-    req.currentUserId = userId;
+    req.currentUser = {userId, userRole};
 
     next();
   } catch (error) {

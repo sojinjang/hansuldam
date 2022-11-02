@@ -12,7 +12,7 @@ class UserService {
   // 회원가입
   async addUser(userInfo) {
     // 객체 destructuring
-    const { email, fullName, password } = userInfo;
+    const { fullName, email, password, phoneNumber, address } = userInfo;
 
     // 이메일 중복 확인
     const user = await this.userModel.findByEmail(email);
@@ -27,7 +27,13 @@ class UserService {
     // 우선 비밀번호 해쉬화(암호화)
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUserInfo = { fullName, email, password: hashedPassword };
+    const newUserInfo = {
+      fullName,
+      email,
+      password: hashedPassword,
+      phoneNumber,
+      address,
+    };
 
     // db에 저장
     const createdNewUser = await this.userModel.create(newUserInfo);
@@ -80,6 +86,18 @@ class UserService {
     return users;
   }
 
+  // 사용자 개인정보를 받음.
+  async getUserOne(userId) {
+    const user = await this.userModel.findById(userId);
+    return user;
+  }
+
+  // 사용자 삭제.
+  async deleteUserOne(userId) {
+    const user = await this.userModel.delete(userId);
+    return user;
+  }
+
   // 유저정보 수정, 현재 비밀번호가 있어야 수정 가능함.
   async setUser(userInfoRequired, toUpdate) {
     // 객체 destructuring
@@ -107,8 +125,6 @@ class UserService {
         "현재 비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요."
       );
     }
-
-    // 이제 드디어 업데이트 시작
 
     // 비밀번호도 변경하는 경우에는, 회원가입 때처럼 해쉬화 해주어야 함.
     const { password } = toUpdate;

@@ -1,7 +1,7 @@
 import { model } from 'mongoose';
 import { CategorySchema } from '../schemas/category-schema';
 
-const Category = model('category', CategorySchema);
+const Category = model('categories', CategorySchema);
 
 export class CategoryModel {
 

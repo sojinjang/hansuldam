@@ -1,7 +1,17 @@
-import footer from "../template/footer/footer.js";
-import header from "../template/header/header.js";
+const carouselDot = document.querySelectorAll('.carousel-dot');
 
-const main = document.querySelector(".body-container");
+for (dot of carouselDot) {
+	dot.addEventListener('click', carouselDotClicked);
+}
 
-main.insertAdjacentHTML("beforebegin", header());
-main.insertAdjacentHTML("afterend", footer());
+function carouselDotClicked(e) {
+	e.preventDefault();
+	const slide = document.querySelector('.carousel-slide');
+	const dot = document.querySelectorAll('.carousel-dot');
+
+	dot.forEach((dot, i) => {
+		if (dot === e.target) {
+			slide.style.transform = `transLateX(-${i * 100}%)`;
+		}
+	});
+}
