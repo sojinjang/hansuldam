@@ -1,7 +1,7 @@
 import { Router } from "express";
 import is from "@sindresorhus/is";
 
-import { productService , userService } from "../services";
+import { productService, userService } from "../services";
 
 const adminRouter = Router();
 
@@ -17,7 +17,7 @@ adminRouter.post("/products", async (req, res, next) => {
 
     // req (request)의 body 에서 데이터 가져오기
     // 논의 필요
-    const { name, price, category, image, brand } = req.body;
+    const { name, price, category, image, brand, description } = req.body;
 
     // 위 데이터를 상품 db에 추가하기
     const newProduct = await productService.addProduct({
@@ -26,6 +26,7 @@ adminRouter.post("/products", async (req, res, next) => {
       category,
       image,
       brand,
+      description,
     });
 
     res.status(201).json(newProduct);
@@ -45,7 +46,7 @@ adminRouter.patch("/products/:productId", async (req, res, next) => {
 
     const { productId } = req.params;
 
-    const { name, price, category, image, brand } = req.body;
+    const { name, price, category, image, brand, description } = req.body;
 
     // 위 데이터를 상품 db에 추가하기
     const updateProduct = await productService.updateProduct(productId, {
@@ -53,7 +54,8 @@ adminRouter.patch("/products/:productId", async (req, res, next) => {
       price,
       category,
       image,
-      brand
+      brand,
+      description,
     });
 
     // 업데이트 이후의 데이터를 프론트에 보내 줌
@@ -90,6 +92,5 @@ adminRouter.get("/users", async (req, res, next) => {
     next(error);
   }
 });
-
 
 export { adminRouter };

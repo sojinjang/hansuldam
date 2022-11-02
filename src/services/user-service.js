@@ -126,8 +126,6 @@ class UserService {
       );
     }
 
-    // 이제 드디어 업데이트 시작
-
     // 비밀번호도 변경하는 경우에는, 회원가입 때처럼 해쉬화 해주어야 함.
     const { password } = toUpdate;
 
