@@ -8,6 +8,7 @@ li {list-style: none;}
 a {
   text-decoration: none;
 }
+button{all:unset;}
 
 
 /* body */
@@ -172,6 +173,7 @@ header {
   box-sizing: border-box;
   justify-content: space-between;
   padding-top: 20px;
+  padding-bottom: 10px;
 }
 
 .slider-header-image {
@@ -213,7 +215,7 @@ header {
   display: flex;
   box-sizing: border-box;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
 
 }
 
@@ -227,6 +229,13 @@ header {
 .container-slider-image .container-slider-image-button > button > img {
   width: 50px;
   height: 50px;
+  filter: opacity(0.3);
+  cursor: pointer;
+}
+
+.container-slider-image .container-slider-image-button > button > img:hover {
+  background-color: rgb(243, 243, 243);
+  filter: opacity(0.5);
 }
 
 .container-products-images {
@@ -257,9 +266,9 @@ header {
 }
 
 .container-products-images .products-image-list img {
-  
   width: 200px;
   height: 250px;
+  cursor: pointer;
 }
 
 .container-products-images .products-image-list div img:hover {
@@ -267,25 +276,59 @@ header {
   transition: all 0.5s linear;
 }
 
-.carousel-wrapper {
-  margin-top: 50px;
+/* carousel */
+.carousel-container{
+  width: 100%;
+  margin: 10px auto;
+  overflow: hidden;
+  position: relative;
+  margin-top: 50px;  
 }
 
-.carousel-wrapper-list {
+.carousel-container .carousel-slide {
   display: flex;
-  flex-direction: row;
   box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  transition: all 0.4s ease-in-out;
 }
 
-.carousel-item img{
-  width: 300vw;
-  border-radius: 10px;
-  overflow-x: hidden;
+.carousel-container .carousel-slide > img{
+  user-select: none;
+}
+
+.carousel-container .carousel-slide > img:first-child {
+  border-radius: 10px 0 0 10px;
+}
+
+.carousel-container .carousel-slide > img:last-child {
+  border-radius: 0 10px 10px 0;
+}
+
+.carousel-container .carousel-dots-container {
+  position: absolute;  
+  display: block;
+  width: 85vw;
+  bottom: 10%;
+  z-index: 88;
+}
+
+.carousel-container .carousel-dots-container ul {
+  display: flex;
+  justify-content: center;
+}
+
+.carousel-container .carousel-dots-container ul li {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid white;
+  margin: 0 5px 0 5px;
+  cursor: pointer;
 }
 
 
 /* footer */
-
 .footer-container {
   display: flex;
   box-sizing: border-box;
