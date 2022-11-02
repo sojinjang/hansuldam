@@ -14,57 +14,48 @@
       crossorigin="anonymous"
     ></script>
     <link rel="stylesheet" href="home.css" />
-    <script src="home.js" type="module" defer></script>
+    <link rel="stylesheet" href="../template/footer/footer.css" />
+    <link rel="stylesheet" href="../template/header/header.css" />
+    <!-- <script src="home.js" type="module" defer></script> -->
   </head>
   <body>
      <!-- todo: 스크롤 내리면 로고, 검색창 등 작아지게 만들기 -->
-     <header> 
-      <div class="header-container">
-        <section class="navigation-menu">
-          <div class="company-logo-wrapper">
-            <img class="company-logo" src="../img/logo.png">
-          </div>
-          <div class="searchbar">
-            <img class="search-img" src="../img/search-icon.png" alt="나는 돋보기">
-            <span class="search-text">제품검색</span>
-          </div>
-        </section>
-        <section class="user-menu">
-          <ul class="user-list">
-            <li class="login"><a href="">로그인</a></li>
-            <li class="join"><a href="">회원가입</a></li>
-            <div class="basket">
-              <a href=""><img src="../img/shopping-bag.png"></a>
-            </div>
-          </ul>
-        </section>
-      </div>
-      <div class="header-menu-wrapper">
-        <ul class="menu-list">
-          <li>
-            <div class="menu-label"><a>전체상품</a></div>
-          </li>
-          <li>
-            <div class="menu-label"><a>신상품</a></div>
-          </li>
-          <li>
-            <div class="menu-label"><a>베스트</a></div>
-          </li>
-          <li>
-            <div class="menu-label"><a>밀키트</a></div>
-          </li>
-        </ul>
-      </div>
-    </header>
+     
 
-    <section class="body-container">
+    <main class="body-container">
       <div class="section-container">
-        <div class="carousel-wrapper">
-          <ul class="carousel-wrapper-list">
-            <li class="carousel-item">
-              <img src="../img/carousel.jpg" alt="나는 캐러셀">
-            </li>
-          </ul>
+        <div class="carousel-container">
+          <div class="carousel-dots-container">
+            <ul>
+              <li class="carousel-dot">
+                <div>
+                </div>
+              </li>
+              <li class="carousel-dot">
+                <div>
+                </div>
+              </li>
+              <li class="carousel-dot">
+                <div>
+                </div>
+              </li>
+              <li class="carousel-dot">
+                <div>
+                </div>
+              </li>
+              <li class="carousel-dot">
+                <div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="carousel-slide">
+            <img src="../img/carousel1.png" alt="나는 캐러셀">
+            <img src="../img/carousel2.png" alt="나는 캐러셀">
+            <img src="../img/carousel3.png" alt="나는 캐러셀">
+            <img src="../img/carousel4.png" alt="나는 캐러셀">
+            <img src="../img/carousel5.png" alt="나는 캐러셀">
+          </div>
         </div>
         <div class="sool-list">
           <div class="sool-item">
@@ -84,71 +75,46 @@
             <label>밀키트</label>
           </div>
         </div>
-        <div class="container-slider-header">
-          <div class="slider-header-title">
-            <div class="main-title">금주의 PICK 🍶</div>
-            <div class="sub-title">[상호명]이가 추천드려요!</div>
-          </div>
-          <div class="slider-header-tilte-button">
-            <a href="#">더 보기</a>
-          </div>
-        </div>
-        <div class="container-slider-image">
-          <div class="container-slider-image-button">
-            <button><img src="../img/left-arrow.png"></button>
-          </div>
-          <div class="container-products-images">
-            <div class="products-image-list">
-              <div><img src="https://d38cxpfv0ljg7q.cloudfront.net/admin_contents/thumbnail/Xp8J-1666763020027-1011ssgp_9241.jpg"></div>
-              <span>주류이름 어쩌고</span>
+        <section class="container-row">
+          <div class="container-slider-header">
+            <div class="slider-header-title">
+              <div class="main-title">금주의 PICK 🍶</div>
+              <div class="sub-title">[상호명]이가 추천드려요!</div>
             </div>
-            <div class="products-image-list">
-              <div><img src="https://d38cxpfv0ljg7q.cloudfront.net/admin_contents/thumbnail/Xp8J-1666763020027-1011ssgp_9241.jpg"></div>
-              <span>주류이름 어쩌고</span>
-            </div>
-            <div class="products-image-list">
-              <div><img src="https://d38cxpfv0ljg7q.cloudfront.net/admin_contents/thumbnail/Xp8J-1666763020027-1011ssgp_9241.jpg"></div>
-              <span>주류이름 어쩌고</span>
-            </div>
-            <div class="products-image-list">
-              <div><img src="https://d38cxpfv0ljg7q.cloudfront.net/admin_contents/thumbnail/Xp8J-1666763020027-1011ssgp_9241.jpg"></div>
-              <span>주류이름 어쩌고</span>
+            <div class="slider-header-tilte-button">
+              <a href="#">더 보기</a>
             </div>
           </div>
-          <div class="container-slider-image-button">
-            <button><img src="../img/right-arrow.png"></button>
+          <div class="container-slider-image">
+            <div class="container-slider-image-button">
+              <button class="slider-left-button"><img src="../img/left-arrow.png"></button>
+            </div>
+            <div class="container-products-images">
+              <div class="products-image-list">
+                <div><img src="https://d38cxpfv0ljg7q.cloudfront.net/admin_contents/thumbnail/Xp8J-1666763020027-1011ssgp_9241.jpg"></div>
+                <span>주류이름 어쩌고</span>
+              </div>
+              <div class="products-image-list">
+                <div><img src="https://d38cxpfv0ljg7q.cloudfront.net/admin_contents/thumbnail/Xp8J-1666763020027-1011ssgp_9241.jpg"></div>
+                <span>주류이름 어쩌고</span>
+              </div>
+              <div class="products-image-list">
+                <div><img src="https://d38cxpfv0ljg7q.cloudfront.net/admin_contents/thumbnail/Xp8J-1666763020027-1011ssgp_9241.jpg"></div>
+                <span>주류이름 어쩌고</span>
+              </div>
+              <div class="products-image-list">
+                <div><img src="https://d38cxpfv0ljg7q.cloudfront.net/admin_contents/thumbnail/Xp8J-1666763020027-1011ssgp_9241.jpg"></div>
+                <span>주류이름 어쩌고</span>
+              </div>
+            </div>
+            <div class="container-slider-image-button">
+              <button class="btn2"><img src="../img/right-arrow.png"></button>
+            </div>
           </div>
-        </div>
+        </section>
       </div>
-    </section>
+    </main>
 
-    <footer>
-      <div class="footer-container">
-        <ul class="footer-policy">
-          <li class="policy__item">
-            <a href="" class="policy__item__link footer-item-text">이용 약관</a>
-            <a href="" class="policy__item__link footer-item-text">개인정보 처리방침</a>
-            <a href="" class="policy__item__link footer-item-text">취소 및 환불 정책</a>
-          </li>
-        </ul>
-        <ul class="footer-info">
-          <li class="info__item">
-            <span class="info__item__text footer-item-text">
-              <b>[상호명]</b> | 대표 노숙취 | 개인정보보호책임자 노숙취 | 사업자등록번호 231-07-81350
-            </span>
-          </li>
-          <li>
-            <span class="info__item__text footer-item-text">
-              주소 서울특별시 송파구 올림픽로 300, 777층 | 이메일 tipsyboy@gogle.com | 마케팅/제휴 문의 drunk@gogle.com
-            </span>
-          </li>
-          <li>
-            <span class="footer-item-text">
-              [상호명]는 통신판매중개자로서 통신판매 당사자가 아니며, 판매자가 등록한 상품정보 및 거래에 대해 [상호명]는 책임을 지지 않습니다.
-            </span>
-          </li>
-        </ul>
-      </div>
-    </footer>
+    <script type="module" src="home.js"></script>
   </body>
 </html>
