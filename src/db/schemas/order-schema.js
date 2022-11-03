@@ -1,4 +1,4 @@
-import { Schema } from 'mongoose';
+import { Schema } from "mongoose";
 
 const OrderSchema = new Schema(
   {
@@ -65,5 +65,5 @@ const OrderSchema = new Schema(
     timestamps: true,
   }
 );
-  
-  export { OrderSchema };
+
+export { OrderSchema };

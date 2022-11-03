@@ -32,7 +32,7 @@ userRouter.post("/login", async (req, res, next) => {
 
 // 로그아웃
 userRouter.post("/logout", loginRequired, async (req, res, next) => {
-  console.log(req.cookies)
+  console.log(req.cookies);
 });
 
 // 회원가입 api (아래는 /register이지만, 실제로는 /api/user/register로 요청해야 함.)
@@ -50,7 +50,7 @@ userRouter.post("/register", async (req, res, next) => {
     const password = req.body.password;
     const phoneNumber = req.body.phoneNumber;
     const address = req.body.address;
-    
+
     // 위 데이터를 유저 db에 추가하기
     const newUser = await userService.addUser({
       fullName,
@@ -73,8 +73,8 @@ userRouter.get("/", loginRequired, async (req, res, next) => {
   try {
     // params로부터 id를 가져옴
     const userId = req.currentUser.userId;
-    
-    const getUserInfo = await userService.getUserOne(userId)
+
+    const getUserInfo = await userService.getUserOne(userId);
 
     res.status(200).json(getUserInfo);
   } catch (error) {
@@ -102,7 +102,7 @@ userRouter.patch("/", loginRequired, async (req, res, next) => {
     const password = req.body.newPassword;
     const phoneNumber = req.body.phoneNumber;
     const address = req.body.address;
-  
+
     // body data로부터, 확인용으로 사용할 현재 비밀번호를 추출함.
     const currentPassword = req.body.password;
 
@@ -141,8 +141,8 @@ userRouter.delete("/", loginRequired, async (req, res, next) => {
   try {
     // params로부터 id를 가져옴
     const userId = req.currentUser.userId;
-    
-    const deleteUser = await userService.deleteUserOne(userId)
+
+    const deleteUser = await userService.deleteUserOne(userId);
 
     res.status(200).json(deleteUser);
   } catch (error) {

@@ -15,27 +15,27 @@ orderRouter.post("/", async (req, res, next) => {
     }
     // req (request)의 body 에서 데이터 가져오기
     const {
-        fullName,
-        address,
-        shipping,
-        paymentMethod,
-        paymentDetail,
-        priceSum,
-        productList,
-        userId,
-        phoneNumber,
+      fullName,
+      address,
+      shipping,
+      paymentMethod,
+      paymentDetail,
+      priceSum,
+      productList,
+      userId,
+      phoneNumber,
     } = req.body;
     // 위 데이터를 주문 db에 추가하기
     const newOrder = await orderService.addOrder({
-        fullName,
-        address,
-        shipping,
-        paymentMethod,
-        paymentDetail,
-        priceSum,
-        productList,
-        userId,
-        phoneNumber,
+      fullName,
+      address,
+      shipping,
+      paymentMethod,
+      paymentDetail,
+      priceSum,
+      productList,
+      userId,
+      phoneNumber,
     });
 
     res.status(201).json(newOrder);
@@ -92,8 +92,7 @@ orderRouter.delete("/:orderId", async (req, res, next) => {
   }
 });
 
-
-// 주문 상세 정보를 가져옴 
+// 주문 상세 정보를 가져옴
 orderRouter.get("/:orderId", async (req, res, next) => {
   try {
     const { orderId } = req.params;

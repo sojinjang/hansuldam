@@ -33,8 +33,8 @@ class ProductService {
   async updateProduct(productId, toUpdate) {
     // 우선 해당 id의 상품이 db에 있는지 확인
     let product = await this.productModel.findById(productId);
-    console.log(product)
-    
+    console.log(product);
+
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!product) {
       res.status(404);
@@ -43,7 +43,9 @@ class ProductService {
     //상품 이름 중복 확인
     product = await this.productModel.findByName(product.name);
     if (product) {
-      throw new Error("수정한 이름과 같은 이름의 상품이 있습니다. 다시 확인해주세요");
+      throw new Error(
+        "수정한 이름과 같은 이름의 상품이 있습니다. 다시 확인해주세요"
+      );
     }
     // 업데이트 진행
     product = await this.productModel.update({
