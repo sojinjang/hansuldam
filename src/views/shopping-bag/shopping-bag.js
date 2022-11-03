@@ -8,39 +8,46 @@ main.insertAdjacentHTML("afterend", footer());
 
 const productForm = document.getElementById("product-form");
 const productInput = document.querySelector("#product-form input");
+const shoppingbagList = document.querySelector(".shoppingbag-list");
 
 const PRODUCTS_KEY = "products";
 
-let productArr = [];
+let productArr = [
+  {
+    _id: "249ee1e45022fa608b63e994",
+    category: "증류주",
+    brand: "전주이강주",
+    name: "조정형 명인 전주 이강주",
+    price: 5500,
+    volume: 375,
+    quantity: 200,
+    img: "../img/redmonkey.jpeg",
+    sold: 10,
+    alcoholType: "증류",
+    alcoholDegree: 19,
+    manufacturedDate: "2022-04-15",
+    createdAt: "2022-06-07T05:28:04.709Z",
+    updatedAt: "2022-06-07T05:32:19.548Z",
+  },
+  {
+    _id: "249ee1e45022fa608b63e994",
+    category: "증류주",
+    brand: "전주이강주",
+    name: "조정형 명인 전주 이강주",
+    price: 5500,
+    volume: 375,
+    quantity: 200,
+    img: "../img/redmonkey.jpeg",
+    sold: 10,
+    alcoholType: "증류",
+    alcoholDegree: 19,
+    manufacturedDate: "2022-04-15",
+    createdAt: "2022-06-07T05:28:04.709Z",
+    updatedAt: "2022-06-07T05:32:19.548Z",
+  },
+];
 
-const productElements = {
-  product: "div",
-  "checkbox-wrapper": "div",
-  "custom-checkbox": "button",
-  "checkbox-img": "img",
-  "product-info-top": "div",
-  thumbnail: "div",
-  "product-img": "img",
-  "product-info": "div",
-  "product-brand": "div",
-  "product-name": "div",
-  "product-volume": "div",
-  "product-remove-button": "button",
-  "remove-img": "img",
-  blank: "div",
-  "product-info-bottom": "div",
-  "amount-control": "div",
-  decrease: "div",
-  "minus-button": "button",
-  "minus-image": "img",
-  amount: "div",
-  increase: "div",
-  "plus-button": "button",
-  "plus-image": "img",
-  price: "div",
-};
-
-function saveProduct() {
+function saveProducts() {
   localStorage.setItem(PRODUCTS_KEY, JSON.stringify(productArr));
 }
 
@@ -52,39 +59,75 @@ function deleteProduct(event) {
   saveProducts();
 }
 
-function camelize(str) {
-  return str.replace(/\W+(.)/g, function (match, chr) {
-    return chr.toUpperCase();
-  });
-}
-
-function makeAllProductElemWithClass(productElementsObj) {
-  Object.entries(productElementsObj).forEach(([elemCssClassName, tag]) => {
-    window[camelize(elemCssClassName)] = document.createElement(tag);
-    window[camelize(elemCssClassName)].setAttribute("class", elemCssClassName);
-  });
-}
-
-function showProduct(newProduct) {
-  makeAllProductElemWithClass(productElements)[
-    ("checkbox-wrapper", "product-info-top", "blank", "product-info-bottom")
-  ].forEach((elem) => {
-    product.appendChild(camelize(elem));
-  });
-  // notImplemented
+function showProducts(item) {
+  let product = undefined;
+  product = document.createElement("div");
+  product.setAttribute("class", "product");
+  product.innerHTML = `<div class="checkbox-wrapper">
+                <button type="button" class="custom-checkbox">
+                  <img
+                    class="checkbox-img"
+                    src="../img/check.png"
+                    alt="checkbox"
+                  />
+                </button>
+              </div>
+              <div class="product-info-top">
+                <div class="thumbnail">
+                  <img class="product-img" src="../img/redmonkey.jpeg" />
+                </div>
+                <div class="product-info">
+                  <div class="product-brand">${item.brand}</div>
+                  <div class="product-name">${item.name}</div>
+                  <div class="product-volume">${item.volume}</div>
+                </div>
+                <button type="button" class="product-remove-button">
+                  <img
+                    class="remove-img"
+                    src="../img/x.png"
+                    alt="remove-button"
+                  />
+                </button>
+              </div>
+              <div class="blank"></div>
+              <div class="product-info-bottom">
+                <div class="amount-control">
+                  <div class="decrease">
+                    <button class="minus-button" type="button">
+                      <img
+                        class="minus-image"
+                        src="../img/minus.png"
+                        alt="minus"
+                      />
+                    </button>
+                  </div>
+                  <div class="amount">${item.quantity}</div>
+                  <div class="increase">
+                    <button class="plus-button" type="button">
+                      <img
+                        class="plus-image"
+                        src="../img/plus.png"
+                        alt="plus"
+                      />
+                    </button>
+                  </div>
+                </div>
+                <div class="price">${item.price}</div>
+              </div>`;
+  shoppingbagList.append(product);
 }
 
 function handleProductSubmit(event) {
   event.preventDefault();
-  const newProduct = productInput.value;
-  productInput.value = "";
-  const newProductObj = {
-    text: newProduct,
-    id: Date.now(),
-  };
-  productArr.push(newProductObj);
-  showProduct(newProductObj);
-  saveProduct();
+  // const newProduct = productInput.value;
+  // productInput.value = "";
+  // const newProductObj = {
+  //   text: newProduct,
+  //   id: Date.now(),
+  // };
+  // productArr.push(newProductObj);
+  showProducts(productArr);
+  saveProducts();
 }
 
 productForm.addEventListener("submit", handleProductSubmit);
@@ -94,5 +137,5 @@ const savedProducts = localStorage.getItem(PRODUCTS_KEY);
 if (savedProducts !== null) {
   const parsedProducts = JSON.parse(savedProducts);
   productArr = parsedProducts;
-  parsedProducts.forEach(paintProduct);
+  parsedProducts.forEach(showProducts);
 }
