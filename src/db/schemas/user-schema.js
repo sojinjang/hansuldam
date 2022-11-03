@@ -1,7 +1,7 @@
 import { Schema } from "mongoose";
 
 const UserSchema = new Schema(
-  {   
+  {
     email: {
       type: String,
       required: true,
@@ -35,6 +35,10 @@ const UserSchema = new Schema(
       type: String,
       required: false,
       default: "basic-user",
+    },
+    orderList: {
+      type: [String],
+      required: false,
     },
   },
   {
