@@ -1,5 +1,4 @@
 import { Router } from "express";
-import is from "@sindresorhus/is";
 
 import { categoryService } from "../services";
 
