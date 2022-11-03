@@ -1,7 +1,7 @@
 import { Router } from "express";
 import is from "@sindresorhus/is";
 
-import { orderService } from "../services";
+import { orderService, productService } from "../services";
 
 const orderRouter = Router();
 
@@ -15,27 +15,25 @@ orderRouter.post("/", async (req, res, next) => {
     }
     // req (request)의 body 에서 데이터 가져오기
     const {
-        fullName,
-        address,
-        shipping,
-        paymentMethod,
-        paymentDetail,
-        priceSum,
-        productList,
-        userId,
-        phoneNumber,
+      fullName,
+      address,
+      shipping,
+      paymentMethod,
+      paymentDetail,
+      priceSum,
+      productList,
+      phoneNumber,
     } = req.body;
     // 위 데이터를 주문 db에 추가하기
     const newOrder = await orderService.addOrder({
-        fullName,
-        address,
-        shipping,
-        paymentMethod,
-        paymentDetail,
-        priceSum,
-        productList,
-        userId,
-        phoneNumber,
+      fullName,
+      address,
+      shipping,
+      paymentMethod,
+      paymentDetail,
+      priceSum,
+      productList,
+      phoneNumber,
     });
 
     res.status(201).json(newOrder);
@@ -92,8 +90,7 @@ orderRouter.delete("/:orderId", async (req, res, next) => {
   }
 });
 
-
-// 주문 상세 정보를 가져옴 
+// 주문 상세 정보를 가져옴
 orderRouter.get("/:orderId", async (req, res, next) => {
   try {
     const { orderId } = req.params;
@@ -102,6 +99,22 @@ orderRouter.get("/:orderId", async (req, res, next) => {
 
     // 주문 목록(배열)을 JSON 형태로 프론트에 보냄
     res.status(200).json(order);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// 주문한 상품 리스트를 가져옴
+orderRouter.get("/:orderId/products", async (req, res, next) => {
+  try {
+    const { orderId } = req.params;
+
+    const { productList } = await orderService.getOrderById(orderId);
+
+    const products = await productService.getProductList(productList);
+
+    // 주문 목록(배열)을 JSON 형태로 프론트에 보냄
+    res.status(200).json(products);
   } catch (error) {
     next(error);
   }

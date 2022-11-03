@@ -1,4 +1,4 @@
-function adminCheck(req, res, next) {
+function adminRequired(req, res, next) {
   const { userRole } = req.currentUser;
   if (userRole == "admin") {
     next();
@@ -11,4 +11,4 @@ function adminCheck(req, res, next) {
   }
 }
 
-export { adminCheck };
+export { adminRequired };
