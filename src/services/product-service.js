@@ -70,6 +70,11 @@ class ProductService {
     const deletedProduct = await this.productModel.delete(productId);
     return deletedProduct;
   }
+
+  async getOrderByProductList(productList) {
+    const products = await this.productModel.findByIdArray(productList);
+    return products;
+  }
 }
 
 const productService = new ProductService(productModel);

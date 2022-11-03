@@ -38,27 +38,27 @@ const OrderSchema = new Schema(
       type: String,
       required: false,
     },
-    paymentMethod: {
-      type: String,
-      required: false,
-    },
-    paymentDetail: {
-      type: String,
+    payment: {
+      type: new Schema(
+        {
+          way: String,
+          detail: String,
+          number: String,
+        },
+        {
+          _id: false,
+        }
+      ),
       required: false,
     },
     priceSum: {
       type: Number,
       required: true,
     },
-    productList: [
-      {
-        productId: {
-          type: Schema.Types.ObjectId,
-          ref: "products",
-          required: false,
-        },
-      },
-    ],
+    productList: {
+      type: [String],
+      required: false,
+    },
   },
   {
     collection: "orders",
