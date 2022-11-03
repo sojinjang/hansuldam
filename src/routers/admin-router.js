@@ -1,7 +1,12 @@
 import { Router } from "express";
 import is from "@sindresorhus/is";
 
-import { productService, userService, orderService, categoryService } from "../services";
+import {
+  productService,
+  userService,
+  orderService,
+  categoryService,
+} from "../services";
 
 const adminRouter = Router();
 
@@ -118,25 +123,17 @@ adminRouter.patch("/orders/:orderId", async (req, res, next) => {
 
     const { orderId } = req.params;
 
-    const {
-        fullName,
-        productList,
-        phoneNumber,
-        address,
-        paymentMethod,
-        paymentDetail,
-        status
-    } = req.body;
+    const { fullName, productList, phoneNumber, address, payment, status } =
+      req.body;
 
     // 위 데이터를 카테고리 db에 추가하기
     const updateOrder = await orderService.updateOrderAdmin(orderId, {
-        fullName,
-        productList,
-        phoneNumber,
-        address,
-        paymentMethod,
-        paymentDetail,
-        status,        
+      fullName,
+      productList,
+      phoneNumber,
+      address,
+      payment,
+      status,
     });
 
     // 업데이트 이후의 데이터를 프론트에 보내 줌
@@ -174,7 +171,7 @@ adminRouter.post("/category", async (req, res, next) => {
 
     // 위 데이터를 카테고리 db에 추가하기
     const newCategory = await categoryService.addCategory({
-      name
+      name,
     });
 
     res.status(201).json(newCategory);
@@ -191,7 +188,7 @@ adminRouter.patch("/category/:categoryId", async (req, res, next) => {
         "headers의 Content-Type을 application/json으로 설정해주세요"
       );
     }
-    
+
     const { categoryId } = req.params;
 
     const { name } = req.body;

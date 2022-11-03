@@ -35,6 +35,11 @@ export class ProductModel {
     const product = await Product.findOne({ _id: productId });
     return product;
   }
+
+  async findByIdArray(idArray) {
+    const products = await Product.find({ _id: { $in: idArray } });
+    return products;
+  }
 }
 
 const productModel = new ProductModel();
