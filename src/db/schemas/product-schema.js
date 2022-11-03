@@ -2,8 +2,8 @@ import { Schema } from "mongoose";
 const ProductSchema = new Schema(
   {
     category: {
-      type: Schema.Types.String,
-      ref: "categories",
+      type: String,
+      required: true,
     },
     brand: {
       type: String,

@@ -3,8 +3,7 @@ import { CategorySchema } from "../schemas/category-schema";
 
 const Category = model("categories", CategorySchema);
 
-export class CategoryModel { 
-
+export class CategoryModel {
   async create(categoryInfo) {
     const createdNewCategory = await Category.create(categoryInfo);
     return createdNewCategory;
@@ -18,26 +17,24 @@ export class CategoryModel {
   async update({ categoryId, update }) {
     const filter = { _id: categoryId };
     const option = { returnOriginal: false };
-    const updatedCategory = await Category.findOneAndUpdate(filter, update, option);
+    const updatedCategory = await Category.findOneAndUpdate(
+      filter,
+      update,
+      option
+    );
     return updatedCategory;
   }
-  
+
   async delete({ categoryId }) {
     const filter = { _id: categoryId };
     const deletedCategory = await Category.deleteOne(filter);
     return deletedCategory;
   }
 
-  async findByName(name) {
-    const category = await Category.findOne({ name });
+  async findByObj(obj) {
+    const category = await Category.findOne(obj);
     return category;
   }
-
-  async findById(categoryId) {
-    const category = await Category.findOne({ _id: categoryId });
-    return category;
-  }
-  
 }
 
 const categoryModel = new CategoryModel();
