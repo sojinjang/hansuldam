@@ -1,9 +1,11 @@
 import { Router } from "express";
+import is from "@sindresorhus/is";
 
-import { userService } from "../services";
+import { userService, orderService } from "../services";
 
 const authRouter = Router();
 
+//----- users
 // 사용자 정보 조회
 authRouter.get("/user", async (req, res, next) => {
   try {
@@ -81,6 +83,50 @@ authRouter.delete("/user", async (req, res, next) => {
     const deleteUser = await userService.deleteUserOne(userId);
 
     res.status(200).json(deleteUser);
+  } catch (error) {
+    next(error);
+  }
+});
+
+//-----orders
+// 회원 주문하기
+authRouter.post("/orders", async (req, res, next) => {
+  try {
+    if (is.emptyObject(req.body)) {
+      throw new Error(
+        "headers의 Content-Type을 application/json으로 설정해주세요"
+      );
+    }
+    const userId = req.currentUser.userId;
+
+    // req (request)의 body 에서 데이터 가져오기
+    const {
+      fullName,
+      address,
+      shipping,
+      paymentMethod,
+      paymentDetail,
+      priceSum,
+      productList,
+      phoneNumber,
+    } = req.body;
+
+    // 위 데이터를 주문 db에 추가하기
+    const newOrder = await orderService.addOrder({
+      userId,
+      fullName,
+      address,
+      shipping,
+      paymentMethod,
+      paymentDetail,
+      priceSum,
+      productList,
+      phoneNumber,
+    });
+
+    await userService.addOrderIdInUser(userId, newOrder._id);
+
+    res.status(201).json(newOrder);
   } catch (error) {
     next(error);
   }

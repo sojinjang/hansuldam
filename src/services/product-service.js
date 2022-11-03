@@ -71,7 +71,7 @@ class ProductService {
     return deletedProduct;
   }
 
-  async getOrderByProductList(productList) {
+  async getProductList(productList) {
     const products = await this.productModel.findByIdArray(productList);
     return products;
   }
