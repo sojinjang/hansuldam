@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>성인인증 완료창</title>
+        <!-- 아이콘 -->
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="/elice-rabbit-favicon.png"
+        />
+        <!-- bulma css 관련 -->
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+        />
+        <!-- 폰트 어썸: 아이콘 -->
+        <script
+            defer
+            src="https://kit.fontawesome.com/9daa42bcef.js"
+            crossorigin="anonymous"
+        ></script>
+
+        <!-- 커스텀 css, js -->
+        <link rel="stylesheet" href="join-success.css" />
+        <link rel="stylesheet" href="../template/footer/footer.css" />
+        
+    </head>
+
+    <body>
+        <header>
+            <div class="header-container">
+                <section class="navigation-menu">
+                    <div class="company-logo-wrapper">
+                    <img class="company-logo" src="../img/logo.png">
+                    </div>
+                </section>
+        
+                <section class="user-menu">
+                    <div class="user-img">
+                    <a href=""><img src="../img/뚱이.jpeg"></a>
+                    </div>
+                </section>
+            </div>
+        </header>
+
+        <main class="body-container">
+            <div class="body-section-container">
+                <form class="body-join-check">
+                    <label for="">성인이세요?</label>
+                    <div>
+                        <input
+                                class="input"
+                                id="userNameInput"
+                                type="text"
+                                placeholder="이름"
+                                autocomplete="on">
+                        <input
+                                class="input"
+                                id="userNumberInput"
+                                type="text"
+                                placeholder="생년월일(ex 901121)"
+                                autocomplete="on">
+                    </div>
+                    <button type="button" class="checkBtn button">
+                        인증 하기
+                    </button>
+                </form>
+                <form class="body-join-form" onsubmit="return false;">
+                    <section class="join-form-hello">
+                        <p>인증 성공하셨어~</p>
+                    </section>
+                    <section class="join-form-input">
+                        <label for="nameInput">이름</label>
+                        <div>
+                            <input 
+                                class="input"
+                                id="nameInput"
+                                type="text"
+                                placeholder="나의 이름은?"
+                                autocomplete="on">
+                        </div>
+                    </section>
+                    <section class="join-form-input">
+                        <label for="nameInput">이메일</label>
+                        <div>
+                            <input 
+                                class="input"
+                                id="emailInput"
+                                type="text"
+                                placeholder="email@thanks.com"
+                                autocomplete="on">
+                        </div>
+                    </section>
+                    <section class="join-form-input">
+                        <label for="passwordInput">비밀번호</label>
+                        <div>
+                            <input 
+                                class="input"
+                                id="passwordInput"
+                                type="password"
+                                placeholder="********"
+                                autocomplete="on">
+                        </div>
+                    </section>
+                    <section class="join-form-input">
+                        <label for="passwordInput">비밀번호 확인</label>
+                        <div>
+                            <input 
+                                class="input"
+                                id="passwordCheck"
+                                type="password"
+                                placeholder="********"
+                                autocomplete="on">
+                        </div>
+                    </section>
+                    <section class="join-form-input">
+                        <label for="addressInput">주소</label>
+                        <div>
+                            <div class="address-find">
+                                <input 
+                                class="input"
+                                id="addressCode"
+                                type=""
+                                placeholder="우편번호"
+                                autocomplete="on">
+                                <button>우편번호 찾기</button>
+                            </div>
+                            <input 
+                                class="input"
+                                id="addressLocation"
+                                type=""
+                                placeholder="oo시 ㅇㅇ구 ㅇㅇ동"
+                                autocomplete="on">
+                            <input 
+                                class="input"
+                                id="addressDetail"
+                                type=""
+                                placeholder="나머지 주소 입력"
+                                autocomplete="on">
+                        </div>
+                    </section>
+                    <section class="join-form-input">
+                        <label for="phoneNumberInput">휴대폰 번호</label>
+                        <div>
+                            <input 
+                                class="input"
+                                id="phoneNumber"
+                                type="number"
+                                placeholder="01x-xxxx-xxxx"
+                                autocomplete="on">
+                        </div>
+                    </section>
+                    <button class="join-form-button">
+                        가입 완료하기
+                    </button>
+                </form>
+            </div>
+        </main>
+        <script src="join-success.js" type="module"></script>
+    </body>
+</html>
