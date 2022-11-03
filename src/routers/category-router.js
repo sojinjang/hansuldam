@@ -1,83 +1,50 @@
 import { Router } from "express";
-import { categoryService } from "../services";
+import is from "@sindresorhus/is";
 
+import { categoryService, productService } from "../services";
 
 const categoryRouter = Router();
 
-// 카테고리 추가
-categoryRouter.post(
-    "/:catg",
-  //   Required,
-    async (req, res, next) => {
-      try {
-        const { catg } = req.params;
-        const newCategory = await categoryService.createCategory(catg);
-  
-        res.status(201).json(newCategory);
-      } catch (err) {
-        next(err);
-      }
-    }
-  );
-
-//카테고리 삭제
-categoryRouter.delete(
-    "/:catg",
-  //   adminRequired,
-    async (req, res, next) => {
-      try {
-        const { catg } = req.params;
-  
-        const deleteCategory = await categoryService.deleteCategory(catg);
-        res.status(201).json(deleteCategory);
-      } catch (err) {
-        next(err);
-      }
-    }
-  );
-
-//  전체 카테고리 조회
-categoryRouter.get("/categorylist", async (req, res, next) => {
+// 전체 카테고리 목록을 가져옴 (배열 형태)
+categoryRouter.get("/", async (req, res, next) => {
   try {
-    const categories = await categoryService.findAllCategories();
-    res.status(200).json(categories); 
-  } catch (err) {
-    next(err);
+    // 전체 카테고리 목록을 얻음
+    const category = await categoryService.getCategories();
+
+    // 카테고리 목록(배열)을 JSON 형태로 프론트에 보냄
+    res.status(200).json(category);
+  } catch (error) {
+    next(error);
   }
 });
 
-// 카테고리 이름으로 얻기
-categoryRouter.get("/:catg", async (req, res, next) => {
+// 카테고리 상세 정보를 가져옴 (배열 형태)
+categoryRouter.get("/:categoryId", async (req, res, next) => {
   try {
-    const categoryName = req.params;
-    const category = await categoryService.findByCategoryName(categoryName);
-    res.status(200).json(category); 
-  } catch (err) {
-    next(err);
+    const { categoryId } = req.params;
+
+    const category = await categoryService.getCategoryById(categoryId);
+
+    // 카테고리 목록(배열)을 JSON 형태로 프론트에 보냄
+    res.status(200).json(category);
+  } catch (error) {
+    next(error);
   }
 });
 
+categoryRouter.get("/:categoryId/products", async (req, res, next) => {
+  try {
+    const { categoryId } = req.params;
 
-// 카테고리 업데이트
-categoryRouter.put(
-  "/edit/:catg",
-//   adminRequired,
-  async (req, res, next) => {
-    try {
-      const { catg } = req.params;
+    const { productList } = await categoryService.getCategoryById(categoryId);
 
-      const name = req.body.name;
+    const products = await productService.getProductList(productList);
 
-      const updatedCategoryInfo = await categoryService.updateCategory(
-        catg,
-        name
-      );
-
-      res.status(200).json(updatedCategoryInfo);
-    } catch (err) {
-      next(err);
-    }
+    // 주문 목록(배열)을 JSON 형태로 프론트에 보냄
+    res.status(200).json(products);
+  } catch (error) {
+    next(error);
   }
-);
+});
 
 export { categoryRouter };
