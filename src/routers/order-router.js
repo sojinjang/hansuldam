@@ -56,22 +56,22 @@ orderRouter.patch("/:orderId", async (req, res, next) => {
     const { orderId } = req.params;
 
     const {
-        fullName,
-        productList,
-        phoneNumber,
-        address,
-        paymentMethod,
-        paymentDetail,
+      fullName,
+      productList,
+      phoneNumber,
+      address,
+      paymentMethod,
+      paymentDetail,
     } = req.body;
 
     // 위 데이터를 카테고리 db에 추가하기
     const updateOrder = await orderService.updateOrder(orderId, {
-        fullName,
-        productList,
-        phoneNumber,
-        address,
-        paymentMethod,
-        paymentDetail,
+      fullName,
+      productList,
+      phoneNumber,
+      address,
+      paymentMethod,
+      paymentDetail,
     });
     res.status(200).json(updateOrder);
   } catch (error) {

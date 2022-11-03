@@ -3,8 +3,7 @@ import { OrderSchema } from "../schemas/order-schema";
 
 const Order = model("orders", OrderSchema);
 
-export class OrderModel { 
-
+export class OrderModel {
   async create(orderInfo) {
     const createdNewOrder = await Order.create(orderInfo);
     return createdNewOrder;
@@ -21,7 +20,7 @@ export class OrderModel {
     const updatedOrder = await Order.findOneAndUpdate(filter, update, option);
     return updatedOrder;
   }
-  
+
   async delete({ orderId }) {
     const filter = { _id: orderId };
     const deletedorders = await Order.deleteOne(filter);
@@ -37,7 +36,6 @@ export class OrderModel {
     const order = await Order.findOne({ _id: userId });
     return order;
   }
-  
 }
 
 const orderModel = new OrderModel();

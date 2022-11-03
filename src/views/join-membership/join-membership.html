@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>쇼핑-데모</title>
+        <!-- 아이콘 -->
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="/elice-rabbit-favicon.png"
+        />
+        <!-- bulma css 관련 -->
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+        />
+        <!-- 폰트 어썸: 아이콘 -->
+        <script
+            defer
+            src="https://kit.fontawesome.com/9daa42bcef.js"
+            crossorigin="anonymous"
+        ></script>
+
+        <!-- 커스텀 css, js -->
+        <link rel="stylesheet" href="join-membership.css" />
+        <script src="join-membership.js" type="module" defer></script>
+    </head>
+
+    <body>
+        <header>
+            <div class="header-container">
+                <section class="navigation-menu">
+                    <div class="company-logo-wrapper">
+                    <img class="company-logo" src="../img/logo.png">
+                    </div>
+                </section>
+        
+                <section class="user-menu">
+                    <div class="user-img">
+                    <a href=""><img src="../img/뚱이.jpeg"></a>
+                    </div>
+                </section>
+            </div>
+        </header>
+
+        <main class="body-container">
+            <div class="main-section-container">
+                <form class="main-join-form">
+                    <section class="join-form-hello">
+                        <p>가입하세용~~</p>
+                    </section>
+                    <section class="join-form-input">
+                        <label for="nameInput">이름</label>
+                        <div>
+                            <input 
+                                class="input"
+                                id="nameInput"
+                                type="text"
+                                placeholder="나의 이름은?"
+                                autocomplete="on">
+                        </div>
+                    </section>
+                    <section class="join-form-input">
+                        <label for="emailInput">이메일</label>
+                        <div>
+                            <input 
+                                class="input"
+                                id="emailInput"
+                                type="email"
+                                placeholder="abc@example.com"
+                                autocomplete="on">
+                        </div>
+                    </section>
+                    <button class="join-form-button">
+                        성인 인증하기
+                    </button>
+                </form>
+            </div>
+        </main>
+    </body>
+</html>
