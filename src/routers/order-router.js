@@ -79,60 +79,8 @@ orderRouter.patch("/:orderId", async (req, res, next) => {
   }
 });
 
-// 주문 수정 관리자
-orderRouter.patch("/admin/orders/:orderId", async (req, res, next) => {
-  try {
-    if (is.emptyObject(req.body)) {
-      throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
-      );
-    }
-
-    const { orderId } = req.params;
-
-    const {
-        fullName,
-        productList,
-        phoneNumber,
-        address,
-        paymentMethod,
-        paymentDetail,
-        status
-    } = req.body;
-
-    // 위 데이터를 카테고리 db에 추가하기
-    const updateOrder = await orderService.updateOrderAdmin(orderId, {
-        fullName,
-        productList,
-        phoneNumber,
-        address,
-        paymentMethod,
-        paymentDetail,
-        status,        
-    });
-
-    // 업데이트 이후의 데이터를 프론트에 보내 줌
-    res.status(200).json(updateOrder);
-  } catch (error) {
-    next(error);
-  }
-});
-
 // 주문 취소 구매자
 orderRouter.delete("/:orderId", async (req, res, next) => {
-  try {
-    const { orderId } = req.params;
-
-    const order = await orderService.deleteOrder(orderId);
-
-    res.status(200).json(order);
-  } catch (error) {
-    next(error);
-  }
-});
-
-// 주문 삭제(관리자)
-orderRouter.delete("/admin/orders/:orderId", async (req, res, next) => {
   try {
     const { orderId } = req.params;
 
