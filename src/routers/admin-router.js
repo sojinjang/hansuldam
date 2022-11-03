@@ -1,7 +1,7 @@
 import { Router } from "express";
 import is from "@sindresorhus/is";
 
-import { productService, userService } from "../services";
+import { productService, userService, orderService, categoryService } from "../services";
 
 const adminRouter = Router();
 
@@ -94,9 +94,21 @@ adminRouter.get("/users", async (req, res, next) => {
 });
 
 //-----주문
+// 전체 주문 목록을 가져옴 (관리자)
+adminRouter.get("/orders", async (req, res, next) => {
+  try {
+    // 전체 주문 목록을 얻음
+    const order = await orderService.getOrders();
+
+    // 주문 목록(배열)을 JSON 형태로 프론트에 보냄
+    res.status(200).json(order);
+  } catch (error) {
+    next(error);
+  }
+});
 
 // 주문 수정 관리자
-orderRouter.patch("/orders/:orderId", async (req, res, next) => {
+adminRouter.patch("/orders/:orderId", async (req, res, next) => {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
@@ -135,7 +147,7 @@ orderRouter.patch("/orders/:orderId", async (req, res, next) => {
 });
 
 // 주문 삭제(관리자)
-orderRouter.delete("/orders/:orderId", async (req, res, next) => {
+adminRouter.delete("/orders/:orderId", async (req, res, next) => {
   try {
     const { orderId } = req.params;
 
@@ -149,7 +161,7 @@ orderRouter.delete("/orders/:orderId", async (req, res, next) => {
 
 // -----카테고리
 // 카테고리 추가 (관리자)
-categoryRouter.post("/category", async (req, res, next) => {
+adminRouter.post("/category", async (req, res, next) => {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
@@ -172,7 +184,7 @@ categoryRouter.post("/category", async (req, res, next) => {
 });
 
 // 카테고리 정보 수정
-categoryRouter.patch("/category/:categoryId", async (req, res, next) => {
+adminRouter.patch("/category/:categoryId", async (req, res, next) => {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
@@ -197,7 +209,7 @@ categoryRouter.patch("/category/:categoryId", async (req, res, next) => {
 });
 
 // 카테고리 삭제(관리자)
-categoryRouter.delete("/category/:categoryId", async (req, res, next) => {
+adminRouter.delete("/category/:categoryId", async (req, res, next) => {
   try {
     const { categoryId } = req.params;
 

@@ -92,18 +92,6 @@ orderRouter.delete("/:orderId", async (req, res, next) => {
   }
 });
 
-// 전체 주문 목록을 가져옴 -안쓰일건지?
-orderRouter.get("/", async (req, res, next) => {
-  try {
-    // 전체 주문 목록을 얻음
-    const order = await orderService.getOrders();
-
-    // 주문 목록(배열)을 JSON 형태로 프론트에 보냄
-    res.status(200).json(order);
-  } catch (error) {
-    next(error);
-  }
-});
 
 // 주문 상세 정보를 가져옴 
 orderRouter.get("/:orderId", async (req, res, next) => {
