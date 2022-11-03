@@ -22,7 +22,6 @@ orderRouter.post("/", async (req, res, next) => {
       paymentDetail,
       priceSum,
       productList,
-      userId,
       phoneNumber,
     } = req.body;
     // 위 데이터를 주문 db에 추가하기
@@ -34,7 +33,6 @@ orderRouter.post("/", async (req, res, next) => {
       paymentDetail,
       priceSum,
       productList,
-      userId,
       phoneNumber,
     });
 
@@ -113,7 +111,7 @@ orderRouter.get("/:orderId/products", async (req, res, next) => {
 
     const { productList } = await orderService.getOrderById(orderId);
 
-    const products = await productService.getOrderByProductList(productList);
+    const products = await productService.getProductList(productList);
 
     // 주문 목록(배열)을 JSON 형태로 프론트에 보냄
     res.status(200).json(products);

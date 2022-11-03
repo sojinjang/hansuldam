@@ -2,8 +2,8 @@ import { Schema } from "mongoose";
 const ProductSchema = new Schema(
   {
     category: {
-      type: Schema.Types.String,
-      ref: "categories",
+      type: String,
+      required: true,
     },
     brand: {
       type: String,
@@ -18,12 +18,12 @@ const ProductSchema = new Schema(
       type: Number,
       required: true,
     },
-
+    // 이하 나중에 구현할?
     volume: {
       type: Number,
       required: false,
     },
-    stock: {
+    quantity: {
       type: Number,
       required: false,
     },

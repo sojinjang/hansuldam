@@ -31,13 +31,8 @@ export class CategoryModel {
     return deletedCategory;
   }
 
-  async findByName(name) {
-    const category = await Category.findOne({ name });
-    return category;
-  }
-
-  async findById(categoryId) {
-    const category = await Category.findOne({ _id: categoryId });
+  async findByObj(obj) {
+    const category = await Category.findOne(obj);
     return category;
   }
 }
