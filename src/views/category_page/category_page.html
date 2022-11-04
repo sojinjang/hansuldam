@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Liquor Store 🍸</title>
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+		/>
+		<script
+			defer
+			src="https://kit.fontawesome.com/9daa42bcef.js"
+			crossorigin="anonymous"
+		></script>
+		<link rel="stylesheet" href="category_page.css" />
+		<link rel="stylesheet" href="../template/footer/footer.css" />
+		<link rel="stylesheet" href="../template/header/header.css" />
+	</head>
+	<body>
+		<!-- todo: 스크롤 내리면 로고, 검색창 등 작아지게 만들기 -->
+		<main class="body-container">
+			<section class="container-wrapper">
+				<!-- API요청 후 이곳에서 제품을 불러옵니다. -->
+				<div class="add-container-here"></div>
+				<div class="product-container">
+					<div class="product-image-wrapper">
+						<img src="../img/ricewine_icon.png" alt="" />
+					</div>
+					<div class="product-content-container">
+						<div class="content__title__wrapper">
+							<p class="content__info content__name">name</p>
+						</div>
+						<div class="content__container">
+							<div class="content__left__container">
+								<div class="content__brandName">
+									<p class="content__info content__brand">brand</p>
+								</div>
+								<p class="content__info content__description">description</p>
+								<p class="content__info content__price">price</p>
+							</div>
+							<div class="content__right__container">
+								<p class="content__info content__sold">sold</p>
+								<p class="content__info content__category">category</p>
+								<p class="content__info content__alcoholDegree">alcoholDegree</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+		<script type="module" src="getHeaderFooter.js"></script>
+		<script src="category_page.js"></script>
+	</body>
+</html>
