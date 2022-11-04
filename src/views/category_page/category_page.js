@@ -1,70 +1,70 @@
 async function fetchData() {
-	const res = await fetch('http://localhost:8900/api/products', {	method: 'GET'	});
-	
-	return await res.json();
-}
+	const res = await fetch('/api/products/', {
+		method: 'GET',
+	});
 
-async function getData() {
 	try {
-		return await fetchData();
+		return await res.json();
 	} catch (error) {
 		console.log(error);
 	}
 }
 
-async function addContainer() {
-	const data = await getData();
-	const firstItem = document.querySelectorAll('.content__info');
-	const tempContainer = document.querySelector('.add-container-here');
-	const a = `					<div class="product-container">
+async function showProducts() {
+	let data = await fetchData();
+
+	data.forEach((v, i) => {
+		let product = document.createElement('div');
+		product.setAttribute('class', 'product');
+		product.classList.add(`product__num__${i}`);
+		product.innerHTML = `					<div class="product-container">
 					<div class="product-image-wrapper">
 						<img src="../img/ricewine_icon.png" alt="" />
 					</div>
 					<div class="product-content-container">
 						<div class="content__title__wrapper">
-							<p class="content__info content__name">name</p>
+							<p class="content__info content__name">${data[i]['name']}</p>
 						</div>
 						<div class="content__container">
 							<div class="content__left__container">
 								<div class="content__brandName">
-									<p class="content__info content__brand">brand</p>
+									<p class="content__info content__brand">${data[i]['brand']}</p>
 								</div>
-								<p class="content__info content__description">description</p>
+								<p class="content__info content__description">${data[i]['description']}</p>
 								<p class="content__info content__price">price</p>
 							</div>
 							<div class="content__right__container">
-								<p class="content__info content__sold">sold</p>
-								<p class="content__info content__category">category</p>
-								<p class="content__info content__alcoholDegree">alcoholDegree</p>
+								<p class="content__info content__sold">${data[i]['sold']}</p>
+								<p class="content__info content__category">${data[i]['category']}</p>
+								<p class="content__info content__alcoholDegree">${data[i]['alcoholDegree']}</p>
 							</div>
 						</div>
 					</div>
-				</div>
-	`;
-	
-	for (i = 1; i < data.length; i++) {
-		tempContainer.insertAdjacentHTML('beforeend', a);
-	}
-	
-	const items = document.querySelectorAll('.content__info');
-	
-	let itemArr = [];
-	let dataArr = [];
-	
-	firstItem.forEach((v, i) => {
-		const value = v.className.split(' ')[1].split('content__')[1];
-		itemArr[i] = value;
+				</div>`;
+
+		const sectionContainer = document.querySelector('.section-container');	
+		sectionContainer.append(product);
 	});
-	
-	for (temp of data) {
-		for (t of itemArr) {
-			dataArr.push(temp[t]);
-		}
-	}
-	
-	items.forEach((v, i) => {
-		v.innerHTML = dataArr[i];
-	});
+
+	return data;
 }
-	
-addContainer();
+
+async function goToProduct() {
+	const data = await showProducts();
+
+	const productContainer = document.querySelectorAll('.product');
+	const PRODUCTS_KEY = 'productId';
+
+	productContainer.forEach(v => {
+		v.addEventListener('click', (e) => {
+			// 클릭한 항목의 번호 저장
+			const currentDataIndex = e.currentTarget.classList[1].split('__')[2];
+			const currentDataId = data[currentDataIndex]['_id'];
+			
+			localStorage.setItem(PRODUCTS_KEY, currentDataId);
+			window.location.href = '/product_detail';
+		})
+	})
+}
+
+goToProduct();
