@@ -132,4 +132,44 @@ authRouter.post("/orders", async (req, res, next) => {
   }
 });
 
+//-----carts
+// 회원 장바구니
+authRouter.patch("/cart", async (req, res, next) => {
+  try {
+    if (is.emptyObject(req.body)) {
+      throw new Error(
+        "headers의 Content-Type을 application/json으로 설정해주세요"
+      );
+    }
+    const userId = req.currentUser.userId;
+
+    // req (request)의 body 에서 데이터 가져오기
+    const { productsInCart } = req.body;
+
+    // 위 데이터를 주문 db에 추가하기
+    const newCart = await userService.addCart({
+      userId,
+      productsInCart,
+    });
+
+    res.status(201).json(newCart);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// 장바구니 조회
+authRouter.get("/cart", async (req, res, next) => {
+  try {
+    const userId = req.currentUser.userId;
+
+    // 위 데이터를 주문 db에 추가하기
+    const productsInCart = await userService.getCart(userId);
+    const gettedCart = { productsInCart };
+    res.status(201).json(gettedCart);
+  } catch (error) {
+    next(error);
+  }
+});
+
 export { authRouter };

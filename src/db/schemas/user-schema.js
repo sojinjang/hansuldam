@@ -1,4 +1,5 @@
 import { Schema } from "mongoose";
+import { CartSchema } from "./cart-schema";
 
 const UserSchema = new Schema(
   {
@@ -39,10 +40,12 @@ const UserSchema = new Schema(
     orders: {
       type: [String],
       required: false,
+      default: [],
     },
-    cart: {
-      type: String,
+    productsInCart: {
+      type: [CartSchema],
       required: false,
+      default: [],
     },
   },
   {
