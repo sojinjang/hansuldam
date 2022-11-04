@@ -1,5 +1,5 @@
-import footer from "../template/footer/footer.js";
-import header from "../template/header/header.js";
+import footer from "./footer/footer.js";
+import header from "./header/header.js";
 
 const main = document.querySelector(".body-container");
 
