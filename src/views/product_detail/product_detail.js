@@ -45,19 +45,24 @@ function clickOrder() {
 
 function clickCart() {
 	const PRODUCTS_KEY = 'products';
-	//
 	if (!localStorage.getItem(PRODUCTS_KEY)) {
 		let tempArr = [data];
-
+		
 		localStorage.setItem(PRODUCTS_KEY, JSON.stringify(tempArr));
 	} else {
 		let tempArr = JSON.parse(localStorage.getItem(PRODUCTS_KEY));
-
+		
 		tempArr.push(data);
 		console.log(tempArr);
 		localStorage.setItem(PRODUCTS_KEY, JSON.stringify(tempArr));
 	}
-	console.log('장바구니에 담았습니다!');
+
+	// Message
+	const cartMessage = document.querySelector('.cart-message');
+	cartMessage.classList.add('fade-message');
+	setTimeout(() => {
+		cartMessage.classList.remove('fade-message');
+	}, 1000)
 }
 
 getData();
