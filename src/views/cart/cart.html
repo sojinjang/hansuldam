@@ -13,7 +13,7 @@
       src="https://kit.fontawesome.com/9daa42bcef.js"
       crossorigin="anonymous"
     ></script>
-    <link rel="stylesheet" href="shopping-bag.css" />
+    <link rel="stylesheet" href="cart.css" />
     <link rel="stylesheet" href="../template/footer/footer.css" />
     <link rel="stylesheet" href="../template/header/header.css" />
   </head>
@@ -39,16 +39,21 @@
       <section class="container-shoppingbag">
         <div class="shoppingbag-list-wrapper">
           <div class="shoppingbag-list">
+            <div class="delete-wrapper">
+              <input type="checkbox" name="checker" class="all-checker" /><label
+                for="checker1"
+              ></label>
+              <button role="button" class="select-delete-button">
+                선택 상품 삭제
+              </button>
+              <div class="delete-button"></div>
+            </div>
             <!-- js로 만들 부분 -->
             <div class="product">
               <div class="checkbox-wrapper">
-                <button type="button" class="custom-checkbox">
-                  <img
-                    class="checkbox-img"
-                    src="../img/check.png"
-                    alt="checkbox"
-                  />
-                </button>
+                <input type="checkbox" name="checker" class="checker1" /><label
+                  for="checker1"
+                ></label>
               </div>
               <div class="product-info-top">
                 <div class="thumbnail">
@@ -130,6 +135,6 @@
       </section>
     </main>
 
-    <script type="module" src="shopping-bag.js"></script>
+    <script type="module" src="cart.js"></script>
   </body>
 </html>

@@ -65,10 +65,6 @@
   margin: auto;
 }
 
-/* div {
-  display: block;
-} */
-
 .shoppingbag-list {
   margin-bottom: 15px;
   padding: 20px;
@@ -77,7 +73,44 @@
   background-color: rgba(255, 255, 255, 0.5);
 }
 
-/* 용량 위치 수정 */
+.shoppingbag-list .delete-wrapper {
+  display: flex;
+}
+
+.shoppingbag-list .delete-wrapper .all-checker {
+  margin-right: auto;
+  margin-left: 18px;
+}
+
+.shoppingbag-list .delete-wrapper .select-delete-button {
+  font-family: "Do Hyeon", sans-serif;
+  margin-left: auto;
+  background-color: #f8f9fa;
+  border: 1px solid #f8f9fa;
+  border-radius: 4px;
+  color: #3c4043;
+  cursor: pointer;
+  font-size: 18px;
+  height: 40px;
+  line-height: 30px;
+  min-width: 54px;
+  padding: 0 16px;
+  touch-action: manipulation;
+  transition: all 0.2s linear;
+  text-align: center;
+}
+
+.select-delete-button:hover {
+  border-color: #dadce0;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 2px 2px;
+  color: #202124;
+}
+
+.select-delete-button:focus {
+  border-color: #4285f4;
+  outline: none;
+}
+
 .shoppingbag-list .product {
   display: grid;
   grid-template-rows: 1fr auto;
@@ -88,18 +121,6 @@
   border: 1px solid rgb(224, 224, 224);
   border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.5);
-}
-
-.shoppingbag-list .product .checkbox-wrapper .custom-checkbox {
-  padding: 0px;
-  display: flex;
-  -webkit-box-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  align-items: center;
-  width: 25px;
-  height: 25px;
-  cursor: pointer;
 }
 
 .shoppingbag-list .product .product-info-top {
