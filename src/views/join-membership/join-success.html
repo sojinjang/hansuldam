@@ -26,6 +26,7 @@
         <!-- 커스텀 css, js -->
         <link rel="stylesheet" href="join-success.css" />
         <link rel="stylesheet" href="../template/footer/footer.css" />
+        <link rel="stylesheet" href="../template/header/header.css" />
         
     </head>
 
@@ -52,44 +53,49 @@
                     <label for="">성인이세요?</label>
                     <div>
                         <input
-                                class="input"
-                                id="userNameInput"
-                                type="text"
-                                placeholder="이름"
-                                autocomplete="on">
+                            class="input"
+                            id="userNameInput"
+                            type="text"
+                            name ="username"
+                            minlength="2" 
+                            maxlength="20"
+                            required
+                            placeholder="이름"
+                            autocomplete="on">
                         <input
-                                class="input"
-                                id="userNumberInput"
-                                type="text"
-                                placeholder="생년월일(ex 901121)"
-                                autocomplete="on">
+                            class="input"
+                            id="userAgeInput"
+                            type="text"
+                            required
+                            placeholder="나이를 입력하세요"
+                            autocomplete="on">
                     </div>
-                    <button type="button" class="checkBtn button">
-                        인증 하기
-                    </button>
+                    <input type="submit" value="인증하기" class="adultCheckButton">
                 </form>
                 <form class="body-join-form" onsubmit="return false;">
                     <section class="join-form-hello">
                         <p>인증 성공하셨어~</p>
                     </section>
                     <section class="join-form-input">
-                        <label for="nameInput">이름</label>
+                        <label for="name">이름</label>
                         <div>
                             <input 
                                 class="input"
                                 id="nameInput"
                                 type="text"
+                                required
                                 placeholder="나의 이름은?"
                                 autocomplete="on">
                         </div>
                     </section>
                     <section class="join-form-input">
-                        <label for="nameInput">이메일</label>
+                        <label for="emailInput">이메일</label>
                         <div>
                             <input 
                                 class="input"
-                                id="emailInput"
+                                id="email"
                                 type="text"
+                                required
                                 placeholder="email@thanks.com"
                                 autocomplete="on">
                         </div>
@@ -101,6 +107,7 @@
                                 class="input"
                                 id="passwordInput"
                                 type="password"
+                                required
                                 placeholder="********"
                                 autocomplete="on">
                         </div>
@@ -112,6 +119,7 @@
                                 class="input"
                                 id="passwordCheck"
                                 type="password"
+                                required
                                 placeholder="********"
                                 autocomplete="on">
                         </div>
@@ -122,8 +130,10 @@
                             <div class="address-find">
                                 <input 
                                 class="input"
-                                id="addressCode"
-                                type=""
+                                id="addressPostalCode"
+                                type="text"
+                                minlength="5"
+                                required
                                 placeholder="우편번호"
                                 autocomplete="on">
                                 <button>우편번호 찾기</button>
@@ -131,13 +141,15 @@
                             <input 
                                 class="input"
                                 id="addressLocation"
-                                type=""
+                                type="text"
+                                required
                                 placeholder="oo시 ㅇㅇ구 ㅇㅇ동"
                                 autocomplete="on">
                             <input 
                                 class="input"
                                 id="addressDetail"
                                 type=""
+                                required
                                 placeholder="나머지 주소 입력"
                                 autocomplete="on">
                         </div>
@@ -148,12 +160,14 @@
                             <input 
                                 class="input"
                                 id="phoneNumber"
-                                type="number"
+                                type="tel"
+                                pattern="/(^02|^0504|^0505|^0\d{2})(\d+)?(\d{4})$/, '$1-$2-$3'"
+                                required
                                 placeholder="01x-xxxx-xxxx"
                                 autocomplete="on">
                         </div>
                     </section>
-                    <button class="join-form-button">
+                    <button class="join-form-button" type="submit">
                         가입 완료하기
                     </button>
                 </form>
