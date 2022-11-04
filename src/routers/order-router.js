@@ -18,10 +18,9 @@ orderRouter.post("/", async (req, res, next) => {
       fullName,
       address,
       shipping,
-      paymentMethod,
-      paymentDetail,
+      payment,
       priceSum,
-      orderProductList,
+      productsInOrder,
       phoneNumber,
     } = req.body;
     // 위 데이터를 주문 db에 추가하기
@@ -29,10 +28,9 @@ orderRouter.post("/", async (req, res, next) => {
       fullName,
       address,
       shipping,
-      paymentMethod,
-      paymentDetail,
+      payment,
       priceSum,
-      orderProductList,
+      productsInOrder,
       phoneNumber,
     });
 
@@ -55,21 +53,21 @@ orderRouter.patch("/:orderId", async (req, res, next) => {
 
     const {
       fullName,
-      orderProductList,
+      productsInOrder,
       phoneNumber,
       address,
-      paymentMethod,
-      paymentDetail,
+      payment,
+      priceSum,
     } = req.body;
 
     // 위 데이터를 카테고리 db에 추가하기
     const updateOrder = await orderService.updateOrder(orderId, {
       fullName,
-      orderProductList,
+      productsInOrder,
       phoneNumber,
       address,
-      paymentMethod,
-      paymentDetail,
+      payment,
+      priceSum,
     });
     res.status(200).json(updateOrder);
   } catch (error) {
@@ -109,9 +107,9 @@ orderRouter.get("/:orderId/products", async (req, res, next) => {
   try {
     const { orderId } = req.params;
     //{ id , quantity }
-    const { orderProductList } = await orderService.getOrderById(orderId);
+    const { productsInOrder } = await orderService.getOrderById(orderId);
 
-    const productObjs = await productService.getProductObj(orderProductList);
+    const productObjs = await productService.getProductObj(productsInOrder);
 
     // 주문 목록(배열)을 JSON 형태로 프론트에 보냄
     res.status(200).json(productObjs);

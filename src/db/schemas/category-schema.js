@@ -6,7 +6,7 @@ const CategorySchema = new Schema(
       type: String,
       required: true,
     },
-    productList: {
+    products: {
       type: [String],
       required: false,
     },

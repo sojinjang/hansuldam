@@ -6,7 +6,7 @@ const CartSchema = new Schema(
       type: String,
       required: false,
     },
-    productList: {
+    productsInCart: {
       type: [
         {
           id: String,
