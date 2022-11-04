@@ -21,15 +21,15 @@ const UserSchema = new Schema(
     address: {
       type: new Schema(
         {
-          postalCode: String,
-          address1: String,
-          address2: String,
+          postalCode: { type: String, required: true },
+          address1: { type: String, required: true },
+          address2: { type: String, required: false },
         },
         {
           _id: false,
         }
       ),
-      required: false,
+      required: true,
     },
     role: {
       type: String,
@@ -38,6 +38,10 @@ const UserSchema = new Schema(
     },
     orderList: {
       type: [String],
+      required: false,
+    },
+    cart: {
+      type: String,
       required: false,
     },
   },

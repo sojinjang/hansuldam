@@ -12,26 +12,26 @@ const OrderSchema = new Schema(
     },
     phoneNumber: {
       type: String,
-      required: false,
+      required: true,
     },
     address: {
       type: new Schema(
         {
-          postalCode: String,
-          address1: String,
-          address2: String,
+          postalCode: { type: String, required: true },
+          address1: { type: String, required: true },
+          address2: { type: String, required: false },
         },
         {
           _id: false,
         }
       ),
-      required: false,
+      required: true,
     },
     status: {
       type: String,
       enum: ["상품준비중", "상품배송중", "배송완료"],
       default: "상품준비중",
-      required: false,
+      required: true,
     },
     shipping: {
       type: String,
@@ -54,8 +54,18 @@ const OrderSchema = new Schema(
       type: Number,
       required: true,
     },
-    productList: {
-      type: [String],
+    orderProductList: {
+      type: [
+        new Schema(
+          {
+            id: { type: String, required: true },
+            quantity: { type: Number, default: 1, required: true },
+          },
+          {
+            _id: false,
+          }
+        ),
+      ],
       required: false,
     },
   },
