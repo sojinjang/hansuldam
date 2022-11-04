@@ -6,12 +6,17 @@ const CartSchema = new Schema(
       type: String,
       required: false,
     },
-    productList: {
+    productsInCart: {
       type: [
-        {
-          id: String,
-          quantity: Number,
-        },
+        new Schema(
+          {
+            id: { type: String, required: true },
+            quantity: { type: Number, default: 1, required: true },
+          },
+          {
+            _id: false,
+          }
+        ),
       ],
       required: false,
     },
