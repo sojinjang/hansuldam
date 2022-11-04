@@ -1,4 +1,5 @@
 import { Schema } from "mongoose";
+import { CartSchema } from "./cart-schema";
 
 const OrderSchema = new Schema(
   {
@@ -54,18 +55,8 @@ const OrderSchema = new Schema(
       type: Number,
       required: true,
     },
-    orderProductList: {
-      type: [
-        new Schema(
-          {
-            id: { type: String, required: true },
-            quantity: { type: Number, default: 1, required: true },
-          },
-          {
-            _id: false,
-          }
-        ),
-      ],
+    productsInOrder: {
+      type: [CartSchema],
       required: false,
     },
   },

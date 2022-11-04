@@ -107,7 +107,7 @@ authRouter.post("/orders", async (req, res, next) => {
       paymentMethod,
       paymentDetail,
       priceSum,
-      orderProductList,
+      productsInOrder,
       phoneNumber,
     } = req.body;
 
@@ -120,7 +120,7 @@ authRouter.post("/orders", async (req, res, next) => {
       paymentMethod,
       paymentDetail,
       priceSum,
-      orderProductList,
+      productsInOrder,
       phoneNumber,
     });
 
@@ -134,7 +134,7 @@ authRouter.post("/orders", async (req, res, next) => {
 
 //-----carts
 // 회원 장바구니
-authRouter.post("/cart", async (req, res, next) => {
+authRouter.patch("/cart", async (req, res, next) => {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
@@ -147,14 +147,26 @@ authRouter.post("/cart", async (req, res, next) => {
     const { productsInCart } = req.body;
 
     // 위 데이터를 주문 db에 추가하기
-    const newOrder = await orderService.addCart({
+    const newCart = await userService.addCart({
       userId,
       productsInCart,
     });
 
-    await userService.addOrderIdInUser(userId, newOrder._id);
+    res.status(201).json(newCart);
+  } catch (error) {
+    next(error);
+  }
+});
 
-    res.status(201).json(newOrder);
+// 장바구니 조회
+authRouter.get("/cart", async (req, res, next) => {
+  try {
+    const userId = req.currentUser.userId;
+
+    // 위 데이터를 주문 db에 추가하기
+    const productsInCart = await userService.getCart(userId);
+    const gettedCart = { productsInCart };
+    res.status(201).json(gettedCart);
   } catch (error) {
     next(error);
   }

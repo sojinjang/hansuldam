@@ -137,7 +137,7 @@ class UserService {
     // 업데이트 진행
     user = await this.userModel.update({
       userId,
-      update: toUpdate,
+      updateObj: toUpdate,
     });
 
     return user;
@@ -155,14 +155,36 @@ class UserService {
       throw new Error("가입 내역이 없습니다. 다시 한 번 확인해 주세요.");
     }
 
-    const toUpdate = { $push: { orderList: orderId } };
+    const toUpdate = { $push: { orders: orderId } };
     // 업데이트 진행
     user = await this.userModel.update({
       userId,
-      update: toUpdate,
+      updateObj: toUpdate,
     });
 
     return user;
+  }
+
+  // 장바구니 update
+  async addCart(userInfo) {
+    // 객체 destructuring
+    const { userId, productsInCart } = userInfo;
+    // 이메일 중복 확인
+    const updateCart = await this.userModel.update({
+      userId,
+      updateObj: { productsInCart },
+    });
+
+    return updateCart;
+  }
+
+  // 장바구니 get
+  async getCart(userId) {
+    // 객체 destructuring
+    // 이메일 중복 확인
+    const { productsInCart } = await this.userModel.findById(userId);
+
+    return productsInCart;
   }
 }
 

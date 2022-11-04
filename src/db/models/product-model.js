@@ -16,7 +16,13 @@ export class ProductModel {
 
   async update({ productId, update }) {
     const filter = { _id: productId };
-    const updatedProduct = await Product.findOneAndUpdate(filter, update);
+    const option = { returnOriginal: false };
+
+    const updatedProduct = await Product.findOneAndUpdate(
+      filter,
+      update,
+      option
+    );
     return updatedProduct;
   }
 
