@@ -36,7 +36,7 @@ const UserSchema = new Schema(
       required: false,
       default: "basic-user",
     },
-    orderList: {
+    orders: {
       type: [String],
       required: false,
     },
