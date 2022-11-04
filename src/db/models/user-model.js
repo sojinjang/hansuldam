@@ -24,11 +24,12 @@ export class UserModel {
     return users;
   }
 
-  async update({ userId, update }) {
+  // updateObj 에는 객체가 들어가야함
+  async update({ userId, updateObj }) {
     const filter = { _id: userId };
     const option = { returnOriginal: false };
 
-    const updatedUser = await User.findOneAndUpdate(filter, update, option);
+    const updatedUser = await User.findOneAndUpdate(filter, updateObj, option);
     return updatedUser;
   }
 
