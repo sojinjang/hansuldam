@@ -107,7 +107,7 @@ authRouter.post("/orders", async (req, res, next) => {
       paymentMethod,
       paymentDetail,
       priceSum,
-      orderProductList,
+      productsInOrder,
       phoneNumber,
     } = req.body;
 
@@ -120,7 +120,7 @@ authRouter.post("/orders", async (req, res, next) => {
       paymentMethod,
       paymentDetail,
       priceSum,
-      orderProductList,
+      productsInOrder,
       phoneNumber,
     });
 

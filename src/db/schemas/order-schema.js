@@ -54,7 +54,7 @@ const OrderSchema = new Schema(
       type: Number,
       required: true,
     },
-    orderProductList: {
+    productsInOrder: {
       type: [
         new Schema(
           {
