@@ -133,13 +133,19 @@ adminRouter.patch("/orders/:orderId", async (req, res, next) => {
 
     const { orderId } = req.params;
 
-    const { fullName, productList, phoneNumber, address, payment, status } =
-      req.body;
+    const {
+      fullName,
+      orderProductList,
+      phoneNumber,
+      address,
+      payment,
+      status,
+    } = req.body;
 
     // 위 데이터를 카테고리 db에 추가하기
     const updateOrder = await orderService.updateOrderAdmin(orderId, {
       fullName,
-      productList,
+      orderProductList,
       phoneNumber,
       address,
       payment,
