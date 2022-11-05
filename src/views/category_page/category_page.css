@@ -32,6 +32,11 @@ button {
 	margin-bottom: 20px;
 }
 
+.product-container:hover {
+	cursor: pointer;
+	background-color: aliceblue;
+}
+
 .product-content-container {
 	display: flex;
 	flex-direction: column;
