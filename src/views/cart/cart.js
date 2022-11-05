@@ -10,21 +10,25 @@ const shoppingbagList = document.querySelector(".shoppingbag-list");
 
 const PRODUCTS_KEY = "products";
 
-function saveProducts() {
-  localStorage.setItem(PRODUCTS_KEY, JSON.stringify(tempData));
+function saveProducts(productsArr) {
+  localStorage.setItem(PRODUCTS_KEY, JSON.stringify(productsArr));
 }
 
 function deleteProduct(event) {
   const productInfoDiv = event.target.parentElement;
   const productDiv = productInfoDiv.productInfoDiv;
+  products = products.filter(
+    (product) => product.id !== parseInt(productDiv.id)
+  );
   productDiv.remove();
-  saveProducts();
+  saveProducts(products);
 }
 
 function showProducts(item) {
   let product = undefined;
   product = document.createElement("div");
   product.setAttribute("class", "product");
+  product.setAttribute("id", item.id);
   product.innerHTML = `<div class="checkbox-wrapper">
                 <input type="checkbox" name="checker" id=buy-checker /><label
                   for="checker1"
@@ -125,7 +129,7 @@ let tempData = [
     updatedAt: "2022-11-07T05:32:19.548Z",
   },
 ];
-saveProducts();
+saveProducts(tempData);
 
 const savedProducts = localStorage.getItem(PRODUCTS_KEY);
 
