@@ -1,49 +1,82 @@
 import footer from "../template/footer/footer.js";
+//import * as Api from "/api.js";
 
 const body = document.querySelector(".body-container");
-const name = document.querySelector("#nameInput");
-const email = document.querySelector("#emailInput");
+const nameInput = document.querySelector("#nameInput");
+const emailInput = document.querySelector("#emailInput");
 const joinBtn = document.querySelector(".join-form-button");
+const overlabBtn = document.querySelector(".emailOverlap");
 
+// const successUserInfo = [];
+// function pushUserInfo() {
+//     let email = emailInput.value;
+//     let name = emailInput.value;
+//     successUserInfo.push(email);
+//     successUserInfo.push(name);
+// }
+// pushUserInfo();
 
 
 body.insertAdjacentHTML("afterend", footer());
 
+joinBtn.addEventListener("click", joinCheck)
 
-joinBtn.addEventListener("click", joinEvent);
+overlabBtn.addEventListener("click", checkOverlab)
 
-function joinEvent(e){
-    e.preventDefault();
-    // 입력받은 값을 {key:value} 형태로 만들어주기
+let tempStatus = true;
+
+function checkOverlab() {
+
+    const emailinput = emailInput.value;
+    const emailRegExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+
+    function 중복체크(emailinput) {
+        const data = ["elice@test.com"]; // 임시 데이터
     
-    const data = { name: name.value, email: email.value };
-
-    // 중복 이메일이 아닌지
-
-    // 이메일 형식 맞는지
-    function verifyEmail() {
-        // 이메일 검증 스크립트 작성
-        let emailVal = email.value;
+        if(data.includes(emailinput) == true || emailinput == "") {
+            return true;
+        }
+        return false;
+    }
     
-        var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-        // 검증에 사용할 정규식 변수 regExp에 저장
-        
-        if (emailVal.match(regExp) != null) {
-            alert('Good!');
-        }
-        else {
-            alert('Error');
-        }
-    };
+    if(emailinput == "") {
+        alert("이메일을 입력하세요.")
+        return;
+    }
+    if(중복체크(emailinput)) {
+        alert("이미 사용중인 이메일입니다.")
+        tempStatus = false;
+        return;
+    }
+    if(emailinput.match(emailRegExp) == null) {
+        alert("이메일 형식을 다시 확인해주세요.")
+        tempStatus = false;
+        return;
+    }
+    if(!중복체크(emailinput)) {
+        alert("사용 가능합니다!")
+        tempStatus = true;
+        return;
+    }
 
-    verifyEmail();
-
-    // 입력받은 값을 json형태로 바꿔줌
-    JSON.stringify(data);
-
-    // db에 넣어주기
 }
 
+function joinCheck(e) {
+    e.preventDefault();
+    
+    if(nameInput.value.length <= 1) {
+        alert("이름은 두 글자 이상 입력해야 합니다.")
+        return;
+    }
+    if(!tempStatus || nameInput.value == "" ) {
+        alert("입력창을 다시 확인하세요.");
+        return;
+    }
+    if(tempStatus){
+        const successUserInfo = [nameInput.value, emailInput.value]
+        location.href = `join-success.html?${successUserInfo}`;
+    }
+}
 
 
 
