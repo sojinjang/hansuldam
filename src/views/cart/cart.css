@@ -1,0 +1,339 @@
+@import url("https://fonts.googleapis.com/css2?family=Secular+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap");
+
+.body-container {
+  background-color: wheat;
+}
+
+.hidden {
+  display: none;
+}
+
+.order-status-wrapper {
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  padding: 70px 0px 78px;
+}
+
+.order-status-wrapper .order-status-bar {
+  display: flex;
+}
+
+.order-status-wrapper .order-status-bar .order-status-highlighted {
+  display: flex;
+  font-family: "Secular One", sans-serif;
+  color: rgb(91, 58, 28);
+  font-size: 25px;
+  -webkit-box-align: center;
+  align-items: center;
+  font-weight: 500;
+  line-height: 20px;
+  justify-content: space-evenly;
+}
+
+.order-status-wrapper .order-status-bar .order-status {
+  font-family: "Secular One", sans-serif;
+  font-size: 25px;
+  color: rgba(0, 0, 0, 0.3);
+  -webkit-box-align: center;
+  align-items: center;
+  font-weight: 500;
+  line-height: 20px;
+  justify-content: space-evenly;
+}
+
+.order-status-wrapper .order-status-bar .order-arrow {
+  margin: 0 15px 0 15px;
+  opacity: 0.3;
+  font-size: 25px;
+  -webkit-box-align: center;
+  align-items: center;
+  line-height: 20px;
+  justify-content: space-evenly;
+}
+
+.container-shoppingbag {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  -webkit-box-align: start;
+  align-items: start;
+  max-width: 1024px;
+  width: 100%;
+  min-height: 100vh;
+  margin: auto;
+}
+
+.shoppingbag-list {
+  margin-bottom: 15px;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid rgb(224, 224, 224);
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.shoppingbag-list .delete-wrapper {
+  display: flex;
+}
+
+.shoppingbag-list .delete-wrapper .all-checker {
+  margin-right: auto;
+  margin-left: 18px;
+}
+
+.shoppingbag-list .delete-wrapper .select-delete-button {
+  font-family: "Do Hyeon", sans-serif;
+  margin-left: auto;
+  background-color: #f8f9fa;
+  border: 1px solid #f8f9fa;
+  border-radius: 4px;
+  color: #3c4043;
+  cursor: pointer;
+  font-size: 18px;
+  height: 40px;
+  line-height: 30px;
+  min-width: 54px;
+  padding: 0 16px;
+  touch-action: manipulation;
+  transition: all 0.2s linear;
+  text-align: center;
+}
+
+.select-delete-button:hover {
+  border-color: #dadce0;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 2px 2px;
+  color: #202124;
+}
+
+.select-delete-button:focus {
+  border-color: #4285f4;
+  outline: none;
+}
+
+.shoppingbag-list .product {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  grid-template-columns: 32px 1fr;
+  text-align: left;
+  margin: 10px 0 10px 0;
+  padding: 20px;
+  border: 1px solid rgb(224, 224, 224);
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.shoppingbag-list .product .product-info-top {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: auto 1fr auto;
+  column-gap: 15px;
+  margin-bottom: 12px;
+}
+
+.shoppingbag-list .product .product-info-top .thumbnail {
+  height: 110px;
+  grid-row: span 2 / auto;
+}
+
+.shoppingbag-list .product .product-info-top .thumbnail img {
+  height: auto;
+  width: 86px;
+  min-width: 23px;
+  border-radius: 10px;
+}
+
+.shoppingbag-list .product .product-info-top .product-info {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  -webkit-box-flex: 1;
+  flex-grow: 1;
+  word-break: keep-all;
+  font-size: 15px;
+  color: rgb(62, 62, 62);
+}
+
+.shoppingbag-list .product .product-info-top .product-brand {
+  color: rgb(78, 78, 78);
+}
+
+.shoppingbag-list .product .product-info-top .product-name {
+  font-size: 20px;
+  font-weight: bold;
+  color: rgb(62, 62, 62);
+}
+
+.shoppingbag-list .product .product-info-top .product-remove-button {
+  padding: 0px;
+  display: flex;
+  height: 12px;
+  line-height: 12px;
+  font-size: 19.21px;
+  color: rgb(178, 178, 178);
+  -webkit-box-pack: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.shoppingbag-list .product .product-info-top .product-remove-button img {
+  width: 17px;
+  height: 17px;
+}
+
+.shoppingbag-list .product .product-info-bottom {
+  width: 100%;
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  align-items: center;
+}
+
+.shoppingbag-list .product .product-info-bottom .amount-control {
+  display: grid;
+  width: 90px;
+  grid-template-rows: 27px;
+  grid-template-columns: 3fr 4fr 4fr;
+  -webkit-box-pack: center;
+  place-content: center;
+  text-align: center;
+  color: rgb(112, 112, 112);
+  margin: 5px 0;
+}
+
+.decrease,
+.increase {
+  padding: 0px;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  border: 1px solid rgb(224, 224, 224);
+  font-size: 11.43px;
+  border-radius: 10%;
+}
+
+.decrease button,
+.increase button {
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+}
+
+.decrease button img,
+.increase button img {
+  width: 15px;
+  height: 15px;
+}
+
+.amount-control .amount {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  padding: 0px;
+  border-width: 1px;
+  border-style: solid none;
+  border-color: rgb(224, 224, 224);
+  border-image: initial;
+  justify-content: center;
+}
+
+.price {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 19px;
+  font-weight: bold;
+}
+
+.container-caculate-price .bill {
+  height: 100%;
+  padding: 20px;
+  border-radius: 10px;
+  border: 0.5px solid rgb(224, 224, 224);
+  margin-bottom: 60px;
+  background-color: rgba(255, 255, 255, 0.555);
+}
+
+.container-caculate-price .bill .content {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  display: flex;
+  flex-direction: column;
+  margin: 15px;
+}
+
+.bill-title {
+  margin-right: auto;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.container-caculate-price .bill .content .total-product-price {
+  margin-left: auto;
+  font-size: 17px;
+}
+
+.container-caculate-price .bill .content .delivery-fee {
+  margin-left: auto;
+  font-size: 17px;
+}
+
+.container-caculate-price .bill .border-bottom {
+  border: 0.5px solid rgb(224, 224, 224);
+}
+
+.container-caculate-price .bill .bill-footer {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  display: flex;
+  flex-direction: column;
+  margin: 15px;
+}
+
+.container-caculate-price .bill .bill-footer .total-payment-price {
+  margin-left: auto;
+  font-size: 22px;
+  font-weight: bold;
+  color: rgb(186, 101, 21);
+}
+
+.button-wrapper {
+  font-family: "Secular One", sans-serif;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.rounded-button {
+  background-color: #fdc78c;
+  border: 2px solid #422800;
+  border-radius: 30px;
+  box-shadow: #422800 4px 4px 0 0;
+  color: #422800;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 500;
+  font-size: 18px;
+  padding: 0 18px;
+  line-height: 50px;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  transition: all 0.2s linear;
+}
+
+.rounded-button:hover {
+  background-color: #fff;
+}
+
+.rounded-button:active {
+  box-shadow: #422800 2px 2px 0 0;
+  transform: translate(2px, 2px);
+}
+
+@media (min-width: 768px) {
+  .rounded-button {
+    min-width: 120px;
+    padding: 0 25px;
+  }
+}
