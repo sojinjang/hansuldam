@@ -10,6 +10,10 @@ const shoppingbagList = document.querySelector(".shoppingbag-list");
 
 const PRODUCTS_KEY = "products";
 
+function isEmptyCart(productsList) {
+  return productsList == null;
+}
+
 function saveProducts(productsArr) {
   localStorage.setItem(PRODUCTS_KEY, JSON.stringify(productsArr));
 }
@@ -24,7 +28,7 @@ function deleteProduct(event) {
   saveProducts(products);
 }
 
-function showProducts(item) {
+function showProduct(item) {
   let product = undefined;
   product = document.createElement("div");
   product.setAttribute("class", "product");
@@ -129,11 +133,27 @@ let tempData = [
     updatedAt: "2022-11-07T05:32:19.548Z",
   },
 ];
+
 saveProducts(tempData);
 
 const savedProducts = localStorage.getItem(PRODUCTS_KEY);
 
-if (savedProducts !== null) {
+if (!isEmptyCart) {
   const parsedProducts = JSON.parse(savedProducts);
-  parsedProducts.forEach(showProducts);
+  parsedProducts.forEach(showProduct);
+}
+
+function deteleCheckedProducts() {}
+
+function controlProductAmount() {}
+
+function caculateProductPrice() {}
+
+function caculateAllProductPrice() {
+  // 5만원 이상 무료배송
+}
+
+function showEmptyCart() {
+  // '장바구니 비어있습니다.' 문구 띄우기
+  // checkout 버튼 숨기기
 }
