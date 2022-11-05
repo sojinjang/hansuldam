@@ -46,8 +46,7 @@ header {
   vertical-align: middle;
 }
 
-.navigation-menu .searchbar {
-  max-width: 200px;
+.navigation-menu .search-container {
   height: 100%;
   display: flex;
   -webkit-box-align: center;
@@ -55,15 +54,19 @@ header {
   margin-left: 20px;
 }
 
-.navigation-menu .searchbar .search-img {
+.navigation-menu .search-container .search__img {
+  cursor: pointer;
   width: 15px;
   height: 15px;
 }
 
-.navigation-menu .searchbar .search-text {
+.navigation-menu .search-container .search__bar {
+  opacity: 0.7;
   color: rgb(178, 178, 178);
   font-size: 18px;
   line-height: 18px;
+  max-width: none;
+  width: 250px;
   margin-left: 18px;
 }
 
@@ -90,7 +93,7 @@ header {
   align-items: center;
 }
 
-.user-menu .user-list li a{
+.user-menu .user-list li{
   cursor: pointer;
   display: block;
   font-size: 18px;
@@ -103,6 +106,7 @@ header {
 }
 
 .user-menu .user-list .basket {
+  cursor: pointer;
   width: 30px;
   height: 30px;
   vertical-align: middle;
@@ -130,4 +134,8 @@ header {
   position: relative;
   padding: 10px 10px 0 0;
   font-size: 18px;
+}
+
+.company-logo {
+  cursor: pointer;
 }
