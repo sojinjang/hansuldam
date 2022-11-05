@@ -23,7 +23,7 @@ function getHeader() {
       <div class="header-menu-wrapper">
         <ul class="menu-list">
           <li>
-            <div class="menu-label"><a>전체상품</a></div>
+            <div class="menu-label"><a class="products">전체상품</a></div>
           </li>
           <li>
             <div class="menu-label"><a>신상품</a></div>
@@ -39,12 +39,19 @@ function getHeader() {
     </header>`;
 }
 
-const login = document.querySelector('.login');
-const companyLogo = document.querySelector('.company-logo');
-const join = document.querySelector('.join');
 
-function log() {
-  join.addEventListener('click', () => console.log('hi'))
+function redirectPage() {
+  const companyLogo = document.querySelector('.company-logo');
+  const login = document.querySelector('.login');
+  const join = document.querySelector('.join');
+  const cart = document.querySelector('.basket');
+  const products = document.querySelector('.products')
+
+  companyLogo.addEventListener('click', () => (window.location.href = '/'));
+  login.addEventListener('click', () => (window.location.href = '/login'));
+  join.addEventListener('click', () => (window.location.href = '/join'));
+  cart.addEventListener('click', () => (window.location.href = '/join'));
+  products.addEventListener('click',() => (window.location.href = '/products'));
 }
 
-export { getHeader, log };
+export { getHeader, redirectPage };

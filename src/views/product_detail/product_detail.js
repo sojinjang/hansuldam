@@ -40,7 +40,7 @@ basketButton.addEventListener('click', clickCart);
 
 function clickOrder() {
 	console.log('주문 페이지로 이동합니다...');
-	// window.location.href = '/orders';
+	window.location.href = '/order';
 }
 
 function clickCart() {
