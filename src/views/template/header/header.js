@@ -1,21 +1,21 @@
-export default function header() {
+function getHeader() {
   return `<header> 
       <div class="header-container">
         <section class="navigation-menu">
           <div class="company-logo-wrapper">
             <img class="company-logo" src="../img/logo.png">
           </div>
-          <div class="searchbar">
-            <img class="search-img" src="../img/search-icon.png" alt="나는 돋보기">
-            <span class="search-text">제품검색</span>
+          <div class="search-container">
+            <img class="search__img" src="../img/search-icon.png" alt="나는 돋보기">
+            <input class="input is-rounded search__bar" type="text" placeholder="제품검색" />
           </div>
         </section>
         <section class="user-menu">
           <ul class="user-list">
-            <li class="login"><a href="">로그인</a></li>
-            <li class="join"><a href="">회원가입</a></li>
+            <li class="login">로그인</li>
+            <li class="join">회원가입</li>
             <div class="basket">
-              <a href=""><img src="../img/shopping-bag.png"></a>
+              <img src="../img/shopping-bag.png">
             </div>
           </ul>
         </section>
@@ -38,3 +38,13 @@ export default function header() {
       </div>
     </header>`;
 }
+
+const login = document.querySelector('.login');
+const companyLogo = document.querySelector('.company-logo');
+const join = document.querySelector('.join');
+
+function log() {
+  join.addEventListener('click', () => console.log('hi'))
+}
+
+export { getHeader, log };
