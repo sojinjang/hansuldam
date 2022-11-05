@@ -62,7 +62,7 @@ async function goToProduct() {
 			const currentDataId = data[currentDataIndex]['_id'];
 			
 			localStorage.setItem(PRODUCTS_KEY, currentDataId);
-			window.location.href = '/product_detail';
+			window.location.href = '/product-detail';
 		})
 	})
 }

@@ -26,5 +26,6 @@ export default function getFooter() {
           </li>
         </ul>
       </div>
-    </footer>`;
+    </footer>
+    <script type="module" src="../template/getHeaderFooter.js"></script>`;
 }
