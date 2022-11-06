@@ -3,10 +3,10 @@ function getHeader() {
       <div class="header-container">
         <section class="navigation-menu">
           <div class="company-logo-wrapper">
-            <img class="company-logo" src="../img/logo.png">
+            <img class="company-logo" src="../img/logo.png" alt="company-logo">
           </div>
           <div class="search-container">
-            <img class="search__img" src="../img/search-icon.png" alt="나는 돋보기">
+            <img class="search__img" src="../img/search-icon.png" alt="search-logo">
             <input class="input is-rounded search__bar" type="text" placeholder="제품검색" />
           </div>
         </section>
@@ -15,7 +15,7 @@ function getHeader() {
             <li class="login">로그인</li>
             <li class="join">회원가입</li>
             <div class="basket">
-              <img src="../img/shopping-bag.png">
+              <img src="../img/shopping-bag.png" alt="cart-img">
             </div>
           </ul>
         </section>
@@ -39,19 +39,18 @@ function getHeader() {
     </header>`;
 }
 
-
 function redirectPage() {
-  const companyLogo = document.querySelector('.company-logo');
-  const login = document.querySelector('.login');
-  const join = document.querySelector('.join');
-  const cart = document.querySelector('.basket');
-  const products = document.querySelector('.products')
+  const companyLogo = document.querySelector(".company-logo");
+  const login = document.querySelector(".login");
+  const join = document.querySelector(".join");
+  const cart = document.querySelector(".basket");
+  const products = document.querySelector(".products");
 
-  companyLogo.addEventListener('click', () => (window.location.href = '/'));
-  login.addEventListener('click', () => (window.location.href = '/login'));
-  join.addEventListener('click', () => (window.location.href = '/join'));
-  cart.addEventListener('click', () => (window.location.href = '/join'));
-  products.addEventListener('click',() => (window.location.href = '/products'));
+  companyLogo.addEventListener("click", () => (window.location.href = "/"));
+  login.addEventListener("click", () => (window.location.href = "/login"));
+  join.addEventListener("click", () => (window.location.href = "/join"));
+  cart.addEventListener("click", () => (window.location.href = "/join"));
+  products.addEventListener("click", () => (window.location.href = "/products"));
 }
 
 export { getHeader, redirectPage };
