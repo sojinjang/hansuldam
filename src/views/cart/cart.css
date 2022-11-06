@@ -83,21 +83,21 @@
 }
 
 .shoppingbag-list .delete-wrapper .select-delete-button {
-  font-family: "Do Hyeon", sans-serif;
+  line-height: 30px;
+  min-width: 54px;
+  height: 40px;
+  padding: 0 16px;
   margin-left: auto;
   background-color: #f8f9fa;
   border: 1px solid #f8f9fa;
-  border-radius: 4px;
-  color: #3c4043;
-  cursor: pointer;
+  border-radius: 4px;  
+  font-family: "Do Hyeon", sans-serif;
   font-size: 18px;
-  height: 40px;
-  line-height: 30px;
-  min-width: 54px;
-  padding: 0 16px;
+  color: #3c4043;
+  text-align: center;
+  cursor: pointer;
   touch-action: manipulation;
   transition: all 0.2s linear;
-  text-align: center;
 }
 
 .select-delete-button:hover {
