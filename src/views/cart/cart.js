@@ -3,6 +3,9 @@ const shoppingbagList = document.querySelector(".shoppingbag-list");
 
 const allChecker = document.querySelector(".all-checker");
 const selectedItemDeleteButton = document.querySelector(".selected-item-delete-button");
+const totalProductPrice = document.querySelector(".total-product-price");
+const deliveryFee = document.querySelector(".delivery-fee");
+const totalPrice = document.querySelector(".total-payment-price");
 
 const PRODUCTS_KEY = "products";
 
@@ -104,10 +107,12 @@ function deleteProductFromCart(e) {
   saveProducts(savedProducts);
 }
 
+function getCheckedItems() {
+  return document.querySelectorAll("input[name=individual-checker]:checked");
+}
+
 function deteleCheckedProducts() {
-  const checkedItemList = document.querySelectorAll(
-    "input[name=individual-checker]:checked"
-  );
+  const checkedItemList = getCheckedItems();
   checkedItemList.forEach((item) => {
     const productDiv = document.getElementById(item.id);
     let savedProducts = removeProductFromDB(productDiv.id);
@@ -138,8 +143,33 @@ function setProductPrice(quantity, price) {
   price.innerText = `${productPrice.toLocaleString("ko-KR")}원`;
 }
 
+function getPureDigit(numStr) {
+  const regex = /[^0-9]/g;
+  return String(numStr).replace(regex, "");
+}
+
+function getTotalProductPrice() {
+  const checkedItemList = getCheckedItems();
+  let addedPrice = parseInt(0);
+  checkedItemList.forEach((item) => {
+    const productDiv = document.getElementById(item.id);
+    let productPrice = productDiv.querySelector(".price").innerText.slice(0, -1);
+    addedPrice += parseInt(getPureDigit(productPrice));
+  });
+  totalProductPrice.innerText = `${addedPrice.toLocaleString("ko-KR")}원`;
+  return addedPrice;
+}
+
+function getDeliveryFee(price) {
+  const deliveryCharge = price < 50000 ? (price > 0 ? 3000 : 0) : 0;
+  deliveryFee.innerText = `${deliveryCharge.toLocaleString("ko-KR")}원`;
+  return deliveryCharge;
+}
+
 function caculateTotalPrice() {
-  // 5만원 이상 무료배송
+  const totalProductPrice = getTotalProductPrice();
+  const deliveryFee = getDeliveryFee(totalProductPrice);
+  totalPrice.innerText = `${(totalProductPrice + deliveryFee).toLocaleString("ko-KR")}원`;
 }
 
 function showEmptyCart() {
@@ -200,21 +230,34 @@ let tempData = [
 saveProducts(tempData);
 
 renderCartContents();
+caculateTotalPrice();
 
 const deleteButtons = document.querySelectorAll(".product-remove-button");
 const minusButtons = document.querySelectorAll(".minus-button");
 const plusButtons = document.querySelectorAll(".plus-button");
+const checkboxes = document.querySelectorAll(".individual-checker");
 
 deleteButtons.forEach((deleteButton) => {
   deleteButton.addEventListener("click", deleteProductFromCart);
+  deleteButton.addEventListener("click", caculateTotalPrice);
 });
+
 allChecker.addEventListener("click", checkAllProducts);
+allChecker.addEventListener("click", caculateTotalPrice);
+
 selectedItemDeleteButton.addEventListener("click", deteleCheckedProducts);
+selectedItemDeleteButton.addEventListener("click", caculateTotalPrice);
 
 minusButtons.forEach((minusButton) => {
   minusButton.addEventListener("click", decreaseProductQuantity);
+  minusButton.addEventListener("click", caculateTotalPrice);
 });
 
 plusButtons.forEach((plusButton) => {
   plusButton.addEventListener("click", increaseProductQuantity);
+  plusButton.addEventListener("click", caculateTotalPrice);
+});
+
+checkboxes.forEach((checkbox) => {
+  checkbox.addEventListener("click", caculateTotalPrice);
 });
