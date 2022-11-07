@@ -1,38 +1,53 @@
-import footer from "../template/footer/footer.js";
-import header from "../template/header/header.js";
-
 const main = document.querySelector(".body-container");
 const shoppingbagList = document.querySelector(".shoppingbag-list");
 
-main.insertAdjacentHTML("beforebegin", header());
-main.insertAdjacentHTML("afterend", footer());
+const allChecker = document.querySelector(".all-checker");
+const selectedItemDeleteButton = document.querySelector(".selected-item-delete-button");
+const totalProductPrice = document.querySelector(".total-product-price");
+const deliveryFee = document.querySelector(".delivery-fee");
+const totalPrice = document.querySelector(".total-payment-price");
+const checkoutButton = document.querySelector(".checkout");
 
 const PRODUCTS_KEY = "products";
+const HIDDEN_CLASSNAME = "hidden";
 
-function isEmptyCart(productsList) {
-  return productsList == null;
+function getSavedProducts() {
+  return JSON.parse(localStorage.getItem(PRODUCTS_KEY));
+}
+
+function removeProductFromDB(productId) {
+  let savedProducts = getSavedProducts();
+  savedProducts = savedProducts.filter(
+    (product) => String(product._id) !== String(productId)
+  );
+  return savedProducts;
 }
 
 function saveProducts(productsArr) {
   localStorage.setItem(PRODUCTS_KEY, JSON.stringify(productsArr));
 }
 
-function deleteProduct(event) {
-  const productInfoDiv = event.target.parentElement;
-  const productDiv = productInfoDiv.productInfoDiv;
-  products = products.filter((product) => product.id !== parseInt(productDiv.id));
-  productDiv.remove();
-  saveProducts(products);
+function adjustQuantityFromDB(productId, quantity) {
+  const savedProducts = getSavedProducts();
+  const index = savedProducts.findIndex((x) => x._id === productId);
+  savedProducts[index].quantity = parseInt(quantity);
+  saveProducts(savedProducts);
+}
+
+function isEmptyCart(productsList) {
+  return productsList == null || productsList.length === 0;
 }
 
 function showProduct(item) {
   let product = undefined;
   product = document.createElement("div");
   product.setAttribute("class", "product");
-  product.setAttribute("id", item.id);
+  product.setAttribute("id", item._id);
   product.innerHTML = `<div class="checkbox-wrapper">
-                <input type="checkbox" name="checker" id=buy-checker /><label
-                  for="checker1"
+                <input type="checkbox" checked="checked" name="individual-checker" id=${
+                  item._id
+                } class=individual-checker /><label
+                  for="checker"
                 ></label>
               </div>
               <div class="product-info-top">
@@ -55,7 +70,7 @@ function showProduct(item) {
               <div class="blank"></div>
               <div class="product-info-bottom">
                 <div class="amount-control">
-                  <div class="decrease">
+                  <div class="decrease" id=${item._id}>
                     <button class="minus-button" type="button">
                       <img
                         class="minus-image"
@@ -64,8 +79,8 @@ function showProduct(item) {
                       />
                     </button>
                   </div>
-                  <div class="amount">${item.quantity}</div>
-                  <div class="increase">
+                  <div class="amount">${parseInt(item.quantity)}</div>
+                  <div class="increase" id=${item._id}>
                     <button class="plus-button" type="button">
                       <img
                         class="plus-image"
@@ -75,9 +90,108 @@ function showProduct(item) {
                     </button>
                   </div>
                 </div>
-                <div class="price">${item.price}원</div>
+                <div class="price" alt=${item.price}>${(
+    item.price * item.quantity
+  ).toLocaleString("ko-KR")}원</div>
               </div>`;
   shoppingbagList.append(product);
+}
+
+function renderCartContents() {
+  const savedProducts = getSavedProducts();
+  if (!isEmptyCart(savedProducts)) {
+    checkoutButton.classList.remove(HIDDEN_CLASSNAME);
+    savedProducts.forEach(showProduct);
+  } else {
+    hideCheckout();
+  }
+}
+
+function checkAllProducts(e) {
+  const checkboxList = document.querySelectorAll(".individual-checker");
+  checkboxList.forEach((checkbox) => (checkbox.checked = e.target.checked));
+}
+
+function deleteProductFromCart(e) {
+  const productDiv = e.target.parentElement.parentElement.parentElement;
+  let savedProducts = removeProductFromDB(productDiv.id);
+  productDiv.remove();
+  saveProducts(savedProducts);
+  if (isEmptyCart(savedProducts)) hideCheckout();
+}
+
+function getCheckedItems() {
+  return document.querySelectorAll("input[name=individual-checker]:checked");
+}
+
+function deleteCheckedProducts() {
+  const checkedItemList = getCheckedItems();
+  checkedItemList.forEach((item) => {
+    const productDiv = document.getElementById(item.id);
+    let savedProducts = removeProductFromDB(productDiv.id);
+    productDiv.remove();
+    saveProducts(savedProducts);
+    if (isEmptyCart(savedProducts)) hideCheckout();
+  });
+}
+
+function decreaseProductQuantity(e) {
+  const decreaseDiv = e.target.parentElement.parentElement;
+  const quantity = decreaseDiv.nextElementSibling;
+  const price = decreaseDiv.parentElement.nextElementSibling;
+  if (quantity.innerText > 1) {
+    quantity.innerText -= 1;
+    adjustQuantityFromDB(decreaseDiv.id, quantity.innerText);
+    setProductPrice(quantity.innerText, price);
+  }
+}
+
+function increaseProductQuantity(e) {
+  const increaseDiv = e.target.parentElement.parentElement;
+  const quantity = increaseDiv.previousElementSibling;
+  const price = increaseDiv.parentElement.nextElementSibling;
+  quantity.innerText = parseInt(quantity.innerText) + 1;
+  adjustQuantityFromDB(increaseDiv.id, quantity.innerText);
+  setProductPrice(quantity.innerText, price);
+}
+
+function setProductPrice(quantity, price) {
+  const pricePerItem = price.getAttribute("alt");
+  const productPrice = quantity * pricePerItem;
+  price.innerText = `${productPrice.toLocaleString("ko-KR")}원`;
+}
+
+function getPureDigit(numStr) {
+  const regex = /[^0-9]/g;
+  return String(numStr).replace(regex, "");
+}
+
+function getTotalProductPrice() {
+  const checkedItemList = getCheckedItems();
+  let addedPrice = parseInt(0);
+  checkedItemList.forEach((item) => {
+    const productDiv = document.getElementById(item.id);
+    let productPrice = productDiv.querySelector(".price").innerText.slice(0, -1);
+    addedPrice += parseInt(getPureDigit(productPrice));
+  });
+  totalProductPrice.innerText = `${addedPrice.toLocaleString("ko-KR")}원`;
+  return addedPrice;
+}
+
+function getDeliveryFee(price) {
+  const deliveryCharge = price < 50000 ? (price > 0 ? 3000 : 0) : 0;
+  deliveryFee.innerText = `${deliveryCharge.toLocaleString("ko-KR")}원`;
+  return deliveryCharge;
+}
+
+function caculateTotalPrice() {
+  const totalProductPrice = getTotalProductPrice();
+  const deliveryFee = getDeliveryFee(totalProductPrice);
+  totalPrice.innerText = `${(totalProductPrice + deliveryFee).toLocaleString("ko-KR")}원`;
+}
+
+function hideCheckout() {
+  checkoutButton.classList.add(HIDDEN_CLASSNAME);
 }
 
 let tempData = [
@@ -130,27 +244,37 @@ let tempData = [
     updatedAt: "2022-11-07T05:32:19.548Z",
   },
 ];
-
 saveProducts(tempData);
 
-const savedProducts = localStorage.getItem(PRODUCTS_KEY);
+renderCartContents();
+caculateTotalPrice();
 
-if (!isEmptyCart) {
-  const parsedProducts = JSON.parse(savedProducts);
-  parsedProducts.forEach(showProduct);
-}
+const deleteButtons = document.querySelectorAll(".product-remove-button");
+const minusButtons = document.querySelectorAll(".minus-button");
+const plusButtons = document.querySelectorAll(".plus-button");
+const checkboxes = document.querySelectorAll(".individual-checker");
 
-function deteleCheckedProducts() {}
+deleteButtons.forEach((deleteButton) => {
+  deleteButton.addEventListener("click", deleteProductFromCart);
+  deleteButton.addEventListener("click", caculateTotalPrice);
+});
 
-function controlProductAmount() {}
+allChecker.addEventListener("click", checkAllProducts);
+allChecker.addEventListener("click", caculateTotalPrice);
 
-function caculateProductPrice() {}
+selectedItemDeleteButton.addEventListener("click", deleteCheckedProducts);
+selectedItemDeleteButton.addEventListener("click", caculateTotalPrice);
 
-function caculateAllProductPrice() {
-  // 5만원 이상 무료배송
-}
+minusButtons.forEach((minusButton) => {
+  minusButton.addEventListener("click", decreaseProductQuantity);
+  minusButton.addEventListener("click", caculateTotalPrice);
+});
 
-function showEmptyCart() {
-  // '장바구니 비어있습니다.' 문구 띄우기
-  // checkout 버튼 숨기기
-}
+plusButtons.forEach((plusButton) => {
+  plusButton.addEventListener("click", increaseProductQuantity);
+  plusButton.addEventListener("click", caculateTotalPrice);
+});
+
+checkboxes.forEach((checkbox) => {
+  checkbox.addEventListener("click", caculateTotalPrice);
+});
