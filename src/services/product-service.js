@@ -72,11 +72,18 @@ class ProductService {
     const products = await this.productModel.findByIdArray(productList);
     return products;
   }
-  // orderProductList = { id , quantity }
+  // productsInOrder = { id , quantity }
   // id 를 product 정보 객체로 바꿔주는 함수
-  async getProductObj(orderProductList) {
+  async getProductObj(productsInOrder) {
+    console.log(productsInOrder);
+    let productIdArr = [];
+    let quantityArr = [];
+    productsInOrder.forEach(({ id, quantity }) => {
+      productIdArr = [...productId, id];
+      quantityArr = [...quantity, id];
+    });
     const productObjs = await Promise.all(
-      orderProductList.map(async ({ id, quantity }) => {
+      productsInOrder.map(async ({ id, quantity }) => {
         const product = await this.productModel.findById(id);
         return { product, quantity };
       })
