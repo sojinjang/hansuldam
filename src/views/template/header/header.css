@@ -101,20 +101,17 @@ header {
 
 .header-menu-wrapper .menu-list {
   max-width: 1144px;
-  height: 35px;
   display: flex;
   -webkit-box-pack: start;
-  justify-content: flex-start;
   -webkit-box-align: baseline;
   align-items: baseline;
-  margin-bottom: 20px;
-
 }
 
-.header-menu-wrapper .menu-list .menu-label {
+.header-menu-wrapper .menu-list li {
   position: relative;
-  padding: 10px 10px 0 0;
+  padding: 2px;
   font-size: 18px;
+  margin-right: 5px;
 }
 
 .company-logo {
