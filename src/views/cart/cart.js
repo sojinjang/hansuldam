@@ -39,7 +39,9 @@ function showProduct(item) {
   product.setAttribute("class", "product");
   product.setAttribute("id", item._id);
   product.innerHTML = `<div class="checkbox-wrapper">
-                <input type="checkbox" name="individual-checker" id=${item._id} class=individual-checker /><label
+                <input type="checkbox" name="individual-checker" id=${
+                  item._id
+                } class=individual-checker /><label
                   for="checker"
                 ></label>
               </div>
@@ -72,7 +74,7 @@ function showProduct(item) {
                       />
                     </button>
                   </div>
-                  <div class="amount">${item.quantity}</div>
+                  <div class="amount">${parseInt(item.quantity)}</div>
                   <div class="increase">
                     <button class="plus-button" type="button">
                       <img
@@ -83,7 +85,9 @@ function showProduct(item) {
                     </button>
                   </div>
                 </div>
-                <div class="price">${item.price}원</div>
+                <div class="price" alt=${item.price}>${(
+    item.price * item.quantity
+  ).toLocaleString("ko-KR")}원</div>
               </div>`;
   shoppingbagList.append(product);
 }
@@ -93,8 +97,8 @@ function checkAllProducts(e) {
   checkboxList.forEach((checkbox) => (checkbox.checked = e.target.checked));
 }
 
-function deleteProductFromCart(event) {
-  const productDiv = event.target.parentElement.parentElement.parentElement;
+function deleteProductFromCart(e) {
+  const productDiv = e.target.parentElement.parentElement.parentElement;
   let savedProducts = removeProductFromDB(productDiv.id);
   productDiv.remove();
   saveProducts(savedProducts);
@@ -112,11 +116,29 @@ function deteleCheckedProducts() {
   });
 }
 
-function controlProductAmount() {}
+function decreaseProductQuantity(e) {
+  const decreaseDiv = e.target.parentElement.parentElement;
+  const quantity = decreaseDiv.nextElementSibling;
+  if (quantity.innerText > 1) quantity.innerText -= 1;
+  const price = decreaseDiv.parentElement.nextElementSibling;
+  setProductPrice(quantity.innerText, price);
+}
 
-function caculateProductPrice() {}
+function increaseProductQuantity(e) {
+  const increaseDiv = e.target.parentElement.parentElement;
+  const quantity = increaseDiv.previousElementSibling;
+  quantity.innerText = parseInt(quantity.innerText) + 1;
+  const price = increaseDiv.parentElement.nextElementSibling;
+  setProductPrice(quantity.innerText, price);
+}
 
-function caculateAllProductPrice() {
+function setProductPrice(quantity, price) {
+  const pricePerItem = price.getAttribute("alt");
+  const productPrice = quantity * pricePerItem;
+  price.innerText = `${productPrice.toLocaleString("ko-KR")}원`;
+}
+
+function caculateTotalPrice() {
   // 5만원 이상 무료배송
 }
 
@@ -180,8 +202,19 @@ saveProducts(tempData);
 renderCartContents();
 
 const deleteButtons = document.querySelectorAll(".product-remove-button");
+const minusButtons = document.querySelectorAll(".minus-button");
+const plusButtons = document.querySelectorAll(".plus-button");
+
 deleteButtons.forEach((deleteButton) => {
   deleteButton.addEventListener("click", deleteProductFromCart);
 });
 allChecker.addEventListener("click", checkAllProducts);
 selectedItemDeleteButton.addEventListener("click", deteleCheckedProducts);
+
+minusButtons.forEach((minusButton) => {
+  minusButton.addEventListener("click", decreaseProductQuantity);
+});
+
+plusButtons.forEach((plusButton) => {
+  plusButton.addEventListener("click", increaseProductQuantity);
+});
