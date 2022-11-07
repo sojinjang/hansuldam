@@ -1,84 +1,84 @@
 :root {
-	--hover-background-color: #f5f5f5;
+  --hover-background-color: #f5f5f5;
 }
 
 /* reset */
 * {
-	margin: 0;
-	padding: 0;
+  margin: 0;
+  padding: 0;
 }
 li {
-	list-style: none;
+  list-style: none;
 }
 a {
-	text-decoration: none;
+  text-decoration: none;
 }
 button {
-	all: unset;
+  all: unset;
 }
 
 /* main */
 
 .body-container {
-	margin-top: 50px;
+  margin-top: 50px;
 }
 
 /* product */
 
 .product-container {
-	display: flex;
-	background-color: whitesmoke;
-	padding: 20px 40px 20px 40px;
-	margin-bottom: 20px;
+  display: flex;
+  background-color: whitesmoke;
+  padding: 20px 40px 20px 40px;
+  margin-bottom: 20px;
 }
 
 .product-container:hover {
-	cursor: pointer;
-	background-color: aliceblue;
+  cursor: pointer;
+  background-color: aliceblue;
 }
 
 .product-content-container {
-	display: flex;
-	flex-direction: column;
-	margin-left: 40px;
-	width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-left: 40px;
+  width: 100%;
 }
 
 .product-container .product-image-wrapper {
-	width: 170px;
+  width: 170px;
 }
 
 .product-container .product-image-wrapper img {
-	width: 100%;
+  width: 100%;
 }
 
 .content__container {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	width: 55%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 55%;
 }
 
 .content__container .content__left__container,
 .content__right__container {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .product-content-container .content__title__wrapper {
-	color: #363636;
-	font-size: 2rem;
-	font-weight: 600;
-	line-height: 1.125;
-	margin-bottom: 20px;
+  color: #363636;
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.125;
+  margin-bottom: 20px;
 }
 
 .content__container .content__left__container .content__brandName {
-	display: flex;
-	flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .content__container .content__left__container .content__brandName p {
-	margin-right: 10px;
+  margin-right: 10px;
 }
