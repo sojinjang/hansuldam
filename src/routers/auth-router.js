@@ -224,7 +224,7 @@ authRouter.delete("/comments/:commentId", async (req, res, next) => {
     const userId = req.currentUser.userId;
     const { commentId } = req.params;
 
-    const deleted = await commentService.deleteComment(commentId);
+    const deleted = await commentService.deleteComment(userId, commentId);
 
     res.status(200).json(deleted);
   } catch (error) {

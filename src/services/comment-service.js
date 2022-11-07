@@ -7,7 +7,6 @@ class CommentService {
 
   async addComment(commentInfo) {
     // db에 저장
-    console.log(commentInfo);
     const createdNewComment = await this.commentModel.create(commentInfo);
 
     return createdNewComment;
@@ -40,9 +39,9 @@ class CommentService {
     return updatedComment;
   }
 
-  async deleteComment(commentId) {
+  async deleteComment(curUserId, commentId) {
     const { userId } = await this.commentModel.findById(commentId);
-    if (curUserId !== userId) {
+    if (curUserId !== userId.toString()) {
       throw new Error(`권한이 없습니다.`);
     }
 
