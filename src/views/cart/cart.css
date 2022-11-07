@@ -2,12 +2,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap");
 
-.body-container {
-  background-color: wheat;
-}
 
 .hidden {
-  display: none;
+  display: none !important;  /* opacity: 0; 
+  visibility: 0 */
+}
+
+.body-container {
+  background-color: wheat;
 }
 
 .order-status-wrapper {
@@ -82,7 +84,7 @@
   margin-left: 18px;
 }
 
-.shoppingbag-list .delete-wrapper .select-delete-button {
+.shoppingbag-list .delete-wrapper .selected-item-delete-button {
   line-height: 30px;
   min-width: 54px;
   height: 40px;
@@ -302,7 +304,7 @@
   justify-content: space-evenly;
 }
 
-.rounded-button {
+#rounded-button {
   background-color: #fdc78c;
   border: 2px solid #422800;
   border-radius: 30px;
@@ -322,17 +324,17 @@
   transition: all 0.2s linear;
 }
 
-.rounded-button:hover {
+#rounded-button:hover {
   background-color: #fff;
 }
 
-.rounded-button:active {
+#rounded-button:active {
   box-shadow: #422800 2px 2px 0 0;
   transform: translate(2px, 2px);
 }
 
 @media (min-width: 768px) {
-  .rounded-button {
+  #rounded-button {
     min-width: 120px;
     padding: 0 25px;
   }
