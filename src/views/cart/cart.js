@@ -1,21 +1,36 @@
 const main = document.querySelector(".body-container");
 const shoppingbagList = document.querySelector(".shoppingbag-list");
 
+const allChecker = document.querySelector(".all-checker");
+const selectedItemDeleteButton = document.querySelector(".selected-item-delete-button");
+
 const PRODUCTS_KEY = "products";
 
-function isEmptyCart(productsList) {
-  return productsList == null;
+function getSavedProducts() {
+  return JSON.parse(localStorage.getItem(PRODUCTS_KEY));
+}
+
+function removeProductFromDB(productId) {
+  let savedProducts = getSavedProducts();
+  savedProducts = savedProducts.filter(
+    (product) => String(product._id) !== String(productId)
+  );
+  return savedProducts;
 }
 
 function saveProducts(productsArr) {
   localStorage.setItem(PRODUCTS_KEY, JSON.stringify(productsArr));
 }
 
-function deleteProductFromCart(event) {
-  const productDiv = event.target.parentElement.parentElement.parentElement;
-  let savedProducts = removeProductFromDB(productDiv.id);
-  productDiv.remove();
-  saveProducts(savedProducts);
+function isEmptyCart(productsList) {
+  return productsList == null;
+}
+
+function renderCartContents() {
+  const savedProducts = getSavedProducts();
+  if (!isEmptyCart(savedProducts)) {
+    savedProducts.forEach(showProduct);
+  }
 }
 
 function showProduct(item) {
@@ -73,6 +88,43 @@ function showProduct(item) {
   shoppingbagList.append(product);
 }
 
+function checkAllProducts(e) {
+  const checkboxList = document.querySelectorAll(".individual-checker");
+  checkboxList.forEach((checkbox) => (checkbox.checked = e.target.checked));
+}
+
+function deleteProductFromCart(event) {
+  const productDiv = event.target.parentElement.parentElement.parentElement;
+  let savedProducts = removeProductFromDB(productDiv.id);
+  productDiv.remove();
+  saveProducts(savedProducts);
+}
+
+function deteleCheckedProducts() {
+  const checkedItemList = document.querySelectorAll(
+    "input[name=individual-checker]:checked"
+  );
+  checkedItemList.forEach((item) => {
+    const productDiv = document.getElementById(item.id);
+    let savedProducts = removeProductFromDB(productDiv.id);
+    productDiv.remove();
+    saveProducts(savedProducts);
+  });
+}
+
+function controlProductAmount() {}
+
+function caculateProductPrice() {}
+
+function caculateAllProductPrice() {
+  // 5만원 이상 무료배송
+}
+
+function showEmptyCart() {
+  // '장바구니 비어있습니다.' 문구 띄우기
+  // checkout 버튼 숨기기
+}
+
 let tempData = [
   {
     _id: "249ee1e45022fa608b63e994",
@@ -123,61 +175,13 @@ let tempData = [
     updatedAt: "2022-11-07T05:32:19.548Z",
   },
 ];
-
 saveProducts(tempData);
 
-const savedProducts = localStorage.getItem(PRODUCTS_KEY);
-
-if (!isEmptyCart(savedProducts)) {
-  const parsedProducts = JSON.parse(savedProducts);
-  parsedProducts.forEach(showProduct);
-}
+renderCartContents();
 
 const deleteButtons = document.querySelectorAll(".product-remove-button");
 deleteButtons.forEach((deleteButton) => {
   deleteButton.addEventListener("click", deleteProductFromCart);
 });
-
-function checkAllProducts(e) {
-  const checkboxList = document.querySelectorAll(".individual-checker");
-  checkboxList.forEach((checkbox) => (checkbox.checked = e.target.checked));
-}
-const allChecker = document.querySelector(".all-checker");
 allChecker.addEventListener("click", checkAllProducts);
-
-function deteleCheckedProducts() {
-  const checkedItemList = document.querySelectorAll(
-    "input[name=individual-checker]:checked"
-  );
-  checkedItemList.forEach((item) => {
-    const productDiv = document.getElementById(item.id);
-    console.log(productDiv);
-    let savedProducts = removeProductFromDB(productDiv.id);
-    productDiv.remove();
-    saveProducts(savedProducts);
-  });
-}
-
-const selectedItemDeleteButton = document.querySelector(".selected-item-delete-button");
 selectedItemDeleteButton.addEventListener("click", deteleCheckedProducts);
-
-function removeProductFromDB(productId) {
-  let savedProducts = JSON.parse(localStorage.getItem(PRODUCTS_KEY));
-  savedProducts = savedProducts.filter(
-    (product) => String(product._id) !== String(productId)
-  );
-  return savedProducts;
-}
-
-function controlProductAmount() {}
-
-function caculateProductPrice() {}
-
-function caculateAllProductPrice() {
-  // 5만원 이상 무료배송
-}
-
-function showEmptyCart() {
-  // '장바구니 비어있습니다.' 문구 띄우기
-  // checkout 버튼 숨기기
-}
