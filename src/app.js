@@ -10,7 +10,8 @@ import {
   authRouter,
 } from "./routers";
 import { errorHandler, loginRequired, adminRequired } from "./middlewares";
-import { setTestdata } from "../testdata";
+
+// import { setTestdata } from "../testdata";
 
 const app = express();
 
