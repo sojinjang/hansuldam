@@ -6,8 +6,8 @@ function getHeader() {
             <img class="company-logo" src="../img/logo.png" alt="company-logo">
           </div>
           <div class="search-container">
-            <img class="search__img" src="../img/search-icon.png" alt="search-logo">
-            <input class="input is-rounded search__bar" type="text" placeholder="제품검색" />
+            <img class="search-img" src="../img/search-icon.png" alt="search-logo">
+            <input class="input is-rounded search-bar" type="text" placeholder="제품검색" />
           </div>
         </section>
         <section class="user-menu">

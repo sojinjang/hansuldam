@@ -2,28 +2,9 @@
   --hover-background-color: #f5f5f5;
 }
 
-/* reset */
-* {margin: 0; padding:0;}
-li {list-style: none;}
-a {
-  text-decoration: none;
-}
-button{all:unset;}
-
-
-/* body */
-body {
-  overflow-x : hidden;
-  margin: 0;
-}
-
-header, .body-container, footer {
-  padding: 0 7vw 0 7vw;
-}
-
 /* header */
 header {
-  padding-top: 30px;
+  padding: 30px 7vw 0 7vw;
 }
 
 .header-container {
@@ -54,13 +35,13 @@ header {
   margin-left: 20px;
 }
 
-.navigation-menu .search-container .search__img {
+.navigation-menu .search-container .search-img {
   cursor: pointer;
   width: 15px;
   height: 15px;
 }
 
-.navigation-menu .search-container .search__bar {
+.navigation-menu .search-container .search-bar {
   opacity: 0.7;
   color: rgb(178, 178, 178);
   font-size: 18px;
