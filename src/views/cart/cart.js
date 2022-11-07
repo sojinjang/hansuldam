@@ -6,8 +6,10 @@ const selectedItemDeleteButton = document.querySelector(".selected-item-delete-b
 const totalProductPrice = document.querySelector(".total-product-price");
 const deliveryFee = document.querySelector(".delivery-fee");
 const totalPrice = document.querySelector(".total-payment-price");
+const checkoutButton = document.querySelector(".checkout");
 
 const PRODUCTS_KEY = "products";
+const HIDDEN_CLASSNAME = "hidden";
 
 function getSavedProducts() {
   return JSON.parse(localStorage.getItem(PRODUCTS_KEY));
@@ -26,14 +28,7 @@ function saveProducts(productsArr) {
 }
 
 function isEmptyCart(productsList) {
-  return productsList == null;
-}
-
-function renderCartContents() {
-  const savedProducts = getSavedProducts();
-  if (!isEmptyCart(savedProducts)) {
-    savedProducts.forEach(showProduct);
-  }
+  return productsList == null || productsList.length === 0;
 }
 
 function showProduct(item) {
@@ -95,6 +90,16 @@ function showProduct(item) {
   shoppingbagList.append(product);
 }
 
+function renderCartContents() {
+  const savedProducts = getSavedProducts();
+  if (!isEmptyCart(savedProducts)) {
+    checkoutButton.classList.remove(HIDDEN_CLASSNAME);
+    savedProducts.forEach(showProduct);
+  } else {
+    hideCheckout();
+  }
+}
+
 function checkAllProducts(e) {
   const checkboxList = document.querySelectorAll(".individual-checker");
   checkboxList.forEach((checkbox) => (checkbox.checked = e.target.checked));
@@ -105,6 +110,7 @@ function deleteProductFromCart(e) {
   let savedProducts = removeProductFromDB(productDiv.id);
   productDiv.remove();
   saveProducts(savedProducts);
+  if (isEmptyCart(savedProducts)) hideCheckout();
 }
 
 function getCheckedItems() {
@@ -118,6 +124,7 @@ function deteleCheckedProducts() {
     let savedProducts = removeProductFromDB(productDiv.id);
     productDiv.remove();
     saveProducts(savedProducts);
+    if (isEmptyCart(savedProducts)) hideCheckout();
   });
 }
 
@@ -172,9 +179,8 @@ function caculateTotalPrice() {
   totalPrice.innerText = `${(totalProductPrice + deliveryFee).toLocaleString("ko-KR")}원`;
 }
 
-function showEmptyCart() {
-  // '장바구니 비어있습니다.' 문구 띄우기
-  // checkout 버튼 숨기기
+function hideCheckout() {
+  checkoutButton.classList.add(HIDDEN_CLASSNAME);
 }
 
 let tempData = [
