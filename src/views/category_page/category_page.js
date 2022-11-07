@@ -49,8 +49,9 @@ async function showProducts() {
   return productsData;
 }
 
-async function goToProduct() {
-  const data = await showProducts();
+function goToProduct() {
+  // const data = await showProducts();
+  const data = showProducts();
 
   const productContainer = document.querySelectorAll('.product');
   const PRODUCTS_KEY = 'productId';
