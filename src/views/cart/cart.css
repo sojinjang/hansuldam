@@ -82,7 +82,7 @@
   margin-left: 18px;
 }
 
-.shoppingbag-list .delete-wrapper .select-delete-button {
+.shoppingbag-list .delete-wrapper .selected-item-delete-button {
   line-height: 30px;
   min-width: 54px;
   height: 40px;
