@@ -14,7 +14,7 @@ async function showProducts() {
   let productsData = await fetchData();
 
   productsData.forEach((product) => {
-    const { _id, name, brand, price, volume, sold, category, alcoholDegree } = product;
+    const { _id, name, brand, price, volume, sales, category, alcoholDegree } = product;
 
     let productSection = document.createElement('section');
 
@@ -34,7 +34,7 @@ async function showProducts() {
       <p class="content-volume">${volume}ml</p>
     </div>
     <div class="content-right-container">
-      <p class="content-sold">${sold}회 판매</p>
+      <p class="content-sold">${sales}회 판매</p>
       <p class="content-category">${category}</p>
       <p class="content-alcoholDegree">${alcoholDegree}도</p>
     </div>
