@@ -75,13 +75,6 @@ class ProductService {
   // productsInOrder = { id , quantity }
   // id 를 product 정보 객체로 바꿔주는 함수
   async getProductObj(productsInOrder) {
-    console.log(productsInOrder);
-    let productIdArr = [];
-    let quantityArr = [];
-    productsInOrder.forEach(({ id, quantity }) => {
-      productIdArr = [...productId, id];
-      quantityArr = [...quantity, id];
-    });
     const productObjs = await Promise.all(
       productsInOrder.map(async ({ id, quantity }) => {
         const product = await this.productModel.findById(id);
