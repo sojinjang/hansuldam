@@ -10,8 +10,7 @@ import {
   authRouter,
 } from "./routers";
 import { errorHandler, loginRequired, adminRequired } from "./middlewares";
-
-// import { setTestdata } from "../testdata";
+// import setTestdata from "../testdata";
 
 const app = express();
 
@@ -25,7 +24,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // 초기 testdata 셋팅
-//setTestdata();
+// setTestdata();
 
 // html, css, js 라우팅
 app.use(viewsRouter);

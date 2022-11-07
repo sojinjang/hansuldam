@@ -4,7 +4,6 @@ yarn.lock
 package-lock.json
 .env
 .DS_Store
-testdata
 .vscode
 src/routers/views-router.js
 test/test.js
