@@ -35,7 +35,6 @@ class CategoryService {
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!category) {
-      res.status(404);
       throw new Error(
         "일치하는 카테고리가 없습니다. 다시 한 번 확인해 주세요."
       );
@@ -57,7 +56,6 @@ class CategoryService {
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!category) {
-      res.status(404);
       throw new Error(
         "일치하는 카테고리가 없습니다. 다시 한 번 확인해 주세요."
       );
