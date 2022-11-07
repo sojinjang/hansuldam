@@ -117,3 +117,10 @@ header {
 .company-logo {
   cursor: pointer;
 }
+
+.menu-event-label {
+  color: #7a7a7a;
+  font-size: .75em;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}

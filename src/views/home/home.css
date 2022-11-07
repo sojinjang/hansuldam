@@ -47,7 +47,7 @@ body {
   height: 60px;
 }
 
-.sool-list .sool-item label {
+.sool-list .sool-item span {
   width: 60px;
   height: 60px;
   font-weight: bold;

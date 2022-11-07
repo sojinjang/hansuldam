@@ -17,6 +17,11 @@ button {
   all: unset;
 }
 
+/* header */
+.clicked-label {
+	background-color: #DFDFDF;
+}
+
 /* main */
 
 .body-container {
