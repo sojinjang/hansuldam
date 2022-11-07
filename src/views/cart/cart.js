@@ -1,11 +1,5 @@
-import footer from "../template/footer/footer.js";
-import header from "../template/header/header.js";
-
 const main = document.querySelector(".body-container");
 const shoppingbagList = document.querySelector(".shoppingbag-list");
-
-main.insertAdjacentHTML("beforebegin", header());
-main.insertAdjacentHTML("afterend", footer());
 
 const PRODUCTS_KEY = "products";
 
@@ -135,7 +129,7 @@ saveProducts(tempData);
 
 const savedProducts = localStorage.getItem(PRODUCTS_KEY);
 
-if (!isEmptyCart) {
+if (!isEmptyCart(savedProducts)) {
   const parsedProducts = JSON.parse(savedProducts);
   parsedProducts.forEach(showProduct);
 }
