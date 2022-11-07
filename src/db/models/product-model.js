@@ -16,7 +16,13 @@ export class ProductModel {
 
   async update({ productId, update }) {
     const filter = { _id: productId };
-    const updatedProduct = await Product.findOneAndUpdate(filter, update);
+    const option = { returnOriginal: false };
+
+    const updatedProduct = await Product.findOneAndUpdate(
+      filter,
+      update,
+      option
+    );
     return updatedProduct;
   }
 
@@ -34,6 +40,11 @@ export class ProductModel {
   async findById(productId) {
     const product = await Product.findOne({ _id: productId });
     return product;
+  }
+
+  async findByIdArray(idArray) {
+    const products = await Product.find({ _id: { $in: idArray } });
+    return products;
   }
 }
 

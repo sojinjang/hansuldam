@@ -1,10 +1,10 @@
-import { Schema } from 'mongoose';
+import { Schema } from "mongoose";
+import { CartSchema } from "./cart-schema";
 
 const OrderSchema = new Schema(
   {
     userId: {
-      type: Schema.Types.ObjectId,
-      ref: "users",
+      type: String,
       required: false,
     },
     fullName: {
@@ -13,14 +13,37 @@ const OrderSchema = new Schema(
     },
     phoneNumber: {
       type: String,
-      required: false,
+      required: true,
     },
     address: {
       type: new Schema(
         {
-          postalCode: String,
-          address1: String,
-          address2: String,
+          postalCode: { type: String, required: true },
+          address1: { type: String, required: true },
+          address2: { type: String, required: false },
+        },
+        {
+          _id: false,
+        }
+      ),
+      required: true,
+    },
+    status: {
+      type: String,
+      enum: ["상품준비중", "상품배송중", "배송완료"],
+      default: "상품준비중",
+      required: true,
+    },
+    shipping: {
+      type: String,
+      required: false,
+    },
+    payment: {
+      type: new Schema(
+        {
+          way: String,
+          detail: String,
+          number: String,
         },
         {
           _id: false,
@@ -28,42 +51,19 @@ const OrderSchema = new Schema(
       ),
       required: false,
     },
-    status: {
-      type: String,
-      enum: ["상품준비중", "상품배송중", "배송완료"],
-      default: "상품준비중",
-      required: false,
-    },
-    shipping: {
-      type: String,
-      required: false,
-    },
-    paymentMethod: {
-      type: String,
-      required: false,
-    },
-    paymentDetail: {
-      type: String,
-      required: false,
-    },
     priceSum: {
       type: Number,
       required: true,
     },
-    productList: [
-      {
-        productId: {
-          type: Schema.Types.ObjectId,
-          ref: "products",
-          required: false,
-        },
-      },
-    ],
+    productsInOrder: {
+      type: [CartSchema],
+      required: false,
+    },
   },
   {
     collection: "orders",
     timestamps: true,
   }
 );
-  
-  export { OrderSchema };
+
+export { OrderSchema };

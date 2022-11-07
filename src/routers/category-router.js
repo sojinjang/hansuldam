@@ -1,7 +1,6 @@
 import { Router } from "express";
-import is from "@sindresorhus/is";
 
-import { categoryService } from "../services";
+import { categoryService, productService } from "../services";
 
 const categoryRouter = Router();
 
@@ -27,6 +26,21 @@ categoryRouter.get("/:categoryId", async (req, res, next) => {
 
     // 카테고리 목록(배열)을 JSON 형태로 프론트에 보냄
     res.status(200).json(category);
+  } catch (error) {
+    next(error);
+  }
+});
+
+categoryRouter.get("/:categoryId/products", async (req, res, next) => {
+  try {
+    const { categoryId } = req.params;
+
+    const { products } = await categoryService.getCategoryById(categoryId);
+
+    const productList = await productService.getProductList(products);
+
+    // 주문 목록(배열)을 JSON 형태로 프론트에 보냄
+    res.status(200).json(productList);
   } catch (error) {
     next(error);
   }

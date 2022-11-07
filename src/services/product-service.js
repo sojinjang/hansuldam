@@ -33,17 +33,17 @@ class ProductService {
   async updateProduct(productId, toUpdate) {
     // 우선 해당 id의 상품이 db에 있는지 확인
     let product = await this.productModel.findById(productId);
-    console.log(product)
-    
+
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!product) {
-      res.status(404);
       throw new Error("일치하는 상품이 없습니다. 다시 한 번 확인해 주세요.");
     }
     //상품 이름 중복 확인
-    product = await this.productModel.findByName(product.name);
+    product = await this.productModel.findByName(toUpdate.name);
     if (product) {
-      throw new Error("수정한 이름과 같은 이름의 상품이 있습니다. 다시 확인해주세요");
+      throw new Error(
+        "수정한 이름과 같은 이름의 상품이 있습니다. 다시 확인해주세요"
+      );
     }
     // 업데이트 진행
     product = await this.productModel.update({
@@ -60,13 +60,28 @@ class ProductService {
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!product) {
-      res.status(404);
       throw new Error("일치하는 상품이 없습니다. 다시 한 번 확인해 주세요.");
     }
 
     // 업데이트 진행
     const deletedProduct = await this.productModel.delete(productId);
     return deletedProduct;
+  }
+
+  async getProductList(productList) {
+    const products = await this.productModel.findByIdArray(productList);
+    return products;
+  }
+  // orderProductList = { id , quantity }
+  // id 를 product 정보 객체로 바꿔주는 함수
+  async getProductObj(orderProductList) {
+    const productObjs = await Promise.all(
+      orderProductList.map(async ({ id, quantity }) => {
+        const product = await this.productModel.findById(id);
+        return { product, quantity };
+      })
+    );
+    return productObjs;
   }
 }
 

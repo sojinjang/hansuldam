@@ -54,8 +54,6 @@ class UserService {
       );
     }
 
-    // 이제 이메일은 문제 없는 경우이므로, 비밀번호를 확인함
-
     // 비밀번호 일치 여부 확인
     const correctPasswordHash = user.password; // db에 저장되어 있는 암호화된 비밀번호
 
@@ -75,7 +73,9 @@ class UserService {
     const secretKey = process.env.JWT_SECRET_KEY || "secret-key";
 
     // 2개 프로퍼티를 jwt 토큰에 담음
-    const token = jwt.sign({ userId: user._id, role: user.role }, secretKey);
+    const token = jwt.sign({ userId: user._id, role: user.role }, secretKey, {
+      expiresIn: "1h",
+    });
 
     return { token };
   }
@@ -137,10 +137,54 @@ class UserService {
     // 업데이트 진행
     user = await this.userModel.update({
       userId,
-      update: toUpdate,
+      updateObj: toUpdate,
     });
 
     return user;
+  }
+
+  // 유저정보에 주문id 추가.
+  async addOrderIdInUser(userId, orderId) {
+    // 객체 destructuring
+
+    // 우선 해당 id의 유저가 db에 있는지 확인
+    let user = await this.userModel.findById(userId);
+
+    // db에서 찾지 못한 경우, 에러 메시지 반환
+    if (!user) {
+      throw new Error("가입 내역이 없습니다. 다시 한 번 확인해 주세요.");
+    }
+
+    const toUpdate = { $push: { orders: orderId } };
+    // 업데이트 진행
+    user = await this.userModel.update({
+      userId,
+      updateObj: toUpdate,
+    });
+
+    return user;
+  }
+
+  // 장바구니 update
+  async addCart(userInfo) {
+    // 객체 destructuring
+    const { userId, productsInCart } = userInfo;
+    // 이메일 중복 확인
+    const updateCart = await this.userModel.update({
+      userId,
+      updateObj: { productsInCart },
+    });
+
+    return updateCart;
+  }
+
+  // 장바구니 get
+  async getCart(userId) {
+    // 객체 destructuring
+    // 이메일 중복 확인
+    const { productsInCart } = await this.userModel.findById(userId);
+
+    return productsInCart;
   }
 }
 
