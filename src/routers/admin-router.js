@@ -6,6 +6,7 @@ import {
   userService,
   orderService,
   categoryService,
+  commentService,
 } from "../services";
 
 const adminRouter = Router();
@@ -232,6 +233,17 @@ adminRouter.delete("/category/:categoryId", async (req, res, next) => {
     const category = await categoryService.deleteCategory(categoryId);
 
     res.status(200).json(category);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// 모든댓글 조회(관리자)
+adminRouter.get("/comments", async (req, res, next) => {
+  try {
+    const comments = await commentService.getAllComments();
+
+    res.status(200).json(comments);
   } catch (error) {
     next(error);
   }
