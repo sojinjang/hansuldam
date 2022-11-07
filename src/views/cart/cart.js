@@ -13,10 +13,9 @@ function saveProducts(productsArr) {
 
 function deleteProductFromCart(event) {
   const productDiv = event.target.parentElement.parentElement.parentElement;
-  let products = JSON.parse(localStorage.getItem(PRODUCTS_KEY));
-  products = products.filter((product) => product._id !== parseInt(productDiv.id));
+  let savedProducts = removeProductFromDB(productDiv.id);
   productDiv.remove();
-  saveProducts(products);
+  saveProducts(savedProducts);
 }
 
 function showProduct(item) {
@@ -25,8 +24,8 @@ function showProduct(item) {
   product.setAttribute("class", "product");
   product.setAttribute("id", item._id);
   product.innerHTML = `<div class="checkbox-wrapper">
-                <input type="checkbox" name="checker" class=buy-checker /><label
-                  for="checker1"
+                <input type="checkbox" name="individual-checker" id=${item._id} class=individual-checker /><label
+                  for="checker"
                 ></label>
               </div>
               <div class="product-info-top">
@@ -140,13 +139,35 @@ deleteButtons.forEach((deleteButton) => {
 });
 
 function checkAllProducts(e) {
-  const checkboxList = document.querySelectorAll(".buy-checker");
+  const checkboxList = document.querySelectorAll(".individual-checker");
   checkboxList.forEach((checkbox) => (checkbox.checked = e.target.checked));
 }
 const allChecker = document.querySelector(".all-checker");
 allChecker.addEventListener("click", checkAllProducts);
 
-function deteleCheckedProducts() {}
+function deteleCheckedProducts() {
+  const checkedItemList = document.querySelectorAll(
+    "input[name=individual-checker]:checked"
+  );
+  checkedItemList.forEach((item) => {
+    const productDiv = document.getElementById(item.id);
+    console.log(productDiv);
+    let savedProducts = removeProductFromDB(productDiv.id);
+    productDiv.remove();
+    saveProducts(savedProducts);
+  });
+}
+
+const selectedItemDeleteButton = document.querySelector(".selected-item-delete-button");
+selectedItemDeleteButton.addEventListener("click", deteleCheckedProducts);
+
+function removeProductFromDB(productId) {
+  let savedProducts = JSON.parse(localStorage.getItem(PRODUCTS_KEY));
+  savedProducts = savedProducts.filter(
+    (product) => String(product._id) !== String(productId)
+  );
+  return savedProducts;
+}
 
 function controlProductAmount() {}
 
