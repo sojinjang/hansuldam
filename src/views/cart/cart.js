@@ -11,10 +11,10 @@ function saveProducts(productsArr) {
   localStorage.setItem(PRODUCTS_KEY, JSON.stringify(productsArr));
 }
 
-function deleteProduct(event) {
-  const productInfoDiv = event.target.parentElement;
-  const productDiv = productInfoDiv.productInfoDiv;
-  products = products.filter((product) => product.id !== parseInt(productDiv.id));
+function deleteProductFromCart(event) {
+  const productDiv = event.target.parentElement.parentElement.parentElement;
+  let products = JSON.parse(localStorage.getItem(PRODUCTS_KEY));
+  products = products.filter((product) => product._id !== parseInt(productDiv.id));
   productDiv.remove();
   saveProducts(products);
 }
@@ -23,7 +23,7 @@ function showProduct(item) {
   let product = undefined;
   product = document.createElement("div");
   product.setAttribute("class", "product");
-  product.setAttribute("id", item.id);
+  product.setAttribute("id", item._id);
   product.innerHTML = `<div class="checkbox-wrapper">
                 <input type="checkbox" name="checker" id=buy-checker /><label
                   for="checker1"
@@ -133,6 +133,11 @@ if (!isEmptyCart(savedProducts)) {
   const parsedProducts = JSON.parse(savedProducts);
   parsedProducts.forEach(showProduct);
 }
+
+const deleteButtons = document.getElementsByClassName("product-remove-button");
+Array.from(deleteButtons).forEach((deleteButton) => {
+  deleteButton.addEventListener("click", deleteProductFromCart);
+});
 
 function deteleCheckedProducts() {}
 
