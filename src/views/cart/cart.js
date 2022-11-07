@@ -27,6 +27,13 @@ function saveProducts(productsArr) {
   localStorage.setItem(PRODUCTS_KEY, JSON.stringify(productsArr));
 }
 
+function adjustQuantityFromDB(productId, quantity) {
+  const savedProducts = getSavedProducts();
+  const index = savedProducts.findIndex((x) => x._id === productId);
+  savedProducts[index].quantity = parseInt(quantity);
+  saveProducts(savedProducts);
+}
+
 function isEmptyCart(productsList) {
   return productsList == null || productsList.length === 0;
 }
@@ -63,7 +70,7 @@ function showProduct(item) {
               <div class="blank"></div>
               <div class="product-info-bottom">
                 <div class="amount-control">
-                  <div class="decrease">
+                  <div class="decrease" id=${item._id}>
                     <button class="minus-button" type="button">
                       <img
                         class="minus-image"
@@ -73,7 +80,7 @@ function showProduct(item) {
                     </button>
                   </div>
                   <div class="amount">${parseInt(item.quantity)}</div>
-                  <div class="increase">
+                  <div class="increase" id=${item._id}>
                     <button class="plus-button" type="button">
                       <img
                         class="plus-image"
@@ -131,16 +138,20 @@ function deteleCheckedProducts() {
 function decreaseProductQuantity(e) {
   const decreaseDiv = e.target.parentElement.parentElement;
   const quantity = decreaseDiv.nextElementSibling;
-  if (quantity.innerText > 1) quantity.innerText -= 1;
   const price = decreaseDiv.parentElement.nextElementSibling;
-  setProductPrice(quantity.innerText, price);
+  if (quantity.innerText > 1) {
+    quantity.innerText -= 1;
+    adjustQuantityFromDB(decreaseDiv.id, quantity.innerText);
+    setProductPrice(quantity.innerText, price);
+  }
 }
 
 function increaseProductQuantity(e) {
   const increaseDiv = e.target.parentElement.parentElement;
   const quantity = increaseDiv.previousElementSibling;
-  quantity.innerText = parseInt(quantity.innerText) + 1;
   const price = increaseDiv.parentElement.nextElementSibling;
+  quantity.innerText = parseInt(quantity.innerText) + 1;
+  adjustQuantityFromDB(increaseDiv.id, quantity.innerText);
   setProductPrice(quantity.innerText, price);
 }
 
