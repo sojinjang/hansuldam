@@ -37,7 +37,7 @@ adminRouter.post("/products", async (req, res, next) => {
 
     // category 모델에 product._id 추가
     const filterObj = { name: category };
-    const toUpdate = { $push: { productList: newProduct._id } };
+    const toUpdate = { $push: { products: newProduct._id } };
     await categoryService.updateCategory(filterObj, toUpdate);
 
     res.status(201).json(newProduct);
@@ -71,7 +71,7 @@ adminRouter.patch("/products/:productId", async (req, res, next) => {
 
     // category 모델에 product._id 추가
     const filterObj = { name: category };
-    const toUpdate = { $push: { productList: updateProduct._id } };
+    const toUpdate = { $push: { products: updateProduct._id } };
     await categoryService.updateCategory(filterObj, toUpdate);
 
     // 업데이트 이후의 데이터를 프론트에 보내 줌
@@ -136,7 +136,7 @@ adminRouter.patch("/orders/:orderId", async (req, res, next) => {
 
     const {
       fullName,
-      orderProductList,
+      productsInOrder,
       phoneNumber,
       address,
       payment,
@@ -146,7 +146,7 @@ adminRouter.patch("/orders/:orderId", async (req, res, next) => {
     // 위 데이터를 카테고리 db에 추가하기
     const updateOrder = await orderService.updateOrderAdmin(orderId, {
       fullName,
-      orderProductList,
+      productsInOrder,
       phoneNumber,
       address,
       payment,

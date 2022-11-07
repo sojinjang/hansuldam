@@ -1,4 +1,4 @@
-export default function footer() {
+export default function getFooter() {
   return `<footer>
       <div class="footer-container">
         <ul class="footer-policy">
@@ -26,5 +26,6 @@ export default function footer() {
           </li>
         </ul>
       </div>
-    </footer>`;
+    </footer>
+    <script type="module" src="../template/getHeaderFooter.js"></script>`;
 }

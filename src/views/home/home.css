@@ -118,6 +118,7 @@ header, .body-container, footer {
   height: 50px;
   filter: opacity(0.3);
   cursor: pointer;
+  border-radius: 10px;
 }
 
 .container-slider-image .container-slider-image-button > button > img:hover {

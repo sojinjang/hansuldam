@@ -1,5 +1,4 @@
 import { Router } from "express";
-import is from "@sindresorhus/is";
 
 import { categoryService, productService } from "../services";
 
@@ -36,12 +35,12 @@ categoryRouter.get("/:categoryId/products", async (req, res, next) => {
   try {
     const { categoryId } = req.params;
 
-    const { productList } = await categoryService.getCategoryById(categoryId);
+    const { products } = await categoryService.getCategoryById(categoryId);
 
-    const products = await productService.getProductList(productList);
+    const productList = await productService.getProductList(products);
 
     // 주문 목록(배열)을 JSON 형태로 프론트에 보냄
-    res.status(200).json(products);
+    res.status(200).json(productList);
   } catch (error) {
     next(error);
   }

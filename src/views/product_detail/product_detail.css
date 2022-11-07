@@ -85,3 +85,12 @@ button {
 .button-container button {
 	margin: 0 !important;
 }
+
+.cart-message {
+	opacity: 0;
+	transition: 0.5s all ease;
+}
+
+.fade-message {
+	opacity: 1;
+}
