@@ -35,6 +35,17 @@ export class CategoryModel {
     const category = await Category.findOne(obj);
     return category;
   }
+
+  async findByObj(obj) {
+    const category = await Category.findOne(obj);
+    return category;
+  }
+
+  async setTestdata(arr) {
+    await Category.deleteMany({});
+    const categories = await Category.insertMany(arr);
+    return categories;
+  }
 }
 
 const categoryModel = new CategoryModel();
