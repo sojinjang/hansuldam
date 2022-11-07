@@ -1,7 +1,7 @@
 import { Router } from "express";
 import is from "@sindresorhus/is";
 
-import { userService, orderService } from "../services";
+import { userService, orderService, commentService } from "../services";
 
 const authRouter = Router();
 
@@ -165,6 +165,68 @@ authRouter.get("/cart", async (req, res, next) => {
     const productsInCart = await userService.getCart(userId);
     const gettedCart = { productsInCart };
     res.status(201).json(gettedCart);
+  } catch (error) {
+    next(error);
+  }
+});
+
+//------------댓글
+authRouter.get("/comments/:productId", async (req, res, next) => {
+  try {
+    const { productId } = req.params;
+    const comments = await commentService.getCommentsByProductId(productId);
+
+    res.status(200).json(comments);
+  } catch (error) {
+    next(error);
+  }
+});
+
+authRouter.post("/comments", async (req, res, next) => {
+  try {
+    const userId = req.currentUser.userId;
+    const { productId, content } = req.body;
+    console.log({
+      productId,
+      userId,
+      content,
+    });
+    const commentInfo = await commentService.addComment({
+      productId,
+      userId,
+      content,
+    });
+
+    res.status(200).json(commentInfo);
+  } catch (error) {
+    next(error);
+  }
+});
+
+authRouter.patch("/comments/:commentId", async (req, res, next) => {
+  try {
+    const userId = req.currentUser.userId;
+    const { commentId } = req.params;
+    const { content } = req.body;
+
+    const commentInfo = await commentService.setItem(userId, commentId, {
+      content,
+    });
+
+    res.status(200).json(commentInfo);
+  } catch (error) {
+    next(error);
+  }
+});
+
+authRouter.delete("/comments/:commentId", async (req, res, next) => {
+  try {
+    const userId = req.currentUser.userId;
+    const { commentId } = req.params;
+
+    const deleted = await commentService.deleteComment(userId, commentId);
+
+    res.status(200).json(deleted);
   } catch (error) {
     next(error);
   }
