@@ -56,8 +56,8 @@ function goToProduct() {
   const productContainer = document.querySelectorAll('.product');
   const PRODUCTS_KEY = 'productId';
 
-  productContainer.forEach((v) => {
-    v.addEventListener('click', (e) => {
+  productContainer.forEach((container) => {
+    container.addEventListener('click', (e) => {
       // 클릭한 항목의 번호 저장
       const currentDataIndex = e.currentTarget.classList[1].split('__')[2];
       const currentDataId = data[currentDataIndex]['_id'];
