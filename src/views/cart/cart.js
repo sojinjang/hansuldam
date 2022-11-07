@@ -25,7 +25,7 @@ function showProduct(item) {
   product.setAttribute("class", "product");
   product.setAttribute("id", item._id);
   product.innerHTML = `<div class="checkbox-wrapper">
-                <input type="checkbox" name="checker" id=buy-checker /><label
+                <input type="checkbox" name="checker" class=buy-checker /><label
                   for="checker1"
                 ></label>
               </div>
@@ -134,10 +134,17 @@ if (!isEmptyCart(savedProducts)) {
   parsedProducts.forEach(showProduct);
 }
 
-const deleteButtons = document.getElementsByClassName("product-remove-button");
-Array.from(deleteButtons).forEach((deleteButton) => {
+const deleteButtons = document.querySelectorAll(".product-remove-button");
+deleteButtons.forEach((deleteButton) => {
   deleteButton.addEventListener("click", deleteProductFromCart);
 });
+
+function checkAllProducts(e) {
+  const checkboxList = document.querySelectorAll(".buy-checker");
+  checkboxList.forEach((checkbox) => (checkbox.checked = e.target.checked));
+}
+const allChecker = document.querySelector(".all-checker");
+allChecker.addEventListener("click", checkAllProducts);
 
 function deteleCheckedProducts() {}
 
