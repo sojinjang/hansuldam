@@ -124,7 +124,7 @@ function getCheckedItems() {
   return document.querySelectorAll("input[name=individual-checker]:checked");
 }
 
-function deteleCheckedProducts() {
+function deleteCheckedProducts() {
   const checkedItemList = getCheckedItems();
   checkedItemList.forEach((item) => {
     const productDiv = document.getElementById(item.id);
@@ -262,7 +262,7 @@ deleteButtons.forEach((deleteButton) => {
 allChecker.addEventListener("click", checkAllProducts);
 allChecker.addEventListener("click", caculateTotalPrice);
 
-selectedItemDeleteButton.addEventListener("click", deteleCheckedProducts);
+selectedItemDeleteButton.addEventListener("click", deleteCheckedProducts);
 selectedItemDeleteButton.addEventListener("click", caculateTotalPrice);
 
 minusButtons.forEach((minusButton) => {
