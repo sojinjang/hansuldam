@@ -42,7 +42,7 @@ function showProduct(item) {
   product.setAttribute("class", "product");
   product.setAttribute("id", item._id);
   product.innerHTML = `<div class="checkbox-wrapper">
-                <input type="checkbox" name="individual-checker" id=${
+                <input type="checkbox" checked="checked" name="individual-checker" id=${
                   item._id
                 } class=individual-checker /><label
                   for="checker"
