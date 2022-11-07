@@ -38,15 +38,14 @@ async function goToEvent() {
         `http://localhost:8900/api/category/${eventId}/products`
         )
       const eventProducts = await res.json();
-        
       eventProducts.forEach((product) => renderData(product));
+      
+      await goToDetailPage();
       })
   })
 }
 
-async function goToDetailPage() {
-  await goToEvent();
-
+function goToDetailPage() {
   const productContainer = document.querySelectorAll('.product-container');
   productContainer.forEach((container) => {
     container.addEventListener('click', (e) => {
@@ -87,6 +86,6 @@ function renderData(product) {
   const bodyContainer = document.querySelector('.body-container');
   
   bodyContainer.append(productSection);
-}
+};
 
-goToDetailPage();
+goToEvent();
