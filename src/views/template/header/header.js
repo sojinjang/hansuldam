@@ -31,7 +31,7 @@ function getHeader() {
           <li class="menu-label" id="bestProducts">
             <a>베스트</a>
           </li>
-          <li class="menu-label" id="eventProducts">
+          <li class="menu-event-label" id="eventProducts">
             <a>기획전</a>
           </li>
         </ul>
@@ -46,8 +46,9 @@ function redirectPage() {
   $(".company-logo").addEventListener("click", () => (window.location.href = "/"));
   $(".login").addEventListener("click", () => (window.location.href = "/login"));
   $('.join').addEventListener("click", () => (window.location.href = "/join"));
-  $('.basket').addEventListener("click", () => (window.location.href = "/join"));
-
+  $('.basket').addEventListener("click", () => (window.location.href = "/cart"));
+  $('#eventProducts').addEventListener('click', () => (window.location.href = '/event-page'));
+  
   menuLabels.forEach((label) => {
     label.addEventListener('click', (e) => {
       const labelId = e.currentTarget.getAttribute('id');

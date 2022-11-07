@@ -11,7 +11,8 @@ async function fetchData() {
   return await res.json();
 }
 
-async function getData() {
+async function renderData() {
+  const fetchedData = await fetchData();
   const {
     _id,
     category,
@@ -24,7 +25,7 @@ async function getData() {
     alcoholType,
     alcoholDegree,
     manufacturedDate,
-  } = await fetchData();
+  } = fetchedData;
 
   let productSection = document.createElement('section');
 
@@ -77,15 +78,15 @@ async function getData() {
   const bodyContainer = document.querySelector('.body-container');
 
   bodyContainer.append(productSection);
+
+  return fetchedData;
 }
 
 async function orderAndCart() {
-  await getData();
+  let productData = await renderData();
 
   const orderButton = document.querySelector('#order-button');
   const basketButton = document.querySelector('#basket-button');
-
-  let data;
 
   orderButton.addEventListener('click', clickOrder);
   basketButton.addEventListener('click', clickCart);
@@ -98,13 +99,13 @@ async function orderAndCart() {
   function clickCart() {
     const PRODUCTS_KEY = 'products';
     if (!localStorage.getItem(PRODUCTS_KEY)) {
-      let tempArr = [data];
+      let tempArr = [productData];
 
       localStorage.setItem(PRODUCTS_KEY, JSON.stringify(tempArr));
     } else {
       let tempArr = JSON.parse(localStorage.getItem(PRODUCTS_KEY));
 
-      tempArr.push(data);
+      tempArr.push(productData);
       console.log(tempArr);
       localStorage.setItem(PRODUCTS_KEY, JSON.stringify(tempArr));
     }
