@@ -2,11 +2,10 @@ import footer from "../template/footer/footer.js";
 import header from "../template/header/header.js";
 
 const main = document.querySelector(".body-container");
+const shoppingbagList = document.querySelector(".shoppingbag-list");
 
 main.insertAdjacentHTML("beforebegin", header());
 main.insertAdjacentHTML("afterend", footer());
-
-const shoppingbagList = document.querySelector(".shoppingbag-list");
 
 const PRODUCTS_KEY = "products";
 
@@ -21,9 +20,7 @@ function saveProducts(productsArr) {
 function deleteProduct(event) {
   const productInfoDiv = event.target.parentElement;
   const productDiv = productInfoDiv.productInfoDiv;
-  products = products.filter(
-    (product) => product.id !== parseInt(productDiv.id)
-  );
+  products = products.filter((product) => product.id !== parseInt(productDiv.id));
   productDiv.remove();
   saveProducts(products);
 }
