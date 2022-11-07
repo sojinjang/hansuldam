@@ -13,59 +13,50 @@ async function fetchData() {
 async function showProducts() {
   let productsData = await fetchData();
 
-  productsData.forEach((v, i) => {
-    let productContainer = document.createElement('div');
-    productContainer.setAttribute('class', 'product');
-    productContainer.classList.add(`product__num__${i}`);
-    productContainer.innerHTML = `					<div class="product-container">
-					<div class="product-image-wrapper">
-						<img src="../img/ricewine_icon.png" alt="Product Image" />
-					</div>
-					<div class="product-content-container">
-						<div class="content__title__wrapper">
-							<p class="content__info content__name">${productsData[i]['name']}</p>
-						</div>
-						<div class="content__container">
-							<div class="content__left__container">
-								<div class="content__brandName">
-									<p class="content__info content__brand">${productsData[i]['brand']}</p>
-								</div>
-								<p class="content__info content__description">${productsData[i]['description']}</p>
-								<p class="content__info content__price">price</p>
-							</div>
-							<div class="content__right__container">
-								<p class="content__info content__sold">${productsData[i]['sold']}</p>
-								<p class="content__info content__category">${productsData[i]['category']}</p>
-								<p class="content__info content__alcoholDegree">${productsData[i]['alcoholDegree']}</p>
-							</div>
-						</div>
-					</div>
-				</div>`;
+  productsData.forEach((product) => {
+    const { _id, name, brand, price, volume, sold, category, alcoholDegree } = product;
 
-    const sectionContainer = document.querySelector('.section-container');
-    sectionContainer.append(productContainer);
-  });
+    let productSection = document.createElement('section');
 
-  return productsData;
+    productSection.setAttribute('class', 'product-container');
+    productSection.setAttribute('id', _id);
+    productSection.innerHTML = `<div class="product-image-wrapper">
+  <img src="../img/ricewine_icon.png" alt="Product Image" />
+</div>
+<div class="product-content-container">
+  <div class="content-title-wrapper">
+    <p class="content-name">${name}</p>
+  </div>
+  <div class="content-container">
+    <div class="content-left-container">
+      <p class="content-brand">브랜드 | ${brand}</p>
+      <p class="content-price">${price}원</p>
+      <p class="content-volume">${volume}ml</p>
+    </div>
+    <div class="content-right-container">
+      <p class="content-sold">${sold}회 판매</p>
+      <p class="content-category">${category}</p>
+      <p class="content-alcoholDegree">${alcoholDegree}도</p>
+    </div>
+  </div>
+</div>`;
+
+    const bodyContainer = document.querySelector('.body-container');
+    
+    bodyContainer.append(productSection);
+  })
 }
 
-function goToProduct() {
-  // const data = await showProducts();
-  const data = showProducts();
+async function goToDetailPage() {
+  await showProducts();
 
-  const productContainer = document.querySelectorAll('.product');
-  const PRODUCTS_KEY = 'productId';
-
+  const productContainer = document.querySelectorAll('.product-container');
   productContainer.forEach((container) => {
     container.addEventListener('click', (e) => {
-      // 클릭한 항목의 번호 저장
-      const currentDataIndex = e.currentTarget.classList[1].split('__')[2];
-      const currentDataId = data[currentDataIndex]['_id'];
-
-      localStorage.setItem(PRODUCTS_KEY, currentDataId);
-      window.location.href = '/product-detail';
-    });
-  });
+      const productId = e.currentTarget.getAttribute('id');
+      window.location.href = `/product-detail?id=${productId}`
+    })
+  })
 }
 
-goToProduct();
+goToDetailPage();

@@ -56,12 +56,14 @@ button {
 .content-container {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  width: 55%;
+  width: 100%;
 }
 
-.content-container .content-left-container,
-.content-right-container {
+.content-left-container {
+  width: 250px;
+}
+
+.content-left-container, .content-right-container {
   display: flex;
   flex-direction: column;
 }
@@ -74,11 +76,11 @@ button {
   margin-bottom: 20px;
 }
 
-.content-container .content-left-container .content-brandName {
+.content-left-container .content-brandName {
   display: flex;
   flex-direction: row;
 }
 
-.content-container .content-left-container .content-brandName p {
+.content-left-container .content-brandName p {
   margin-right: 10px;
 }

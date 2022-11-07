@@ -1,7 +1,11 @@
 async function fetchData() {
 	// 임시 데이터 입니다.
+	const queryString = new Proxy(new URLSearchParams(window.location.search), {
+    get: (params, prop) => params.get(prop),
+  });
+  const id = queryString.id;
 	const res = await fetch(
-		'http://localhost:8900/api/products/63610adac317f1d02531d3a5',
+		`http://localhost:8900/api/products/${id}`,
 		{
 			method: 'GET',
 		}
