@@ -56,30 +56,30 @@ userRouter.post("/register", isEmptyObject, async (req, res, next) => {
   }
 });
 
-userRouter.post("/random-password", isEmptyObject, async (req, res) => {
-  const { email } = req.body;
-  const user = await userService.findUserByEmail(email);
-  if (!user) {
-    throw new Error(
-      "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요."
+userRouter.post("/random-password", isEmptyObject, async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    const user = await userService.findUserByEmail(email);
+
+    const newPassword = generateRandomPassword();
+    const newHashedPassword = await bcrypt.hash(newPassword, 10);
+
+    const randomPasswordUpdate = await userService.changePasswordAsRandom(
+      user._id, // user_id
+      newHashedPassword
     );
+    // const sendMail =
+    await sendRandomPassword(
+      email,
+      "임시 비밀번호 발급 이메일입니다.",
+      `임시 비밀번호: ${newPassword}
+  로그인 후 새로운 비밀번호로 변경해주세요.`
+    );
+
+    res.status(200).json(randomPasswordUpdate);
+  } catch (error) {
+    next(error);
   }
-
-  const newPassword = generateRandomPassword();
-  const newHashedPassword = await bcrypt.hash(newPassword, 10);
-
-  const randomPasswordUpdate = await userService.changePasswordAsRandom(
-    user._id, // user_id
-    newHashedPassword
-  );
-  // const sendMail =
-  await sendRandomPassword(
-    email,
-    "임시 비밀번호 발급 이메일입니다.",
-    `임시 비밀번호: '${newPassword}'  로그인 후 새로운 비밀번호로 변경해주세요.`
-  );
-
-  res.status(200).json(randomPasswordUpdate);
 });
 
 export { userRouter };
