@@ -1,70 +1,115 @@
 async function fetchData() {
-	const res = await fetch('/api/products/', {
-		method: 'GET',
-	});
+  const res = await fetch('/api/products/', {
+    method: 'GET',
+  });
+  
+  return await res.json();
+}
 
-	try {
-		return await res.json();
-	} catch (error) {
-		console.log(error);
-	}
+async function refineData() {
+  const productsData = await fetchData();
+
+  const queryString = new Proxy(new URLSearchParams(window.location.search), {
+    get: (params, prop) => params.get(prop),
+  });
+  const label = queryString.label;
+
+  // 현재 라벨 확인용
+  console.log(label);
+
+  switch(label) {
+    
+    case 'totalProducts':
+      return productsData;
+      
+    case 'newProducts':
+      const sortNew = productsData.sort((a, b) => {
+        if (a.updatedAt < b.updatedAt) return 1;
+        if (a.updatedAt > b.updatedAt) return -1;
+      });
+      return sortNew;
+
+    case 'bestProducts':
+      const sortBestSelling = productsData.sort((a, b) => {
+        if (a.sold < b.sold) return 1;
+        if (a.sold > b.sold) return -1;
+      });
+      return sortBestSelling;
+  }
 }
 
 async function showProducts() {
-	let data = await fetchData();
+  let productsData = await refineData();
 
-	data.forEach((v, i) => {
-		let product = document.createElement('div');
-		product.setAttribute('class', 'product');
-		product.classList.add(`product__num__${i}`);
-		product.innerHTML = `					<div class="product-container">
-					<div class="product-image-wrapper">
-						<img src="../img/ricewine_icon.png" alt="" />
-					</div>
-					<div class="product-content-container">
-						<div class="content__title__wrapper">
-							<p class="content__info content__name">${data[i]['name']}</p>
-						</div>
-						<div class="content__container">
-							<div class="content__left__container">
-								<div class="content__brandName">
-									<p class="content__info content__brand">${data[i]['brand']}</p>
-								</div>
-								<p class="content__info content__description">${data[i]['description']}</p>
-								<p class="content__info content__price">price</p>
-							</div>
-							<div class="content__right__container">
-								<p class="content__info content__sold">${data[i]['sold']}</p>
-								<p class="content__info content__category">${data[i]['category']}</p>
-								<p class="content__info content__alcoholDegree">${data[i]['alcoholDegree']}</p>
-							</div>
-						</div>
-					</div>
-				</div>`;
+  if (!productsData) {
+    alert('fetch한 데이터가 없습니다!');
+  }
+  else productsData.forEach((product) => renderData(product));
 
-		const sectionContainer = document.querySelector('.section-container');	
-		sectionContainer.append(product);
-	});
+  const $ = (selector) => document.querySelector(selector);
+  const queryString = new Proxy(new URLSearchParams(window.location.search), {
+    get: (params, prop) => params.get(prop),
+  });
+  const label = queryString.label;
 
-	return data;
+  switch(label) {
+    case 'totalProducts' :
+      $('#totalProducts').setAttribute('class', 'menu-label clicked-label');
+      break;
+      
+    case 'newProducts' :
+      $('#newProducts').setAttribute('class', 'menu-label clicked-label'); 
+      break;
+      
+    case 'bestProducts' :
+      $('#bestProducts').setAttribute('class', 'menu-label clicked-label'); 
+      break;           
+  }
 }
 
-async function goToProduct() {
-	const data = await showProducts();
+async function goToDetailPage() {
+  await showProducts();
 
-	const productContainer = document.querySelectorAll('.product');
-	const PRODUCTS_KEY = 'productId';
+  const productContainer = document.querySelectorAll('.product-container');
+  productContainer.forEach((container) => {
+    container.addEventListener('click', (e) => {
+      const productId = e.currentTarget.getAttribute('id');
+      window.location.href = `/product-detail?id=${productId}`;
+    });
+  });
+};
 
-	productContainer.forEach(v => {
-		v.addEventListener('click', (e) => {
-			// 클릭한 항목의 번호 저장
-			const currentDataIndex = e.currentTarget.classList[1].split('__')[2];
-			const currentDataId = data[currentDataIndex]['_id'];
-			
-			localStorage.setItem(PRODUCTS_KEY, currentDataId);
-			window.location.href = '/product-detail';
-		})
-	})
+function renderData(product) {
+  const { _id, name, brand, price, volume, sold, category, alcoholDegree } = product;
+
+  let productSection = document.createElement('section');
+
+  productSection.setAttribute('class', 'product-container');
+  productSection.setAttribute('id', _id);
+  productSection.innerHTML = `<div class="product-image-wrapper">
+  <img src="../img/ricewine_icon.png" alt="Product Image" />
+</div>
+<div class="product-content-container">
+  <div class="content-title-wrapper">
+    <p class="content-name">${name}</p>
+  </div>
+  <div class="content-container">
+    <div class="content-left-container">
+      <p class="content-brand">브랜드 | ${brand}</p>
+      <p class="content-price">${price}원</p>
+      <p class="content-volume">${volume}ml</p>
+    </div>
+    <div class="content-right-container">
+      <p class="content-sold">${sold}회 판매</p>
+      <p class="content-category">${category}</p>
+      <p class="content-alcoholDegree">${alcoholDegree}도</p>
+    </div>
+  </div>
+</div>`;
+
+  const bodyContainer = document.querySelector('.body-container');
+  
+  bodyContainer.append(productSection);
 }
 
-goToProduct();
+goToDetailPage();

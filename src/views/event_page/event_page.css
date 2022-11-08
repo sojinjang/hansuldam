@@ -89,3 +89,27 @@ button {
 .content-left-container .content-brandName p {
   margin-right: 10px;
 }
+
+/* event category */
+.body-container {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.events-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+}
+
+.event-wrapper {
+  display: inline-flex;
+  /* flex-direction: column; */
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.event-wrapper:hover {
+  color: #808080;
+}
