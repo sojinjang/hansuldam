@@ -6,10 +6,10 @@ class ErrorMessage {
   static 4004 =
     "headers의 Content-Type을 application/json으로 설정되어있지 않거나 body에 내용이 없습니다.";
   // user 서비스 오류
-  static 4101 = "이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요.";
+  static 4101 = "이 이메일은 현재 사용중입니다. 다른 이메일을 입력해주세요.";
   static 4102 = "해당 이메일은 가입 내역이 없습니다. 다시 확인해주세요.";
-  static 4103 = "비밀번호가 일치하지 않습니다. 다시 확인해 주세요.";
-  static 4104 = "가입 내역이 없습니다. 다시 확인해 주세요.";
+  static 4103 = "비밀번호가 일치하지 않습니다. 다시 확인해주세요.";
+  static 4104 = "가입 내역이 없습니다. 다시 확인해주세요.";
   // product 서비스 오류
   static 4201 = "같은 이름의 상품이 있습니다. 다시 확인해주세요.";
   static 4202 = "수정한 이름과 같은 이름의 상품이 있습니다. 이름을 변경해주세요.";
@@ -23,4 +23,4 @@ class ErrorMessage {
   static 4403 = "일치하는 카테고리가 없습니다. 다시 확인해주세요.";
 }
 
-module.exports = ErrorMessage;
+export { ErrorMessage };
