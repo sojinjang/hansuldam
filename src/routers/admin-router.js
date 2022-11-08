@@ -46,50 +46,54 @@ adminRouter.post("/products", isEmptyObject, async (req, res, next) => {
 });
 
 // 상품 정보 수정
-adminRouter.patch("/products/:productId", isEmptyObject, async (req, res, next) => {
-  try {
-    const { productId } = req.params;
+adminRouter.patch(
+  "/products/:productId",
+  isEmptyObject,
+  async (req, res, next) => {
+    try {
+      const { productId } = req.params;
 
-    const {
-      name,
-      price,
-      volume,
-      category,
-      image,
-      brand,
-      description,
-      stock,
-      sales,
-      alcoholType,
-      alcoholDegree,
-    } = req.body;
+      const {
+        name,
+        price,
+        volume,
+        category,
+        image,
+        brand,
+        description,
+        stock,
+        sales,
+        alcoholType,
+        alcoholDegree,
+      } = req.body;
 
-    // 위 데이터를 상품 db에 추가하기
-    const updateProduct = await productService.updateProduct(productId, {
-      name,
-      price,
-      volume,
-      category,
-      image,
-      brand,
-      description,
-      stock,
-      sales,
-      alcoholType,
-      alcoholDegree,
-    });
+      // 위 데이터를 상품 db에 추가하기
+      const updateProduct = await productService.updateProduct(productId, {
+        name,
+        price,
+        volume,
+        category,
+        image,
+        brand,
+        description,
+        stock,
+        sales,
+        alcoholType,
+        alcoholDegree,
+      });
 
-    // category 모델에 product._id 추가
-    const filterObj = { name: category };
-    const toUpdate = { $push: { products: updateProduct._id } };
-    await categoryService.updateCategory(filterObj, toUpdate);
+      // category 모델에 product._id 추가
+      const filterObj = { name: category };
+      const toUpdate = { $push: { products: updateProduct._id } };
+      await categoryService.updateCategory(filterObj, toUpdate);
 
-    // 업데이트 이후의 데이터를 프론트에 보내 줌
-    res.status(200).json(updateProduct);
-  } catch (error) {
-    next(error);
+      // 업데이트 이후의 데이터를 프론트에 보내 줌
+      res.status(200).json(updateProduct);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 // 상품 삭제
 adminRouter.delete("/products/:productId", async (req, res, next) => {
@@ -200,26 +204,30 @@ adminRouter.post("/category", isEmptyObject, async (req, res, next) => {
 });
 
 // 카테고리 정보 수정
-adminRouter.patch("/category/:categoryId", isEmptyObject, async (req, res, next) => {
-  try {
-    const { categoryId } = req.params;
+adminRouter.patch(
+  "/category/:categoryId",
+  isEmptyObject,
+  async (req, res, next) => {
+    try {
+      const { categoryId } = req.params;
 
-    const { name } = req.body;
+      const { name } = req.body;
 
-    // 위 데이터를 카테고리 db에 추가하기
-    const updateCategory = await categoryService.updateCategory(
-      { id: categoryId },
-      {
-        name,
-      }
-    );
+      // 위 데이터를 카테고리 db에 추가하기
+      const updateCategory = await categoryService.updateCategory(
+        { id: categoryId },
+        {
+          name,
+        }
+      );
 
-    // 업데이트 이후의 데이터를 프론트에 보내 줌
-    res.status(200).json(updateCategory);
-  } catch (error) {
-    next(error);
+      // 업데이트 이후의 데이터를 프론트에 보내 줌
+      res.status(200).json(updateCategory);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 // 카테고리 삭제(관리자)
 adminRouter.delete("/category/:categoryId", async (req, res, next) => {
@@ -240,6 +248,19 @@ adminRouter.get("/comments", async (req, res, next) => {
     const comments = await commentService.getAllComments();
 
     res.status(200).json(comments);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// 댓글 삭제(관리자)
+adminRouter.delete("/comments/:commentId", async (req, res, next) => {
+  try {
+    const { commentId } = req.params;
+
+    const deleted = await commentService.deleteComment(commentId);
+
+    res.status(200).json(deleted);
   } catch (error) {
     next(error);
   }
