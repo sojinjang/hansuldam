@@ -1,3 +1,4 @@
+import * as api from "../api.js";
 import { setCookie } from "../utils/cookie.js";
 
 const loginBtn = document.querySelector("#submitButton");
@@ -26,22 +27,12 @@ async function logIn(e) {
   const loginInput = { email, password };
 
   try {
-    const response = await fetch("/api/user/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(loginInput),
-    });
-    const token = await response.json();
+    const token = await api.post("/api/user/login", loginInput);
     setCookie(TOKEN, token);
+    history.back();
   } catch (err) {
-    console.error(err);
-    alert(err.errorMessage);
+    alert(err.message);
   }
 }
-
-// 회원가입 버튼을 눌렀을 때 버튼 태그에 링크 걸어둠
-// 비밀번호 찾기 버튼 눌렀을 때 버튼 태그에 링크 걸어둠
 
 loginBtn.addEventListener("click", logIn);
