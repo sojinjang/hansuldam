@@ -4,7 +4,7 @@ async function fetchData() {
     get: (params, prop) => params.get(prop),
   });
   const id = queryString.id;
-  const res = await fetch(`http://localhost:8900/api/products/${id}`, {
+  const res = await fetch(`/api/products/${id}`, {
     method: 'GET',
   });
 
