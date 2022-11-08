@@ -1,3 +1,5 @@
+import { get, post, patch, delete as del } from '../api.js'
+
 const $ = (selector) => document.querySelector(selector);
 
 async function fetchCategory() {
@@ -26,9 +28,10 @@ async function showCategories() {
   </section>`;
   
       await $('.admin-menu').insertAdjacentHTML('afterend', productContainerHTML);
-      categoriesData.forEach((category) => renderCategory(category));
-      // renderDetailCategory();
-  
+      categoriesData.forEach(async (category, index) => {
+        await renderCategory(category);
+        if (index == categoriesData.length - 1) deleteCategory();
+      });
       $('.close-button').addEventListener('click', closeSection);
       $('.add-button').addEventListener('click', addCategory);
     }
@@ -47,7 +50,7 @@ async function renderCategory(category) {
   categorySection.innerHTML = `<div class="column is-2 row-name">${name}</div>
 <div class="column is-8 row-products">${products}</div>
 <div class="column is-1"><button id="${_id}" class="button column detail-button">상세</button></div>
-<div class="column is-1"><button id="del${_id}" class="button column delete-button">삭제</button></div>
+<div class="column is-1"><button id="${_id}" class="button column delete-button">삭제</button></div>
 `;
 
   $('.categories-container').append(categorySection);
@@ -56,10 +59,46 @@ async function renderCategory(category) {
 function closeSection() {
   $('.category-menu').classList.remove('isClicked');
   $('.categories-container').remove();
+  $('.add-category-modal').remove();
 }
 
-function addCategory() {
-  console.log('hi');
+async function addCategory() {
+  const categoryModalHtml = `<div class="add-category-modal">
+  <input class="input is-rounded category-input" type="text" name="name" placeholder="추가 할 카테고리 이름을 입력하세용" />
+  <div clas>
+    <button class="button add-category-button">항목 추가</button>
+    <button class="button close-modal-button">닫기</button>
+  </div>
+</div>`;
+  $('.admin-menu').insertAdjacentHTML('afterend', categoryModalHtml);
+  $('.add-category-button').addEventListener('click', async () => {
+    const inputValue = $('.category-input').value;
+    const resData = await postCategory(inputValue);
+    console.log(resData);
+  });
+
+  $('.close-modal-button').addEventListener('click', () => {
+    $('.add-category-modal').remove();
+  });
+}
+
+async function postCategory(inputValue) {
+  const inputValueObject = {
+    name: inputValue
+  }
+
+  await post('/api/admin/category' ,inputValueObject);
+}
+
+async function deleteCategory() {
+  const deleteBtn = document.querySelectorAll('.delete-button');
+  deleteBtn.forEach((button) => {
+    button.addEventListener('click', async (e) => {
+      const currentId = e.target.getAttribute('id');
+
+      await del('/api/admin/category', currentId);
+    });
+  });
 }
 
 // async function renderDetailCategory() {
