@@ -1,18 +1,12 @@
 import { Router } from "express";
-import is from "@sindresorhus/is";
-
+import { isEmptyObject } from "../middlewares";
 import { orderService, productService } from "../services";
 
 const orderRouter = Router();
 
 // 주문 추가 - userId false로 설정하면 선택으로 들어가고 안들어가고가 될듯?
-orderRouter.post("/", async (req, res, next) => {
+orderRouter.post("/", isEmptyObject, async (req, res, next) => {
   try {
-    if (is.emptyObject(req.body)) {
-      throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
-      );
-    }
     // req (request)의 body 에서 데이터 가져오기
     const {
       fullName,
@@ -41,14 +35,8 @@ orderRouter.post("/", async (req, res, next) => {
 });
 
 // 주문 수정 구매자
-orderRouter.patch("/:orderId", async (req, res, next) => {
+orderRouter.patch("/:orderId", isEmptyObject, async (req, res, next) => {
   try {
-    if (is.emptyObject(req.body)) {
-      throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
-      );
-    }
-
     const { orderId } = req.params;
 
     const {
