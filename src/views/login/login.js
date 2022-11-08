@@ -1,33 +1,29 @@
 import { setCookie } from "../utils/cookie.js";
 
-const emailInput = document.querySelector("#emailInput");
-const passwordInput = document.querySelector("#passwordInput");
 const loginBtn = document.querySelector("#submitButton");
 
 const TOKEN = "token";
 
+function isValidEmail(email) {
+  const emailRegExp =
+    /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+  return emailRegExp.test(email);
+}
+
+function isValidPassword(password) {
+  return password.length > 3;
+}
+
 async function logIn(e) {
   e.preventDefault();
 
-  const email = emailInput.value;
-  const password = passwordInput.value;
-  const emailRegExp =
-    /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+  const email = document.querySelector("#emailInput").value;
+  const password = document.querySelector("#passwordInput").value;
 
-  if (email.match(emailRegExp) == null) {
-    alert("이메일 형식을 다시 확인해주세요.");
-    return;
-  }
+  if (!isValidEmail(email)) alert("이메일 형식을 다시 확인해주세요.");
+  if (!isValidPassword(password)) alert("비밀번호 4자리 이상 입력해주세요.");
 
-  if (password.length < 4) {
-    alert("비밀번호 4자리 이상 입력해주세요");
-    return;
-  }
-
-  const inputData = {
-    email: email,
-    password: password,
-  };
+  const loginInput = { email, password };
 
   try {
     const response = await fetch("/api/user/login", {
@@ -35,13 +31,12 @@ async function logIn(e) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(inputData),
+      body: JSON.stringify(loginInput),
     });
     const token = await response.json();
     setCookie(TOKEN, token);
-    sessionStorage.setItem("token", JSON.stringify(token));
   } catch (err) {
-    console.error(err.stack);
+    console.error(err);
     alert(err.errorMessage);
   }
 }
