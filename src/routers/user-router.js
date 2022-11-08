@@ -2,6 +2,9 @@ import { Router } from "express";
 import { isEmptyObject } from "../middlewares";
 import { loginRequired } from "../middlewares";
 import { userService } from "../services";
+import { generateRandomPassword } from "../utils/generate-random-password";
+import { sendRandomPassword } from "../utils/send-mail";
+import bcrypt from "bcrypt";
 
 const userRouter = Router();
 
@@ -51,6 +54,32 @@ userRouter.post("/register", isEmptyObject, async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+});
+
+userRouter.post("/random-password", isEmptyObject, async (req, res) => {
+  const { email } = req.body;
+  const user = await userService.findUserByEmail(email);
+  if (!user) {
+    throw new Error(
+      "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요."
+    );
+  }
+
+  const newPassword = generateRandomPassword();
+  const newHashedPassword = await bcrypt.hash(newPassword, 10);
+
+  const randomPasswordUpdate = await userService.changePasswordAsRandom(
+    user._id, // user_id
+    newHashedPassword
+  );
+  // const sendMail =
+  await sendRandomPassword(
+    email,
+    "임시 비밀번호 발급 이메일입니다.",
+    `임시 비밀번호: '${newPassword}'  로그인 후 새로운 비밀번호로 변경해주세요.`
+  );
+
+  res.status(200).json(randomPasswordUpdate);
 });
 
 export { userRouter };
