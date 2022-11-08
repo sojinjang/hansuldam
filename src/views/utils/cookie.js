@@ -10,3 +10,5 @@ const getCookie = (key) => {
   );
   return matches ? decodeURIComponent(matches[1]) : undefined;
 };
+
+export { setCookie, getCookie };
