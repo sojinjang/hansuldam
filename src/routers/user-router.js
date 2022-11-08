@@ -65,10 +65,10 @@ userRouter.post("/random-password", isEmptyObject, async (req, res, next) => {
     const newHashedPassword = await bcrypt.hash(newPassword, 10);
 
     const randomPasswordUpdate = await userService.changePasswordAsRandom(
-      user._id, // user_id
+      user._id,
       newHashedPassword
     );
-    // const sendMail =
+
     await sendRandomPassword(
       email,
       "임시 비밀번호 발급 이메일입니다.",
