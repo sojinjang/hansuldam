@@ -9,10 +9,10 @@ class CategoryService {
     const { name } = categoryInfo;
 
     //상품 중복 확인
-    const category = await this.categoryModel.findByObj({ name });
-    if (category) {
-      throw new Error("같은 이름의 카테고리가 있습니다. 다시 확인해주세요");
-    }
+    // const category = await this.categoryModel.findByObj({ name });
+    // if (category) {
+    //   throw new Error("같은 이름의 카테고리가 있습니다. 다시 확인해주세요");
+    // }
 
     // db에 저장
     const createdNewCategory = await this.categoryModel.create(categoryInfo);
