@@ -23,10 +23,6 @@ const ProductSchema = new Schema(
       type: Number,
       required: false,
     },
-    quantity: {
-      type: Number,
-      required: false,
-    },
     image: {
       type: String,
       required: false,
@@ -39,7 +35,7 @@ const ProductSchema = new Schema(
       type: Number,
       required: false,
     },
-    sold: {
+    sales: {
       type: Number,
       required: false,
       default: 0,
