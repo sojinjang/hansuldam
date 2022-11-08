@@ -6,6 +6,7 @@ const UserSchema = new Schema(
     email: {
       type: String,
       required: true,
+      unique: true,
     },
     fullName: {
       type: String,
@@ -30,7 +31,7 @@ const UserSchema = new Schema(
           _id: false,
         }
       ),
-      required: true,
+      required: false,
     },
     role: {
       type: String,

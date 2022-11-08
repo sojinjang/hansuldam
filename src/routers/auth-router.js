@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { isEmptyObject } from "../middlewares";
-
+import { BadRequest } from "../utils/errorCodes";
 import { userService, orderService, commentService } from "../services";
 
 const authRouter = Router();
@@ -38,7 +38,7 @@ authRouter.patch("/user", isEmptyObject, async (req, res, next) => {
 
     // currentPassword 없을 시, 진행 불가
     if (!currentPassword) {
-      throw new Error("정보를 변경하려면, 현재의 비밀번호가 필요합니다.");
+      throw new BadRequest("Need currentPassword", 4105);
     }
 
     const userInfoRequired = { userId, currentPassword };
