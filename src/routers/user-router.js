@@ -23,9 +23,9 @@ userRouter.post("/login", isEmptyObject, async (req, res, next) => {
 });
 
 // 로그아웃
-userRouter.post("/logout", loginRequired, async (req, res, next) => {
-  console.log(req.cookies);
-});
+// userRouter.post("/logout", loginRequired, async (req, res, next) => {
+//   console.log(req.cookies);
+// });
 
 // 회원가입 api (아래는 /register이지만, 실제로는 /api/user/register로 요청해야 함.)
 userRouter.post("/register", isEmptyObject, async (req, res, next) => {

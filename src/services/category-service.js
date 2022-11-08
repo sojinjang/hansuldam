@@ -11,7 +11,7 @@ class CategoryService {
     //상품 중복 확인
     const category = await this.categoryModel.findByObj({ name });
     if (category) {
-      throw NeedChangecategoryName;
+      throw NeedChangeCategoryName;
     }
 
     // db에 저장
