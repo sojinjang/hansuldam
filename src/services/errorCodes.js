@@ -1,6 +1,12 @@
-// 요청오류는 4000번대
-
-// class ErrorCode extends Error {
+class ErrorCode extends Error {
+  constructor(message, statusCode, errorCode) {
+    super(message);
+    this.statusCode = statusCode;
+    this.errorCode = errorCode;
+    // 이 오류생성자가 호출되기 전에 발생한 호출까지만 stack에 쌓는다(보안이슈)
+    Error.captureStackTrace(this, this.constructor);
+  }
+}
 
 const UnknownError = {
   code: 1000,
@@ -10,103 +16,29 @@ const UnknownError = {
 const DBError = { code: 5100, message: "DB Error" };
 const AWSError = 5200;
 
-// ------- 미들웨어 오류 : 4000
-const NoAuth = {
-  code: 4001,
-  status: 403,
-  message: "로그인한 유저만 사용할 수 있는 서비스입니다.",
-};
+class BadRequest extends ErrorCode {
+  constructor(message, errorCode) {
+    if (message) super(message, 400, errorCode);
+    else super("Bad Request", 400, 400);
+  }
+}
+class Unauthorized extends ErrorCode {
+  constructor(message, errorCode) {
+    if (message) super(message, 401, errorCode);
+    else super("Unauthorized", 401, 401);
+  }
+}
+class Forbidden extends ErrorCode {
+  constructor(message, errorCode) {
+    if (message) super(message, 403, errorCode);
+    else super("Forbidden", 403, 403);
+  }
+}
+class NotFound extends ErrorCode {
+  constructor(message, errorCode) {
+    if (message) super(message, 404, errorCode);
+    else super("NotFound", 404, 404);
+  }
+}
 
-const IncorrectToken = {
-  code: 4002,
-  status: 403,
-  message: "정상적인 토큰이 아닙니다.",
-};
-
-const NoAdmin = {
-  code: 4002,
-  status: 403,
-  message: "관리자 권한이 필요합니다.",
-};
-const EmptyObject = {
-  code: 4002,
-  status: 406,
-  message: "headers의 Content-Type을 application/json으로 설정해주세요",
-};
-
-// ------- user 서비스오류: 4100
-const NeedChangeEmail = {
-  code: 4101,
-  status: 400,
-  message: "이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요.",
-};
-const EmailNoInDB = {
-  code: 4102,
-  status: 404,
-  message: "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.",
-};
-const PasswordError = {
-  code: 4103,
-  status: 401,
-  message: "비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.",
-};
-const NoInDB = {
-  code: 4104,
-  status: 404,
-  message: "가입 내역이 없습니다. 다시 한 번 확인해 주세요.",
-};
-
-//--------product 서비스오류: 4200
-const NeedChangeProductName = {
-  code: 4201,
-  status: 400,
-  message: "같은 이름의 상품이 있습니다. 다시 확인해주세요",
-};
-const NeedAnotherProductName = {
-  code: 4202,
-  status: 400,
-  message: "수정한 이름과 같은 이름의 상품이 있습니다. 다시 확인해주세요",
-};
-const ProductNoInDB = {
-  code: 4203,
-  status: 404,
-  message: "일치하는 상품이 없습니다. 다시 한 번 확인해 주세요.",
-};
-
-//--------order 서비스오류: 4300
-const CanNotChangeOrder = {
-  code: 4302,
-  status: 401,
-  message: "상품준비중 상태가 아니라 주문을 수정할수 없습니다.",
-};
-const OrderNoInDB = {
-  code: 4303,
-  status: 404,
-  message: "일치하는 주문 내역이 없습니다. 다시 한 번 확인해 주세요.",
-};
-
-//--------category 서비스오류: 4400
-const NeedChangeCategoryName = {
-  code: 4401,
-  status: 400,
-  message: "같은 이름의 카테고리가 있습니다. 다시 확인해주세요",
-};
-const NeedAnotherCategoryName = {
-  code: 4402,
-  status: 400,
-  message: "수정한 이름과 같은 이름의 카테고리가 있습니다. 다시 확인해주세요",
-};
-const CategoryNoInDB = {
-  code: 4403,
-  status: 404,
-  message: "일치하는 카테고리가 없습니다. 다시 한 번 확인해 주세요.",
-};
-
-export {
-  UnknownError,
-  ValidationError,
-  SyntaxError,
-  NoPermission,
-  DBError,
-  AWSError,
-};
+export { BadRequest, Unauthorized, Forbidden, NotFound, DBError, AWSError };

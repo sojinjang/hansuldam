@@ -2,6 +2,9 @@ import { Router } from "express";
 import { isEmptyObject } from "../middlewares";
 import { loginRequired } from "../middlewares";
 import { userService } from "../services";
+import { generateRandomPassword } from "../utils/generate-random-password";
+import { sendRandomPassword } from "../utils/send-mail";
+import bcrypt from "bcrypt";
 
 const userRouter = Router();
 
@@ -48,6 +51,32 @@ userRouter.post("/register", isEmptyObject, async (req, res, next) => {
     // 추가된 유저의 db 데이터를 프론트에 다시 보내줌
     // 물론 프론트에서 안 쓸 수도 있지만, 편의상 일단 보내 줌
     res.status(201).json(newUser);
+  } catch (error) {
+    next(error);
+  }
+});
+
+userRouter.post("/random-password", isEmptyObject, async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    const user = await userService.findUserByEmail(email);
+
+    const newPassword = generateRandomPassword();
+    const newHashedPassword = await bcrypt.hash(newPassword, 10);
+
+    const randomPasswordUpdate = await userService.changePasswordAsRandom(
+      user._id,
+      newHashedPassword
+    );
+
+    await sendRandomPassword(
+      email,
+      "임시 비밀번호 발급 이메일입니다.",
+      `임시 비밀번호: ${newPassword}
+  로그인 후 새로운 비밀번호로 변경해주세요.`
+    );
+
+    res.status(200).json(randomPasswordUpdate);
   } catch (error) {
     next(error);
   }

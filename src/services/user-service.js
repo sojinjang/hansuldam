@@ -15,11 +15,21 @@ class UserService {
     // 객체 destructuring
     const { fullName, email, password, phoneNumber, address } = userInfo;
 
+<<<<<<< HEAD
     // 이메일 중복 확인
     const user = await this.userModel.findByEmail(email);
     if (user) {
       throw NeedChangeEmail;
     }
+=======
+    // 이메일 중복 확인 - email unique이므로 필요 X
+    // const user = await this.userModel.findByEmail(email);
+    // if (user) {
+    //   throw new Error(
+    //     "이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요."
+    //   );
+    // }
+>>>>>>> 7dc2048c8df332a1ebec4ba4e4de6e6b0e6a413c
 
     // 이메일 중복은 이제 아니므로, 회원가입을 진행함
 
@@ -65,7 +75,7 @@ class UserService {
     }
 
     // 로그인 성공 -> JWT 웹 토큰 생성
-    const secretKey = process.env.JWT_SECRET_KEY || "ParaisePrison";
+    const secretKey = process.env.JWT_SECRET_KEY;
 
     // 2개 프로퍼티를 jwt 토큰에 담음
     const token = jwt.sign({ userId: user._id, role: user.role }, secretKey, {
@@ -174,6 +184,27 @@ class UserService {
     const { productsInCart } = await this.userModel.findById(userId);
 
     return productsInCart;
+  }
+  //비밀번호 찾기 api
+  async findUserByEmail(email) {
+    const user = await this.userModel.findByEmail(email);
+    if (!user) {
+      throw new Error(
+        "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요."
+      );
+    }
+    return user;
+  }
+
+  async changePasswordAsRandom(userId, newHashedPassword) {
+    const toUpdate = { password: newHashedPassword };
+    // 우선 해당 id의 유저가 db에 있는지 확인
+    const user = await this.userModel.update({
+      userId,
+      update: toUpdate,
+    });
+
+    return user;
   }
 }
 
