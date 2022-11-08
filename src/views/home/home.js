@@ -1,4 +1,6 @@
 const $ = selector => document.querySelector(selector);
+
+// 캐러셀 버튼 클릭 시
 const carouselDot = document.querySelectorAll('.carousel-dot');
 
 for (dot of carouselDot) {
@@ -19,8 +21,36 @@ function clickCarouselDot(e) {
 	});
 }
 
+async function renderData() {
+	const res = await fetch(
+		'http://localhost:8900/api/category/63689bbb0dc55a83467142cc/products',
+		{
+			method: 'GET',
+		}
+	);
+	
+	const eventProducts = await res.json();
+
+	eventProducts.forEach((product) => {
+		const { _id, name } = product;
+		let productContainer = document.createElement('div');
+		productContainer.setAttribute('class', 'products-image-list');
+		productContainer.setAttribute('id', _id);
+		productContainer.innerHTML = `<div>
+		<img
+			src="https://d38cxpfv0ljg7q.cloudfront.net/admin_contents/thumbnail/Xp8J-1666763020027-1011ssgp_9241.jpg"
+		/>
+	</div>
+<span>${name}</span>`;
+
+		const eventsContainer = document.querySelector('.products-container');
+		eventsContainer.append(productContainer);
+	});
+};
+
 async function clickSliderButton() {
 	await renderData();
+	goToDetailPage();
 
 	const productsContainer = document.querySelector('.products-container');
 	const maxSlidePage = document.querySelectorAll('.products-image-list').length - 4;
@@ -44,31 +74,14 @@ async function clickSliderButton() {
 	});
 }
 
-async function renderData() {
-  const res = await fetch(
-    'http://localhost:8900/api/category/63689bbb0dc55a83467142cc/products',
-    {
-      method: 'GET',
-    }
-  );
-	
-	const eventProducts = await res.json();
-
-	eventProducts.forEach((product) => {
-		const { name } = product;
-		let productContainer = document.createElement('div');
-		productContainer.setAttribute('class', 'products-image-list');
-		// productContainer.setAttribute('id', _id);
-		productContainer.innerHTML = `<div>
-		<img
-			src="https://d38cxpfv0ljg7q.cloudfront.net/admin_contents/thumbnail/Xp8J-1666763020027-1011ssgp_9241.jpg"
-		/>
-	</div>
-<span>${name}</span>`;
-
-		const eventsContainer = document.querySelector('.products-container');
-		eventsContainer.append(productContainer);
-	});
+function goToDetailPage() {
+  const productContainer = document.querySelectorAll('.products-image-list');
+  productContainer.forEach((container) => {
+    container.addEventListener('click', (e) => {
+      const productId = e.currentTarget.getAttribute('id');
+      window.location.href = `/product-detail?id=${productId}`;
+    });
+  });
 };
 
 clickSliderButton();

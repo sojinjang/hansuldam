@@ -40,7 +40,7 @@ async function goToEvent() {
       const eventProducts = await res.json();
       eventProducts.forEach((product) => renderData(product));
       
-      await goToDetailPage();
+      goToDetailPage();
       })
   })
 }
