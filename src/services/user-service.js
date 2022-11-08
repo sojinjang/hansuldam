@@ -15,13 +15,11 @@ class UserService {
     // 객체 destructuring
     const { fullName, email, password, phoneNumber, address } = userInfo;
 
-<<<<<<< HEAD
     // 이메일 중복 확인
     const user = await this.userModel.findByEmail(email);
     if (user) {
       throw NeedChangeEmail;
     }
-=======
     // 이메일 중복 확인 - email unique이므로 필요 X
     // const user = await this.userModel.findByEmail(email);
     // if (user) {
@@ -29,7 +27,6 @@ class UserService {
     //     "이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요."
     //   );
     // }
->>>>>>> 7dc2048c8df332a1ebec4ba4e4de6e6b0e6a413c
 
     // 이메일 중복은 이제 아니므로, 회원가입을 진행함
 
