@@ -134,14 +134,8 @@ adminRouter.patch("/orders/:orderId", async (req, res, next) => {
 
     const { orderId } = req.params;
 
-    const {
-      fullName,
-      productsInOrder,
-      phoneNumber,
-      address,
-      payment,
-      status,
-    } = req.body;
+    const { fullName, productsInOrder, phoneNumber, address, payment, status } =
+      req.body;
 
     // 위 데이터를 카테고리 db에 추가하기
     const updateOrder = await orderService.updateOrderAdmin(orderId, {
@@ -244,6 +238,19 @@ adminRouter.get("/comments", async (req, res, next) => {
     const comments = await commentService.getAllComments();
 
     res.status(200).json(comments);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// 댓글 삭제(관리자)
+adminRouter.delete("/comments/:commentId", async (req, res, next) => {
+  try {
+    const { commentId } = req.params;
+
+    const deleted = await commentService.deleteComment(commentId);
+
+    res.status(200).json(deleted);
   } catch (error) {
     next(error);
   }

@@ -209,7 +209,7 @@ authRouter.patch("/comments/:commentId", async (req, res, next) => {
     const { commentId } = req.params;
     const { content } = req.body;
 
-    const commentInfo = await commentService.setItem(userId, commentId, {
+    const commentInfo = await commentService.userSetComment(userId, commentId, {
       content,
     });
 
@@ -224,7 +224,7 @@ authRouter.delete("/comments/:commentId", async (req, res, next) => {
     const userId = req.currentUser.userId;
     const { commentId } = req.params;
 
-    const deleted = await commentService.deleteComment(userId, commentId);
+    const deleted = await commentService.userDeleteComment(userId, commentId);
 
     res.status(200).json(deleted);
   } catch (error) {
