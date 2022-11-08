@@ -35,7 +35,7 @@ const ProductSchema = new Schema(
       type: Number,
       required: false,
     },
-    sold: {
+    sales: {
       type: Number,
       required: false,
       default: 0,
