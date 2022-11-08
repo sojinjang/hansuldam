@@ -1,4 +1,5 @@
 import { categoryModel } from "../db";
+import { BadRequest, NotFound } from "../utils/errorCodes";
 
 class CategoryService {
   constructor(categoryModel) {
@@ -8,19 +9,13 @@ class CategoryService {
   async addCategory(categoryInfo) {
     const { name } = categoryInfo;
 
-    //상품 중복 확인
-    const category = await this.categoryModel.findByObj({ name });
-    if (category) {
-      throw NeedChangeCategoryName;
-    }
-    // const category = await this.categoryModel.findByObj({ name });
-    // if (category) {
-    //   throw new Error("같은 이름의 카테고리가 있습니다. 다시 확인해주세요");
-    // }
-
     // db에 저장
-    const createdNewCategory = await this.categoryModel.create(categoryInfo);
-    return createdNewCategory;
+    try {
+      const createdNewCategory = await this.categoryModel.create(categoryInfo);
+      return createdNewCategory;
+    } catch {
+      throw new BadRequest("Same Category in DB", 4401);
+    }
   }
 
   async getCategories() {
@@ -39,13 +34,13 @@ class CategoryService {
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!category) {
-      throw CategoryNoInDB;
+      throw new NotFound("This Category Not in DB", 4403);
     }
 
     // 이름 중복 확인
     category = await this.categoryModel.findByName(toUpdate.name);
     if (category) {
-      throw NeedAnotherCategoryName;
+      throw new BadRequest("This Modify Name already in DB", 4402);
     }
 
     const categoryId = category._id;
@@ -64,7 +59,7 @@ class CategoryService {
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!category) {
-      throw CategoryNoInDB;
+      throw new NotFound("This Category Not in DB", 4403);
     }
 
     // 업데이트 진행

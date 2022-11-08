@@ -1,5 +1,5 @@
 import { userModel } from "../db";
-import {} from "./errorCodes";
+import { BadRequest, Unauthorized, NotFound } from "../utils/errorCodes";
 
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -15,21 +15,6 @@ class UserService {
     // 객체 destructuring
     const { fullName, email, password, phoneNumber, address } = userInfo;
 
-    // 이메일 중복 확인
-    const user = await this.userModel.findByEmail(email);
-    if (user) {
-      throw NeedChangeEmail;
-    }
-    // 이메일 중복 확인 - email unique이므로 필요 X
-    // const user = await this.userModel.findByEmail(email);
-    // if (user) {
-    //   throw new Error(
-    //     "이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요."
-    //   );
-    // }
-
-    // 이메일 중복은 이제 아니므로, 회원가입을 진행함
-
     // 우선 비밀번호 해쉬화(암호화)
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -41,8 +26,12 @@ class UserService {
       address,
     };
 
-    // db에 저장
-    const createdNewUser = await this.userModel.create(newUserInfo);
+    try {
+      // db에 저장
+      const createdNewUser = await this.userModel.create(newUserInfo);
+    } catch {
+      throw new BadRequest("This Email is Currently in Use.", 4101);
+    }
 
     return createdNewUser;
   }
@@ -55,7 +44,7 @@ class UserService {
     // 우선 해당 이메일의 사용자 정보가  db에 존재하는지 확인
     const user = await this.userModel.findByEmail(email);
     if (!user) {
-      throw EmailNoInDB;
+      throw new NotFound("This Email Not in DB", 4102);
     }
 
     // 비밀번호 일치 여부 확인
@@ -68,7 +57,7 @@ class UserService {
     );
 
     if (!isPasswordCorrect) {
-      throw PasswordError;
+      throw new Unauthorized("Incorrect Password", 4103);
     }
 
     // 로그인 성공 -> JWT 웹 토큰 생성
@@ -110,7 +99,7 @@ class UserService {
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {
-      throw NoInDB;
+      throw new NotFound("UserId does not in DB", 4104);
     }
 
     // 이제, 정보 수정을 위해 사용자가 입력한 비밀번호가 올바른 값인지 확인해야 함
@@ -123,7 +112,7 @@ class UserService {
     );
 
     if (!isPasswordCorrect) {
-      throw PasswordError;
+      throw new Unauthorized("Incorrect Password", 4103);
     }
 
     // 비밀번호도 변경하는 경우에는, 회원가입 때처럼 해쉬화 해주어야 함.
@@ -152,7 +141,7 @@ class UserService {
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {
-      throw new Error("가입 내역이 없습니다. 다시 한 번 확인해 주세요.");
+      throw new NotFound("UserId does not in DB", 4104);
     }
 
     const toUpdate = { $push: { orders: orderId } };
@@ -167,7 +156,9 @@ class UserService {
 
   // 장바구니 update
   async addCart(userInfo) {
+    // 객체 destructuring
     const { userId, productsInCart } = userInfo;
+    // 이메일 중복 확인
     const updateCart = await this.userModel.update({
       userId,
       updateObj: { productsInCart },
@@ -178,6 +169,8 @@ class UserService {
 
   // 장바구니 get
   async getCart(userId) {
+    // 객체 destructuring
+    // 이메일 중복 확인
     const { productsInCart } = await this.userModel.findById(userId);
 
     return productsInCart;
@@ -186,9 +179,7 @@ class UserService {
   async findUserByEmail(email) {
     const user = await this.userModel.findByEmail(email);
     if (!user) {
-      throw new Error(
-        "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요."
-      );
+      throw new NotFound("Email Not In DB", 4102);
     }
     return user;
   }

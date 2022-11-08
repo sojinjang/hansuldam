@@ -31,7 +31,7 @@ const UserSchema = new Schema(
           _id: false,
         }
       ),
-      required: true,
+      required: false,
     },
     role: {
       type: String,
