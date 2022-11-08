@@ -1,5 +1,5 @@
 import { Router } from "express";
-import is from "@sindresorhus/is";
+import { isEmptyObject } from "../middlewares";
 
 import { userService, orderService, commentService } from "../services";
 
@@ -21,16 +21,8 @@ authRouter.get("/user", async (req, res, next) => {
 });
 
 // 사용자 정보 수정
-authRouter.patch("/user", async (req, res, next) => {
+authRouter.patch("/user", isEmptyObject, async (req, res, next) => {
   try {
-    // content-type 을 application/json 로 프론트에서
-    // 설정 안 하고 요청하면, body가 비어 있게 됨.
-    if (is.emptyObject(req.body)) {
-      throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
-      );
-    }
-
     // params로부터 id를 가져옴
     const userId = req.currentUser.userId;
 
@@ -90,13 +82,8 @@ authRouter.delete("/user", async (req, res, next) => {
 
 //-----orders
 // 회원 주문하기
-authRouter.post("/orders", async (req, res, next) => {
+authRouter.post("/orders", isEmptyObject, async (req, res, next) => {
   try {
-    if (is.emptyObject(req.body)) {
-      throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
-      );
-    }
     const userId = req.currentUser.userId;
 
     // req (request)의 body 에서 데이터 가져오기
@@ -132,13 +119,8 @@ authRouter.post("/orders", async (req, res, next) => {
 
 //-----carts
 // 회원 장바구니
-authRouter.patch("/cart", async (req, res, next) => {
+authRouter.patch("/cart", isEmptyObject, async (req, res, next) => {
   try {
-    if (is.emptyObject(req.body)) {
-      throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
-      );
-    }
     const userId = req.currentUser.userId;
 
     // req (request)의 body 에서 데이터 가져오기
@@ -209,7 +191,7 @@ authRouter.patch("/comments/:commentId", async (req, res, next) => {
     const { commentId } = req.params;
     const { content } = req.body;
 
-    const commentInfo = await commentService.setItem(userId, commentId, {
+    const commentInfo = await commentService.userSetComment(userId, commentId, {
       content,
     });
 
@@ -224,7 +206,7 @@ authRouter.delete("/comments/:commentId", async (req, res, next) => {
     const userId = req.currentUser.userId;
     const { commentId } = req.params;
 
-    const deleted = await commentService.deleteComment(userId, commentId);
+    const deleted = await commentService.userDeleteComment(userId, commentId);
 
     res.status(200).json(deleted);
   } catch (error) {

@@ -24,7 +24,7 @@ class CommentService {
     return comments;
   }
 
-  async setItem(curUserId, commentId, toUpdate) {
+  async userSetComment(curUserId, commentId, toUpdate) {
     const { userId } = await this.commentModel.findById(commentId);
 
     if (curUserId !== userId.toString()) {
@@ -39,12 +39,23 @@ class CommentService {
     return updatedComment;
   }
 
-  async deleteComment(curUserId, commentId) {
+  async userDeleteComment(curUserId, commentId) {
     const { userId } = await this.commentModel.findById(commentId);
     if (curUserId !== userId.toString()) {
       throw new Error(`권한이 없습니다.`);
     }
 
+    const { deletedCount } = await this.commentModel.deleteById(commentId);
+
+    // 삭제에 실패한 경우, 에러 메시지 반환
+    if (deletedCount === 0) {
+      throw new Error(`${commentId} 주문의 삭제에 실패하였습니다`);
+    }
+
+    return { result: "success" };
+  }
+
+  async deleteComment(commentId) {
     const { deletedCount } = await this.commentModel.deleteById(commentId);
 
     // 삭제에 실패한 경우, 에러 메시지 반환

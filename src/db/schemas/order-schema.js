@@ -41,7 +41,7 @@ const OrderSchema = new Schema(
     payment: {
       type: new Schema(
         {
-          way: String,
+          method: String,
           detail: String,
           number: String,
         },

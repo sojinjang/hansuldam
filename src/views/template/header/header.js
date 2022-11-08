@@ -6,8 +6,8 @@ function getHeader() {
             <img class="company-logo" src="../img/logo.png" alt="company-logo">
           </div>
           <div class="search-container">
-            <img class="search__img" src="../img/search-icon.png" alt="search-logo">
-            <input class="input is-rounded search__bar" type="text" placeholder="제품검색" />
+            <img class="search-img" src="../img/search-icon.png" alt="search-logo">
+            <input class="input is-rounded search-bar" type="text" placeholder="제품검색" />
           </div>
         </section>
         <section class="user-menu">
@@ -22,17 +22,17 @@ function getHeader() {
       </div>
       <div class="header-menu-wrapper">
         <ul class="menu-list">
-          <li>
-            <div class="menu-label"><a class="products">전체상품</a></div>
+          <li class="menu-label" id="totalProducts">
+            <a class="products">전체상품</a>
           </li>
-          <li>
-            <div class="menu-label"><a>신상품</a></div>
+          <li class="menu-label" id="newProducts">
+            <a>신상품</a>
           </li>
-          <li>
-            <div class="menu-label"><a>베스트</a></div>
+          <li class="menu-label" id="bestProducts">
+            <a>베스트</a>
           </li>
-          <li>
-            <div class="menu-label"><a>밀키트</a></div>
+          <li class="menu-event-label" id="eventProducts">
+            <a>기획전</a>
           </li>
         </ul>
       </div>
@@ -40,17 +40,22 @@ function getHeader() {
 }
 
 function redirectPage() {
-  const companyLogo = document.querySelector(".company-logo");
-  const login = document.querySelector(".login");
-  const join = document.querySelector(".join");
-  const cart = document.querySelector(".basket");
-  const products = document.querySelector(".products");
+  const $ = selector => document.querySelector(selector);
+  const menuLabels = document.querySelectorAll('.menu-label');
 
-  companyLogo.addEventListener("click", () => (window.location.href = "/"));
-  login.addEventListener("click", () => (window.location.href = "/login"));
-  join.addEventListener("click", () => (window.location.href = "/join"));
-  cart.addEventListener("click", () => (window.location.href = "/join"));
-  products.addEventListener("click", () => (window.location.href = "/products"));
+  $(".company-logo").addEventListener("click", () => (window.location.href = "/"));
+  $(".login").addEventListener("click", () => (window.location.href = "/login"));
+  $('.join').addEventListener("click", () => (window.location.href = "/join"));
+  $('.basket').addEventListener("click", () => (window.location.href = "/cart"));
+  $('#eventProducts').addEventListener('click', () => (window.location.href = '/event-page'));
+  
+  menuLabels.forEach((label) => {
+    label.addEventListener('click', (e) => {
+      const labelId = e.currentTarget.getAttribute('id');
+      window.location.href = `/products?label=${labelId}`;
+    });
+  });
+  
 }
 
 export { getHeader, redirectPage };

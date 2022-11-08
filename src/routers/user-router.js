@@ -1,21 +1,16 @@
 import { Router } from "express";
-import is from "@sindresorhus/is";
-
+import { isEmptyObject } from "../middlewares";
 import { loginRequired } from "../middlewares";
 import { userService } from "../services";
+import { generateRandomPassword } from "../utils/generate-random-password";
+import { sendRandomPassword } from "../utils/send-mail";
+import bcrypt from "bcrypt";
 
 const userRouter = Router();
 
 // 로그인 api (아래는 /login 이지만, 실제로는 /api/user/login로 요청해야 함.)
-userRouter.post("/login", async (req, res, next) => {
+userRouter.post("/login", isEmptyObject, async (req, res, next) => {
   try {
-    // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
-    if (is.emptyObject(req.body)) {
-      throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
-      );
-    }
-
     // req (request) 에서 데이터 가져오기
     const email = req.body.email;
     const password = req.body.password;
@@ -36,15 +31,8 @@ userRouter.post("/logout", loginRequired, async (req, res, next) => {
 });
 
 // 회원가입 api (아래는 /register이지만, 실제로는 /api/user/register로 요청해야 함.)
-userRouter.post("/register", async (req, res, next) => {
+userRouter.post("/register", isEmptyObject, async (req, res, next) => {
   try {
-    // Content-Type: application/json 설정을 안 한 경우, 에러를 만들도록 함.
-    // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
-    if (is.emptyObject(req.body)) {
-      throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
-      );
-    }
     const fullName = req.body.fullName;
     const email = req.body.email;
     const password = req.body.password;
@@ -63,6 +51,32 @@ userRouter.post("/register", async (req, res, next) => {
     // 추가된 유저의 db 데이터를 프론트에 다시 보내줌
     // 물론 프론트에서 안 쓸 수도 있지만, 편의상 일단 보내 줌
     res.status(201).json(newUser);
+  } catch (error) {
+    next(error);
+  }
+});
+
+userRouter.post("/random-password", isEmptyObject, async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    const user = await userService.findUserByEmail(email);
+
+    const newPassword = generateRandomPassword();
+    const newHashedPassword = await bcrypt.hash(newPassword, 10);
+
+    const randomPasswordUpdate = await userService.changePasswordAsRandom(
+      user._id, // user_id
+      newHashedPassword
+    );
+    // const sendMail =
+    await sendRandomPassword(
+      email,
+      "임시 비밀번호 발급 이메일입니다.",
+      `임시 비밀번호: ${newPassword}
+  로그인 후 새로운 비밀번호로 변경해주세요.`
+    );
+
+    res.status(200).json(randomPasswordUpdate);
   } catch (error) {
     next(error);
   }
