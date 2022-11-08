@@ -11,7 +11,7 @@ class CategoryService {
     //상품 중복 확인
     const category = await this.categoryModel.findByObj({ name });
     if (category) {
-      throw new Error("같은 이름의 카테고리가 있습니다. 다시 확인해주세요");
+      throw NeedChangecategoryName;
     }
 
     // db에 저장
@@ -35,10 +35,13 @@ class CategoryService {
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!category) {
-      res.status(404);
-      throw new Error(
-        "일치하는 카테고리가 없습니다. 다시 한 번 확인해 주세요."
-      );
+      throw CategoryNoInDB;
+    }
+
+    // 이름 중복 확인
+    category = await this.categoryModel.findByName(toUpdate.name);
+    if (category) {
+      throw NeedAnotherCategoryName;
     }
 
     const categoryId = category._id;
@@ -57,10 +60,7 @@ class CategoryService {
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!category) {
-      res.status(404);
-      throw new Error(
-        "일치하는 카테고리가 없습니다. 다시 한 번 확인해 주세요."
-      );
+      throw CategoryNoInDB;
     }
 
     // 업데이트 진행

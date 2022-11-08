@@ -12,7 +12,7 @@ class ProductService {
     //상품 중복 확인
     const product = await this.productModel.findByName(name);
     if (product) {
-      throw new Error("같은 이름의 상품이 있습니다. 다시 확인해주세요");
+      throw NeedChangeName;
     }
 
     // db에 저장
@@ -36,14 +36,12 @@ class ProductService {
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!product) {
-      throw new Error("일치하는 상품이 없습니다. 다시 한 번 확인해 주세요.");
+      throw ProductNoInDB;
     }
     //상품 이름 중복 확인
     product = await this.productModel.findByName(toUpdate.name);
     if (product) {
-      throw new Error(
-        "수정한 이름과 같은 이름의 상품이 있습니다. 다시 확인해주세요"
-      );
+      throw NeedAnotherProductName;
     }
     // 업데이트 진행
     product = await this.productModel.update({
@@ -60,7 +58,7 @@ class ProductService {
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!product) {
-      throw new Error("일치하는 상품이 없습니다. 다시 한 번 확인해 주세요.");
+      throw ProductNoInDB;
     }
 
     // 업데이트 진행

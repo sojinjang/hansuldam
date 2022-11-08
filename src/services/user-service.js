@@ -1,4 +1,5 @@
 import { userModel } from "../db";
+import {} from "./errorCodes";
 
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -17,9 +18,7 @@ class UserService {
     // 이메일 중복 확인
     const user = await this.userModel.findByEmail(email);
     if (user) {
-      throw new Error(
-        "이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요."
-      );
+      throw NeedChangeEmail;
     }
 
     // 이메일 중복은 이제 아니므로, 회원가입을 진행함
@@ -49,9 +48,7 @@ class UserService {
     // 우선 해당 이메일의 사용자 정보가  db에 존재하는지 확인
     const user = await this.userModel.findByEmail(email);
     if (!user) {
-      throw new Error(
-        "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요."
-      );
+      throw EmailNoInDB;
     }
 
     // 비밀번호 일치 여부 확인
@@ -64,13 +61,11 @@ class UserService {
     );
 
     if (!isPasswordCorrect) {
-      throw new Error(
-        "비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요."
-      );
+      throw PasswordError;
     }
 
     // 로그인 성공 -> JWT 웹 토큰 생성
-    const secretKey = process.env.JWT_SECRET_KEY || "secret-key";
+    const secretKey = process.env.JWT_SECRET_KEY || "ParaisePrison";
 
     // 2개 프로퍼티를 jwt 토큰에 담음
     const token = jwt.sign({ userId: user._id, role: user.role }, secretKey, {
@@ -108,7 +103,7 @@ class UserService {
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {
-      throw new Error("가입 내역이 없습니다. 다시 한 번 확인해 주세요.");
+      throw NoInDB;
     }
 
     // 이제, 정보 수정을 위해 사용자가 입력한 비밀번호가 올바른 값인지 확인해야 함
@@ -121,9 +116,7 @@ class UserService {
     );
 
     if (!isPasswordCorrect) {
-      throw new Error(
-        "현재 비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요."
-      );
+      throw PasswordError;
     }
 
     // 비밀번호도 변경하는 경우에는, 회원가입 때처럼 해쉬화 해주어야 함.
@@ -167,9 +160,7 @@ class UserService {
 
   // 장바구니 update
   async addCart(userInfo) {
-    // 객체 destructuring
     const { userId, productsInCart } = userInfo;
-    // 이메일 중복 확인
     const updateCart = await this.userModel.update({
       userId,
       updateObj: { productsInCart },
@@ -180,8 +171,6 @@ class UserService {
 
   // 장바구니 get
   async getCart(userId) {
-    // 객체 destructuring
-    // 이메일 중복 확인
     const { productsInCart } = await this.userModel.findById(userId);
 
     return productsInCart;
