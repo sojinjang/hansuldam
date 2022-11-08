@@ -1,5 +1,5 @@
 import { Router } from "express";
-import is from "@sindresorhus/is";
+import { isEmptyObject } from "../middlewares";
 
 import {
   productService,
@@ -13,26 +13,36 @@ const adminRouter = Router();
 
 // ---- 상품관련
 // 제품 추가
-adminRouter.post("/products", async (req, res, next) => {
+adminRouter.post("/products", isEmptyObject, async (req, res, next) => {
   try {
-    if (is.emptyObject(req.body)) {
-      throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
-      );
-    }
-
     // req (request)의 body 에서 데이터 가져오기
-    // 논의 필요
-    const { name, price, category, image, brand, description } = req.body;
+    const {
+      name,
+      price,
+      volume,
+      category,
+      image,
+      brand,
+      description,
+      stock,
+      sales,
+      alcoholType,
+      alcoholDegree,
+    } = req.body;
 
     // 위 데이터를 상품 db에 추가하기
     const newProduct = await productService.addProduct({
       name,
       price,
+      volume,
       category,
       image,
       brand,
       description,
+      stock,
+      sales,
+      alcoholType,
+      alcoholDegree,
     });
 
     // category 모델에 product._id 추가
@@ -47,39 +57,54 @@ adminRouter.post("/products", async (req, res, next) => {
 });
 
 // 상품 정보 수정
-adminRouter.patch("/products/:productId", async (req, res, next) => {
-  try {
-    if (is.emptyObject(req.body)) {
-      throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
-      );
+adminRouter.patch(
+  "/products/:productId",
+  isEmptyObject,
+  async (req, res, next) => {
+    try {
+      const { productId } = req.params;
+
+      const {
+        name,
+        price,
+        volume,
+        category,
+        image,
+        brand,
+        description,
+        stock,
+        sales,
+        alcoholType,
+        alcoholDegree,
+      } = req.body;
+
+      // 위 데이터를 상품 db에 추가하기
+      const updateProduct = await productService.updateProduct(productId, {
+        name,
+        price,
+        volume,
+        category,
+        image,
+        brand,
+        description,
+        stock,
+        sales,
+        alcoholType,
+        alcoholDegree,
+      });
+
+      // category 모델에 product._id 추가
+      const filterObj = { name: category };
+      const toUpdate = { $push: { products: updateProduct._id } };
+      await categoryService.updateCategory(filterObj, toUpdate);
+
+      // 업데이트 이후의 데이터를 프론트에 보내 줌
+      res.status(200).json(updateProduct);
+    } catch (error) {
+      next(error);
     }
-
-    const { productId } = req.params;
-
-    const { name, price, category, image, brand, description } = req.body;
-
-    // 위 데이터를 상품 db에 추가하기
-    const updateProduct = await productService.updateProduct(productId, {
-      name,
-      price,
-      category,
-      image,
-      brand,
-      description,
-    });
-
-    // category 모델에 product._id 추가
-    const filterObj = { name: category };
-    const toUpdate = { $push: { products: updateProduct._id } };
-    await categoryService.updateCategory(filterObj, toUpdate);
-
-    // 업데이트 이후의 데이터를 프론트에 보내 줌
-    res.status(200).json(updateProduct);
-  } catch (error) {
-    next(error);
   }
-});
+);
 
 // 상품 삭제
 adminRouter.delete("/products/:productId", async (req, res, next) => {
@@ -124,14 +149,8 @@ adminRouter.get("/orders", async (req, res, next) => {
 });
 
 // 주문 수정 관리자
-adminRouter.patch("/orders/:orderId", async (req, res, next) => {
+adminRouter.patch("/orders/:orderId", isEmptyObject, async (req, res, next) => {
   try {
-    if (is.emptyObject(req.body)) {
-      throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
-      );
-    }
-
     const { orderId } = req.params;
 
     const {
@@ -141,6 +160,8 @@ adminRouter.patch("/orders/:orderId", async (req, res, next) => {
       address,
       payment,
       status,
+      shipping,
+      priceSum,
     } = req.body;
 
     // 위 데이터를 카테고리 db에 추가하기
@@ -151,6 +172,8 @@ adminRouter.patch("/orders/:orderId", async (req, res, next) => {
       address,
       payment,
       status,
+      shipping,
+      priceSum,
     });
 
     // 업데이트 이후의 데이터를 프론트에 보내 줌
@@ -175,14 +198,8 @@ adminRouter.delete("/orders/:orderId", async (req, res, next) => {
 
 // -----카테고리
 // 카테고리 추가 (관리자)
-adminRouter.post("/category", async (req, res, next) => {
+adminRouter.post("/category", isEmptyObject, async (req, res, next) => {
   try {
-    if (is.emptyObject(req.body)) {
-      throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
-      );
-    }
-
     // req (request)의 body 에서 데이터 가져오기
     const { name } = req.body;
 
@@ -198,32 +215,30 @@ adminRouter.post("/category", async (req, res, next) => {
 });
 
 // 카테고리 정보 수정
-adminRouter.patch("/category/:categoryId", async (req, res, next) => {
-  try {
-    if (is.emptyObject(req.body)) {
-      throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
+adminRouter.patch(
+  "/category/:categoryId",
+  isEmptyObject,
+  async (req, res, next) => {
+    try {
+      const { categoryId } = req.params;
+
+      const { name } = req.body;
+
+      // 위 데이터를 카테고리 db에 추가하기
+      const updateCategory = await categoryService.updateCategory(
+        { id: categoryId },
+        {
+          name,
+        }
       );
+
+      // 업데이트 이후의 데이터를 프론트에 보내 줌
+      res.status(200).json(updateCategory);
+    } catch (error) {
+      next(error);
     }
-
-    const { categoryId } = req.params;
-
-    const { name } = req.body;
-
-    // 위 데이터를 카테고리 db에 추가하기
-    const updateCategory = await categoryService.updateCategory(
-      { id: categoryId },
-      {
-        name,
-      }
-    );
-
-    // 업데이트 이후의 데이터를 프론트에 보내 줌
-    res.status(200).json(updateCategory);
-  } catch (error) {
-    next(error);
   }
-});
+);
 
 // 카테고리 삭제(관리자)
 adminRouter.delete("/category/:categoryId", async (req, res, next) => {
@@ -244,6 +259,19 @@ adminRouter.get("/comments", async (req, res, next) => {
     const comments = await commentService.getAllComments();
 
     res.status(200).json(comments);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// 댓글 삭제(관리자)
+adminRouter.delete("/comments/:commentId", async (req, res, next) => {
+  try {
+    const { commentId } = req.params;
+
+    const deleted = await commentService.deleteComment(commentId);
+
+    res.status(200).json(deleted);
   } catch (error) {
     next(error);
   }

@@ -70,7 +70,7 @@ class UserService {
     }
 
     // 로그인 성공 -> JWT 웹 토큰 생성
-    const secretKey = process.env.JWT_SECRET_KEY || "secret-key";
+    const secretKey = process.env.JWT_SECRET_KEY || "ParaisePrison";
 
     // 2개 프로퍼티를 jwt 토큰에 담음
     const token = jwt.sign({ userId: user._id, role: user.role }, secretKey, {
