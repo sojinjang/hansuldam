@@ -186,6 +186,27 @@ class UserService {
 
     return productsInCart;
   }
+  //비밀번호 찾기 api
+  async findUserByEmail(email) {
+    const user = await this.userModel.findByEmail(email);
+    if (!user) {
+      throw new Error(
+        "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요."
+      );
+    }
+    return user;
+  }
+
+  async changePasswordAsRandom(userId, newHashedPassword) {
+    const toUpdate = { password: newHashedPassword };
+    // 우선 해당 id의 유저가 db에 있는지 확인
+    const user = await this.userModel.update({
+      userId,
+      update: toUpdate,
+    });
+
+    return user;
+  }
 }
 
 const userService = new UserService(userModel);
