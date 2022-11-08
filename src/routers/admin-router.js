@@ -16,8 +16,19 @@ const adminRouter = Router();
 adminRouter.post("/products", isEmptyObject, async (req, res, next) => {
   try {
     // req (request)의 body 에서 데이터 가져오기
-    // 논의 필요
-    const { name, price, category, image, brand, description } = req.body;
+    const {
+      name,
+      price,
+      volume,
+      category,
+      image,
+      brand,
+      description,
+      stock,
+      sales,
+      alcoholType,
+      alcoholDegree,
+    } = req.body;
 
     // 위 데이터를 상품 db에 추가하기
     const newProduct = await productService.addProduct({
