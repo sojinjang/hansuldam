@@ -1,21 +1,13 @@
 import { Router } from "express";
-import is from "@sindresorhus/is";
-
+import { isEmptyObject } from "../middlewares";
 import { loginRequired } from "../middlewares";
 import { userService } from "../services";
 
 const userRouter = Router();
 
 // 로그인 api (아래는 /login 이지만, 실제로는 /api/user/login로 요청해야 함.)
-userRouter.post("/login", async (req, res, next) => {
+userRouter.post("/login", isEmptyObject, async (req, res, next) => {
   try {
-    // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
-    if (is.emptyObject(req.body)) {
-      throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
-      );
-    }
-
     // req (request) 에서 데이터 가져오기
     const email = req.body.email;
     const password = req.body.password;
@@ -36,15 +28,8 @@ userRouter.post("/logout", loginRequired, async (req, res, next) => {
 });
 
 // 회원가입 api (아래는 /register이지만, 실제로는 /api/user/register로 요청해야 함.)
-userRouter.post("/register", async (req, res, next) => {
+userRouter.post("/register", isEmptyObject, async (req, res, next) => {
   try {
-    // Content-Type: application/json 설정을 안 한 경우, 에러를 만들도록 함.
-    // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
-    if (is.emptyObject(req.body)) {
-      throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
-      );
-    }
     const fullName = req.body.fullName;
     const email = req.body.email;
     const password = req.body.password;
