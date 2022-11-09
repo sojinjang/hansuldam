@@ -31,6 +31,10 @@ adminRouter.post("/products", isEmptyObject, async (req, res, next) => {
       alcoholDegree,
     } = req.body;
 
+    const categoryCheck = await categoryService.getCategoryByName(category);
+    if (!categoryCheck) {
+      throw new NotFound("This Category Not in DB", 4403);
+    }
     // 위 데이터를 상품 db에 추가하기
     const newProduct = await productService.addProduct({
       name,
