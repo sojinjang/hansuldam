@@ -7,8 +7,6 @@ class CategoryService {
   }
 
   async addCategory(categoryInfo) {
-    const { name } = categoryInfo;
-
     // db에 저장
     try {
       const createdNewCategory = await this.categoryModel.create(categoryInfo);

@@ -29,11 +29,10 @@ class UserService {
     try {
       // db에 저장
       const createdNewUser = await this.userModel.create(newUserInfo);
+      return createdNewUser;
     } catch {
       throw new BadRequest("This Email is Currently in Use.", 4101);
     }
-
-    return createdNewUser;
   }
 
   // 로그인
@@ -175,6 +174,7 @@ class UserService {
 
     return productsInCart;
   }
+
   //비밀번호 찾기 api
   async findUserByEmail(email) {
     const user = await this.userModel.findByEmail(email);
