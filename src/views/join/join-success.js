@@ -1,140 +1,137 @@
-
-import footer from '../template/footer/footer.js';
-
+import * as api from "../api.js";
 
 const body = document.querySelector(".body-container");
 const main_form = document.querySelector(".body-join-form");
-const ageInput = document.querySelector("#userAgeInput");
-let nameInput = document.querySelector("#userNameInput");
-const checkBtn = document.querySelector(".adultCheckButton");
-let email = document.querySelector("#email");
-let name = document.querySelector("#nameInput");
+
+const nameForValidation = document.querySelector("#nameForValidation");
+const idNum = document.querySelector("#idNum");
+const adultcheckBtn = document.querySelector(".adultCheckButton");
+
+const email = document.querySelector("#email");
+const username = document.querySelector("#name");
 const password = document.querySelector("#passwordInput");
 const passwordCheck = document.querySelector("#passwordCheck");
-const addressPostalCode = document.querySelector("#addressPostalCode");
-const addressLocation = document.querySelector("#addressLocation");
+const address = document.querySelector("#addressLocation");
 const addressDetail = document.querySelector("#addressDetail");
 const phoneNumber = document.querySelector("#phoneNumber");
-const joinPassBtn = document.querySelector(".join-form-button");
+const joinCompletedBtn = document.querySelector(".join-form-button");
 
-const receivedData = location.href.split('?')[1]; 
-const userData = decodeURI(receivedData).split(",");
-
-name.value = userData[0];
+// 내용 자동입력
+const recievedData = location.href.split("?")[1];
+const userData = decodeURI(recievedData).split(",");
+nameForValidation.value = userData[0];
+username.value = userData[0];
 email.value = userData[1];
-nameInput.value = userData[0];
 
-body.insertAdjacentHTML("afterend", footer());
-
-// 성인인증하기 버튼 이벤트 리스너
-checkBtn.addEventListener("click", OpenjoinPage);
-
-function OpenjoinPage(e) {
-    e.preventDefault(); 
-    // 이 코드가 있으면 이름(nameInput)의 input 타입이 적용되지 않고, 이 코드가 없으면 input이 적용되지만 새로고침이 되버림
-
-    this.onclick = null;
-    const ageinput = ageInput.value;
-
-    function isName(name) {
-        if(name !== "") {
-            return true;
-        }
-        if(name == "") {
-            return false;
-        }
-    }
-
-    function isAdult(ageinput) {
-        const twenty = 20;
-
-        if (Number(ageinput) >= twenty) {
-            return true;
-        }
-        return false;  
-    }
-
-    if(isAdult(ageinput) && isName(nameInput.value)) {
-        alert("인증 성공하셨습니다.")
-        main_form.style.display = "flex";
-        return;
-    }
-    if(ageInput.value == "") {
-        alert("나이를 입력해주세요")
-        return;
-    }
-    if (!isAdult(ageinput)) {
-        alert("미성년자는 가입 불가입니다.")
-        //window.location.href="http://127.0.0.1:5500/src/views/home/home.html?%22"
-    }
+function isIdNum(idNumInput) {
+  const idRegExp =
+    /^(?:[0-9]{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[1,2][0-9]|3[0,1]))-[1-4][0-9]{6}$/;
+  return idRegExp.test(idNumInput);
 }
 
-// 가입 완료 버튼 이벤트리스너
-joinPassBtn.addEventListener("click", successJoin);
-
-function successJoin() {
-
-    const inputName = name.value;
-    const inputPassword = password.value;
-    const inputPasswordCheck = passwordCheck.value;
-    const inputAddressPostalCode = addressPostalCode.value;
-    const inputAddressLocation = addressLocation.value;
-    const inputAddressDetail = addressDetail.vaule;
-    const inputPhoneNumber = phoneNumber.value;
-    
-    function checkPassword(password){
-        if(password == inputPassword && password !== "") {
-            return true;
-        }
-        if(password == ""){
-            return false;
-        }
-        if(password !== inputPassword) {
-            console.log("비밀번호가 일치하지 않습니다.")
-            return false;
-        }
-    }
-
-    function checkAddress(address, address1, address2){
-        if(address == "" || address1 == "" || address2 == "") {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    function checkPhonNumber(phoneNumber) {
-        if(phoneNumber == "") {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    function checkTotal(password, address, address1, address2, phoneNumber) {
-        if(checkPassword(password) && checkAddress(address, address1, address2) && checkPhonNumber(phoneNumber)) {
-            console.log("가입성공!")
-            window.location.href="http://127.0.0.1:5500/src/views/home/home.html?%22";
-            return true;
-        } else {
-            console.log("입력칸을 다시 확인해주세요");
-        }
-    }
-
-    checkTotal(inputPasswordCheck, inputAddressPostalCode, inputAddressLocation, inputAddressDetail, inputPhoneNumber);
-    
-
-    const userInputData = {
-        fullName: inputName,
-        password: inputPassword,
-        address: {
-            PostalCode: inputAddressPostalCode,
-            address1: inputAddressLocation,
-            address2: inputAddressDetail,
-        },
-        phoneNumber: inputPhoneNumber,
-    };
-    //const res = await fetch("api주소");
-    JSON.stringify(userInputData);
+function isAdult(idNumInput) {
+  const curDateObj = new Date();
+  const curYear = curDateObj.getFullYear();
+  const genType = idNumInput.slice(7, 8);
+  let age = 0;
+  if (genType <= 2) {
+    age = curYear - (1900 + parseInt(idNumInput.slice(0, 2)));
+  } else {
+    age = curYear - (2000 + parseInt(idNumInput.slice(0, 2)));
+  }
+  return age < 20 ? false : true;
 }
 
+function examineIdNumber(e) {
+  const idNumValue = idNum.value.trim();
+  e.preventDefault();
+  if (idNumValue.length === 0) {
+    alert("주민번호를 입력해주세요.");
+    return;
+  }
+  if (!isIdNum(idNumValue)) {
+    alert(
+      "주민번호 형식에 맞지 않는 입력값입니다.\n######-####### 형식으로 입력해주세요."
+    );
+    return;
+  }
+  if (isAdult(idNumValue)) {
+    alert("성인 인증에 성공했습니다.");
+    main_form.style.display = "flex";
+    return;
+  } else {
+    alert("미성년자는 가입 불가능합니다.");
+    return;
+  }
+}
+
+function checkPassword(password, passwordCheck) {
+  if ((password == "") | (passwordCheck == "")) {
+    alert("비밀번호를 입력해주세요.");
+    return;
+  } else if (password !== passwordCheck) {
+    alert("비밀번호 확인 값이 일치하지 않습니다.");
+    return;
+  }
+  return true;
+}
+
+function checkAddress(address, detailedAddress) {
+  if (address == "" || detailedAddress == "") {
+    alert("주소를 기입해주세요.");
+    return false;
+  }
+  return true;
+}
+
+function checkPhoneNumber(phoneNumber) {
+  if (phoneNumber.length === 0) {
+    alert("휴대폰 번호를 입력해주세요.");
+    return;
+  } else if (!/^[0-9]+$/.test(phoneNumber)) {
+    alert("숫자만 입력 가능합니다.");
+    return;
+  }
+  return true;
+}
+
+async function submitUserInfo(userInfoObj) {
+  try {
+    await api.post("/api/user/register", userInfoObj);
+    alert("회원가입이 완료되었습니다 🎉");
+    window.location.href = "/login";
+  } catch (err) {
+    alert(err.message);
+  }
+}
+
+function requestToCompleteJoin() {
+  const inputEmail = email.value;
+  const inputName = username.value;
+  const inputPassword = password.value;
+  const inputPasswordCheck = passwordCheck.value;
+  const inputPhoneNumber = phoneNumber.value;
+  const inputAddress = address.value;
+  const inputDetailedAddress = addressDetail.value;
+  const userInputObj = {
+    email: inputEmail,
+    fullName: inputName,
+    password: inputPassword,
+    phoneNumber: inputPhoneNumber,
+    address: {
+      address1: inputAddress,
+      address2: inputDetailedAddress,
+    },
+  };
+
+  if (
+    checkPassword(inputPassword, inputPasswordCheck) &&
+    checkPhoneNumber(inputPhoneNumber) &&
+    checkAddress(inputAddress, inputDetailedAddress)
+  ) {
+    submitUserInfo(userInputObj);
+  }
+}
+
+adultcheckBtn.addEventListener("click", examineIdNumber);
+joinCompletedBtn.addEventListener("click", requestToCompleteJoin);
