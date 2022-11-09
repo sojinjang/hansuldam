@@ -1,4 +1,4 @@
-import { categoryModel } from "../db";
+import { categoryModel, productModel } from "../db";
 import { BadRequest, NotFound } from "../utils/errorCodes";
 
 class CategoryService {
@@ -28,6 +28,11 @@ class CategoryService {
     return category;
   }
 
+  async getCategoryByName(categoryName) {
+    const category = await this.categoryModel.findByObj({ Name: categoryName });
+    return category;
+  }
+
   async updateCategory(obj, toUpdate) {
     // 우선 해당 id의 상품이 db에 있는지 확인
     const categoryId = obj.id;
@@ -49,6 +54,11 @@ class CategoryService {
       categoryId,
       update: toUpdate,
     });
+
+    // 상품 상세 내용중 category 수정 (나중에 리팩토링)
+    const productIdArr = category.products;
+    const toUpdateObj = { category: toUpdate.name };
+    await productModel.updateManyByIdArr(productIdArr, toUpdateObj);
 
     return category;
   }
