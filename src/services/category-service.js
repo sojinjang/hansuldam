@@ -35,10 +35,8 @@ class CategoryService {
 
   async updateCategory(obj, toUpdate) {
     // 우선 해당 id의 상품이 db에 있는지 확인
-    console.log(obj);
     let category = await this.categoryModel.findByObj(obj);
     // db에서 찾지 못한 경우, 에러 메시지 반환
-    console.log(category);
     if (!category) {
       throw new NotFound("This Category Not in DB", 4403);
     }
