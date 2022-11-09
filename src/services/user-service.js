@@ -189,7 +189,7 @@ class UserService {
     // 우선 해당 id의 유저가 db에 있는지 확인
     const user = await this.userModel.update({
       userId,
-      update: toUpdate,
+      updateObj: toUpdate,
     });
 
     return user;

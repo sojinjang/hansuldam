@@ -1,5 +1,5 @@
 import { orderModel } from "../db";
-import { NotFound } from "../utils/errorCodes";
+import { NotFound, Forbidden } from "../utils/errorCodes";
 
 class OrderService {
   constructor(orderModel) {
