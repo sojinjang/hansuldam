@@ -1,10 +1,10 @@
 import { Router } from "express";
 import { isEmptyObject } from "../middlewares";
-import { loginRequired } from "../middlewares";
 import { userService } from "../services";
 import { generateRandomPassword } from "../utils/generate-random-password";
 import { sendRandomPassword } from "../utils/send-mail";
 import bcrypt from "bcrypt";
+import passport from "passport";
 
 const userRouter = Router();
 
@@ -81,5 +81,22 @@ userRouter.post("/random-password", isEmptyObject, async (req, res, next) => {
     next(error);
   }
 });
+
+// google authO
+userRouter.get(
+  "/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
+
+userRouter.get(
+  "/google/callback",
+  passport.authenticate("google", { session: false }),
+  (req, res, next) => {
+    // userToken 설정하기
+    setUserToken(res, req.user);
+
+    res.redirect("/");
+  }
+);
 
 export { userRouter };
