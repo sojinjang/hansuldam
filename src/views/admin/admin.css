@@ -73,10 +73,49 @@
 }
 
 .add-category-modal {
-  background-color: white;
   position: absolute;
   width: 300px;
-  height: 100px;
-  border: 1px solid ;
-  top: 540px;
+  top: 580px;
+}
+
+.add-category-modal button {
+  width: 15px;
+  height: 24px;
+  left: 190px
+}
+
+.modify-category-input {
+  width: 210px;
+}
+
+.modify-category-modal {
+  width: 100%;
+  z-index: 10;
+  position: relative;
+}
+
+.modify-category-modal button{
+  width: 15px;
+  height: 24px;
+}
+
+.add-product-modal {
+  display: flex;
+  width: 50%;
+  border: 0.5px solid grey;
+  padding: 10px;
+}
+
+.add-product-modal button{
+  width: 15px;
+  height: 24px;
+}
+
+.add-product-modal .right-modal, .left-modal{
+  display: flex;
+  flex-direction: column;
+}
+
+.none {
+  display: none;
 }
