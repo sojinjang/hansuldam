@@ -1,4 +1,6 @@
-const body = document.querySelector(".body-container");
+import { isName, isValidEmail } from "../utils/validator.js";
+import * as api from "../api.js";
+
 const nameInput = document.querySelector("#nameInput");
 const emailInput = document.querySelector("#emailInput");
 const joinBtn = document.querySelector(".join-form-button");
@@ -6,20 +8,11 @@ const checkOverlabBtn = document.querySelector(".emailOverlap");
 
 let emailCleard = false;
 
-function isName(name) {
-  return /^[가-힣]{2,4}/.test(name);
-}
-
-function isValidEmail(email) {
-  const emailRegExp =
-    /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-  return emailRegExp.test(email);
-}
-
 function isDuplicatedEmail(email) {
-  const data = ["elice@test.com"]; // 임시 데이터
+  // todo: 장바구니 api 만들어지는대로 변경
+  const tempData = ["elice@test.com"];
 
-  if (data.includes(email)) {
+  if (tempData.includes(email)) {
     return true;
   }
   return false;
@@ -39,6 +32,8 @@ function checkEmail() {
     return;
   }
   emailCleard = true;
+  alert("사용 가능한 이메일입니다 ✅");
+  // todo: 사용 가능한 이메일입니다. 작은 글씨로 띄워주기
 }
 
 function moveToNextPage() {
