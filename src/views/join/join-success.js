@@ -1,6 +1,6 @@
+import { isIdNum, isAdult } from "../utils/validator.js";
 import * as api from "../api.js";
 
-const body = document.querySelector(".body-container");
 const main_form = document.querySelector(".body-join-form");
 
 const nameForValidation = document.querySelector("#nameForValidation");
@@ -22,25 +22,6 @@ const userData = decodeURI(recievedData).split(",");
 nameForValidation.value = userData[0];
 username.value = userData[0];
 email.value = userData[1];
-
-function isIdNum(idNumInput) {
-  const idRegExp =
-    /^(?:[0-9]{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[1,2][0-9]|3[0,1]))-[1-4][0-9]{6}$/;
-  return idRegExp.test(idNumInput);
-}
-
-function isAdult(idNumInput) {
-  const curDateObj = new Date();
-  const curYear = curDateObj.getFullYear();
-  const genType = idNumInput.slice(7, 8);
-  let age = 0;
-  if (genType <= 2) {
-    age = curYear - (1900 + parseInt(idNumInput.slice(0, 2)));
-  } else {
-    age = curYear - (2000 + parseInt(idNumInput.slice(0, 2)));
-  }
-  return age < 20 ? false : true;
-}
 
 function examineIdNumber(e) {
   const idNumValue = idNum.value.trim();
