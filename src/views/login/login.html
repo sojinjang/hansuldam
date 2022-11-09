@@ -3,105 +3,67 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>쇼핑-데모</title>
-    <!-- 아이콘 -->
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="/elice-rabbit-favicon.png"
-    />
-    <!-- bulma css 관련 -->
+    <title>로그인 - liquor store 🍸</title>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
     />
-    <!-- 폰트 어썸: 아이콘 -->
     <script
       defer
       src="https://kit.fontawesome.com/9daa42bcef.js"
       crossorigin="anonymous"
     ></script>
-
-    <!-- 커스텀 css, js -->
     <link rel="stylesheet" href="login.css" />
-    <script src="login.js" type="module" defer></script>
+    <link rel="stylesheet" href="../template/header/header.css" />
+    <link rel="stylesheet" href="../template/footer/footer.css" />
   </head>
   <body>
-    <!-- 헤더 -->
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-      <div class="container mt-3">
-        <div class="navbar-brand">
-          <a class="navbar-item" href="/">
-            <img src="/elice-rabbit.png" width="30" height="30" />
-            <span class="has-text-link">쇼핑-데모</span>
-          </a>
-
-          <a
-            role="button"
-            class="navbar-burger"
-            aria-label="menu"
-            aria-expanded="false"
-            data-target="navbarBasicExample"
-          >
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-          </a>
-        </div>
-
-        <div id="navbarBasicExample" class="navbar-menu">
-          <div class="navbar-end breadcrumb my-auto" aria-label="breadcrumbs">
-            <ul id="navbar">
-              <li><a href="/register">회원가입</a></li>
-              <li>
-                <a href="/cart" aria-current="page">
-                  <span class="icon">
-                    <i class="fas fa-cart-shopping"></i>
-                  </span>
-                  <span>카트</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
+    <main class="body-container">
+      <div class="body-section-container">
+        <form class="body-login-form" id="loginForm">
+          <p class="login-form-hello">안녕하세요</p>
+          <section class="login-form-input">
+            <label class="input-email-label" for="emailInput">이메일</label>
+            <div class="input-control">
+              <input
+                class="input"
+                id="emailInput"
+                type="email"
+                placeholder="abc@example.com"
+                autocomplete="on"
+              />
+            </div>
+          </section>
+  
+          <section class="login-form-input">
+            <label class="login-form-input-password-label" for="passwordInput">비밀번호</label>
+            <div class="input-control">
+              <input
+                class="input"
+                id="passwordInput"
+                type="password"
+                placeholder="********"
+                autocomplete="on"
+              />
+            </div>
+          </section>
+  
+          <button class="login-form-button" id="submitButton">
+            로그인하기
+          </button>
+  
+          <section class="login-form-text">
+            <div>
+              <a href="/">회원가입</a>
+            </div>
+            <div>
+              <a href="/">비밀번호 찾기</a>
+            </div>
+          </section>
+        </form>
       </div>
-    </nav>
-
-    <!-- 로그인 폼(Form) -->
-    <div class="login-form-container">
-      <form class="box login-form-box" id="loginForm">
-        <p class="title is-5 has-text-info">어서오세요!</p>
-        <div class="field">
-          <label class="label" for="emailInput">이메일</label>
-          <div class="control">
-            <input
-              class="input"
-              id="emailInput"
-              type="email"
-              placeholder="abc@example.com"
-              autocomplete="on"
-            />
-          </div>
-        </div>
-
-        <div class="field mb-5">
-          <label class="label" for="passwordInput">비밀번호</label>
-          <div class="control">
-            <input
-              class="input"
-              id="passwordInput"
-              type="password"
-              placeholder="********"
-              autocomplete="on"
-            />
-          </div>
-        </div>
-
-        <button class="button is-info is-fullwidth" id="submitButton">
-          로그인하기
-        </button>
-      </form>
-    </div>
+    </main>
+    <script src="login.js" type="module" defer></script>
+    <script src="../template/getHeaderFooter.js" type="module" defer></script>
   </body>
 </html>
