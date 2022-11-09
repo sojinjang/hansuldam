@@ -9,7 +9,6 @@ async function user() {
       password: await bcrypt.hash("00000000", 10),
       phoneNumber: "01012341234",
       address: {
-        postalCode: "55343",
         address1: "이마저도 역시 이렇구 전통주로 4길 5",
         address2: "500호",
       },
@@ -21,7 +20,6 @@ async function user() {
       password: await bcrypt.hash("11111111", 10),
       phoneNumber: "01012341234",
       address: {
-        postalCode: "55343",
         address1: "이마저도 역시 이렇구 전통주로 4길 5",
         address2: "1004호",
       },

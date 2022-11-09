@@ -1,11 +1,6 @@
 # Dependencies
 node_modules
 yarn.lock
-package-lock.json
 .env
 .DS_Store
-.vscode
-src/routers/views-router.js
-test/test.js
-
-imshi.ts
+testdata

@@ -1,12 +1,12 @@
+import { Forbidden } from "../utils/errorCodes";
+
 function adminRequired(req, res, next) {
   const { userRole } = req.currentUser;
   if (userRole == "admin") {
     next();
   } else {
-    res.status(403).json({
-      result: "forbidden-approach",
-      reason: "관리자 권한이 필요합니다.",
-    });
+    const NoAdmin = new Forbidden("No Admin", 4003);
+    next(NoAdmin);
     return;
   }
 }

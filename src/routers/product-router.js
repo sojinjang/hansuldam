@@ -21,6 +21,9 @@ productRouter.get("/", async (req, res, next) => {
 productRouter.get("/:productId", async (req, res, next) => {
   try {
     const { productId } = req.params;
+    if (!productId) {
+      throw new BadRequest("Undefined params", 4005);
+    }
     const product = await productService.getProductById(productId);
 
     // 상품 목록을 JSON 형태로 프론트에 보냄

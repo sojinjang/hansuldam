@@ -11,8 +11,6 @@ import {
 } from "./routers";
 import { errorHandler, loginRequired, adminRequired } from "./middlewares";
 
-import { setTestdata } from "../testdata";
-
 const app = express();
 
 // CORS 에러 방지
@@ -23,9 +21,6 @@ app.use(express.json());
 
 // Content-Type: application/x-www-form-urlencoded 형태의 데이터를 인식하고 핸들링할 수 있게 함.
 app.use(express.urlencoded({ extended: false }));
-
-// 초기 testdata 셋팅
-setTestdata();
 
 // html, css, js 라우팅
 app.use(viewsRouter);
