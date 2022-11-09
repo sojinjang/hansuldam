@@ -13,6 +13,9 @@
 	MONGODB_URL= "mongodb+srv://user:1234@cluster0.ca83syk.mongodb.net/test"
 	PORT= 8900
 	JWT_SECERT_KEY="ParaisePrison"
+	GMAIL_ID= "dejaikeem@gmail.com"
+	GMAIL_PASSWORD= "eresifkjbelszxnx"
+
 ```
 
 4. express 앱 실행
