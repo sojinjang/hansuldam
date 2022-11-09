@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>회원가입 - liquor store 🍸</title>
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+        />
+        <script
+            defer
+            src="https://kit.fontawesome.com/9daa42bcef.js"
+            crossorigin="anonymous"
+        ></script>
+        <link rel="stylesheet" href="join.css" />
+        
+    </head>
+
+    <body>
+        <header>
+            <div class="header-container">
+                <section class="navigation-menu">
+                    <div class="company-logo-wrapper">
+                    <img class="company-logo" src="../img/logo.png">
+                    </div>
+                </section>
+        
+                <section class="user-menu">
+                    <div class="user-img">
+                    <a href=""><img src="../img/뚱이.jpeg"></a>
+                    </div>
+                </section>
+            </div>
+        </header>
+
+        <main class="body-container">
+            <div class="main-section-container">
+                <form class="main-join-form" onsubmit="return false;">
+                    <section class="join-form-hello">
+                        <p>회원 가입</p>
+                    </section>
+                    <section class="join-form-input">
+                        <label for="nameInput">이름</label>
+                        <div>
+                            <input 
+                                class="input"
+                                id="nameInput"
+                                type="text"
+                                name ="username" 
+                                minlength="2" 
+                                maxlength="20"
+                                required="required"
+                                placeholder="나의 이름은?"
+                                autocomplete="on">
+                        </div>
+                    </section>
+                    <section class="join-form-input">
+                        <div>
+                            <label for="emailInput">이메일</label>
+                            <div>
+                                <input 
+                                    class="input"
+                                    id="emailInput"
+                                    type="email"
+                                    name="email"
+                                    required="required"
+                                    placeholder="abc@example.com"
+                                    autocomplete="on">      
+                            </div>
+                        </div>
+                        <button type="submit" class="emailOverlap">이메일 중복 확인</button>
+                    </section>
+                    <input type="submit" value="전송" class="join-form-button">
+                </form>
+            </div>
+        </main>
+        <script src="join-membership.js" type="module" defer></script>
+    </body>
+</html>
