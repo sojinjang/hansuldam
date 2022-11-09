@@ -1,7 +1,5 @@
-import footer from "../template/footer/footer.js";
-import header from "../template/header/header.js";
+import { showProducts } from './product_admin.js';
+import { showCategories } from './category_admin.js';
 
-const main = document.querySelector(".body-container");
-
-main.insertAdjacentHTML("beforebegin", header());
-main.insertAdjacentHTML("afterend", footer());
+showProducts();
+showCategories();

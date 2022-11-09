@@ -14,9 +14,6 @@ async function refineData() {
   });
   const label = queryString.label;
 
-  // 현재 라벨 확인용
-  console.log(label);
-
   switch(label) {
     
     case 'totalProducts':
