@@ -174,6 +174,7 @@ class UserService {
 
     return productsInCart;
   }
+
   //비밀번호 찾기 api
   async findUserByEmail(email) {
     const user = await this.userModel.findByEmail(email);
