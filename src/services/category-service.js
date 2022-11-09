@@ -48,12 +48,8 @@ class CategoryService {
         categoryId,
         update: toUpdate,
       });
-    } catch (error) {
-      const ModifyError = new BadRequest(
-        "This Modify Name already in DB",
-        4402
-      );
-      next(ModifyError);
+    } catch {
+      throw new BadRequest("This Modify Name already in DB", 4402);
     }
 
     // 상품 상세 내용중 category 수정 (나중에 리팩토링)
