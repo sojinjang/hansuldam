@@ -99,19 +99,19 @@
   height: 24px;
 }
 
-.add-product-modal {
+.add-product-modal, .modify-product-modal {
   display: flex;
   width: 50%;
   border: 0.5px solid grey;
   padding: 10px;
 }
 
-.add-product-modal button{
+.add-product-modalm button, .modify-product-modal button{
   width: 15px;
   height: 24px;
 }
 
-.add-product-modal .right-modal, .left-modal{
+.right-modal, .left-modal {
   display: flex;
   flex-direction: column;
 }
