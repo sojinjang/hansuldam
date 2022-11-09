@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { isEmptyObject } from "../middlewares";
+import { BadRequest } from "../utils/errorCodes";
 
 import {
   productService,
@@ -63,7 +64,9 @@ adminRouter.patch(
   async (req, res, next) => {
     try {
       const { productId } = req.params;
-
+      if (!productId) {
+        throw new BadRequest("Undefined params", 4005);
+      }
       const {
         name,
         price,
@@ -110,6 +113,9 @@ adminRouter.patch(
 adminRouter.delete("/products/:productId", async (req, res, next) => {
   try {
     const { productId } = req.params;
+    if (!productId) {
+      throw new BadRequest("Undefined params", 4005);
+    }
 
     const products = await productService.deleteProduct(productId);
 
@@ -152,6 +158,9 @@ adminRouter.get("/orders", async (req, res, next) => {
 adminRouter.patch("/orders/:orderId", isEmptyObject, async (req, res, next) => {
   try {
     const { orderId } = req.params;
+    if (!orderId) {
+      throw new BadRequest("Undefined params", 4005);
+    }
 
     const {
       fullName,
@@ -187,6 +196,9 @@ adminRouter.patch("/orders/:orderId", isEmptyObject, async (req, res, next) => {
 adminRouter.delete("/orders/:orderId", async (req, res, next) => {
   try {
     const { orderId } = req.params;
+    if (!orderId) {
+      throw new BadRequest("Undefined params", 4005);
+    }
 
     const order = await orderService.deleteOrder(orderId);
 
@@ -221,6 +233,9 @@ adminRouter.patch(
   async (req, res, next) => {
     try {
       const { categoryId } = req.params;
+      if (!categoryId) {
+        throw new BadRequest("Undefined params", 4005);
+      }
 
       const { name } = req.body;
 
@@ -244,7 +259,9 @@ adminRouter.patch(
 adminRouter.delete("/category/:categoryId", async (req, res, next) => {
   try {
     const { categoryId } = req.params;
-
+    if (!categoryId) {
+      throw new BadRequest("Undefined params", 4005);
+    }
     const category = await categoryService.deleteCategory(categoryId);
 
     res.status(200).json(category);
@@ -268,7 +285,9 @@ adminRouter.get("/comments", async (req, res, next) => {
 adminRouter.delete("/comments/:commentId", async (req, res, next) => {
   try {
     const { commentId } = req.params;
-
+    if (!categoryId) {
+      throw new BadRequest("Undefined params", 4005);
+    }
     const deleted = await commentService.deleteComment(commentId);
 
     res.status(200).json(deleted);

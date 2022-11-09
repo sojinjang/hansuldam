@@ -38,7 +38,9 @@ orderRouter.post("/", isEmptyObject, async (req, res, next) => {
 orderRouter.patch("/:orderId", isEmptyObject, async (req, res, next) => {
   try {
     const { orderId } = req.params;
-
+    if (!orderId) {
+      throw new BadRequest("Undefined params", 4005);
+    }
     const {
       fullName,
       productsInOrder,
@@ -67,7 +69,9 @@ orderRouter.patch("/:orderId", isEmptyObject, async (req, res, next) => {
 orderRouter.delete("/:orderId", async (req, res, next) => {
   try {
     const { orderId } = req.params;
-
+    if (!orderId) {
+      throw new BadRequest("Undefined params", 4005);
+    }
     const order = await orderService.deleteOrder(orderId);
 
     res.status(200).json(order);
@@ -80,7 +84,9 @@ orderRouter.delete("/:orderId", async (req, res, next) => {
 orderRouter.get("/:orderId", async (req, res, next) => {
   try {
     const { orderId } = req.params;
-
+    if (!orderId) {
+      throw new BadRequest("Undefined params", 4005);
+    }
     const order = await orderService.getOrderById(orderId);
 
     // 주문 목록(배열)을 JSON 형태로 프론트에 보냄
@@ -94,6 +100,9 @@ orderRouter.get("/:orderId", async (req, res, next) => {
 orderRouter.get("/:orderId/products", async (req, res, next) => {
   try {
     const { orderId } = req.params;
+    if (!orderId) {
+      throw new BadRequest("Undefined params", 4005);
+    }
     //{ id , quantity }
     const { productsInOrder } = await orderService.getOrderById(orderId);
 

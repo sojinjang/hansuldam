@@ -1,9 +1,6 @@
 # Dependencies
 node_modules
 yarn.lock
-package-lock.json
 .env
 .DS_Store
 testdata
-src/routers/views-router.js
-test/test.js

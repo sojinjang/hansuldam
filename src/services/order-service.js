@@ -1,4 +1,5 @@
 import { orderModel } from "../db";
+import { NotFound } from "../utils/errorCodes";
 
 class OrderService {
   constructor(orderModel) {
@@ -29,9 +30,7 @@ class OrderService {
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!order) {
-      throw new Error(
-        "일치하는 카테고리가 없습니다. 다시 한 번 확인해 주세요."
-      );
+      throw new NotFound("This Order Not in DB", 4303);
     }
 
     // 업데이트 진행
@@ -48,13 +47,11 @@ class OrderService {
     let order = await this.orderModel.findById(orderId);
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!order) {
-      throw new Error(
-        "일치하는 주문 내역이 없습니다. 다시 한 번 확인해 주세요."
-      );
+      throw new NotFound("This Order Not in DB", 4303);
     }
     //findbyid
     if (order.status !== "상품준비중") {
-      throw new Error("상품이 배송중이기에 고객센터에 문의 부탁드립니다.");
+      throw new Forbidden("Can not Change Order", 4302);
     }
 
     // 업데이트 진행
@@ -75,9 +72,7 @@ class OrderService {
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!order) {
-      throw new Error(
-        "일치하는 주문 내역이 없습니다. 다시 한 번 확인해 주세요."
-      );
+      throw new NotFound("This Order Not in DB", 4303);
     }
 
     // 업데이트 진행

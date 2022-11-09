@@ -1,4 +1,5 @@
 import { commentModel } from "../db";
+import { BadRequest, Unauthorized } from "../utils/errorCodes";
 
 class CommentService {
   constructor(commentModel) {
@@ -28,7 +29,7 @@ class CommentService {
     const { userId } = await this.commentModel.findById(commentId);
 
     if (curUserId !== userId.toString()) {
-      throw new Error(`권한이 없습니다.`);
+      throw new Unauthorized("userID mismatch", 4502);
     }
 
     const updatedComment = await this.commentModel.update({
@@ -42,14 +43,14 @@ class CommentService {
   async userDeleteComment(curUserId, commentId) {
     const { userId } = await this.commentModel.findById(commentId);
     if (curUserId !== userId.toString()) {
-      throw new Error(`권한이 없습니다.`);
+      throw new Unauthorized("userID mismatch", 4502);
     }
 
     const { deletedCount } = await this.commentModel.deleteById(commentId);
 
     // 삭제에 실패한 경우, 에러 메시지 반환
     if (deletedCount === 0) {
-      throw new Error(`${commentId} 주문의 삭제에 실패하였습니다`);
+      throw new BadRequest("Failed to Delete Comment", 4502);
     }
 
     return { result: "success" };
@@ -60,7 +61,7 @@ class CommentService {
 
     // 삭제에 실패한 경우, 에러 메시지 반환
     if (deletedCount === 0) {
-      throw new Error(`${commentId} 주문의 삭제에 실패하였습니다`);
+      throw new BadRequest("Failed to Delete Comment", 4502);
     }
 
     return { result: "success" };

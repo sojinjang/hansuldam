@@ -26,9 +26,9 @@ userRouter.post("/login", isEmptyObject, async (req, res, next) => {
 });
 
 // 로그아웃
-userRouter.post("/logout", loginRequired, async (req, res, next) => {
-  console.log(req.cookies);
-});
+// userRouter.post("/logout", loginRequired, async (req, res, next) => {
+//   console.log(req.cookies);
+// });
 
 // 회원가입 api (아래는 /register이지만, 실제로는 /api/user/register로 요청해야 함.)
 userRouter.post("/register", isEmptyObject, async (req, res, next) => {
@@ -65,10 +65,10 @@ userRouter.post("/random-password", isEmptyObject, async (req, res, next) => {
     const newHashedPassword = await bcrypt.hash(newPassword, 10);
 
     const randomPasswordUpdate = await userService.changePasswordAsRandom(
-      user._id, // user_id
+      user._id,
       newHashedPassword
     );
-    // const sendMail =
+
     await sendRandomPassword(
       email,
       "임시 비밀번호 발급 이메일입니다.",

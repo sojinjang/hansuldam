@@ -1,4 +1,5 @@
 import { productModel } from "../db";
+import { BadRequest, NotFound } from "../utils/errorCodes";
 
 class ProductService {
   // 본 파일의 맨 아래에서, new ProductService(productModel) 하면, 이 함수의 인자로 전달됨
@@ -12,7 +13,7 @@ class ProductService {
     //상품 중복 확인
     const product = await this.productModel.findByName(name);
     if (product) {
-      throw new Error("같은 이름의 상품이 있습니다. 다시 확인해주세요");
+      throw new BadRequest("Same Name in DB", 4201);
     }
 
     // db에 저장
@@ -36,14 +37,12 @@ class ProductService {
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!product) {
-      throw new Error("일치하는 상품이 없습니다. 다시 한 번 확인해 주세요.");
+      throw new NotFound("This Product Not In DB", 4203);
     }
     //상품 이름 중복 확인
     product = await this.productModel.findByName(toUpdate.name);
     if (product) {
-      throw new Error(
-        "수정한 이름과 같은 이름의 상품이 있습니다. 다시 확인해주세요"
-      );
+      throw new BadRequest("Same Name in DB", 4202);
     }
     // 업데이트 진행
     product = await this.productModel.update({
@@ -60,7 +59,7 @@ class ProductService {
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!product) {
-      throw new Error("일치하는 상품이 없습니다. 다시 한 번 확인해 주세요.");
+      throw new NotFound("This Product Not In DB", 4203);
     }
 
     // 업데이트 진행
@@ -72,11 +71,11 @@ class ProductService {
     const products = await this.productModel.findByIdArray(productList);
     return products;
   }
-  // orderProductList = { id , quantity }
+  // productsInOrder = { id , quantity }
   // id 를 product 정보 객체로 바꿔주는 함수
-  async getProductObj(orderProductList) {
+  async getProductObj(productsInOrder) {
     const productObjs = await Promise.all(
-      orderProductList.map(async ({ id, quantity }) => {
+      productsInOrder.map(async ({ id, quantity }) => {
         const product = await this.productModel.findById(id);
         return { product, quantity };
       })
