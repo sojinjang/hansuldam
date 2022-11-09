@@ -9,7 +9,6 @@ const authRouter = Router();
 // 사용자 정보 조회
 authRouter.get("/user", async (req, res, next) => {
   try {
-    // params로부터 id를 가져옴
     const userId = req.currentUser.userId;
 
     const getUserInfo = await userService.getUserOne(userId);
@@ -23,7 +22,6 @@ authRouter.get("/user", async (req, res, next) => {
 // 사용자 정보 수정
 authRouter.patch("/user", isEmptyObject, async (req, res, next) => {
   try {
-    // params로부터 id를 가져옴
     const userId = req.currentUser.userId;
 
     // body data 로부터 업데이트할 사용자 정보를 추출함.
@@ -69,7 +67,6 @@ authRouter.patch("/user", isEmptyObject, async (req, res, next) => {
 // 사용자 삭제(탈퇴)
 authRouter.delete("/user", async (req, res, next) => {
   try {
-    // params로부터 id를 가져옴
     const userId = req.currentUser.userId;
 
     const deleteUser = await userService.deleteUserOne(userId);
@@ -156,6 +153,9 @@ authRouter.get("/cart", async (req, res, next) => {
 authRouter.get("/comments/:productId", async (req, res, next) => {
   try {
     const { productId } = req.params;
+    if (!productId) {
+      throw new BadRequest("Undefined params", 4005);
+    }
     const comments = await commentService.getCommentsByProductId(productId);
 
     res.status(200).json(comments);
@@ -189,6 +189,9 @@ authRouter.patch("/comments/:commentId", async (req, res, next) => {
   try {
     const userId = req.currentUser.userId;
     const { commentId } = req.params;
+    if (!commentId) {
+      throw new BadRequest("Undefined params", 4005);
+    }
     const { content } = req.body;
 
     const commentInfo = await commentService.userSetComment(userId, commentId, {
@@ -205,7 +208,9 @@ authRouter.delete("/comments/:commentId", async (req, res, next) => {
   try {
     const userId = req.currentUser.userId;
     const { commentId } = req.params;
-
+    if (!commentId) {
+      throw new BadRequest("Undefined params", 4005);
+    }
     const deleted = await commentService.userDeleteComment(userId, commentId);
 
     res.status(200).json(deleted);
