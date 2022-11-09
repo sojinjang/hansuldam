@@ -245,7 +245,7 @@ adminRouter.patch(
 
       // 위 데이터를 카테고리 db에 추가하기
       const updateCategory = await categoryService.updateCategory(
-        { id: categoryId },
+        { _id: categoryId },
         {
           name,
         }
