@@ -1,5 +1,5 @@
 async function fetchCategoryData() {
-  const res = await fetch('http://localhost:8900/api/category', {
+  const res = await fetch('/api/category', {
     method: 'GET',
   });
 
@@ -35,7 +35,7 @@ async function goToEvent() {
 
       const eventId = e.currentTarget.getAttribute('id');
       const res = await fetch(
-        `http://localhost:8900/api/category/${eventId}/products`
+        `/api/category/${eventId}/products`
         )
       const eventProducts = await res.json();
       eventProducts.forEach((product) => renderData(product));
