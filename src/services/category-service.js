@@ -35,20 +35,14 @@ class CategoryService {
 
   async updateCategory(obj, toUpdate) {
     // 우선 해당 id의 상품이 db에 있는지 확인
-    const categoryId = obj.id;
     let category = await this.categoryModel.findByObj(obj);
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!category) {
       throw new NotFound("This Category Not in DB", 4403);
     }
-
-    // 이름 중복 확인
-    category = await this.categoryModel.findByObj(toUpdate);
-    if (category) {
-      throw new BadRequest("This Modify Name already in DB", 4402);
-    }
-
+    
+    const categoryId = category._id;
     // 업데이트 진행
     category = await this.categoryModel.update({
       categoryId,
