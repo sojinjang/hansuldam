@@ -25,7 +25,6 @@ async function get(endpoint, params = "") {
 async function post(endpoint, data) {
   const apiUrl = endpoint;
   const bodyData = JSON.stringify(data);
-  console.log(bodyData);
   const res = await fetch(apiUrl, {
     method: "POST",
     headers: {

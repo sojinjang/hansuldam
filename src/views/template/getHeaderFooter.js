@@ -1,9 +1,10 @@
-import footer from "./footer/footer.js";
+import { getFooter, goToAdminPage } from './footer/footer.js';
 import { getHeader, redirectPage } from './header/header.js';
 
 const main = document.querySelector(".body-container");
 
 main.insertAdjacentHTML('beforebegin', getHeader());
-main.insertAdjacentHTML("afterend", footer());
+main.insertAdjacentHTML('afterend', getFooter());
 
 redirectPage();
+goToAdminPage();

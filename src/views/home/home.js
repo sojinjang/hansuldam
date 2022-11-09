@@ -23,11 +23,11 @@ function clickCarouselDot(e) {
 
 async function renderData() {
 	const res = await fetch(
-		'http://localhost:8900/api/category/63689bbb0dc55a83467142cc/products',
-		{
-			method: 'GET',
-		}
-	);
+    'http://localhost:7777/api/category/6369b6e57307884100f493af/products',
+    {
+      method: 'GET',
+    }
+  );
 	
 	const eventProducts = await res.json();
 
