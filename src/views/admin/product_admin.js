@@ -9,10 +9,18 @@ async function initFuc() {
     const addCategoryModal = document.querySelector('.add-category-modal');
     const addProductModal = document.querySelector('.add-product-modal');
 
-    if (productsContainer) { productsContainer.remove() };
-    if (categoriesContainer) { categoriesContainer.remove(); };
-    if (addProductModal) { addProductModal.remove() };
-    if (addCategoryModal) { addCategoryModal.remove() };
+    if (productsContainer) {
+      productsContainer.remove();
+    }
+    if (categoriesContainer) {
+      categoriesContainer.remove();
+    }
+    if (addProductModal) {
+      addProductModal.remove();
+    }
+    if (addCategoryModal) {
+      addCategoryModal.remove();
+    }
 
     openProductMenu();
   });
@@ -20,7 +28,7 @@ async function initFuc() {
 
 async function openProductMenu() {
   const productsData = await get('/api/products');
-  
+
   $('.product-menu').classList.add('isClicked');
   const productContainerHTML = `<section class="products-container">
   <button class="button add-button">추가</button>
@@ -50,11 +58,17 @@ async function openProductMenu() {
 }
 
 function closeSection() {
+  if ($('.modify-product-modal')) {
+    $('.modify-product-modal').remove();
+  }
   $('.product-menu').classList.remove('isClicked');
   $('.products-container').remove();
 }
 
 function addProduct() {
+  if ($('.modify-product-modal')) {
+    $('.modify-product-modal').remove();
+  }
   $('.add-button').classList.add('none');
   $('.close-button').classList.add('none');
 
@@ -79,15 +93,15 @@ function addProduct() {
     </div>
   </div>
 </label>`;
-  
+
   $('.admin-menu').insertAdjacentHTML('afterend', productModalHtml);
+
   $('.add-product-button').addEventListener('click', async () => {
     const productInput = [...document.querySelectorAll('.product-input')];
-    const inputObj = productInput.reduce(
-      (obj, input) => {
-        obj[input.getAttribute('id')] = input.value;
-        return obj;
-      }, {});
+    const inputObj = productInput.reduce((obj, input) => {
+      obj[input.getAttribute('id')] = input.value;
+      return obj;
+    }, {});
 
     await post('/api/admin/products', inputObj);
 
@@ -142,7 +156,7 @@ async function renderProductDetail() {
         alcoholDegree,
       } = currentData;
 
-      const detailHtml = `<div class="columns items-container items-detail" id="cls${_id}">
+      const detailHtml = `<div class="columns items-container items-detail opened" id="${_id}">
       <div class="column is-2">${brand}</div>
       <div class="column is-2">${stock}</div>
       <div class="column is-2">${description}</div>
@@ -150,11 +164,14 @@ async function renderProductDetail() {
       <div class="column is-2">${manufacturedDate}</div>
       <div class="column is-1">${alcoholDegree}도</div>
       <div class="column is-1">
-      <button class="button column">수정</button>
+      <button class="button column modify-button">수정</button>
       </div>
       </div>`;
 
       if (e.target.innerHTML === '상세') {
+        if ($('.items-detail')) {
+          $('.opened').remove();
+        }
         e.target.parentNode.parentNode.insertAdjacentHTML(
           'afterend',
           detailHtml
@@ -162,7 +179,12 @@ async function renderProductDetail() {
         e.target.innerHTML = '닫기';
       } else {
         e.target.innerHTML = '상세';
-        $(`#cls${_id}`).remove();
+        $('.opened').remove();
+      }
+
+      const modifyBtn = document.querySelector('.modify-button');
+      if (modifyBtn) {
+        modifyBtn.addEventListener('click', modifyProduct);
       }
     });
   });
@@ -173,13 +195,61 @@ function deleteProduct() {
   deleteBtn.forEach((button) => {
     button.addEventListener('click', (e) => {
       const currentId = e.target.getAttribute('id');
-      e.target.setAttribute('class', 'button column is-danger delete-button-confirm');
+      e.target.setAttribute(
+        'class',
+        'button column is-danger delete-button-confirm'
+      );
 
       $('.delete-button-confirm').addEventListener('click', async () => {
         await del('/api/admin/products', currentId);
         refreshData();
       });
     });
+  });
+}
+
+function modifyProduct() {
+  const productId = $('.opened').getAttribute('id');
+  const productModalHtml = `<label class="modify-product-modal">
+<div class="left-modal">
+  <input id="name" class="input is-rounded product-input" type="text" placeholder="이름" />
+  <input id="price" class="input is-rounded product-input" type="number" placeholder="가격" />
+  <input id="volume" class="input is-rounded product-input" type="number" placeholder="용량(ml)" />
+  <input id="category" class="input is-rounded product-input" type="text" placeholder="카테고리" />
+  <input id="image" class="input is-rounded product-input" type="text" placeholder="이미지" />
+  <input id="brand" class="input is-rounded product-input" type="text" placeholder="브랜드명" />
+</div>
+<div class="right-modal">
+  <input id="description" class="input is-rounded product-input" type="text" placeholder="설명" />
+  <input id="stock" class="input is-rounded product-input" type="number" placeholder="재고" />
+  <input id="sales" class="input is-rounded product-input" type="number" placeholder="판매량" />
+  <input id="alcoholType" class="input is-rounded product-input" type="text" placeholder="종류(탁주)" />
+  <input id="alcoholDegree" class="input is-rounded product-input" type="number" placeholder="도수" />
+  <div>
+    <button class="button modify-product-button">수정</button>
+    <button class="button close-modal-button">닫기</button>
+  </div>
+</div>
+</label>`;
+
+  $('.admin-menu').insertAdjacentHTML('afterend', productModalHtml);
+
+  $('.modify-product-button').addEventListener('click', async () => {
+    const productInput = [...document.querySelectorAll('.product-input')];
+    const inputObj = productInput.reduce((obj, input) => {
+      obj[input.getAttribute('id')] = input.value;
+      return obj;
+    }, {});
+
+    await patch('/api/admin/products', productId, inputObj);
+
+    $('.modify-product-modal').remove();
+    $('.add-category-modal').remove();
+    refreshData();
+  });
+  $('.close-modal-button').addEventListener('click', () => {
+    $('.modify-product-modal').remove();
+    refreshData();
   });
 }
 
