@@ -29,7 +29,7 @@ async function logIn(e) {
   try {
     const token = await api.post("/api/user/login", loginInput);
     setCookie(TOKEN, token);
-    history.back();
+    window.location.href = "/";
   } catch (err) {
     alert(err.message);
   }
