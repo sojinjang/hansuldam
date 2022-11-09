@@ -120,11 +120,15 @@ adminRouter.delete("/products/:productId", async (req, res, next) => {
     if (!productId) {
       throw new BadRequest("Undefined params", 4005);
     }
+    const product = await productService.getProductById(productId);
+    const filterObj = { name: product.category };
+    const toUpdate = { $pull: { products: productId } };
 
-    const products = await productService.deleteProduct(productId);
+    await categoryService.updateCategory(filterObj, toUpdate);
 
+    const deletedproduct = await productService.deleteProduct(productId);
     // 상품 목록(배열)을 JSON 형태로 프론트에 보냄
-    res.status(200).json(products);
+    res.status(200).json(deletedproduct);
   } catch (error) {
     next(error);
   }
