@@ -4,23 +4,20 @@ import { userModel } from "../../../db";
 const GoogleStrategy = GoogleOauth20.Strategy;
 
 const config = {
-  clientID:
-    "123614632461-gen2gcau1k5bsi5cjsg7rievs2nm5dah.apps.googleusercontent.com", // clientId 설정하기
-  clientSecret: "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", // clientSecret 설정하기
-  callbackURL: "/auth/google/callback",
+  clientID: process.env.clientID, // clientId 설정하기
+  clientSecret: process.env.clientSecret, // clientSecret 설정하기
+  callbackURL: "/api/user/google/callback",
 };
 
-async function findOrCreateUser({ name, email }) {
-  const user = await userModel.findOne({
-    email,
-  });
+async function findOrCreateUser({ fullName, email }) {
+  const user = await userModel.findByEmail(email);
 
   if (user) {
     return user;
   }
 
   const created = await userModel.create({
-    name,
+    fullName,
     email,
     password: "GOOGLE_OAUTH",
   });
@@ -34,11 +31,10 @@ module.exports = new GoogleStrategy(
     const { email, name } = profile._json;
 
     try {
-      const user = await findOrCreateUser({ email, name });
+      const user = await findOrCreateUser({ fullName: name, email });
       done(null, {
-        shortId: user.shortId,
         email: user.email,
-        name: user.name,
+        fullName: user.fullName,
       });
     } catch (e) {
       done(e, null);

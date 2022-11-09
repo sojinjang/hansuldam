@@ -5,6 +5,7 @@ import { generateRandomPassword } from "../utils/generate-random-password";
 import { sendRandomPassword } from "../utils/send-mail";
 import bcrypt from "bcrypt";
 import passport from "passport";
+import { jwt } from "jsonwebtoken";
 
 const userRouter = Router();
 
@@ -82,10 +83,25 @@ userRouter.post("/random-password", isEmptyObject, async (req, res, next) => {
   }
 });
 
-// google authO
+userRouter.post(
+  "/",
+  passport.authenticate("local", { session: false }),
+  (req, res, next) => {
+    const secretKey = process.env.JWT_SECRET_KEY;
+    const token = jwt.sign(req.user, secretKey);
+
+    res.cookie("token", token);
+    res.redirect("/");
+  }
+);
+
+//-------------- google authO
 userRouter.get(
   "/google",
-  passport.authenticate("google", { scope: ["profile", "email"] })
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+    session: false,
+  })
 );
 
 userRouter.get(
@@ -93,7 +109,10 @@ userRouter.get(
   passport.authenticate("google", { session: false }),
   (req, res, next) => {
     // userToken 설정하기
-    setUserToken(res, req.user);
+    const secretKey = process.env.JWT_SECRET_KEY;
+    const token = jwt.sign(req.user, secretKey);
+
+    res.cookie("token", token);
 
     res.redirect("/");
   }
