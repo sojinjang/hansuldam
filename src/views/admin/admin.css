@@ -104,6 +104,7 @@
   width: 50%;
   border: 0.5px solid grey;
   padding: 10px;
+  margin-bottom: 30px;
 }
 
 .add-product-modalm button, .modify-product-modal button{
@@ -118,4 +119,12 @@
 
 .orders-container .none {
   display: none;
+}
+
+.none {
+  display: none;
+}
+
+.img-upload-btn {
+  border: 1px rgb(211, 211, 211) solid;
 }
