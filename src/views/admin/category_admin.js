@@ -85,7 +85,10 @@ async function renderCategory(category) {
     const currentProductIndex = productsData.findIndex(
       (product) => product._id === productId
     );
-    arr.push(productsData[currentProductIndex]['name']);
+
+    if (currentProductIndex !== -1) {
+      arr.push(productsData[currentProductIndex]['name']);
+    }
 
     return arr;
   }, []);
