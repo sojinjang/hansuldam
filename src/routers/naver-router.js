@@ -51,11 +51,7 @@ naverRouter.get("/callback", function (req, res) {
 
   request.get(options, async function (error, response, body) {
     if (!error && response.statusCode == 200) {
-      res.writeHead(200, {
-        "Content-Type": "text/json;charset=utf-8",
-      });
       const { access_token } = JSON.parse(body);
-
       request.get(
         {
           url: "https://openapi.naver.com/v1/nid/me",
@@ -74,8 +70,9 @@ naverRouter.get("/callback", function (req, res) {
           const phoneNumber = result.response.mobile.split("-").join("");
           const password = "naver";
           const naverUserInfo = { fullName, email, phoneNumber, password };
-          console.log(naverUserInfo);
+
           const userToken = await userService.OauthLogin(naverUserInfo);
+
           res.status(200).json(userToken);
         }
       );
