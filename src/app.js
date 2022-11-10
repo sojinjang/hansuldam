@@ -8,6 +8,7 @@ import {
   adminRouter,
   orderRouter,
   authRouter,
+  naverRouter,
 } from "./routers";
 import { errorHandler, loginRequired, adminRequired } from "./middlewares";
 import passport from "passport";
@@ -17,7 +18,7 @@ const app = express();
 // CORS 에러 방지
 app.use(cors());
 
-require("./services/passport")();
+// require("./services/passport")();
 
 // Content-Type: application/json 형태의 데이터를 인식하고 핸들링할 수 있게 함.
 app.use(express.json());
@@ -29,7 +30,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(viewsRouter);
 
 // passport 초기화
-app.use(passport.initialize());
+// app.use(passport.initialize());
 
 // api 라우팅
 app.use("/api/user", userRouter);
@@ -38,6 +39,7 @@ app.use("/api/products", productRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/auth", loginRequired, authRouter);
 app.use("/api/admin", loginRequired, adminRequired, adminRouter);
+app.use("/api/naver", naverRouter);
 
 // 에러 라우팅
 app.use(errorHandler);
