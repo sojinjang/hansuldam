@@ -147,7 +147,7 @@ function makeOrderInfoObj() {
 async function requestPostOrder(orderInfoObj) {
   try {
     await api.post("/api/auth/orders", orderInfoObj);
-    // window.location.href = "/order-completed";
+    window.location.href = "/order-completed";
   } catch (err) {
     alert(err.message);
   }
