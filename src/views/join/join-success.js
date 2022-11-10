@@ -1,4 +1,4 @@
-import { isIdNum, isAdult } from "../utils/validator.js";
+import { isNum, isIdNum, isAdult } from "../utils/validator.js";
 import * as api from "../api.js";
 
 const main_form = document.querySelector(".body-join-form");
@@ -69,7 +69,7 @@ function checkPhoneNumber(phoneNumber) {
   if (phoneNumber.length === 0) {
     alert("휴대폰 번호를 입력해주세요.");
     return;
-  } else if (!/^[0-9]+$/.test(phoneNumber)) {
+  } else if (!isNum(phoneNumber)) {
     alert("숫자만 입력 가능합니다.");
     return;
   }

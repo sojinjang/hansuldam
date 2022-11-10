@@ -2,6 +2,10 @@ function isName(name) {
   return /^[가-힣]{2,4}/.test(name);
 }
 
+function isNum(numStr) {
+  return /^[0-9]+$/.test(numStr);
+}
+
 function isValidEmail(email) {
   const emailRegExp =
     /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
@@ -33,4 +37,4 @@ function isCardNum(cardNumInput) {
   return cardRegExp.test(cardNumInput);
 }
 
-export { isName, isValidEmail, isIdNum, isAdult, isCardNum };
+export { isName, isNum, isValidEmail, isIdNum, isAdult, isCardNum };
