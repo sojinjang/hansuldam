@@ -8,17 +8,17 @@ const checkOverlabBtn = document.querySelector(".emailOverlap");
 
 let emailCleard = false;
 
-function isDuplicatedEmail(email) {
-  // todo: 장바구니 api 만들어지는대로 변경
-  const tempData = ["elice@test.com"];
-
-  if (tempData.includes(email)) {
-    return true;
+async function checkDuplication(email) {
+  try {
+    const res = await api.get("api/user/emailCheck", email);
+    return res;
+  } catch (err) {
+    alert(err.message);
   }
-  return false;
 }
 
-function checkEmail() {
+async function checkEmail(e) {
+  e.preventDefault();
   const email = emailInput.value;
 
   if (!isValidEmail(email)) {
@@ -26,7 +26,8 @@ function checkEmail() {
     emailCleard = false;
     return;
   }
-  if (isDuplicatedEmail(email)) {
+  const isDuplicatedEmail = await checkDuplication(email);
+  if (isDuplicatedEmail) {
     alert("이미 사용중인 이메일입니다.");
     emailCleard = false;
     return;
