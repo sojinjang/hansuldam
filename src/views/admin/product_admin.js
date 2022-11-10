@@ -1,33 +1,18 @@
 import { get, post, patch, delete as del } from '../api.js';
+import removeContainer from './remove_container.js';
 
 const $ = (selector) => document.querySelector(selector);
 
 async function initFuc() {
   $('.product-menu').addEventListener('click', () => {
-    const productsContainer = document.querySelector('.products-container');
-    const categoriesContainer = document.querySelector('.categories-container');
-    const addCategoryModal = document.querySelector('.add-category-modal');
-    const addProductModal = document.querySelector('.add-product-modal');
-
-    if (productsContainer) {
-      productsContainer.remove();
-    }
-    if (categoriesContainer) {
-      categoriesContainer.remove();
-    }
-    if (addProductModal) {
-      addProductModal.remove();
-    }
-    if (addCategoryModal) {
-      addCategoryModal.remove();
-    }
-
+    removeContainer();
     openProductMenu();
   });
 }
 
 async function openProductMenu() {
-  const productsData = await get('/api/products');
+  const fetchData = await get('/api/products');
+  const productsData = fetchData['products'];
 
   $('.product-menu').classList.add('isClicked');
   const productContainerHTML = `<section class="products-container">
@@ -103,7 +88,11 @@ function addProduct() {
       return obj;
     }, {});
 
-    await post('/api/admin/products', inputObj);
+    try {
+      await post('/api/admin/products', inputObj);
+    } catch (e) {
+      alert(e);
+    }
 
     $('.add-product-modal').remove();
     $('.add-category-modal').remove();
@@ -124,7 +113,9 @@ async function renderProduct(product) {
   productSection.setAttribute('class', 'columns items-container');
   productSection.setAttribute('id', _id);
   productSection.innerHTML = `<div class="column is-2 row-name">${name}</div>
-<div class="column is-2 row-price">${price}</div>
+<div class="column is-2 row-price">${Number(price).toLocaleString(
+    'ko-KR'
+  )}원</div>
 <div class="column is-2 row-volumn">${volume}ml</div>
 <div class="column is-2 row-category">${category}</div>
 <div class="column is-2 row-type">${alcoholType}</div>
@@ -136,12 +127,13 @@ async function renderProduct(product) {
 }
 
 async function renderProductDetail() {
-  const productsData = await get('/api/products');
+  const fetchData = await get('/api/products');
+  const productsData = fetchData['products'];
   const detailBtn = document.querySelectorAll('.detail-button');
 
   detailBtn.forEach((button) => {
     button.addEventListener('click', (e) => {
-      let currentId = e.target.getAttribute('id');
+      const currentId = e.target.getAttribute('id');
       const currentIndex = productsData.findIndex(
         (product) => product._id === currentId
       );
@@ -158,9 +150,9 @@ async function renderProductDetail() {
 
       const detailHtml = `<div class="columns items-container items-detail opened" id="${_id}">
       <div class="column is-2">${brand}</div>
-      <div class="column is-2">${stock}</div>
+      <div class="column is-2">${stock}개 남음</div>
       <div class="column is-2">${description}</div>
-      <div class="column is-2">${sales}</div>
+      <div class="column is-2">${sales}개 판매</div>
       <div class="column is-2">${manufacturedDate}</div>
       <div class="column is-1">${alcoholDegree}도</div>
       <div class="column is-1">
@@ -184,7 +176,10 @@ async function renderProductDetail() {
 
       const modifyBtn = document.querySelector('.modify-button');
       if (modifyBtn) {
-        modifyBtn.addEventListener('click', modifyProduct);
+        modifyBtn.addEventListener('click', () => {
+          modifyProduct();
+          window.scrollTo(0, 580);
+        });
       }
     });
   });
@@ -241,11 +236,14 @@ function modifyProduct() {
       return obj;
     }, {});
 
-    await patch('/api/admin/products', productId, inputObj);
+    try {
+      await patch('/api/admin/products', productId, inputObj);
 
-    $('.modify-product-modal').remove();
-    $('.add-category-modal').remove();
-    refreshData();
+      refreshData();
+      $('.modify-product-modal').remove();
+    } catch (e) {
+      alert(e);
+    }
   });
   $('.close-modal-button').addEventListener('click', () => {
     $('.modify-product-modal').remove();
