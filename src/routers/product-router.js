@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { productService } from "../services";
+import { BadRequest } from "../utils/errorCodes";
 
 const productRouter = Router();
 

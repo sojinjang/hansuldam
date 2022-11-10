@@ -1,7 +1,8 @@
 import { Router } from "express";
 import { isEmptyObject } from "../middlewares";
-import { loginRequired } from "../middlewares";
 import { userService } from "../services";
+import { BadRequest } from "../utils/errorCodes";
+
 import { generateRandomPassword } from "../utils/generate-random-password";
 import { sendRandomPassword } from "../utils/send-mail";
 import bcrypt from "bcrypt";
@@ -60,7 +61,9 @@ userRouter.post("/register", isEmptyObject, async (req, res, next) => {
 userRouter.get("/emailCheck/:email", async (req, res, next) => {
   try {
     const needCheckEmail = req.params.email;
-
+    if (!needCheckEmail) {
+      throw new BadRequest("Undefined params", 4005);
+    }
     // 위 데이터를 유저 db에 추가하기
     const user = await userService.getUserOneByEmail(needCheckEmail);
 
