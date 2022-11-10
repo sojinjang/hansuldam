@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Liquor Store 🍸</title>
+        <title>주문 - Liquor Store 🍸</title>
         <link
         rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
@@ -43,8 +43,8 @@
                             <p>전화번호</p>
                         </div>
                         <div>
-                            <p class="user-name">[이름]</p>
-                            <p class="user-phoneNumber">[전화번호]</p>
+                            <input class="user-name"></input>
+                            <input class="user-phoneNumber"></input>
                         </div>
                     </div>
                 </div>
@@ -55,12 +55,11 @@
                         <span>배송지</span>
                         <div class="address">
                             <div class="user-address">
-                                <p class="user-PostalCode">[우편번호]</p>
-                                <p class="user-address1">[주소1]</p>
-                                <p class="user-address2">[주소2]</p>
+                                <input class="user-address1"></input>
+                                <input class="user-address2"></input>
                             </div>
                             <div class="address-status">
-                                <select name="" id="select-status">
+                                <select name="" id="delivery-select">
                                     <option value="0" id="default">배송 시 요청사항을 선택해주세요.</option>
                                     <option value="1">배송 전 연락주세요.</option>
                                     <option value="2">부재 시 경비실에 맡겨주세요.</option>
@@ -83,35 +82,52 @@
                     <div>
                         <button class="creditCardBtn">신용 카드</button>
                         <div class="creditCard">
+                                <select class="card-company" id="card-select">
+                                    <option value="0" id="default">카드사를 선택해주세요.</option>
+                                    <option value="KB 국민">KB 국민</option>
+                                    <option value="현대">현대</option>
+                                    <option value="삼성">삼성</option>
+                                    <option value="신한">신한</option>
+                                    <option value="롯데">롯데</option>
+                                    <option value="하나">하나</option>
+                                    <option value="농협">농협</option>
+                                    <option value="BC">BC</option>
+                                    <option value="우리">우리</option>
+                                    <option value="저축은행">저축은행</option>
+                                    <option value="씨티">씨티</option>
+                                    <option value="전북">전북</option>
+                                    <option value="수협">수협</option>
+                                    <option value="제주">제주</option>
+                                </select>
                             <input 
-                                class="creditCardInput"
+                                class="creditCardInput1"
                                 type="text"
                                 minlength="4"
                                 maxlength="4"
                                 width="100px"
                                 height="22px"
                                 required
-                            />&nbsp;-&nbsp;
+                            />
                             <input
-                                class="creditCardInput"
+                                class="creditCardInput2"
                                 type="text"
                                 minlength="4"
                                 maxlength="4"
                                 width="100px"
                                 height="22px"
                                 required
-                            />&nbsp;-&nbsp;
+                            />
                             <input 
-                                class="creditCardInput"
+                                class="creditCardInput3"
                                 type="text"
                                 minlength="4" 
                                 maxlength="4"
                                 width="100px"
                                 height="22px"
                                 required
-                            />&nbsp;-&nbsp;
+                            />
                             <input 
-                                class="creditCardInput"
+                                class="creditCardInput4"
                                 type="text"
                                 minlength="4"
                                 maxlength="4"
@@ -141,6 +157,7 @@
                         <button
                         role="button"
                         id="rounded-button"
+                        class="pay-button"
                         >
                         결제 하기
                         </button>
