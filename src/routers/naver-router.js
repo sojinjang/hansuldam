@@ -1,4 +1,6 @@
 import { Router } from "express";
+import request from "request";
+
 const naverRouter = Router();
 
 var client_id = process.env.Naver_clientID;
@@ -38,7 +40,6 @@ naverRouter.get("/callback", function (req, res) {
     "&state=" +
     state;
 
-  var request = require("request");
   var options = {
     url: api_url,
     headers: {
@@ -49,38 +50,17 @@ naverRouter.get("/callback", function (req, res) {
   request.get(options, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       res.writeHead(200, { "Content-Type": "text/json;charset=utf-8" });
-      res.end(body);
       const { access_token } = JSON.parse(body);
-      test(access_token);
-      res.redirect("http://localhost:7777");
+
+      // const userToken = naverService(access_token);
+      console.log(access_token);
+      res.status(200).json();
     } else {
       res.status(response.statusCode).end();
       console.log("error = " + response.statusCode);
     }
   });
+  res.redirect("/");
 });
-
-async function test(access_token) {
-  try {
-    const res = await fetch("https://openapi.naver.com/v1/nid/me", {
-      method: "GET",
-      headers: {
-        "Content-Type": "text/json;charset=utf-8",
-        Authorization: `Bearer ${access_token}`,
-      },
-    });
-
-    if (!res.ok) {
-      const error = await res.json();
-      throw new Error(ErrorMessage[error.errorCode]);
-    }
-
-    const result = await res.json();
-
-    return;
-  } catch (error) {
-    return res.json(error.data);
-  }
-}
 
 export { naverRouter };

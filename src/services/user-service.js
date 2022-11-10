@@ -82,6 +82,12 @@ class UserService {
     return user;
   }
 
+  // 이메일로 사용자 개인정보를 받음(이메일 체크)
+  async getUserOneByEmail(email) {
+    const user = await this.userModel.findByEmail(email);
+    return user;
+  }
+
   // 사용자 삭제.
   async deleteUserOne(userId) {
     const user = await this.userModel.delete(userId);

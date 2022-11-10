@@ -57,6 +57,23 @@ userRouter.post("/register", isEmptyObject, async (req, res, next) => {
   }
 });
 
+// 이메일 체크
+userRouter.get("/emailCheck/:email", async (req, res, next) => {
+  try {
+    const needCheckEmail = req.params.email;
+
+    // 위 데이터를 유저 db에 추가하기
+    const user = await userService.getUserOneByEmail(needCheckEmail);
+
+    const isDuplicatedEmail = user ? true : false;
+    const answer = { isDuplicatedEmail };
+
+    res.status(201).json(answer);
+  } catch (error) {
+    next(error);
+  }
+});
+
 userRouter.post("/random-password", isEmptyObject, async (req, res, next) => {
   try {
     const { email } = req.body;

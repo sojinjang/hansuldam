@@ -14,10 +14,14 @@ productRouter.get("/", async (req, res, next) => {
     // 페이지네이션
     let arr = [];
     for (let i = 0; i < products.length; i++) {
-        arr.push(products[i]);
+      arr.push(products[i]);
     }
-    // 상품 목록(배열)을 JSON 형태로 프론트에 보냄
-    const productsPerPage = arr.slice(perPage * (page - 1), perPage * (page - 1) + perPage);
+
+    const productsPerPage = arr.slice(
+      perPage * (page - 1),
+      perPage * (page - 1) + perPage
+    );
+
     const total = arr.length;
     const totalPage = Math.ceil(total / perPage);
     products = productsPerPage;
@@ -25,7 +29,8 @@ productRouter.get("/", async (req, res, next) => {
       totalPage,
       total,
       products,
-    }
+    };
+    // 상품 목록(배열)을 JSON 형태로 프론트에 보냄
     res.status(200).json(result);
   } catch (error) {
     next(error);
