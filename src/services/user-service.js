@@ -9,6 +9,33 @@ class UserService {
   constructor(userModel) {
     this.userModel = userModel;
   }
+  // Oauth 로그인 서비스
+  async OauthLogin(userInfo) {
+    const { fullName, email, phoneNumber, password } = userInfo;
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const newUserInfo = {
+      fullName,
+      email,
+      password: hashedPassword,
+      phoneNumber,
+    };
+
+    let user = await this.userModel.findByEmail(email);
+    if (!user) {
+      user = await this.userModel.create(newUserInfo);
+    }
+
+    const secretKey = process.env.JWT_SECRET_KEY;
+
+    // 2개 프로퍼티를 jwt 토큰에 담음
+    const token = jwt.sign({ userId: user._id, role: user.role }, secretKey, {
+      expiresIn: "1h",
+    });
+
+    return { token };
+  }
 
   // 회원가입
   async addUser(userInfo) {
@@ -128,6 +155,23 @@ class UserService {
       toUpdate.password = newPasswordHash;
     }
 
+    // 업데이트 진행
+    user = await this.userModel.update({
+      userId,
+      updateObj: toUpdate,
+    });
+
+    return user;
+  }
+
+  async NoPasswordSetUser(userId, toUpdate) {
+    // 우선 해당 id의 유저가 db에 있는지 확인
+    let user = await this.userModel.findById(userId);
+
+    // db에서 찾지 못한 경우, 에러 메시지 반환
+    if (!user) {
+      throw new NotFound("UserId does not in DB", 4104);
+    }
     // 업데이트 진행
     user = await this.userModel.update({
       userId,

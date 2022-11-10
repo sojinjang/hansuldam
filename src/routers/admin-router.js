@@ -183,7 +183,7 @@ adminRouter.patch("/orders/:orderId", isEmptyObject, async (req, res, next) => {
       payment,
       status,
       shipping,
-      priceSum,
+      totalPrice,
     } = req.body;
 
     // 위 데이터를 카테고리 db에 추가하기
@@ -195,7 +195,7 @@ adminRouter.patch("/orders/:orderId", isEmptyObject, async (req, res, next) => {
       payment,
       status,
       shipping,
-      priceSum,
+      totalPrice,
     });
 
     // 업데이트 이후의 데이터를 프론트에 보내 줌
