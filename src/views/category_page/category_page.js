@@ -1,24 +1,19 @@
-async function fetchData() {
-  const res = await fetch('/api/products/', {
-    method: 'GET',
-  });
-  
-  return await res.json();
-}
+import { get } from '../api.js';
 
 async function refineData() {
-  const productsData = await fetchData();
+  const fetchData = await get('/api/products');
+  const productsData = fetchData['products'];
 
   const queryString = new Proxy(new URLSearchParams(window.location.search), {
     get: (params, prop) => params.get(prop),
   });
+
   const label = queryString.label;
 
-  switch(label) {
-    
+  switch (label) {
     case 'totalProducts':
       return productsData;
-      
+
     case 'newProducts':
       const sortNew = productsData.sort((a, b) => {
         if (a.updatedAt < b.updatedAt) return 1;
@@ -40,8 +35,7 @@ async function showProducts() {
 
   if (!productsData) {
     alert('fetch한 데이터가 없습니다!');
-  }
-  else productsData.forEach((product) => renderData(product));
+  } else productsData.forEach((product) => renderData(product));
 
   const $ = (selector) => document.querySelector(selector);
   const queryString = new Proxy(new URLSearchParams(window.location.search), {
@@ -49,18 +43,18 @@ async function showProducts() {
   });
   const label = queryString.label;
 
-  switch(label) {
-    case 'totalProducts' :
+  switch (label) {
+    case 'totalProducts':
       $('#totalProducts').setAttribute('class', 'menu-label clicked-label');
       break;
-      
-    case 'newProducts' :
-      $('#newProducts').setAttribute('class', 'menu-label clicked-label'); 
+
+    case 'newProducts':
+      $('#newProducts').setAttribute('class', 'menu-label clicked-label');
       break;
-      
-    case 'bestProducts' :
-      $('#bestProducts').setAttribute('class', 'menu-label clicked-label'); 
-      break;           
+
+    case 'bestProducts':
+      $('#bestProducts').setAttribute('class', 'menu-label clicked-label');
+      break;
   }
 }
 
@@ -74,10 +68,11 @@ async function goToDetailPage() {
       window.location.href = `/product-detail?id=${productId}`;
     });
   });
-};
+}
 
 function renderData(product) {
-  const { _id, name, brand, price, volume, sold, category, alcoholDegree } = product;
+  const { _id, name, brand, price, volume, sold, category, alcoholDegree } =
+    product;
 
   let productSection = document.createElement('section');
 
@@ -105,7 +100,7 @@ function renderData(product) {
 </div>`;
 
   const bodyContainer = document.querySelector('.body-container');
-  
+
   bodyContainer.append(productSection);
 }
 

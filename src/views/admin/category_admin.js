@@ -1,19 +1,11 @@
-import { get, post, patch, delete as del } from '../api.js'
+import { get, post, patch, delete as del } from '../api.js';
+import removeContainer from './remove_container.js';
 
 const $ = (selector) => document.querySelector(selector);
 
 function initFunc() {
   $('.category-menu').addEventListener('click', () => {
-    const productsContainer = document.querySelector('.products-container');
-    const categoriesContainer = document.querySelector('.categories-container');
-    const addCategoryModal = document.querySelector('.add-category-modal');
-    const addProductModal = document.querySelector('.add-product-modal');
-
-    if (productsContainer) { productsContainer.remove() };
-    if (categoriesContainer) { categoriesContainer.remove(); };
-    if (addProductModal) { addProductModal.remove() };
-    if (addCategoryModal) { addCategoryModal.remove() };
-    
+    removeContainer();
     openCategoryMenu();
   });
 }
@@ -21,7 +13,7 @@ function initFunc() {
 async function openCategoryMenu() {
   const categoriesData = await get('/api/category');
   $('.category-menu').classList.add('isClicked');
-  
+
   const productContainerHTML = `<section class="categories-container">
   <button class="button add-button">추가</button>
   <button class="button close-button">닫기</button>
@@ -42,7 +34,7 @@ async function openCategoryMenu() {
 
   $('.close-button').addEventListener('click', closeSection);
   $('.add-button').addEventListener('click', addCategory);
-};
+}
 
 function closeSection() {
   $('.category-menu').classList.remove('isClicked');
@@ -73,16 +65,14 @@ function addCategory() {
     $('.add-category-modal').remove();
     refreshData();
   });
-
-
 }
 
 async function postCategory(inputValue) {
   const inputValueObject = {
-    name: inputValue
-  }
+    name: inputValue,
+  };
 
-  await post('/api/admin/category' ,inputValueObject);
+  await post('/api/admin/category', inputValueObject);
 }
 
 async function renderCategory(category) {
@@ -101,7 +91,7 @@ async function renderCategory(category) {
 `;
 
   $('.categories-container').append(categorySection);
-};
+}
 
 function deleteCategory() {
   const deleteBtn = document.querySelectorAll('.delete-button');
@@ -109,7 +99,10 @@ function deleteCategory() {
     button.addEventListener('click', (e) => {
       const currentId = e.target.getAttribute('id');
 
-      e.target.setAttribute('class', 'button column is-danger delete-button-confirm');
+      e.target.setAttribute(
+        'class',
+        'button column is-danger delete-button-confirm'
+      );
 
       $('.delete-button-confirm').addEventListener('click', async () => {
         await del('/api/admin/category', currentId);
@@ -117,7 +110,7 @@ function deleteCategory() {
       });
     });
   });
-};
+}
 
 function modifyCategory() {
   const modifyBtn = document.querySelectorAll('.modify-button');
@@ -130,25 +123,27 @@ function modifyCategory() {
   <button class="button modify-category-button">추가</button>
   <button class="button close-modify-button">닫기</button>  
 </label>`;
-      await e.currentTarget.parentNode.parentNode.insertAdjacentHTML('beforebegin', categoryModifyModalHtml);
+      await e.currentTarget.parentNode.parentNode.insertAdjacentHTML(
+        'beforebegin',
+        categoryModifyModalHtml
+      );
 
       $('.close-modify-button').addEventListener('click', () => {
         $('.modify-category-modal').remove();
       });
-      
+
       $('.modify-category-button').addEventListener('click', async () => {
         const modifyValue = { name: $('.modify-category-input').value };
         await patch('/api/admin/category', currentId, modifyValue);
         $('.categories-container').remove();
       });
-
     });
   });
-};
+}
 
 function refreshData() {
   $('.categories-container').remove();
   openCategoryMenu();
-};
+}
 
 export { initFunc as showCategories };
