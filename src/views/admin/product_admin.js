@@ -3,7 +3,7 @@ import removeContainer from './remove_container.js';
 
 const $ = (selector) => document.querySelector(selector);
 
-async function initFuc() {
+async function initFunc() {
   $('.product-menu').addEventListener('click', () => {
     removeContainer();
     openProductMenu();
@@ -45,7 +45,12 @@ async function openProductMenu() {
 function closeSection() {
   if ($('.modify-product-modal')) {
     $('.modify-product-modal').remove();
-  }
+  };
+  
+  if ($('.add-product-modal')) {
+    $('.add-product-modal').remove();
+  } 
+  
   $('.product-menu').classList.remove('isClicked');
   $('.products-container').remove();
 }
@@ -54,29 +59,53 @@ function addProduct() {
   if ($('.modify-product-modal')) {
     $('.modify-product-modal').remove();
   }
+
+  if ($('.modify-product-modal')) {
+
+  } 
   $('.add-button').classList.add('none');
   $('.close-button').classList.add('none');
 
   const productModalHtml = `<label class="add-product-modal">
-  <div class="left-modal">
-    <input id="name" class="input is-rounded product-input" type="text" placeholder="이름" />
-    <input id="price" class="input is-rounded product-input" type="number" placeholder="가격" />
-    <input id="volume" class="input is-rounded product-input" type="number" placeholder="용량(ml)" />
-    <input id="category" class="input is-rounded product-input" type="text" placeholder="카테고리" />
-    <input id="image" class="input is-rounded product-input" type="text" placeholder="이미지" />
-    <input id="brand" class="input is-rounded product-input" type="text" placeholder="브랜드명" />
-  </div>
-  <div class="right-modal">
-    <input id="description" class="input is-rounded product-input" type="text" placeholder="설명" />
-    <input id="stock" class="input is-rounded product-input" type="number" placeholder="재고" />
-    <input id="sales" class="input is-rounded product-input" type="number" placeholder="판매량" />
-    <input id="alcoholType" class="input is-rounded product-input" type="text" placeholder="종류(탁주)" />
-    <input id="alcoholDegree" class="input is-rounded product-input" type="number" placeholder="도수" />
-    <div>
-      <button class="button add-product-button">추가</button>
-      <button class="button close-modal-button">닫기</button>
+<div class="left-modal">
+  <input id="name" class="input is-rounded product-input" type="text" placeholder="이름" />
+  <input id="price" class="input is-rounded product-input" type="number" placeholder="가격" />
+  <input id="volume" class="input is-rounded product-input" type="number" placeholder="용량(ml)" />
+  <input id="category" class="input is-rounded product-input" type="text" placeholder="카테고리" />
+  <form action="/api/image" enctype="multipart/form-data" method="post">
+    <div id="file-js-example" class="file has-name">
+      <label class="file-label">
+        <input
+          id="image"
+          class="file-input product-input"
+          type="file"
+          name="uploadImg"
+          placeholder="이미지"
+        />
+        <span class="file-cta">
+          <span class="file-icon">
+            <i class="fas fa-upload"></i>
+          </span>
+          <span class="file-label"></span>
+        </span>
+        <span class="file-name"> 이미지를 넣어주세요! </span>
+        <button type="submit" class="button is-small img-upload-btn">전송</button>
+      </label>
     </div>
+  </form>
+  <input id="brand" class="input is-rounded product-input" type="text" placeholder="브랜드명" />
+</div>
+<div class="right-modal">
+  <input id="description" class="input is-rounded product-input" type="text" placeholder="설명" />
+  <input id="stock" class="input is-rounded product-input" type="number" placeholder="재고" />
+  <input id="sales" class="input is-rounded product-input" type="number" placeholder="판매량" />
+  <input id="alcoholType" class="input is-rounded product-input" type="text" placeholder="종류(탁주)" />
+  <input id="alcoholDegree" class="input is-rounded product-input" type="number" placeholder="도수" />
+  <div>
+    <button class="button add-product-button">추가</button>
+    <button class="button close-modal-button">닫기</button>
   </div>
+</div>
 </label>`;
 
   $('.admin-menu').insertAdjacentHTML('afterend', productModalHtml);
@@ -177,6 +206,7 @@ async function renderProductDetail() {
       const modifyBtn = document.querySelector('.modify-button');
       if (modifyBtn) {
         modifyBtn.addEventListener('click', () => {
+          if ($('.add-product-modal')) { $('.add-product-modal').remove() }
           modifyProduct();
           window.scrollTo(0, 580);
         });
@@ -211,7 +241,27 @@ function modifyProduct() {
   <input id="price" class="input is-rounded product-input" type="number" placeholder="가격" />
   <input id="volume" class="input is-rounded product-input" type="number" placeholder="용량(ml)" />
   <input id="category" class="input is-rounded product-input" type="text" placeholder="카테고리" />
-  <input id="image" class="input is-rounded product-input" type="text" placeholder="이미지" />
+  <form action="/api/image" enctype="multipart/form-data" method="post">
+    <div id="file-js-example" class="file has-name">
+      <label class="file-label">
+        <input
+          id="image"
+          class="file-input product-input"
+          type="file"
+          name="uploadImg"
+          placeholder="이미지"
+        />
+        <span class="file-cta">
+          <span class="file-icon">
+            <i class="fas fa-upload"></i>
+          </span>
+          <span class="file-label"></span>
+        </span>
+        <span class="file-name"> 이미지를 넣어주세요! </span>
+        <button type="submit" class="button is-small img-upload-btn">전송</button>
+      </label>
+    </div>
+  </form>
   <input id="brand" class="input is-rounded product-input" type="text" placeholder="브랜드명" />
 </div>
 <div class="right-modal">
@@ -228,6 +278,14 @@ function modifyProduct() {
 </label>`;
 
   $('.admin-menu').insertAdjacentHTML('afterend', productModalHtml);
+
+  const fileInput = document.querySelector('#file-js-example input[type=file]');
+  fileInput.onchange = () => {
+    if (fileInput.files.length > 0) {
+      const fileName = document.querySelector('#file-js-example .file-name');
+      fileName.textContent = fileInput.files[0].name;
+    }
+  };
 
   $('.modify-product-button').addEventListener('click', async () => {
     const productInput = [...document.querySelectorAll('.product-input')];
@@ -256,4 +314,4 @@ function refreshData() {
   openProductMenu();
 }
 
-export { initFuc as showProducts };
+export { initFunc as showProducts };
