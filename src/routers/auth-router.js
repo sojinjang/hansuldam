@@ -93,7 +93,7 @@ authRouter.post("/orders", isEmptyObject, async (req, res, next) => {
       address,
       shipping,
       payment,
-      priceSum,
+      totalPrice,
       productsInOrder,
       phoneNumber,
     } = req.body;
@@ -105,7 +105,7 @@ authRouter.post("/orders", isEmptyObject, async (req, res, next) => {
       address,
       shipping,
       payment,
-      priceSum,
+      totalPrice,
       productsInOrder,
       phoneNumber,
     });
