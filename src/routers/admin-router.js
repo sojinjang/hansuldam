@@ -104,11 +104,6 @@ adminRouter.patch(
         alcoholDegree,
       });
 
-      // category 모델에 product._id 추가
-      const filterObj = { name: category };
-      const toUpdate = { $push: { products: updateProduct._id } };
-      await categoryService.updateCategory(filterObj, toUpdate);
-
       // 업데이트 이후의 데이터를 프론트에 보내 줌
       res.status(200).json(updateProduct);
     } catch (error) {
