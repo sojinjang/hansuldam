@@ -1,13 +1,10 @@
 import * as api from "../api.js";
 import { isCardNum } from "../utils/validator.js";
+import { getSavedItems } from "../utils/localStorage.js";
 
 const $ = (seletor) => document.querySelector(seletor);
 
 const PRODUCTS_KEY = "products";
-
-function getSavedProducts() {
-  return JSON.parse(localStorage.getItem(PRODUCTS_KEY));
-}
 
 function showProduct(item) {
   let product = undefined;
@@ -135,7 +132,7 @@ function makeOrderInfoObj() {
     },
     payment: {
       method: "신용카드",
-      detail: "현대",
+      detail: $(".card-company").options[$(".card-company").selectedIndex].value,
       number:
         $(".creditCardInput1").value +
         $(".creditCardInput2").value +
@@ -150,7 +147,7 @@ function makeOrderInfoObj() {
 async function requestPostOrder(orderInfoObj) {
   try {
     await api.post("/api/auth/orders", orderInfoObj);
-    window.location.href = "/order-completed";
+    // window.location.href = "/order-completed";
   } catch (err) {
     alert(err.message);
   }
@@ -163,7 +160,7 @@ function sendPayInfo() {
   }
 }
 
-let savedProducts = getSavedProducts();
+let savedProducts = getSavedItems(PRODUCTS_KEY);
 savedProducts.forEach(showProduct);
 caculateTotalPrice();
 
