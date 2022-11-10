@@ -77,15 +77,25 @@ async function postCategory(inputValue) {
 
 async function renderCategory(category) {
   const { _id, name } = await category;
-  // 카테고리 내 상품들. 나중에 스트링으로 바꾸어야 합니다.
+  const fetchProductsData = await get('/api/products');
+  const productsData = fetchProductsData['products'];
   let { products } = await category;
+
+  const productsArr = products.reduce((arr, productId) => {
+    const currentProductIndex = productsData.findIndex(
+      (product) => product._id === productId
+    );
+    arr.push(productsData[currentProductIndex]['name']);
+
+    return arr;
+  }, []);
 
   let categorySection = document.createElement('div');
 
   categorySection.setAttribute('class', 'columns items-container');
   categorySection.setAttribute('id', _id);
   categorySection.innerHTML = `<div class="column is-2 row-name">${name}</div>
-<div class="column is-8 row-products">${products}</div>
+<div class="column is-8 row-products">${[...productsArr]}</div>
 <div class="column is-1"><button id="${_id}" class="button column modify-button">수정</button></div>
 <div class="column is-1"><button id="${_id}" class="button column delete-button">삭제</button></div>
 `;
