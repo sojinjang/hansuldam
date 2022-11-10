@@ -82,6 +82,12 @@ class UserService {
     return user;
   }
 
+  // 이메일로 사용자 개인정보를 받음(이메일 체크)
+  async getUserOneByEmail(email) {
+    const user = await this.userModel.findByEmail(email);
+    return user;
+  }
+
   // 사용자 삭제.
   async deleteUserOne(userId) {
     const user = await this.userModel.delete(userId);
@@ -122,6 +128,23 @@ class UserService {
       toUpdate.password = newPasswordHash;
     }
 
+    // 업데이트 진행
+    user = await this.userModel.update({
+      userId,
+      updateObj: toUpdate,
+    });
+
+    return user;
+  }
+
+  async NoPasswordSetUser(userId, toUpdate) {
+    // 우선 해당 id의 유저가 db에 있는지 확인
+    let user = await this.userModel.findById(userId);
+
+    // db에서 찾지 못한 경우, 에러 메시지 반환
+    if (!user) {
+      throw new NotFound("UserId does not in DB", 4104);
+    }
     // 업데이트 진행
     user = await this.userModel.update({
       userId,
