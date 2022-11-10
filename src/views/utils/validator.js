@@ -28,4 +28,9 @@ function isAdult(idNumInput) {
   return age < 20 ? false : true;
 }
 
-export { isName, isValidEmail, isIdNum, isAdult };
+function isCardNum(cardNumInput) {
+  const cardRegExp = /[0-9]{4}/;
+  return cardRegExp.test(cardNumInput);
+}
+
+export { isName, isValidEmail, isIdNum, isAdult, isCardNum };
