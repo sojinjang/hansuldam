@@ -1,18 +1,11 @@
-async function fetchData() {
-  // 임시 데이터 입니다.
+import { get } from '../api.js'
+
+async function renderData() {
   const queryString = new Proxy(new URLSearchParams(window.location.search), {
     get: (params, prop) => params.get(prop),
   });
-  const id = queryString.id;
-  const res = await fetch(`/api/products/${id}`, {
-    method: 'GET',
-  });
-
-  return await res.json();
-}
-
-async function renderData() {
-  const fetchedData = await fetchData();
+  const currentId = queryString.id;
+  const fetchedData = await get('/api/products', currentId);
   const {
     _id,
     category,
@@ -32,19 +25,20 @@ async function renderData() {
   productSection.setAttribute('class', 'product-container');
   productSection.setAttribute('id', _id);
   productSection.innerHTML = `<div class="product-container">
-	<div class="image-warpper">
-		<img src="../img/ricewine_icon.png" alt="상품 이미지" />
-	</div>
+  <div class="image-warpper">
+    <img src="../img/ricewine_icon.png" alt="상품 이미지" />
+  </div>
 	<div class="content__container">
 		<div class="content__main-info">
-			<p class="content__item content__name">${name}</p>
-			<p class="content__item content__price">${price}</p>
+    <p class="content__item content__name">${name}</p>
+    <p class="content__item content__category">${category}</p>
+			<p class="content__item content__price">${Number(price).toLocaleString('ko-KR')}원</p>
 			<p class="content__desc">${description}</p>
 		</div>
 		<div class="content__detail-info">
 			<p>
 				<span class="content__sold">판매량</span>
-				<span class="content__item content__sold">${sales}</span>
+				<span class="content__item content__sold">${sales}개</span>
 			</p>
 			<p>
 				<span class="content__alcoholType">종류</span>
@@ -52,7 +46,7 @@ async function renderData() {
 			</p>
 			<p>
 				<span class="content__alcoholDegree">도수</span>
-				<span class="content__item content__alcoholDegree">${alcoholDegree}</span>
+				<span class="content__item content__alcoholDegree">${alcoholDegree}도</span>
 			</p>
 			<p>
 				<span class="content__volume">용량</span>

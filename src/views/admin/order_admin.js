@@ -130,7 +130,7 @@ async function renderOrder(order) {
     });
 
     test.innerHTML = `<div class="column is-8">${detailText}</div>
-    <div class="column is-2">총 ${priceSum.toLocaleString('ko-KR')}원</div>`;
+    <div class="column is-2">총 ${Number(priceSum).toLocaleString('ko-KR')}원</div>`;
 
     $('.orders-container').append(test);
   }

@@ -1,5 +1,7 @@
 import { get } from '../api.js';
 
+const $ = (selector) => document.querySelector(selector);
+
 async function refineData() {
   const fetchData = await get('/api/products');
   const productsData = fetchData['products'];
@@ -71,7 +73,7 @@ async function goToDetailPage() {
 }
 
 function renderData(product) {
-  const { _id, name, brand, price, volume, sold, category, alcoholDegree } =
+  const { _id, name, brand, price, volume, sales, category, alcoholDegree } =
     product;
 
   let productSection = document.createElement('section');
@@ -88,11 +90,11 @@ function renderData(product) {
   <div class="content-container">
     <div class="content-left-container">
       <p class="content-brand">브랜드 | ${brand}</p>
-      <p class="content-price">${price}원</p>
+      <p class="content-price">${Number(price).toLocaleString('ko-KR')}원</p>
       <p class="content-volume">${volume}ml</p>
     </div>
     <div class="content-right-container">
-      <p class="content-sold">${sold}회 판매</p>
+      <p class="content-sold">${sales}회 판매</p>
       <p class="content-category">${category}</p>
       <p class="content-alcoholDegree">${alcoholDegree}도</p>
     </div>
