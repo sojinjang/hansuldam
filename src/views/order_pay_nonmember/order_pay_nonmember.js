@@ -144,8 +144,8 @@ function makeOrderInfoObj() {
 
 async function requestPostOrder(orderInfoObj) {
   try {
-    await api.post("/api/orders", orderInfoObj);
-    window.location.href = "/order-completed";
+    const orderObj = await api.post("/api/orders", orderInfoObj);
+    window.location.href = `order_completed.html?${orderObj["_id"]}`;
   } catch (err) {
     alert(err.message);
   }
