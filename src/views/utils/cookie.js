@@ -12,7 +12,9 @@ const getCookieValue = (key) => {
 };
 
 const deleteCookie = (key) => {
-  document.cookie = key + "=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+  setCookie(key, "", {
+    "max-age": -1,
+  });
 };
 
 export { setCookie, getCookieValue, deleteCookie };
