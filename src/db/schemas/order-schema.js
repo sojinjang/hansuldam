@@ -50,7 +50,7 @@ const OrderSchema = new Schema(
       ),
       required: false,
     },
-    priceSum: {
+    totalPrice: {
       type: Number,
       required: true,
     },
