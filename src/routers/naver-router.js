@@ -1,5 +1,6 @@
 import { Router } from "express";
 import request from "request";
+import { naverService, userService } from "../services";
 
 const naverRouter = Router();
 
@@ -47,20 +48,29 @@ naverRouter.get("/callback", function (req, res) {
       "X-Naver-Client-Secret": client_secret,
     },
   };
-  request.get(options, function (error, response, body) {
+  request.get(options, async function (error, response, body) {
     if (!error && response.statusCode == 200) {
-      res.writeHead(200, { "Content-Type": "text/json;charset=utf-8" });
+      res.writeHead(200, {
+        "Content-Type": "text/json;charset=utf-8",
+      });
       const { access_token } = JSON.parse(body);
 
-      // const userToken = naverService(access_token);
-      console.log(access_token);
-      res.status(200).json();
+      const naverUser = await naverService(access_token);
+      console.log("12321", naverUser);
+
+      // 로그인 진행 (로그인 성공 시 jwt 토큰을 프론트에 보내 줌)
+      const userToken = await userService.getUserToken({
+        email: naverUser.email,
+        password: "naver",
+      });
+
+      // jwt 토큰을 프론트에 보냄 (jwt 토큰은, 문자열임)
+      res.status(200).json(userToken);
     } else {
       res.status(response.statusCode).end();
       console.log("error = " + response.statusCode);
     }
   });
-  res.redirect("/");
 });
 
 export { naverRouter };
