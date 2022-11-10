@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>주문 - 한술담 🍶</title>
+        <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+        />
+        <script
+        defer
+        src="https://kit.fontawesome.com/9daa42bcef.js"
+        crossorigin="anonymous"
+        ></script>
+        <link rel="stylesheet" href="order_pay_member.css" />
+        <link rel="stylesheet" href="../template/footer/footer.css" />
+        <link rel="stylesheet" href="../template/header/header.css" />
+    </head>
+    <body>
+        <main class="body-container">
+            <div class="order-status-wrapper">
+                <ol class="order-status-bar">
+                <li class="order-status">01 SHOPPNIG BAG</li>
+                <li class="order-arrow">➡</li>
+                <li class="order-status-highlighted">02 ORDER</li>
+                <li class="order-arrow">➡</li>
+                <li class="order-status">03 ORDER CONFIRMED</li>
+                </ol>
+            </div>
+            <section class="container-order-list">
+                <div class="order-section">
+                    <span>주문 상품</span>
+                    <div class="add-product">
+                    </div>
+                </div>
+
+                <div class="user-info-container">
+                    <span class="user-info-text">주문자 정보</span>
+                    <div class="user-info">
+                        <div class="info-text">
+                            <p>주문자</p>
+                            <p>전화번호</p>
+                        </div>
+                        <div>
+                            <input class="user-name"></input>
+                            <input class="user-phoneNumber"></input>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="address-container">
+                    <span class="address-info-text">배송 정보</span>
+                    <div class="address-info">
+                        <span>배송지</span>
+                        <div class="address">
+                            <div class="user-address">
+                                <input class="user-address1"></input>
+                                <input class="user-address2"></input>
+                            </div>
+                            <div class="address-status">
+                                <select name="" id="delivery-select">
+                                    <option value="0" id="default">배송 시 요청사항을 선택해주세요.</option>
+                                    <option value="1">배송 전 연락주세요.</option>
+                                    <option value="2">부재 시 경비실에 맡겨주세요.</option>
+                                    <option value="3">부재 시 문 앞에 놓아주세요.</option>
+                                    <option value="4">부재 시 택배함에 넣어주세요.</option>
+                                    <option value="direct" id="selfInput">직접 입력</option>
+                                </select>
+                                <input
+                                    type="text"
+                                    class="status-input"
+                                    id="input-hide"
+                                    maxlength="50">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="payment-container">
+                    <span>결제 수단</span>
+                    <div>
+                        <button class="creditCardBtn">신용 카드</button>
+                        <div class="creditCard">
+                                <select class="card-company" id="card-select">
+                                    <option value="0" id="default">카드사를 선택해주세요.</option>
+                                    <option value="KB 국민">KB 국민</option>
+                                    <option value="현대">현대</option>
+                                    <option value="삼성">삼성</option>
+                                    <option value="신한">신한</option>
+                                    <option value="롯데">롯데</option>
+                                    <option value="하나">하나</option>
+                                    <option value="농협">농협</option>
+                                    <option value="BC">BC</option>
+                                    <option value="우리">우리</option>
+                                    <option value="저축은행">저축은행</option>
+                                    <option value="씨티">씨티</option>
+                                    <option value="전북">전북</option>
+                                    <option value="수협">수협</option>
+                                    <option value="제주">제주</option>
+                                </select>
+                            <input 
+                                class="creditCardInput1"
+                                type="text"
+                                minlength="4"
+                                maxlength="4"
+                                width="100px"
+                                height="22px"
+                                required
+                            />
+                            <input
+                                class="creditCardInput2"
+                                type="text"
+                                minlength="4"
+                                maxlength="4"
+                                width="100px"
+                                height="22px"
+                                required
+                            />
+                            <input 
+                                class="creditCardInput3"
+                                type="text"
+                                minlength="4" 
+                                maxlength="4"
+                                width="100px"
+                                height="22px"
+                                required
+                            />
+                            <input 
+                                class="creditCardInput4"
+                                type="text"
+                                minlength="4"
+                                maxlength="4"
+                                width="100px"
+                                height="22px"
+                                required
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container-caculate-price">
+                    <div class="bill">
+                        <div class="content">
+                        <div class="bill-title">총 상품금액</div>
+                        <div class="total-product-price">0원</div>
+                        <div class="bill-title">배송비 (5만원 이상 무료배송)</div>
+                        <div class="delivery-fee">0원</div>
+                        </div>
+                        <div class="border-bottom"></div>
+                        <div class="bill-footer">
+                        <div class="bill-title">총 결제금액</div>
+                        <div class="total-payment-price">0 원</div>
+                        </div>
+                    </div>
+                    <div class="button-wrapper">
+                        <button
+                        role="button"
+                        id="rounded-button"
+                        class="pay-button"
+                        >
+                        결제 하기
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <script type="module" src="order_pay_member.js"></script>
+        <script type="module" src="../template/getHeaderFooter.js"></script>
+    </body>
+</html>

@@ -8,14 +8,6 @@ class ErrorCode extends Error {
   }
 }
 
-const UnknownError = {
-  code: 1000,
-  message: "Unknown error, please report us about it",
-};
-
-const DBError = { code: 5100, message: "DB Error" };
-const AWSError = 5200;
-
 class BadRequest extends ErrorCode {
   constructor(message, errorCode) {
     if (message) super(message, 400, errorCode);
@@ -40,5 +32,13 @@ class NotFound extends ErrorCode {
     else super("NotFound", 404, 404);
   }
 }
+
+const UnknownError = {
+  code: 1000,
+  message: "Unknown error, please report us about it",
+};
+
+const DBError = { code: 5100, message: "DB Error" };
+const AWSError = 5200;
 
 export { BadRequest, Unauthorized, Forbidden, NotFound, DBError, AWSError };

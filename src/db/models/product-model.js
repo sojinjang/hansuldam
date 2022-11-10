@@ -26,6 +26,18 @@ export class ProductModel {
     return updatedProduct;
   }
 
+  async updateManyByIdArr(IdArray, toUpdateObj) {
+    const filter = { _id: { $in: IdArray } };
+    const option = { returnOriginal: false };
+
+    const updatedProduct = await Product.updateMany(
+      filter,
+      toUpdateObj,
+      option
+    );
+    return updatedProduct;
+  }
+
   async delete(productId) {
     const filter = { _id: productId };
     const deletedProduct = await Product.deleteOne(filter);
@@ -44,6 +56,12 @@ export class ProductModel {
 
   async findByIdArray(idArray) {
     const products = await Product.find({ _id: { $in: idArray } });
+    return products;
+  }
+
+  async setTestdata(arr) {
+    await Product.deleteMany({});
+    const products = await Product.insertMany(arr);
     return products;
   }
 }

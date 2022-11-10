@@ -3,27 +3,16 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>성인인증 완료창</title>
-        <!-- 아이콘 -->
-        <link
-            rel="icon"
-            type="image/png"
-            sizes="16x16"
-            href="/elice-rabbit-favicon.png"
-        />
-        <!-- bulma css 관련 -->
+        <title>성인인증 완료창 - 한술담 🍶</title>
         <link
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
         />
-        <!-- 폰트 어썸: 아이콘 -->
         <script
             defer
             src="https://kit.fontawesome.com/9daa42bcef.js"
             crossorigin="anonymous"
         ></script>
-
-        <!-- 커스텀 css, js -->
         <link rel="stylesheet" href="join-success.css" />
         <link rel="stylesheet" href="../template/footer/footer.css" />
         <link rel="stylesheet" href="../template/header/header.css" />
@@ -41,7 +30,7 @@
         
                 <section class="user-menu">
                     <div class="user-img">
-                    <a href=""><img src="../img/뚱이.jpeg"></a>
+                    <a href=""><img></a>
                     </div>
                 </section>
             </div>
@@ -50,11 +39,11 @@
         <main class="body-container">
             <div class="body-section-container">
                 <form class="body-join-check">
-                    <label for="">성인이세요?</label>
+                    <label for="">📢 주류 통신판매에 관한 명령위임고시에 따라 성인인증이 필요합니다.</label>
                     <div>
                         <input
                             class="input"
-                            id="userNameInput"
+                            id="nameForValidation"
                             type="text"
                             name ="username"
                             minlength="2" 
@@ -64,24 +53,24 @@
                             autocomplete="on">
                         <input
                             class="input"
-                            id="userAgeInput"
+                            id="idNum"
                             type="text"
                             required
-                            placeholder="나이를 입력하세요"
+                            placeholder="주민등록번호: ******-*******"
                             autocomplete="on">
                     </div>
                     <input type="submit" value="인증하기" class="adultCheckButton">
                 </form>
                 <form class="body-join-form" onsubmit="return false;">
                     <section class="join-form-hello">
-                        <p>인증 성공하셨어~</p>
+                        <p>추가 정보를 입력해주세요.</p>
                     </section>
                     <section class="join-form-input">
                         <label for="name">이름</label>
                         <div>
                             <input 
                                 class="input"
-                                id="nameInput"
+                                id="name"
                                 type="text"
                                 required
                                 placeholder="나의 이름은?"
@@ -127,17 +116,6 @@
                     <section class="join-form-input">
                         <label for="addressInput">주소</label>
                         <div>
-                            <div class="address-find">
-                                <input 
-                                class="input"
-                                id="addressPostalCode"
-                                type="text"
-                                minlength="5"
-                                required
-                                placeholder="우편번호"
-                                autocomplete="on">
-                                <button>우편번호 찾기</button>
-                            </div>
                             <input 
                                 class="input"
                                 id="addressLocation"
@@ -151,6 +129,7 @@
                                 type=""
                                 required
                                 placeholder="나머지 주소 입력"
+                                value="한남대로 91"
                                 autocomplete="on">
                         </div>
                     </section>
@@ -164,6 +143,7 @@
                                 pattern="/(^02|^0504|^0505|^0\d{2})(\d+)?(\d{4})$/, '$1-$2-$3'"
                                 required
                                 placeholder="01x-xxxx-xxxx"
+                                value="01029906119"
                                 autocomplete="on">
                         </div>
                     </section>
@@ -174,5 +154,6 @@
             </div>
         </main>
         <script src="join-success.js" type="module"></script>
+        <script src="../template/getHeaderFooter.js" type="module" defer></script>
     </body>
 </html>

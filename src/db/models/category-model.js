@@ -33,7 +33,14 @@ export class CategoryModel {
 
   async findByObj(obj) {
     const category = await Category.findOne(obj);
+
     return category;
+  }
+
+  async setTestdata(arr) {
+    await Category.deleteMany({});
+    const categories = await Category.insertMany(arr);
+    return categories;
   }
 }
 

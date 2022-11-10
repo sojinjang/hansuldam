@@ -31,6 +31,10 @@ adminRouter.post("/products", isEmptyObject, async (req, res, next) => {
       alcoholDegree,
     } = req.body;
 
+    const categoryCheck = await categoryService.getCategoryByName(category);
+    if (!categoryCheck) {
+      throw new NotFound("This Category Not in DB", 4403);
+    }
     // 위 데이터를 상품 db에 추가하기
     const newProduct = await productService.addProduct({
       name,
@@ -81,6 +85,10 @@ adminRouter.patch(
         alcoholDegree,
       } = req.body;
 
+      const categoryCheck = await categoryService.getCategoryByName(category);
+      if (!categoryCheck) {
+        throw new NotFound("This Category Not in DB", 4403);
+      }
       // 위 데이터를 상품 db에 추가하기
       const updateProduct = await productService.updateProduct(productId, {
         name,
@@ -116,11 +124,15 @@ adminRouter.delete("/products/:productId", async (req, res, next) => {
     if (!productId) {
       throw new BadRequest("Undefined params", 4005);
     }
+    const product = await productService.getProductById(productId);
+    const filterObj = { name: product.category };
+    const toUpdate = { $pull: { products: productId } };
 
-    const products = await productService.deleteProduct(productId);
+    await categoryService.updateCategory(filterObj, toUpdate);
 
+    const deletedproduct = await productService.deleteProduct(productId);
     // 상품 목록(배열)을 JSON 형태로 프론트에 보냄
-    res.status(200).json(products);
+    res.status(200).json(deletedproduct);
   } catch (error) {
     next(error);
   }
@@ -170,7 +182,7 @@ adminRouter.patch("/orders/:orderId", isEmptyObject, async (req, res, next) => {
       payment,
       status,
       shipping,
-      priceSum,
+      totalPrice,
     } = req.body;
 
     // 위 데이터를 카테고리 db에 추가하기
@@ -182,7 +194,7 @@ adminRouter.patch("/orders/:orderId", isEmptyObject, async (req, res, next) => {
       payment,
       status,
       shipping,
-      priceSum,
+      totalPrice,
     });
 
     // 업데이트 이후의 데이터를 프론트에 보내 줌
@@ -241,7 +253,7 @@ adminRouter.patch(
 
       // 위 데이터를 카테고리 db에 추가하기
       const updateCategory = await categoryService.updateCategory(
-        { id: categoryId },
+        { _id: categoryId },
         {
           name,
         }

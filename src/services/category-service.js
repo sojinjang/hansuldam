@@ -1,4 +1,4 @@
-import { categoryModel } from "../db";
+import { categoryModel, productModel } from "../db";
 import { BadRequest, NotFound } from "../utils/errorCodes";
 
 class CategoryService {
@@ -7,8 +7,6 @@ class CategoryService {
   }
 
   async addCategory(categoryInfo) {
-    const { name } = categoryInfo;
-
     // db에 저장
     try {
       const createdNewCategory = await this.categoryModel.create(categoryInfo);
@@ -28,27 +26,34 @@ class CategoryService {
     return category;
   }
 
+  async getCategoryByName(categoryName) {
+    const category = await this.categoryModel.findByObj({ Name: categoryName });
+    return category;
+  }
+
   async updateCategory(obj, toUpdate) {
     // 우선 해당 id의 상품이 db에 있는지 확인
     let category = await this.categoryModel.findByObj(obj);
-
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!category) {
       throw new NotFound("This Category Not in DB", 4403);
     }
+    const categoryId = category._id;
 
-    // 이름 중복 확인
-    category = await this.categoryModel.findByName(toUpdate.name);
-    if (category) {
+    // 업데이트 진행
+    try {
+      category = await this.categoryModel.update({
+        categoryId,
+        update: toUpdate,
+      });
+    } catch {
       throw new BadRequest("This Modify Name already in DB", 4402);
     }
 
-    const categoryId = category._id;
-    // 업데이트 진행
-    category = await this.categoryModel.update({
-      categoryId,
-      update: toUpdate,
-    });
+    // 상품 상세 내용중 category 수정 (나중에 리팩토링)
+    const productIdArr = category.products;
+    const toUpdateObj = { category: toUpdate.name };
+    await productModel.updateManyByIdArr(productIdArr, toUpdateObj);
 
     return category;
   }

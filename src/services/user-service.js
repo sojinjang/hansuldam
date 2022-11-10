@@ -29,11 +29,10 @@ class UserService {
     try {
       // db에 저장
       const createdNewUser = await this.userModel.create(newUserInfo);
+      return createdNewUser;
     } catch {
       throw new BadRequest("This Email is Currently in Use.", 4101);
     }
-
-    return createdNewUser;
   }
 
   // 로그인
@@ -80,6 +79,12 @@ class UserService {
   // 사용자 개인정보를 받음.
   async getUserOne(userId) {
     const user = await this.userModel.findById(userId);
+    return user;
+  }
+
+  // 이메일로 사용자 개인정보를 받음(이메일 체크)
+  async getUserOneByEmail(email) {
+    const user = await this.userModel.findByEmail(email);
     return user;
   }
 
@@ -132,6 +137,23 @@ class UserService {
     return user;
   }
 
+  async NoPasswordSetUser(userId, toUpdate) {
+    // 우선 해당 id의 유저가 db에 있는지 확인
+    let user = await this.userModel.findById(userId);
+
+    // db에서 찾지 못한 경우, 에러 메시지 반환
+    if (!user) {
+      throw new NotFound("UserId does not in DB", 4104);
+    }
+    // 업데이트 진행
+    user = await this.userModel.update({
+      userId,
+      updateObj: toUpdate,
+    });
+
+    return user;
+  }
+
   // 유저정보에 주문id 추가.
   async addOrderIdInUser(userId, orderId) {
     // 객체 destructuring
@@ -175,6 +197,7 @@ class UserService {
 
     return productsInCart;
   }
+
   //비밀번호 찾기 api
   async findUserByEmail(email) {
     const user = await this.userModel.findByEmail(email);
@@ -189,7 +212,7 @@ class UserService {
     // 우선 해당 id의 유저가 db에 있는지 확인
     const user = await this.userModel.update({
       userId,
-      update: toUpdate,
+      updateObj: toUpdate,
     });
 
     return user;

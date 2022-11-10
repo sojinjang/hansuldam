@@ -18,7 +18,6 @@ const OrderSchema = new Schema(
     address: {
       type: new Schema(
         {
-          postalCode: { type: String, required: true },
           address1: { type: String, required: true },
           address2: { type: String, required: false },
         },
@@ -51,7 +50,7 @@ const OrderSchema = new Schema(
       ),
       required: false,
     },
-    priceSum: {
+    totalPrice: {
       type: Number,
       required: true,
     },
