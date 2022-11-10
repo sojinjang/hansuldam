@@ -139,7 +139,7 @@ function makeOrderInfoObj() {
         $(".creditCardInput3").value +
         $(".creditCardInput4").value,
     },
-    priceSum: getPureDigit($(".total-payment-price").innerText),
+    totalPrice: getPureDigit($(".total-payment-price").innerText),
     productsInOrder: makeProductsInOrder(savedProducts),
   };
 }
