@@ -80,6 +80,11 @@ async function redirectPage() {
         "click",
         () => (window.location.href = "/order-list")
       );
+
+      $(".logout").addEventListener("click", () => {
+        deleteCookie(TOKEN);
+        window.location.href = "/";
+      });
     }
   }
 
