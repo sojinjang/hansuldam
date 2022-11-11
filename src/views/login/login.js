@@ -6,7 +6,14 @@ const loginBtn = document.querySelector("#submitButton");
 
 const TOKEN = "token";
 
-// function
+async function showNaverLoginButton() {
+  try {
+    const res = await api.get("http://localhost:7777/api/naver/login");
+    console.log(res);
+  } catch (err) {
+    alert(err.message);
+  }
+}
 
 async function logIn(e) {
   e.preventDefault();
@@ -28,5 +35,5 @@ async function logIn(e) {
   }
 }
 
-// window.addEventListener("load", ) ;
+window.addEventListener("load", showNaverLoginButton);
 loginBtn.addEventListener("click", logIn);
