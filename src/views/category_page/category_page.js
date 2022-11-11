@@ -87,7 +87,7 @@ async function showProducts() {
   };
   let currentPageData = productsArr[0];
 
-  currentPageData.forEach((product, index) => {
+  currentPageData.forEach((product) => {
     renderData(product);
   });
 
@@ -103,7 +103,10 @@ async function showProducts() {
       const pageButton = document.querySelectorAll('.pagination-link');
       const currentPage = e.target.getAttribute('aria-label');
       
-      pageButton.forEach((button) => button.classList.remove('is-current'));
+      pageButton.forEach((button) => {
+        button.classList.remove('is-current');
+        window.scrollTo(0,0);
+      });
       e.target.classList.add('is-current');
       
       

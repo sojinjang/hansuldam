@@ -60,7 +60,7 @@ async function redirectPage() {
   
   if (getCookieValue(TOKEN)) {
     const user = await get('/api/auth/user');
-    if(user['role'] === 'admin') {
+    if(user && user['role'] === 'admin') {
       $('.user-list').innerHTML = `<li class="admin">관리자페이지 |</li>
 <li class="logout">로그아웃</li>
 <div class="basket">
