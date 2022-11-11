@@ -68,10 +68,9 @@ naverRouter.get("/callback", function (req, res) {
           const password = "naver";
           const naverUserInfo = { fullName, email, phoneNumber, password };
 
-          const userToken = await userService.OauthLogin(naverUserInfo);
+          const { token } = await userService.OauthLogin(naverUserInfo);
 
-          // res.status(200).json(userToken);
-          res.redirect("/?valid=" + userToken);
+          res.redirect("/?valid=" + token);
         }
       );
     } else {
