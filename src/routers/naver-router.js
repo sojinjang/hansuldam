@@ -19,11 +19,12 @@ naverRouter.get("/login", function (req, res) {
     "&state=" +
     state;
   res.writeHead(200, { "Content-Type": "text/html;charset=utf-8" });
-  res.json(
+  const button =
     "<a href='" +
-      api_url +
-      "'><img height='50' src='http://static.nid.naver.com/oauth/small_g_in.PNG'/></a>"
-  );
+    api_url +
+    "'><img height='50' src='http://static.nid.naver.com/oauth/small_g_in.PNG'/></a>";
+
+  res.json({ button });
 });
 
 naverRouter.get("/callback", function (req, res) {
