@@ -38,12 +38,6 @@ export class UserModel {
     const deletedUser = await User.deleteOne(filter);
     return deletedUser;
   }
-
-  async setTestdata(arr) {
-    await User.deleteMany({});
-    const users = await User.insertMany(arr);
-    return users;
-  }
 }
 
 const userModel = new UserModel();
