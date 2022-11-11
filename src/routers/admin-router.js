@@ -1,8 +1,6 @@
 import { Router } from "express";
 import { isEmptyObject } from "../middlewares";
 import { BadRequest } from "../utils/errorCodes";
-import { upload } from "../utils/multer";
-import fs from "fs";
 
 import {
   productService,
@@ -16,93 +14,67 @@ const adminRouter = Router();
 
 // ---- 상품관련
 // 제품 추가
-adminRouter.post(
-  "/products",
-  isEmptyObject,
-  upload.single("uploadImg"),
-  async (req, res, next) => {
-    try {
-      // 이미지 경로
-      const image = req.file.path;
+adminRouter.post("/products", isEmptyObject, async (req, res, next) => {
+  try {
+    // req (request)의 body 에서 데이터 가져오기
+    const { name, category, brand, description, alcoholType } = req.body;
+    const price = Number(req.body.price);
+    const volume = Number(req.body.volume);
+    const stock = Number(req.body.stock);
+    const sales = Number(req.body.sales);
+    const alcoholDegree = Number(req.body.alcoholDegree);
 
-      // req (request)의 body 에서 데이터 가져오기
-      const {
-        name,
-        price,
-        volume,
-        category,
-        brand,
-        description,
-        stock,
-        sales,
-        alcoholType,
-        alcoholDegree,
-      } = req.body;
-
-      const categoryCheck = await categoryService.getCategoryByName(category);
-      if (!categoryCheck) {
-        throw new NotFound("This Category Not in DB", 4403);
-      }
-      // 위 데이터를 상품 db에 추가하기
-      const newProduct = await productService.addProduct({
-        name,
-        price,
-        volume,
-        category,
-        image,
-        brand,
-        description,
-        stock,
-        sales,
-        alcoholType,
-        alcoholDegree,
-      });
-
-      // category 모델에 product._id 추가
-      const filterObj = { name: category };
-      const toUpdate = { $push: { products: newProduct._id } };
-      await categoryService.updateCategory(filterObj, toUpdate);
-
-      res.status(201).json(newProduct);
-    } catch (error) {
-      next(error);
+    const categoryCheck = await categoryService.getCategoryByName(category);
+    if (!categoryCheck) {
+      throw new NotFound("This Category Not in DB", 4403);
     }
+    // 위 데이터를 상품 db에 추가하기
+    const newProduct = await productService.addProduct({
+      name,
+      price,
+      volume,
+      category,
+      brand,
+      description,
+      stock,
+      sales,
+      alcoholType,
+      alcoholDegree,
+    });
+
+    // category 모델에 product._id 추가
+    const filterObj = { name: category };
+    const toUpdate = { $push: { products: newProduct._id } };
+    await categoryService.updateCategory(filterObj, toUpdate);
+
+    res.status(201).json(newProduct);
+  } catch (error) {
+    next(error);
   }
-);
+});
 
 // 상품 정보 수정
 adminRouter.patch(
   "/products/:productId",
   isEmptyObject,
-  upload.single("uploadImg"),
-
   async (req, res, next) => {
     try {
       const { productId } = req.params;
       if (!productId) {
         throw new BadRequest("Undefined params", 4005);
       }
-      // 이미지 경로
-      const image = req.file.path;
+      const { name, category, brand, description, alcoholType } = req.body;
 
-      const {
-        name,
-        price,
-        volume,
-        category,
-        brand,
-        description,
-        stock,
-        sales,
-        alcoholType,
-        alcoholDegree,
-      } = req.body;
+      const price = Number(req.body.price);
+      const volume = Number(req.body.volume);
+      const stock = Number(req.body.stock);
+      const sales = Number(req.body.sales);
+      const alcoholDegree = Number(req.body.alcoholDegree);
 
       const categoryCheck = await categoryService.getCategoryByName(category);
       if (!categoryCheck) {
         throw new NotFound("This Category Not in DB", 4403);
       }
-
       // 위 데이터를 상품 db에 추가하기
       const updateProduct = await productService.updateProduct(productId, {
         name,
@@ -117,11 +89,6 @@ adminRouter.patch(
         alcoholType,
         alcoholDegree,
       });
-
-      // category 모델에 product._id 추가
-      const filterObj = { name: category };
-      const toUpdate = { $push: { products: updateProduct._id } };
-      await categoryService.updateCategory(filterObj, toUpdate);
 
       // 업데이트 이후의 데이터를 프론트에 보내 줌
       res.status(200).json(updateProduct);
@@ -139,15 +106,6 @@ adminRouter.delete("/products/:productId", async (req, res, next) => {
       throw new BadRequest("Undefined params", 4005);
     }
     const product = await productService.getProductById(productId);
-
-    if (fs.existsSync(product.image)) {
-      // 파일이 존재한다면 true 그렇지 않은 경우 false 반환
-      try {
-        fs.unlinkSync(product.image);
-      } catch (error) {
-        throw new BadRequest("Fail Delete Image", 4006);
-      }
-    }
     const filterObj = { name: product.category };
     const toUpdate = { $pull: { products: productId } };
 
@@ -205,8 +163,8 @@ adminRouter.patch("/orders/:orderId", isEmptyObject, async (req, res, next) => {
       payment,
       status,
       shipping,
-      totalPrice,
     } = req.body;
+    const totalPrice = Number(req.body.totalPrice);
 
     // 위 데이터를 카테고리 db에 추가하기
     const updateOrder = await orderService.updateOrderAdmin(orderId, {
