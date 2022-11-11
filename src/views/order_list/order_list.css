@@ -2,17 +2,18 @@
   padding: 20px 68.6px;
 }
 
+.order-container {
+  display: flex;
+  flex-direction: column;
+  padding: 15px 15px;
+}
+
 .body-container .order-list-container {
   display: flex;
   flex-direction: column;
-}
-
-.order-list-container .order-list {
   margin-bottom: 15px;
-}
-
-.order-list .list-box {
-  padding: 20px 20px;
+  background-color: bisque;
+  padding: 15px 15px;
 }
 
 .body-container button {
@@ -26,30 +27,52 @@
   font-size: 30px;
 }
 
-.order-list-container .order-list {
+.order-list-container .order-date {
   display: flex;
-  flex-direction: column;
-  background-color: bisque;
-  border-radius: 20px;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
-.list-box .order-date {
-  border-bottom: 1px solid;
+.order-date span {
+  font-size: 20px;
 }
 
-.list-box .order-detail {
+.order-container .order-status {
+  font-size: 20px;
+}
+
+.order-list-container .category-container {
+  background-color: azure;
+  border-radius: 15px;
   display: flex;
-  flex-direction: column;
-  margin: 5px 0;
+  flex-direction: row;
+  padding: 10px 10px;
+  margin-bottom: 10px;
 }
 
-.list-box .address-container {
+.category-container span {
+  font-size: 15px;
+}
+
+.order-list-container .address-container {
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  background-color: azure;
+  border-radius: 15px;
+  padding: 15px 15px;
 }
 
-.list-box .button-container {
+.order-list-container .user-change-container {
+  display: none;
+  flex-direction: column;
+  box-sizing: border-box;
+  background-color: azure;
+  border-radius: 15px;
+  padding: 15px 15px;
+}
+
+.button-container {
   margin-top: 15px;
   display: none;
   flex-direction: row;
@@ -63,20 +86,12 @@
   border-radius: 15px;
   text-align: center;
   margin: 0 5px;
-}
-
-.order-detail span {
-  font-size: 20px;
-}
-
-.order-detail .category-container {
-  display: flex;
-  flex-direction: row;
+  font-size: 15px;
 }
 
 .category-container img {
-  width: 150px;
-  height: 150px;
+  width: 100px;
+  height: 100px;
   margin-right: 20px;
 }
 
@@ -105,7 +120,7 @@
 }
 
 .user-change-container .change-wrapper {
-  display: none;
+  display: flex;
   flex-direction: column;
 }
 
