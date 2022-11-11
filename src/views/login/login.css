@@ -56,12 +56,23 @@
   height: 40px;
 }
 
-.body-login-form .login-form-text div a {
+.body-login-form .login-form-text div .join-button, .find-button {
   color: dimgray;
   width: 110px;
   height: 30px;
   border-radius: 15px;
   border: 2px solid #d67e37;
+  display: inline-block;
+  text-align: center;
+  align-items: center;
+}
+
+.naver-button {
+  background-color: none;
+  color: dimgray;
+  width: 110px;
+  height: 30px;
+  border-radius: 15px;
   display: inline-block;
   text-align: center;
   align-items: center;
