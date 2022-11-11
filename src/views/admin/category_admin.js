@@ -1,4 +1,5 @@
 import { get, post, patch, delete as del } from '../api.js';
+import { getCookieValue } from '../utils/cookie.js'
 import removeContainer from './remove_container.js';
 
 const $ = (selector) => document.querySelector(selector);
@@ -75,19 +76,44 @@ async function postCategory(inputValue) {
   await post('/api/admin/category', inputValueObject);
 }
 
+async function fetchProducts(index) {
+  const TOKEN = 'token';
+  const res = await fetch(`/api/products?page=${index}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${getCookieValue(TOKEN)}`,
+    },
+  });
+  const data = await res.json();
+
+  return data;
+}
+
 async function renderCategory(category) {
   const { _id, name } = await category;
   const fetchProductsData = await get('/api/products');
-  const productsData = fetchProductsData['products'];
+  const pageOneProducts = fetchProductsData['products'];
   let { products } = await category;
+  let productsTotalData = pageOneProducts;
+
+
+  let totalPage = fetchProductsData['totalPage'];
+
+  for (let i = 2; i <= totalPage; i++) {
+    (await fetchProducts(i))['products'].forEach((product) => {
+      productsTotalData.push(product);
+    });
+  }
+
 
   const productsArr = products.reduce((arr, productId) => {
-    const currentProductIndex = productsData.findIndex(
+    const currentProductIndex = productsTotalData.findIndex(
       (product) => product._id === productId
     );
 
     if (currentProductIndex !== -1) {
-      arr.push(productsData[currentProductIndex]['name']);
+      arr.push(productsTotalData[currentProductIndex]['name']);
     }
 
     return arr;
@@ -112,10 +138,13 @@ function deleteCategory() {
     button.addEventListener('click', (e) => {
       const currentId = e.target.getAttribute('id');
 
+      if (!$('.is-danger')) { alert('삭제 하려면 다시 한 번 눌러주세요!'); }
+
       e.target.setAttribute(
         'class',
         'button column is-danger delete-button-confirm'
       );
+
 
       $('.delete-button-confirm').addEventListener('click', async () => {
         await del('/api/admin/category', currentId);
@@ -135,7 +164,7 @@ function modifyCategory() {
 
       const categoryModifyModalHtml = `<label class="modify-category-modal">
   <input class="input is-rounded modify-category-input" type="text" name="name" placeholder="카테고리 이름을 입력하세요." />
-  <button class="button modify-category-button">추가</button>
+  <button class="button modify-category-button">수정</button>
   <button class="button close-modify-button">닫기</button>  
 </label>`;
       await e.currentTarget.parentNode.parentNode.insertAdjacentHTML(

@@ -10,10 +10,15 @@ const TOKEN = "token";
 async function showNaverLoginButton() {
   try {
     const res = await api.get("/api/naver/login");
-    const naver = document.createElement("div");
-    naver.setAttribute("class", "naver-button");
-    naver.innerHTML = res["button"];
-    buttonSection.append(naver);
+    console.log(res);
+    const naverApiUrl = res["naverApiUrl"];
+    const naverWrapper = document.createElement("div");
+    naverWrapper.setAttribute("class", "naver-button");
+    naverWrapper.innerHTML =
+      "<a href='" +
+      naverApiUrl +
+      "'><img height='40' src='http://static.nid.naver.com/oauth/small_g_in.PNG'/></a>";
+    buttonSection.append(naverWrapper);
   } catch (err) {
     alert(err.message);
   }

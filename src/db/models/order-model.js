@@ -36,12 +36,6 @@ export class OrderModel {
     const order = await Order.findOne({ _id: userId });
     return order;
   }
-
-  async setTestdata(arr) {
-    await Order.deleteMany({});
-    const orders = await Order.insertMany(arr);
-    return orders;
-  }
 }
 
 const orderModel = new OrderModel();

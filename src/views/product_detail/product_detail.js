@@ -1,5 +1,6 @@
 import { get } from '../api.js'
 import { changeToKoreanTime } from '../utils/useful_functions.js'
+import { getCookieValue } from '../utils/cookie.js';
 
 async function renderData() {
   const queryString = new Proxy(new URLSearchParams(window.location.search), {
@@ -91,7 +92,12 @@ async function orderAndCart() {
   basketButton.addEventListener('click', clickCart);
 
   function clickOrder() {
-    window.location.href = '/order';
+    const TOKEN = 'token'
+    if(!getCookieValue(TOKEN)) {
+      window.location.href = '/order-pay-member';
+    } else {
+      window.location.href = '/order-pay-nonmember';
+    }
   }
 
   function clickCart() {
