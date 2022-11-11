@@ -3,13 +3,17 @@ import { setCookie } from "../utils/cookie.js";
 import { isValidEmail, isValidPassword } from "../utils/validator.js";
 
 const loginBtn = document.querySelector("#submitButton");
+const buttonSection = document.querySelector(".login-form-text");
 
 const TOKEN = "token";
 
 async function showNaverLoginButton() {
   try {
-    const res = await api.get("http://localhost:7777/api/naver/login");
-    console.log(res);
+    const res = await api.get("/api/naver/login");
+    const naver = document.createElement("div");
+    naver.setAttribute("class", "naver-button");
+    naver.innerHTML = res["button"];
+    buttonSection.append(naver);
   } catch (err) {
     alert(err.message);
   }
