@@ -1,4 +1,7 @@
-/* main */
+@import url("https://fonts.googleapis.com/css2?family=Secular+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap");
+
 .body-section-container {
   display: flex;
   box-sizing: border-box;
@@ -20,6 +23,8 @@
 .body-login-form p {
   margin: 20px 0;
   font-size: 30px;
+  font-weight: bold;
+  font-family: "Secular One", sans-serif;
   text-align: center;
 }
 
@@ -27,14 +32,25 @@
   margin: 10px 0;
 }
 
+#emailInput {
+  border: 0px;
+  border-radius: 0;
+  border-bottom: 1px solid;
+}
+
+#passwordInput {
+  border: 0px;
+  border-radius: 0;
+  border-bottom: 1px solid;
+}
 
 .body-login-form .login-form-button {
-  margin: 40px 0 20px ;
+  margin: 40px 0 20px;
   padding: 0;
   height: 40px;
   background-color: dodgerblue;
   border: none;
-  border-radius: 5%;
+  border-radius: 15px;
 }
 
 .body-login-form .login-form-text {
@@ -45,4 +61,9 @@
 
 .body-login-form .login-form-text div a {
   color: dimgray;
+  width: 150px;
+  height: 45px;
+  border-radius: 15px;
+  border: 1px solid rgb(178, 178, 178);
+  box-sizing: content-box;
 }
