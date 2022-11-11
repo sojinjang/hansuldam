@@ -113,12 +113,10 @@ function checkPayInfo() {
 }
 
 function makeProductsInOrder(items) {
-  console.log(savedProducts);
   const productsArr = items.map((item) => ({
     id: item._id,
     quantity: item.quantity,
   }));
-  console.log(productsArr);
   return productsArr;
 }
 
@@ -146,8 +144,8 @@ function makeOrderInfoObj() {
 
 async function requestPostOrder(orderInfoObj) {
   try {
-    await api.post("/api/auth/orders", orderInfoObj);
-    window.location.href = "/order-completed";
+    const orderObj = await api.post("/api/auth/orders", orderInfoObj);
+    location.href = `order_completed.html?${orderObj["_id"]}`;
   } catch (err) {
     alert(err.message);
   }
