@@ -1,4 +1,5 @@
 import { productModel } from "../db";
+import { categoryService } from "./";
 import { BadRequest, NotFound } from "../utils/errorCodes";
 
 class ProductService {
@@ -49,6 +50,12 @@ class ProductService {
       productId,
       update: toUpdate,
     });
+
+    const { category } = toUpdate;
+    // category 모델에 product._id 추가
+    const filterObj = { name: category };
+    const Update = { $push: { products: productId } };
+    await categoryService.updateCategory(filterObj, Update);
 
     return product;
   }

@@ -1,4 +1,7 @@
+import { get } from '../../api.js';
 import { deleteCookie, getCookieValue, setCookie } from '../../utils/cookie.js';
+
+const $ = (selector) => document.querySelector(selector);
 
 function getHeader() {
   return `<header> 
@@ -14,7 +17,7 @@ function getHeader() {
         </section>
         <section class="user-menu">
           <ul class="user-list">
-            <li class="login">로그인</li>
+            <li class="login">로그인 |</li>
             <li class="join">회원가입</li>
             <div class="basket">
               <img src="../img/shopping-bag.png" alt="cart-img">
@@ -41,8 +44,7 @@ function getHeader() {
     </header>`;
 }
 
-function redirectPage() {
-  const $ = (selector) => document.querySelector(selector);
+async function redirectPage() {
   const menuLabels = document.querySelectorAll('.menu-label');
   const TOKEN = 'token';
 
@@ -55,17 +57,39 @@ function redirectPage() {
     window.location.href = '/login';
   });
 
+  
   if (getCookieValue(TOKEN)) {
+    const user = await get('/api/auth/user');
+    if(user['role'] === 'admin') {
+      $('.user-list').innerHTML = `<li class="admin">관리자페이지 |</li>
+<li class="logout">로그아웃</li>
+<div class="basket">
+  <img src="../img/shopping-bag.png" alt="cart-img">
+</div>`;
+
+
+      $('.admin').addEventListener(
+        'click',
+        () => (window.location.href = '/admin')
+      );
+
+      $('.logout').addEventListener('click', () => {
+        deleteCookie(TOKEN);
+        window.location.href = '/';
+    });
+  } else {
     $('.user-list').innerHTML = `<li class="logout">로그아웃</li>
 <div class="basket">
   <img src="../img/shopping-bag.png" alt="cart-img">
 </div>`;
+
     $('.logout').addEventListener('click', () => {
       deleteCookie(TOKEN);
-      window.location.reload();
+      window.location.href = '/';
     });
   }
-
+}
+  
   $('.basket').addEventListener(
     'click',
     () => (window.location.href = '/cart')

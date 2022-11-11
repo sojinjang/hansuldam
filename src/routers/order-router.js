@@ -13,10 +13,12 @@ orderRouter.post("/", isEmptyObject, async (req, res, next) => {
       address,
       shipping,
       payment,
-      totalPrice,
       productsInOrder,
       phoneNumber,
     } = req.body;
+
+    const totalPrice = Number(totalPrice);
+
     // 위 데이터를 주문 db에 추가하기
     const newOrder = await orderService.addOrder({
       fullName,
@@ -41,14 +43,10 @@ orderRouter.patch("/:orderId", isEmptyObject, async (req, res, next) => {
     if (!orderId) {
       throw new BadRequest("Undefined params", 4005);
     }
-    const {
-      fullName,
-      productsInOrder,
-      phoneNumber,
-      address,
-      payment,
-      totalPrice,
-    } = req.body;
+    const { fullName, productsInOrder, phoneNumber, address, payment } =
+      req.body;
+
+    const totalPrice = Number(totalPrice);
 
     // 위 데이터를 카테고리 db에 추가하기
     const updateOrder = await orderService.updateOrder(orderId, {
