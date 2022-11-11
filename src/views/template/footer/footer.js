@@ -28,9 +28,6 @@ function getFooter() {
 <script type="module" src="../template/getHeaderFooter.js"></script>`;
 }
 
-function goToAdminPage() {
-  const $ = selector => document.querySelector(selector);
-  $('#secretId').addEventListener('click', () => window.location.href = '/admin');
-}
 
-export { getFooter, goToAdminPage };
+
+export { getFooter };

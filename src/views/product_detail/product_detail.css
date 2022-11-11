@@ -47,12 +47,23 @@ button {
 	margin-bottom: 50%;
 }
 
-.content__main-info .content__name,
-.content__price {
+.content__name, .content__category, .content__price {
 	color: #363636;
-	font-size: 2rem;
-	/* font-weight: 600; */
 	line-height: 1.125;
+}
+
+.content__name {
+	font-weight: 600;
+	font-size: 2rem;
+}
+
+.content__category {
+	font-size: 1rem;
+	margin-bottom: 20px;
+}
+
+.content__price {
+	font-size: 2rem;
 	margin-bottom: 20px;
 }
 

@@ -1,18 +1,35 @@
-async function fetchCategoryData() {
-  const res = await fetch('/api/category', {
-    method: 'GET',
-  });
+import { get } from '../api.js';
 
-  return await res.json();
+const $ = selector => document.querySelector(selector);
+
+async function initFunc() {
+  await showEventCategories();
+
+  const eventCategories = document.querySelectorAll('.event-wrapper');
+
+  $('.menu-event-label').classList.add('clicked-label')
+
+  eventCategories.forEach((container) => {
+    container.addEventListener('click', async (e) => {
+      const productContainer = document.querySelectorAll('.product-container');
+      productContainer.forEach((container) => container.remove());
+
+      const eventId = e.currentTarget.getAttribute('id');
+      const eventProducts = await get(`/api/category/${eventId}/products`);
+      eventProducts['productList'].forEach((product) => renderData(product));
+
+      goToDetailPage();
+    });
+  });
 }
 
 async function showEventCategories() {
-  let eventCategoriesData = await fetchCategoryData();
+  const eventCategoriesData = await get('/api/category');
 
   eventCategoriesData.forEach((eventCategories) => {
     const { _id, name } = eventCategories;
 
-    let eventCategoriesSection = document.createElement('span');
+    const eventCategoriesSection = document.createElement('span');
     eventCategoriesSection.setAttribute('class', 'event-wrapper');
     eventCategoriesSection.setAttribute('id', _id);
     eventCategoriesSection.innerHTML = `${name}`;
@@ -20,29 +37,8 @@ async function showEventCategories() {
     const eventsContainer = document.querySelector('.events-container');
     eventsContainer.append(eventCategoriesSection);
   });
-}
 
-async function goToEvent() {
-  await showEventCategories();
-
-  const eventCategories = document.querySelectorAll('.event-wrapper');
-  
-  eventCategories.forEach((container) => {
-    container.addEventListener('click', async (e) => {
-      // 기존 아이템들 삭제하기
-      const productContainer = document.querySelectorAll('.product-container');
-      productContainer.forEach((container) => container.remove());
-
-      const eventId = e.currentTarget.getAttribute('id');
-      const res = await fetch(
-        `/api/category/${eventId}/products`
-        )
-      const eventProducts = await res.json();
-      eventProducts.forEach((product) => renderData(product));
-      
-      goToDetailPage();
-      })
-  })
+  return eventCategoriesData;
 }
 
 function goToDetailPage() {
@@ -53,10 +49,11 @@ function goToDetailPage() {
       window.location.href = `/product-detail?id=${productId}`;
     });
   });
-};
+}
 
 function renderData(product) {
-  const { _id, name, brand, price, volume, sold, category, alcoholDegree } = product;
+  const { _id, name, brand, price, volume, sales, category, alcoholDegree } =
+    product;
 
   let productSection = document.createElement('section');
 
@@ -72,20 +69,18 @@ function renderData(product) {
   <div class="content-container">
     <div class="content-left-container">
       <p class="content-brand">브랜드 | ${brand}</p>
-      <p class="content-price">${price}원</p>
+      <p class="content-price">${Number(price).toLocaleString('ko-KR')}원</p>
       <p class="content-volume">${volume}ml</p>
     </div>
     <div class="content-right-container">
-      <p class="content-sold">${sold}회 판매</p>
+      <p class="content-sold">${sales}회 판매</p>
       <p class="content-category">${category}</p>
       <p class="content-alcoholDegree">${alcoholDegree}도</p>
     </div>
   </div>
 </div>`;
 
-  const bodyContainer = document.querySelector('.body-container');
-  
-  bodyContainer.append(productSection);
-};
+  $('.body-container').append(productSection);
+}
 
-goToEvent();
+initFunc();

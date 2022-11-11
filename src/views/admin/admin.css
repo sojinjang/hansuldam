@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Jua&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap");
 
 :root {
   --hover-background-color: #f5f5f5;
@@ -104,6 +105,19 @@
   width: 50%;
   border: 0.5px solid grey;
   padding: 10px;
+  margin-bottom: 30px;
+}
+
+.add-product-modal input, .modify-product-modal input, #upload-image-div {
+  width: 250px;
+}
+
+#upload-image-div .file-cta {
+  padding: 5px 0px 5px 7px;
+}
+
+.product-input {
+  width: 250px;
 }
 
 .add-product-modalm button, .modify-product-modal button{
@@ -118,4 +132,12 @@
 
 .orders-container .none {
   display: none;
+}
+
+.none {
+  display: none;
+}
+
+.img-upload-btn {
+  border: 1px rgb(211, 211, 211) solid;
 }
