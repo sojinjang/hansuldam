@@ -10,8 +10,8 @@ let emailCleard = false;
 
 async function checkDuplication(email) {
   try {
-    const res = await api.get("api/user/emailCheck", email);
-    return res;
+    const res = await api.get("../api/user/emailCheck", email);
+    return res["isDuplicatedEmail"];
   } catch (err) {
     alert(err.message);
   }
@@ -22,19 +22,18 @@ async function checkEmail(e) {
   const email = emailInput.value;
 
   if (!isValidEmail(email)) {
-    alert("유효한 이메일 형식이 아닙니다.");
+    alert("유효한 이메일 형식이 아닙니다 👾");
     emailCleard = false;
     return;
   }
   const isDuplicatedEmail = await checkDuplication(email);
   if (isDuplicatedEmail) {
-    alert("이미 사용중인 이메일입니다.");
+    alert("이미 사용중인 이메일입니다 👻");
     emailCleard = false;
     return;
   }
   emailCleard = true;
   alert("사용 가능한 이메일입니다 ✅");
-  // todo: 사용 가능한 이메일입니다. 작은 글씨로 띄워주기
 }
 
 function moveToNextPage() {
@@ -44,11 +43,11 @@ function moveToNextPage() {
 function checkRequest(e) {
   e.preventDefault();
   if (!isName(nameInput.value)) {
-    alert("이름 입력값을 확인해주세요.");
+    alert("이름 입력값을 확인해주세요 📛");
     return;
   }
   if (!emailCleard) {
-    alert("이메일 중복검사를 실행해주세요.");
+    alert("이메일 중복검사를 실행해주세요❗️");
     return;
   } else {
     moveToNextPage();
