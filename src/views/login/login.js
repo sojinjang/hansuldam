@@ -1,18 +1,27 @@
 import * as api from "../api.js";
 import { setCookie } from "../utils/cookie.js";
+import { isValidEmail, isValidPassword } from "../utils/validator.js";
 
 const loginBtn = document.querySelector("#submitButton");
+const buttonSection = document.querySelector(".login-form-text");
 
 const TOKEN = "token";
 
-function isValidEmail(email) {
-  const emailRegExp =
-    /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-  return emailRegExp.test(email);
-}
-
-function isValidPassword(password) {
-  return password.length > 3;
+async function showNaverLoginButton() {
+  try {
+    const res = await api.get("/api/naver/login");
+    console.log(res);
+    const naverApiUrl = res["naverApiUrl"];
+    const naverWrapper = document.createElement("div");
+    naverWrapper.setAttribute("class", "naver-button");
+    naverWrapper.innerHTML =
+      "<a href='" +
+      naverApiUrl +
+      "'><img height='40' src='http://static.nid.naver.com/oauth/small_g_in.PNG'/></a>";
+    buttonSection.append(naverWrapper);
+  } catch (err) {
+    alert(err.message);
+  }
 }
 
 async function logIn(e) {
@@ -35,4 +44,5 @@ async function logIn(e) {
   }
 }
 
+window.addEventListener("load", showNaverLoginButton);
 loginBtn.addEventListener("click", logIn);

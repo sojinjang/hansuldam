@@ -1,4 +1,4 @@
-export default function getFooter() {
+function getFooter() {
   return `<footer class="footer-container">
   <ul class="footer-policy">
     <li class="policy-item">
@@ -10,7 +10,7 @@ export default function getFooter() {
   <ul class="footer-info">
     <li class="info-item">
       <span class="info-item-text footer-item-text">
-        <b>[상호명]</b> | 대표 노숙취 | 개인정보보호책임자 노숙취 | 사업자등록번호 231-07-81350
+        <b id="secretId">[상호명]</b> | 대표 노숙취 | 개인정보보호책임자 노숙취 | 사업자등록번호 231-07-81350
       </span>
     </li>
     <li>
@@ -27,3 +27,7 @@ export default function getFooter() {
 </footer>
 <script type="module" src="../template/getHeaderFooter.js"></script>`;
 }
+
+
+
+export { getFooter };

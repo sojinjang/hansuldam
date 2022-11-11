@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { isEmptyObject } from "../middlewares";
+import { BadRequest } from "../utils/errorCodes";
 
 import {
   productService,
@@ -16,27 +17,23 @@ const adminRouter = Router();
 adminRouter.post("/products", isEmptyObject, async (req, res, next) => {
   try {
     // req (request)의 body 에서 데이터 가져오기
-    const {
-      name,
-      price,
-      volume,
-      category,
-      image,
-      brand,
-      description,
-      stock,
-      sales,
-      alcoholType,
-      alcoholDegree,
-    } = req.body;
+    const { name, category, brand, description, alcoholType } = req.body;
+    const price = Number(req.body.price);
+    const volume = Number(req.body.volume);
+    const stock = Number(req.body.stock);
+    const sales = Number(req.body.sales);
+    const alcoholDegree = Number(req.body.alcoholDegree);
 
+    const categoryCheck = await categoryService.getCategoryByName(category);
+    if (!categoryCheck) {
+      throw new NotFound("This Category Not in DB", 4403);
+    }
     // 위 데이터를 상품 db에 추가하기
     const newProduct = await productService.addProduct({
       name,
       price,
       volume,
       category,
-      image,
       brand,
       description,
       stock,
@@ -63,21 +60,21 @@ adminRouter.patch(
   async (req, res, next) => {
     try {
       const { productId } = req.params;
+      if (!productId) {
+        throw new BadRequest("Undefined params", 4005);
+      }
+      const { name, category, brand, description, alcoholType } = req.body;
 
-      const {
-        name,
-        price,
-        volume,
-        category,
-        image,
-        brand,
-        description,
-        stock,
-        sales,
-        alcoholType,
-        alcoholDegree,
-      } = req.body;
+      const price = Number(req.body.price);
+      const volume = Number(req.body.volume);
+      const stock = Number(req.body.stock);
+      const sales = Number(req.body.sales);
+      const alcoholDegree = Number(req.body.alcoholDegree);
 
+      const categoryCheck = await categoryService.getCategoryByName(category);
+      if (!categoryCheck) {
+        throw new NotFound("This Category Not in DB", 4403);
+      }
       // 위 데이터를 상품 db에 추가하기
       const updateProduct = await productService.updateProduct(productId, {
         name,
@@ -93,11 +90,6 @@ adminRouter.patch(
         alcoholDegree,
       });
 
-      // category 모델에 product._id 추가
-      const filterObj = { name: category };
-      const toUpdate = { $push: { products: updateProduct._id } };
-      await categoryService.updateCategory(filterObj, toUpdate);
-
       // 업데이트 이후의 데이터를 프론트에 보내 줌
       res.status(200).json(updateProduct);
     } catch (error) {
@@ -110,11 +102,18 @@ adminRouter.patch(
 adminRouter.delete("/products/:productId", async (req, res, next) => {
   try {
     const { productId } = req.params;
+    if (!productId) {
+      throw new BadRequest("Undefined params", 4005);
+    }
+    const product = await productService.getProductById(productId);
+    const filterObj = { name: product.category };
+    const toUpdate = { $pull: { products: productId } };
 
-    const products = await productService.deleteProduct(productId);
+    await categoryService.updateCategory(filterObj, toUpdate);
 
+    const deletedproduct = await productService.deleteProduct(productId);
     // 상품 목록(배열)을 JSON 형태로 프론트에 보냄
-    res.status(200).json(products);
+    res.status(200).json(deletedproduct);
   } catch (error) {
     next(error);
   }
@@ -152,6 +151,9 @@ adminRouter.get("/orders", async (req, res, next) => {
 adminRouter.patch("/orders/:orderId", isEmptyObject, async (req, res, next) => {
   try {
     const { orderId } = req.params;
+    if (!orderId) {
+      throw new BadRequest("Undefined params", 4005);
+    }
 
     const {
       fullName,
@@ -161,8 +163,8 @@ adminRouter.patch("/orders/:orderId", isEmptyObject, async (req, res, next) => {
       payment,
       status,
       shipping,
-      priceSum,
     } = req.body;
+    const totalPrice = Number(req.body.totalPrice);
 
     // 위 데이터를 카테고리 db에 추가하기
     const updateOrder = await orderService.updateOrderAdmin(orderId, {
@@ -173,7 +175,7 @@ adminRouter.patch("/orders/:orderId", isEmptyObject, async (req, res, next) => {
       payment,
       status,
       shipping,
-      priceSum,
+      totalPrice,
     });
 
     // 업데이트 이후의 데이터를 프론트에 보내 줌
@@ -187,6 +189,9 @@ adminRouter.patch("/orders/:orderId", isEmptyObject, async (req, res, next) => {
 adminRouter.delete("/orders/:orderId", async (req, res, next) => {
   try {
     const { orderId } = req.params;
+    if (!orderId) {
+      throw new BadRequest("Undefined params", 4005);
+    }
 
     const order = await orderService.deleteOrder(orderId);
 
@@ -221,12 +226,15 @@ adminRouter.patch(
   async (req, res, next) => {
     try {
       const { categoryId } = req.params;
+      if (!categoryId) {
+        throw new BadRequest("Undefined params", 4005);
+      }
 
       const { name } = req.body;
 
       // 위 데이터를 카테고리 db에 추가하기
       const updateCategory = await categoryService.updateCategory(
-        { id: categoryId },
+        { _id: categoryId },
         {
           name,
         }
@@ -244,7 +252,9 @@ adminRouter.patch(
 adminRouter.delete("/category/:categoryId", async (req, res, next) => {
   try {
     const { categoryId } = req.params;
-
+    if (!categoryId) {
+      throw new BadRequest("Undefined params", 4005);
+    }
     const category = await categoryService.deleteCategory(categoryId);
 
     res.status(200).json(category);
@@ -268,7 +278,9 @@ adminRouter.get("/comments", async (req, res, next) => {
 adminRouter.delete("/comments/:commentId", async (req, res, next) => {
   try {
     const { commentId } = req.params;
-
+    if (!categoryId) {
+      throw new BadRequest("Undefined params", 4005);
+    }
     const deleted = await commentService.deleteComment(commentId);
 
     res.status(200).json(deleted);

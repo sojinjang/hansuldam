@@ -13,17 +13,19 @@ orderRouter.post("/", isEmptyObject, async (req, res, next) => {
       address,
       shipping,
       payment,
-      priceSum,
       productsInOrder,
       phoneNumber,
     } = req.body;
+
+    const totalPrice = Number(totalPrice);
+
     // 위 데이터를 주문 db에 추가하기
     const newOrder = await orderService.addOrder({
       fullName,
       address,
       shipping,
       payment,
-      priceSum,
+      totalPrice,
       productsInOrder,
       phoneNumber,
     });
@@ -38,15 +40,13 @@ orderRouter.post("/", isEmptyObject, async (req, res, next) => {
 orderRouter.patch("/:orderId", isEmptyObject, async (req, res, next) => {
   try {
     const { orderId } = req.params;
+    if (!orderId) {
+      throw new BadRequest("Undefined params", 4005);
+    }
+    const { fullName, productsInOrder, phoneNumber, address, payment } =
+      req.body;
 
-    const {
-      fullName,
-      productsInOrder,
-      phoneNumber,
-      address,
-      payment,
-      priceSum,
-    } = req.body;
+    const totalPrice = Number(totalPrice);
 
     // 위 데이터를 카테고리 db에 추가하기
     const updateOrder = await orderService.updateOrder(orderId, {
@@ -55,7 +55,7 @@ orderRouter.patch("/:orderId", isEmptyObject, async (req, res, next) => {
       phoneNumber,
       address,
       payment,
-      priceSum,
+      totalPrice,
     });
     res.status(200).json(updateOrder);
   } catch (error) {
@@ -67,7 +67,9 @@ orderRouter.patch("/:orderId", isEmptyObject, async (req, res, next) => {
 orderRouter.delete("/:orderId", async (req, res, next) => {
   try {
     const { orderId } = req.params;
-
+    if (!orderId) {
+      throw new BadRequest("Undefined params", 4005);
+    }
     const order = await orderService.deleteOrder(orderId);
 
     res.status(200).json(order);
@@ -80,7 +82,9 @@ orderRouter.delete("/:orderId", async (req, res, next) => {
 orderRouter.get("/:orderId", async (req, res, next) => {
   try {
     const { orderId } = req.params;
-
+    if (!orderId) {
+      throw new BadRequest("Undefined params", 4005);
+    }
     const order = await orderService.getOrderById(orderId);
 
     // 주문 목록(배열)을 JSON 형태로 프론트에 보냄
@@ -94,6 +98,9 @@ orderRouter.get("/:orderId", async (req, res, next) => {
 orderRouter.get("/:orderId/products", async (req, res, next) => {
   try {
     const { orderId } = req.params;
+    if (!orderId) {
+      throw new BadRequest("Undefined params", 4005);
+    }
     //{ id , quantity }
     const { productsInOrder } = await orderService.getOrderById(orderId);
 

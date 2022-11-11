@@ -1,10 +1,10 @@
 import { Router } from "express";
 import { isEmptyObject } from "../middlewares";
-import { loginRequired } from "../middlewares";
 import { userService } from "../services";
 import { generateRandomPassword } from "../utils/generate-random-password";
 import { sendRandomPassword } from "../utils/send-mail";
 import bcrypt from "bcrypt";
+import { jwt } from "jsonwebtoken";
 
 const userRouter = Router();
 
@@ -24,11 +24,6 @@ userRouter.post("/login", isEmptyObject, async (req, res, next) => {
     next(error);
   }
 });
-
-// 로그아웃
-// userRouter.post("/logout", loginRequired, async (req, res, next) => {
-//   console.log(req.cookies);
-// });
 
 // 회원가입 api (아래는 /register이지만, 실제로는 /api/user/register로 요청해야 함.)
 userRouter.post("/register", isEmptyObject, async (req, res, next) => {
@@ -51,6 +46,23 @@ userRouter.post("/register", isEmptyObject, async (req, res, next) => {
     // 추가된 유저의 db 데이터를 프론트에 다시 보내줌
     // 물론 프론트에서 안 쓸 수도 있지만, 편의상 일단 보내 줌
     res.status(201).json(newUser);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// 이메일 체크
+userRouter.get("/emailCheck/:email", async (req, res, next) => {
+  try {
+    const needCheckEmail = req.params.email;
+
+    // 위 데이터를 유저 db에 추가하기
+    const user = await userService.getUserOneByEmail(needCheckEmail);
+
+    const isDuplicatedEmail = user ? true : false;
+    const answer = { isDuplicatedEmail };
+
+    res.status(201).json(answer);
   } catch (error) {
     next(error);
   }

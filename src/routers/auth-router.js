@@ -9,7 +9,6 @@ const authRouter = Router();
 // 사용자 정보 조회
 authRouter.get("/user", async (req, res, next) => {
   try {
-    // params로부터 id를 가져옴
     const userId = req.currentUser.userId;
 
     const getUserInfo = await userService.getUserOne(userId);
@@ -23,7 +22,6 @@ authRouter.get("/user", async (req, res, next) => {
 // 사용자 정보 수정
 authRouter.patch("/user", isEmptyObject, async (req, res, next) => {
   try {
-    // params로부터 id를 가져옴
     const userId = req.currentUser.userId;
 
     // body data 로부터 업데이트할 사용자 정보를 추출함.
@@ -32,16 +30,18 @@ authRouter.patch("/user", isEmptyObject, async (req, res, next) => {
     const password = req.body.newPassword;
     const phoneNumber = req.body.phoneNumber;
     const address = req.body.address;
-
-    // body data로부터, 확인용으로 사용할 현재 비밀번호를 추출함.
     const currentPassword = req.body.password;
 
-    // currentPassword 없을 시, 진행 불가
-    if (!currentPassword) {
-      throw new BadRequest("Need currentPassword", 4105);
+    let userInfoRequired;
+    // 만약 새로운 비밀번호를 입력했다면
+    if (password) {
+      // body data로부터, 확인용으로 사용할 현재 비밀번호를 추출함.
+      // currentPassword 없을 시, 진행 불가
+      if (!currentPassword) {
+        throw new BadRequest("Need currentPassword", 4105);
+      }
+      userInfoRequired = { userId, currentPassword };
     }
-
-    const userInfoRequired = { userId, currentPassword };
 
     // 위 데이터가 undefined가 아니라면, 즉, 프론트에서 업데이트를 위해
     // 보내주었다면, 업데이트용 객체에 삽입함.
@@ -53,11 +53,13 @@ authRouter.patch("/user", isEmptyObject, async (req, res, next) => {
       ...(phoneNumber && { phoneNumber }),
     };
 
+    let updatedUserInfo;
     // 사용자 정보를 업데이트함.
-    const updatedUserInfo = await userService.setUser(
-      userInfoRequired,
-      toUpdate
-    );
+    if (userInfoRequired) {
+      updatedUserInfo = await userService.setUser(userInfoRequired, toUpdate);
+    } else {
+      updatedUserInfo = await userService.NoPasswordSetUser(userId, toUpdate);
+    }
 
     // 업데이트 이후의 유저 데이터를 프론트에 보내 줌
     res.status(200).json(updatedUserInfo);
@@ -69,7 +71,6 @@ authRouter.patch("/user", isEmptyObject, async (req, res, next) => {
 // 사용자 삭제(탈퇴)
 authRouter.delete("/user", async (req, res, next) => {
   try {
-    // params로부터 id를 가져옴
     const userId = req.currentUser.userId;
 
     const deleteUser = await userService.deleteUserOne(userId);
@@ -92,10 +93,11 @@ authRouter.post("/orders", isEmptyObject, async (req, res, next) => {
       address,
       shipping,
       payment,
-      priceSum,
       productsInOrder,
       phoneNumber,
     } = req.body;
+
+    const totalPrice = Number(req.body.totalPrice);
 
     // 위 데이터를 주문 db에 추가하기
     const newOrder = await orderService.addOrder({
@@ -104,7 +106,7 @@ authRouter.post("/orders", isEmptyObject, async (req, res, next) => {
       address,
       shipping,
       payment,
-      priceSum,
+      totalPrice,
       productsInOrder,
       phoneNumber,
     });
@@ -156,6 +158,9 @@ authRouter.get("/cart", async (req, res, next) => {
 authRouter.get("/comments/:productId", async (req, res, next) => {
   try {
     const { productId } = req.params;
+    if (!productId) {
+      throw new BadRequest("Undefined params", 4005);
+    }
     const comments = await commentService.getCommentsByProductId(productId);
 
     res.status(200).json(comments);
@@ -189,6 +194,9 @@ authRouter.patch("/comments/:commentId", async (req, res, next) => {
   try {
     const userId = req.currentUser.userId;
     const { commentId } = req.params;
+    if (!commentId) {
+      throw new BadRequest("Undefined params", 4005);
+    }
     const { content } = req.body;
 
     const commentInfo = await commentService.userSetComment(userId, commentId, {
@@ -205,7 +213,9 @@ authRouter.delete("/comments/:commentId", async (req, res, next) => {
   try {
     const userId = req.currentUser.userId;
     const { commentId } = req.params;
-
+    if (!commentId) {
+      throw new BadRequest("Undefined params", 4005);
+    }
     const deleted = await commentService.userDeleteComment(userId, commentId);
 
     res.status(200).json(deleted);

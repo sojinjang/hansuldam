@@ -1,0 +1,141 @@
+.body-container {
+  padding: 20px 68.6px;
+}
+
+.body-container .order-list-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.order-list-container .order-list {
+  margin-bottom: 15px;
+}
+
+.order-list .list-box {
+  padding: 20px 20px;
+}
+
+.body-container button {
+  cursor: pointer;
+  border: 1px solid;
+  box-sizing: content-box;
+}
+
+.body-container span {
+  margin: 10px 0;
+  font-size: 30px;
+}
+
+.order-list-container .order-list {
+  display: flex;
+  flex-direction: column;
+  background-color: bisque;
+  border-radius: 20px;
+}
+
+.list-box .order-date {
+  border-bottom: 1px solid;
+}
+
+.list-box .order-detail {
+  display: flex;
+  flex-direction: column;
+  margin: 5px 0;
+}
+
+.list-box .address-container {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.list-box .button-container {
+  margin-top: 15px;
+  display: none;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.button-container button {
+  width: 100px;
+  height: 50px;
+  background-color: lightsteelblue;
+  border-radius: 15px;
+  text-align: center;
+  margin: 0 5px;
+}
+
+.order-detail span {
+  font-size: 20px;
+}
+
+.order-detail .category-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.category-container img {
+  width: 150px;
+  height: 150px;
+  margin-right: 20px;
+}
+
+.category-container .category-detail {
+  display: flex;
+  flex-direction: column;
+}
+
+.category-detail span {
+  margin: 0;
+}
+
+.category-detail .category-name {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.address-container div span {
+  font-size: 15px;
+}
+
+.user-change-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.user-change-container .change-wrapper {
+  display: none;
+  flex-direction: column;
+}
+
+.user-change-container div span {
+  font-size: 15px;
+}
+
+.address-input-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.address-input-container span {
+  margin: 0;
+  margin-right: 15px;
+  text-align: start;
+}
+
+.address-input-container div {
+  display: flex;
+  flex-direction: column;
+}
+
+.address-input-container div input {
+  margin-bottom: 5px;
+}
+
+.change-btn {
+  width: 70px;
+  border-radius: 10px;
+  text-align: center;
+}

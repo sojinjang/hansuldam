@@ -59,13 +59,13 @@ body {
   display: flex;
   box-sizing: border-box;
   justify-content: space-between;
-  padding-top: 20px;
+  padding-top: 80px;
   padding-bottom: 10px;
 }
 
 /* carousel */
 .carousel-container{
-  width: 100%;
+  width: 90%;
   margin: 10px auto;
   overflow: hidden;
   position: relative;
@@ -95,7 +95,7 @@ body {
 .carousel-container .carousel-dots-container {
   position: absolute;  
   display: block;
-  width: 85vw;
+  width: 76vw;
   bottom: 10%;
   z-index: 88;
 }
