@@ -1,4 +1,5 @@
 import * as api from "../api.js";
+import { changeToKoreanTime } from "../utils/useful_functions.js";
 
 const orderNum = document.querySelector(".num");
 const orderDate = document.querySelector(".date");
@@ -23,7 +24,7 @@ async function getOrderInfo() {
 async function writeOrderInfo() {
   const orderInfoObj = await getOrderInfo();
   orderNum.innerText = "주문번호: " + orderInfoObj["_id"];
-  orderDate.innerText = "주문일자: " + orderInfoObj["createdAt"];
+  orderDate.innerText = "주문일자: " + changeToKoreanTime(orderInfoObj["createdAt"]);
   username.innerText = orderInfoObj["fullName"];
   phoneNumber.innerText = orderInfoObj["phoneNumber"];
   address.innerText =
