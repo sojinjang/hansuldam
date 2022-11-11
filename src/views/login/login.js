@@ -1,19 +1,12 @@
 import * as api from "../api.js";
 import { setCookie } from "../utils/cookie.js";
+import { isValidEmail, isValidPassword } from "../utils/validator.js";
 
 const loginBtn = document.querySelector("#submitButton");
 
 const TOKEN = "token";
 
-function isValidEmail(email) {
-  const emailRegExp =
-    /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-  return emailRegExp.test(email);
-}
-
-function isValidPassword(password) {
-  return password.length > 3;
-}
+// function
 
 async function logIn(e) {
   e.preventDefault();
@@ -35,4 +28,5 @@ async function logIn(e) {
   }
 }
 
+// window.addEventListener("load", ) ;
 loginBtn.addEventListener("click", logIn);

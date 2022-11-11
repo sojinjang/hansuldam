@@ -6,10 +6,14 @@ function isNum(numStr) {
   return /^[0-9]+$/.test(numStr);
 }
 
-function isValidEmail(email) {
+function isValidEmail(emailiInput) {
   const emailRegExp =
     /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-  return emailRegExp.test(email);
+  return emailRegExp.test(emailiInput);
+}
+
+function isValidPassword(passwordInput) {
+  return passwordInput.length > 3;
 }
 
 function isIdNum(idNumInput) {
@@ -37,4 +41,4 @@ function isCardNum(cardNumInput) {
   return cardRegExp.test(cardNumInput);
 }
 
-export { isName, isNum, isValidEmail, isIdNum, isAdult, isCardNum };
+export { isName, isNum, isValidEmail, isValidPassword, isIdNum, isAdult, isCardNum };
