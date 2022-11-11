@@ -9,7 +9,6 @@ const viewsRouter = express.Router();
 viewsRouter.use("/", serveStatic("home"));
 viewsRouter.use("/join", serveStatic("join"));
 viewsRouter.use("/login", serveStatic("login"));
-viewsRouter.use("/order-completed", serveStatic("order_completed"));
 viewsRouter.use("/cart", serveStatic("cart"));
 viewsRouter.use("/products", serveStatic("category_page"));
 viewsRouter.use("/product-detail", serveStatic("product_detail"));
