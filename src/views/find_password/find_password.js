@@ -35,17 +35,8 @@ async function findPassword(e) {
   try {
     await post("/api/user/random-password/", data);
     alert("임시 비밀번호를 발급했습니다. 비밀번호를 바꿔주세요.");
-    window.location.href = "http://localhost:8900/login";
+    window.location.href = "/login";
   } catch (e) {
     alert("가입한 이메일이 아닙니다.");
   }
 }
-
-//post(data);
-
-//post("/api/user/random-password", data);
-
-// const { email, fullName } = userInfo;
-
-// console.log(email);
-// console.log(fullName);
