@@ -85,8 +85,7 @@
               </button>
             </div>
             <div class="products-container-wrapper">
-              <div class="products-container">
-              </div>
+              <div class="products-container"></div>
             </div>
             <div class="slider-button-wrapper">
               <button class="slider-right-button">
@@ -97,7 +96,14 @@
         </section>
       </div>
     </main>
-
+    <form
+      action="/api/admin/products/636ccd4f7f85100912b770f8"
+      enctype="multipart/form-data"
+      method="delete"
+    >
+      <input type="file" name="uploadImg" />
+      <button type="submit" class="btn btn-primary">Upload</button>
+    </form>
     <script src="home.js"></script>
     <script type="module" src="../template/getHeaderFooter.js"></script>
   </body>

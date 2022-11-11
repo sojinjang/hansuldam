@@ -9,6 +9,33 @@ class UserService {
   constructor(userModel) {
     this.userModel = userModel;
   }
+  // Oauth 로그인 서비스
+  async OauthLogin(userInfo) {
+    const { fullName, email, phoneNumber, password } = userInfo;
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const newUserInfo = {
+      fullName,
+      email,
+      password: hashedPassword,
+      phoneNumber,
+    };
+
+    let user = await this.userModel.findByEmail(email);
+    if (!user) {
+      user = await this.userModel.create(newUserInfo);
+    }
+
+    const secretKey = process.env.JWT_SECRET_KEY;
+
+    // 2개 프로퍼티를 jwt 토큰에 담음
+    const token = jwt.sign({ userId: user._id, role: user.role }, secretKey, {
+      expiresIn: "1h",
+    });
+
+    return { token };
+  }
 
   // 회원가입
   async addUser(userInfo) {

@@ -1,6 +1,8 @@
 import { Router } from "express";
 import { isEmptyObject } from "../middlewares";
 import { BadRequest } from "../utils/errorCodes";
+import { upload } from "../utils/multer";
+import fs from "fs";
 
 import {
   productService,
@@ -14,69 +16,21 @@ const adminRouter = Router();
 
 // ---- 상품관련
 // 제품 추가
-adminRouter.post("/products", isEmptyObject, async (req, res, next) => {
-  try {
-    // req (request)의 body 에서 데이터 가져오기
-    const {
-      name,
-      price,
-      volume,
-      category,
-      image,
-      brand,
-      description,
-      stock,
-      sales,
-      alcoholType,
-      alcoholDegree,
-    } = req.body;
-
-    const categoryCheck = await categoryService.getCategoryByName(category);
-    if (!categoryCheck) {
-      throw new NotFound("This Category Not in DB", 4403);
-    }
-    // 위 데이터를 상품 db에 추가하기
-    const newProduct = await productService.addProduct({
-      name,
-      price,
-      volume,
-      category,
-      image,
-      brand,
-      description,
-      stock,
-      sales,
-      alcoholType,
-      alcoholDegree,
-    });
-
-    // category 모델에 product._id 추가
-    const filterObj = { name: category };
-    const toUpdate = { $push: { products: newProduct._id } };
-    await categoryService.updateCategory(filterObj, toUpdate);
-
-    res.status(201).json(newProduct);
-  } catch (error) {
-    next(error);
-  }
-});
-
-// 상품 정보 수정
-adminRouter.patch(
-  "/products/:productId",
+adminRouter.post(
+  "/products",
   isEmptyObject,
+  upload.single("uploadImg"),
   async (req, res, next) => {
     try {
-      const { productId } = req.params;
-      if (!productId) {
-        throw new BadRequest("Undefined params", 4005);
-      }
+      // 이미지 경로
+      const image = req.file.path;
+
+      // req (request)의 body 에서 데이터 가져오기
       const {
         name,
         price,
         volume,
         category,
-        image,
         brand,
         description,
         stock,
@@ -89,6 +43,66 @@ adminRouter.patch(
       if (!categoryCheck) {
         throw new NotFound("This Category Not in DB", 4403);
       }
+      // 위 데이터를 상품 db에 추가하기
+      const newProduct = await productService.addProduct({
+        name,
+        price,
+        volume,
+        category,
+        image,
+        brand,
+        description,
+        stock,
+        sales,
+        alcoholType,
+        alcoholDegree,
+      });
+
+      // category 모델에 product._id 추가
+      const filterObj = { name: category };
+      const toUpdate = { $push: { products: newProduct._id } };
+      await categoryService.updateCategory(filterObj, toUpdate);
+
+      res.status(201).json(newProduct);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// 상품 정보 수정
+adminRouter.patch(
+  "/products/:productId",
+  isEmptyObject,
+  upload.single("uploadImg"),
+
+  async (req, res, next) => {
+    try {
+      const { productId } = req.params;
+      if (!productId) {
+        throw new BadRequest("Undefined params", 4005);
+      }
+      // 이미지 경로
+      const image = req.file.path;
+
+      const {
+        name,
+        price,
+        volume,
+        category,
+        brand,
+        description,
+        stock,
+        sales,
+        alcoholType,
+        alcoholDegree,
+      } = req.body;
+
+      const categoryCheck = await categoryService.getCategoryByName(category);
+      if (!categoryCheck) {
+        throw new NotFound("This Category Not in DB", 4403);
+      }
+
       // 위 데이터를 상품 db에 추가하기
       const updateProduct = await productService.updateProduct(productId, {
         name,
@@ -125,6 +139,15 @@ adminRouter.delete("/products/:productId", async (req, res, next) => {
       throw new BadRequest("Undefined params", 4005);
     }
     const product = await productService.getProductById(productId);
+
+    if (fs.existsSync(product.image)) {
+      // 파일이 존재한다면 true 그렇지 않은 경우 false 반환
+      try {
+        fs.unlinkSync(product.image);
+      } catch (error) {
+        throw new BadRequest("Fail Delete Image", 4006);
+      }
+    }
     const filterObj = { name: product.category };
     const toUpdate = { $pull: { products: productId } };
 
