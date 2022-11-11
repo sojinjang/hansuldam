@@ -13,7 +13,8 @@ orderId.forEach((id) => {
     showProductStatus(orderList);
     productList.forEach(showProductList);
     showUserInformation(orderList);
-    showUserInformationChangeButton(orderList);
+    showUserInformationChange(orderList);
+    showChangeButton(orderList);
   }
 
   setElement();
@@ -23,24 +24,15 @@ orderId.forEach((id) => {
     const productList = await get("/api/orders/", `${id}/products`);
 
     if (orderList.status == "상품준비중") {
-      selectId(`${orderList._id}-button-container`).style.display = "flex";
+      $(".button-container").style.display = "flex";
     }
 
-    selectId(`${orderList._id}-info-change`).addEventListener(
-      "click",
-      clickChangeButton
-    );
-    selectId(`${orderList._id}-cancel-order`).addEventListener(
-      "click",
-      cancelOrder
-    );
-    selectId(`${orderList._id}-change-btn`).addEventListener(
-      "click",
-      setNewInformation
-    );
+    $(".info-change").addEventListener("click", clickChangeButton);
+    $(".cancel-order").addEventListener("click", cancelOrder);
+    selectId(`${orderList._id}-change-btn`).addEventListener("click", setNewInformation);
 
     function clickChangeButton() {
-      selectId(`${orderList._id}-change-wrapper`).style.display = "flex";
+      $(".user-change-container").style.display = "flex";
     }
 
     async function setNewInformation() {
@@ -85,7 +77,7 @@ orderId.forEach((id) => {
       try {
         await patch("/api/orders", id, changeInfo);
         alert("정보가 수정되었습니다.");
-        selectId(`${orderList._id}-change-wrapper`).style.display = "none";
+        $(".user-change-container").style.display = "none";
       } catch (e) {
         alert("문제가 발생했습니다. 다시 시도해주세요.");
       }
@@ -95,10 +87,10 @@ orderId.forEach((id) => {
       try {
         await del("/api/orders", id, productList);
         alert("주문취소가 성공적으로 처리되었습니다.");
+        location.reload();
       } catch (e) {
         alert("문제가 발생했습니다. 다시 시도해주세요.");
       }
-      // 주문 내역 요소 지우기
     }
   }
 
@@ -108,10 +100,16 @@ orderId.forEach((id) => {
 function showProductStatus(item) {
   let product = undefined;
   product = document.createElement("span");
-  product.setAttribute("class", "product-status");
+  product.setAttribute("class", "order-list-container");
   product.setAttribute("id", item._id);
-  product.innerHTML = item.status;
-  $(".order-detail").append(product);
+  product.innerHTML = `<div class="order-status">
+  <div class="order-date">
+    <span class="orderDate">[주문날짜]</span>
+    <span>${item._id}</span>
+  </div>
+  <span class="order-status">${item.status}</span>
+</div>`;
+  $(".order-container").append(product);
 }
 
 function showProductList(item) {
@@ -122,12 +120,12 @@ function showProductList(item) {
   product.innerHTML = `<img src="../img/ricewine_icon.png" alt="" />
   <div class="category-detail">
     <span class="category-name">${item.product.name}</span>
-    <span class="category-price">${(
-      item.product.price * item.quantity
-    ).toLocaleString("ko-KR")}원</span>
+    <span class="category-price">${(item.product.price * item.quantity).toLocaleString(
+      "ko-KR"
+    )}원</span>
     <span class="category-quantity">${item.quantity}개</span>
   </div>`;
-  $(".order-detail").append(product);
+  $(".order-list-container").append(product);
 }
 
 function showUserInformation(item) {
@@ -146,11 +144,14 @@ function showUserInformation(item) {
 </div>
 <div>
   <span class="user-address2" id="${item._id}-user-address2">${item.address.address2}</span>
+</div>
+<div>
+  <span class="user-credit-card" id="${item._id}-user-credit-card">[카드정보]</span>
 </div>`;
-  $(".list-box").append(product);
+  $(".order-list-container").append(product);
 }
 
-function showUserInformationChangeButton(item) {
+function showUserInformationChange(item) {
   let product = undefined;
   product = document.createElement("div");
   product.setAttribute("class", "user-change-container");
@@ -195,10 +196,16 @@ function showUserInformationChangeButton(item) {
     </div>
   </div>
   <button class="change-btn" id="${item._id}-change-btn">변경하기</button>
-</div>
-<div class="button-container" id="${item._id}-button-container">
-  <button class="info-change" id="${item._id}-info-change">정보 수정하기</button>
-  <button class="cancel-order" id="${item._id}-cancel-order">주문 취소</button>
 </div>`;
-  $(".list-box").append(product);
+  $(".order-list-container").append(product);
+}
+
+function showChangeButton(item) {
+  let product = undefined;
+  product = document.createElement("div");
+  product.setAttribute("class", "button-container");
+  product.setAttribute("id", `${item._id}-button-container`);
+  product.innerHTML = `<button class="info-change" id="${item._id}-info-change">정보 수정하기</button>
+  <button class="cancel-order" id="${item._id}-cancel-order">주문 취소</button>`;
+  $(".order-list-container").append(product);
 }
