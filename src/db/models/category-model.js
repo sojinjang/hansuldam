@@ -36,12 +36,6 @@ export class CategoryModel {
 
     return category;
   }
-
-  async setTestdata(arr) {
-    await Category.deleteMany({});
-    const categories = await Category.insertMany(arr);
-    return categories;
-  }
 }
 
 const categoryModel = new CategoryModel();

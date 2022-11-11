@@ -58,12 +58,6 @@ export class ProductModel {
     const products = await Product.find({ _id: { $in: idArray } });
     return products;
   }
-
-  async setTestdata(arr) {
-    await Product.deleteMany({});
-    const products = await Product.insertMany(arr);
-    return products;
-  }
 }
 
 const productModel = new ProductModel();
