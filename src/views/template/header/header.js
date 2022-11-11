@@ -1,5 +1,5 @@
-import { get } from '../../api.js';
-import { deleteCookie, getCookieValue, setCookie } from '../../utils/cookie.js';
+import { get } from "../../api.js";
+import { deleteCookie, getCookieValue, setCookie } from "../../utils/cookie.js";
 
 const $ = (selector) => document.querySelector(selector);
 
@@ -45,63 +45,53 @@ function getHeader() {
 }
 
 async function redirectPage() {
-  const menuLabels = document.querySelectorAll('.menu-label');
-  const TOKEN = 'token';
+  const menuLabels = document.querySelectorAll(".menu-label");
+  const TOKEN = "token";
 
-  $('.company-logo').addEventListener(
-    'click',
-    () => (window.location.href = '/')
-  );
-  $('.join').addEventListener('click', () => (window.location.href = '/join'));
-  $('.login').addEventListener('click', () => {
-    window.location.href = '/login';
+  $(".company-logo").addEventListener("click", () => (window.location.href = "/"));
+  $(".join").addEventListener("click", () => (window.location.href = "/join"));
+  $(".login").addEventListener("click", () => {
+    window.location.href = "/login";
   });
 
-  
   if (getCookieValue(TOKEN)) {
-    const user = await get('/api/auth/user');
-    if(user && user['role'] === 'admin') {
-      $('.user-list').innerHTML = `<li class="admin">관리자페이지 |</li>
+    const user = await get("/api/auth/user");
+    if (user && user["role"] === "admin") {
+      $(".user-list").innerHTML = `<li class="admin">관리자페이지 |</li>
 <li class="logout">로그아웃</li>
 <div class="basket">
   <img src="../img/shopping-bag.png" alt="cart-img">
 </div>`;
 
+      $(".admin").addEventListener("click", () => (window.location.href = "/admin"));
 
-      $('.admin').addEventListener(
-        'click',
-        () => (window.location.href = '/admin')
-      );
-
-      $('.logout').addEventListener('click', () => {
+      $(".logout").addEventListener("click", () => {
         deleteCookie(TOKEN);
-        window.location.href = '/';
-    });
-  } else {
-    $('.user-list').innerHTML = `<li class="logout">로그아웃</li>
+        window.location.href = "/";
+      });
+    } else {
+      $(".user-list").innerHTML = `<li class="myPage">마이페이지 |</li>
+<li class="logout">로그아웃</li>
 <div class="basket">
   <img src="../img/shopping-bag.png" alt="cart-img">
 </div>`;
 
-    $('.logout').addEventListener('click', () => {
-      deleteCookie(TOKEN);
-      window.location.href = '/';
-    });
+      $(".myPage").addEventListener(
+        "click",
+        () => (window.location.href = "/order-list")
+      );
+    }
   }
-}
-  
-  $('.basket').addEventListener(
-    'click',
-    () => (window.location.href = '/cart')
-  );
-  $('#eventProducts').addEventListener(
-    'click',
-    () => (window.location.href = '/event-page')
+
+  $(".basket").addEventListener("click", () => (window.location.href = "/cart"));
+  $("#eventProducts").addEventListener(
+    "click",
+    () => (window.location.href = "/event-page")
   );
 
   menuLabels.forEach((label) => {
-    label.addEventListener('click', (e) => {
-      const labelId = e.currentTarget.getAttribute('id');
+    label.addEventListener("click", (e) => {
+      const labelId = e.currentTarget.getAttribute("id");
       window.location.href = `/products?label=${labelId}`;
     });
   });
