@@ -129,6 +129,8 @@ function modifyCategory() {
   const modifyBtn = document.querySelectorAll('.modify-button');
   modifyBtn.forEach((button) => {
     button.addEventListener('click', async (e) => {
+      if ($('.modify-category-modal')) { $('.modify-category-modal').remove(); }
+
       const currentId = e.target.getAttribute('id');
 
       const categoryModifyModalHtml = `<label class="modify-category-modal">

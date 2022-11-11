@@ -24,7 +24,7 @@ async function openOrderMenu() {
   <div class="column is-2">주소</div>
   <div class="column is-2">주문날짜</div>
   <div class="column is-2">연락처</div>
-  <div class="column is-2">주문상태</div>
+  <div class="column is-2">주문상태/합계</div>
   <div class="column is-2">주문내용</div>
 </div>
 </section>`;
@@ -53,13 +53,12 @@ async function renderOrder(order) {
     _id,
     fullName,
     address,
-    priceSum,
+    totalPrice,
     productsInOrder,
     status,
     createdAt,
     phoneNumber,
   } = await order;
-
   const orderSection = document.createElement('div');
 
   orderSection.setAttribute('class', 'columns items-container');
@@ -121,7 +120,7 @@ async function renderOrder(order) {
     }, []);
 
     const test = document.createElement('div');
-    test.setAttribute('class', 'columns items-container none');
+    test.setAttribute('class', 'columns items-container items-detail none');
     test.setAttribute('id', `detail-${_id}`);
 
     let detailText = ``;
@@ -130,7 +129,7 @@ async function renderOrder(order) {
     });
 
     test.innerHTML = `<div class="column is-8">${detailText}</div>
-    <div class="column is-2">총 ${Number(priceSum).toLocaleString('ko-KR')}원</div>`;
+    <div class="column is-2">총 ${Number(totalPrice).toLocaleString('ko-KR')}원</div>`;
 
     $('.orders-container').append(test);
   }

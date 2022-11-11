@@ -1,4 +1,5 @@
 import { get } from '../api.js'
+import { changeToKoreanTime } from '../utils/useful_functions.js'
 
 async function renderData() {
   const queryString = new Proxy(new URLSearchParams(window.location.search), {
@@ -20,6 +21,8 @@ async function renderData() {
     manufacturedDate,
   } = fetchedData;
 
+  document.title = `${name} - 한술담 🍶`;
+
   let productSection = document.createElement('section');
 
   productSection.setAttribute('class', 'product-container');
@@ -32,7 +35,9 @@ async function renderData() {
 		<div class="content__main-info">
     <p class="content__item content__name">${name}</p>
     <p class="content__item content__category">${category}</p>
-			<p class="content__item content__price">${Number(price).toLocaleString('ko-KR')}원</p>
+			<p class="content__item content__price">${Number(price).toLocaleString(
+        'ko-KR'
+      )}원</p>
 			<p class="content__desc">${description}</p>
 		</div>
 		<div class="content__detail-info">
@@ -54,7 +59,7 @@ async function renderData() {
 			</p>
 			<p>
 				<span class="content__manufacturedDate">제조일자</span>
-				<span class="content__item content__manufacturedDate">${manufacturedDate}</span>
+				<span class="content__item content__manufacturedDate">${changeToKoreanTime(manufacturedDate)}</span>
 			</p>
 		</div>
 		<div class="button-container">
@@ -63,7 +68,7 @@ async function renderData() {
 			</button>
 			<button class="button" id="basket-button">장바구니 담기</button>
 			<p class="cart-message">
-				장바구니에 담았습니다! 로컬스토리지 확인 ㄱㄱ염
+				장바구니에 담았습니다!
 			</p>
 		</div>
 	</div>
@@ -86,7 +91,6 @@ async function orderAndCart() {
   basketButton.addEventListener('click', clickCart);
 
   function clickOrder() {
-    console.log('주문 페이지로 이동합니다...');
     window.location.href = '/order';
   }
 
@@ -100,7 +104,6 @@ async function orderAndCart() {
       let tempArr = JSON.parse(localStorage.getItem(PRODUCTS_KEY));
 
       tempArr.push(productData);
-      console.log(tempArr);
       localStorage.setItem(PRODUCTS_KEY, JSON.stringify(tempArr));
     }
 
