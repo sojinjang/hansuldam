@@ -30,16 +30,18 @@ authRouter.patch("/user", isEmptyObject, async (req, res, next) => {
     const password = req.body.newPassword;
     const phoneNumber = req.body.phoneNumber;
     const address = req.body.address;
-
-    // body data로부터, 확인용으로 사용할 현재 비밀번호를 추출함.
     const currentPassword = req.body.password;
 
-    // currentPassword 없을 시, 진행 불가
-    if (!currentPassword) {
-      throw new BadRequest("Need currentPassword", 4105);
+    let userInfoRequired;
+    // 만약 새로운 비밀번호를 입력했다면
+    if (password) {
+      // body data로부터, 확인용으로 사용할 현재 비밀번호를 추출함.
+      // currentPassword 없을 시, 진행 불가
+      if (!currentPassword) {
+        throw new BadRequest("Need currentPassword", 4105);
+      }
+      userInfoRequired = { userId, currentPassword };
     }
-
-    const userInfoRequired = { userId, currentPassword };
 
     // 위 데이터가 undefined가 아니라면, 즉, 프론트에서 업데이트를 위해
     // 보내주었다면, 업데이트용 객체에 삽입함.
@@ -51,11 +53,13 @@ authRouter.patch("/user", isEmptyObject, async (req, res, next) => {
       ...(phoneNumber && { phoneNumber }),
     };
 
+    let updatedUserInfo;
     // 사용자 정보를 업데이트함.
-    const updatedUserInfo = await userService.setUser(
-      userInfoRequired,
-      toUpdate
-    );
+    if (userInfoRequired) {
+      updatedUserInfo = await userService.setUser(userInfoRequired, toUpdate);
+    } else {
+      updatedUserInfo = await userService.NoPasswordSetUser(userId, toUpdate);
+    }
 
     // 업데이트 이후의 유저 데이터를 프론트에 보내 줌
     res.status(200).json(updatedUserInfo);
@@ -89,7 +93,7 @@ authRouter.post("/orders", isEmptyObject, async (req, res, next) => {
       address,
       shipping,
       payment,
-      priceSum,
+      totalPrice,
       productsInOrder,
       phoneNumber,
     } = req.body;
@@ -101,7 +105,7 @@ authRouter.post("/orders", isEmptyObject, async (req, res, next) => {
       address,
       shipping,
       payment,
-      priceSum,
+      totalPrice,
       productsInOrder,
       phoneNumber,
     });

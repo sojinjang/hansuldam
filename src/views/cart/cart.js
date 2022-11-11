@@ -1,4 +1,6 @@
-const main = document.querySelector(".body-container");
+import { getSavedItems, saveItems } from "../utils/localStorage.js";
+import { getCookieValue } from "../utils/cookie.js";
+
 const shoppingbagList = document.querySelector(".shoppingbag-list");
 
 const allChecker = document.querySelector(".all-checker");
@@ -10,28 +12,21 @@ const checkoutButton = document.querySelector(".checkout");
 
 const PRODUCTS_KEY = "products";
 const HIDDEN_CLASSNAME = "hidden";
-
-function getSavedProducts() {
-  return JSON.parse(localStorage.getItem(PRODUCTS_KEY));
-}
+const TOKEN = "token";
 
 function removeProductFromDB(productId) {
-  let savedProducts = getSavedProducts();
+  let savedProducts = getSavedItems(PRODUCTS_KEY);
   savedProducts = savedProducts.filter(
     (product) => String(product._id) !== String(productId)
   );
   return savedProducts;
 }
 
-function saveProducts(productsArr) {
-  localStorage.setItem(PRODUCTS_KEY, JSON.stringify(productsArr));
-}
-
 function adjustQuantityFromDB(productId, quantity) {
-  const savedProducts = getSavedProducts();
+  const savedProducts = getSavedItems(PRODUCTS_KEY);
   const index = savedProducts.findIndex((x) => x._id === productId);
   savedProducts[index].quantity = parseInt(quantity);
-  saveProducts(savedProducts);
+  saveItems(PRODUCTS_KEY, savedProducts);
 }
 
 function isEmptyCart(productsList) {
@@ -97,8 +92,12 @@ function showProduct(item) {
   shoppingbagList.append(product);
 }
 
+function hideCheckout() {
+  checkoutButton.classList.add(HIDDEN_CLASSNAME);
+}
+
 function renderCartContents() {
-  const savedProducts = getSavedProducts();
+  const savedProducts = getSavedItems(PRODUCTS_KEY);
   if (!isEmptyCart(savedProducts)) {
     checkoutButton.classList.remove(HIDDEN_CLASSNAME);
     savedProducts.forEach(showProduct);
@@ -116,7 +115,7 @@ function deleteProductFromCart(e) {
   const productDiv = e.target.parentElement.parentElement.parentElement;
   let savedProducts = removeProductFromDB(productDiv.id);
   productDiv.remove();
-  saveProducts(savedProducts);
+  saveItems(PRODUCTS_KEY, savedProducts);
   if (isEmptyCart(savedProducts)) hideCheckout();
 }
 
@@ -130,7 +129,7 @@ function deleteCheckedProducts() {
     const productDiv = document.getElementById(item.id);
     let savedProducts = removeProductFromDB(productDiv.id);
     productDiv.remove();
-    saveProducts(savedProducts);
+    saveItems(PRODUCTS_KEY, savedProducts);
     if (isEmptyCart(savedProducts)) hideCheckout();
   });
 }
@@ -184,70 +183,19 @@ function getDeliveryFee(price) {
   return deliveryCharge;
 }
 
-function caculateTotalPrice() {
+function calculateTotalPrice() {
   const totalProductPrice = getTotalProductPrice();
   const deliveryFee = getDeliveryFee(totalProductPrice);
   totalPrice.innerText = `${(totalProductPrice + deliveryFee).toLocaleString("ko-KR")}원`;
 }
 
-function hideCheckout() {
-  checkoutButton.classList.add(HIDDEN_CLASSNAME);
+function moveToPaymentPage() {
+  if (getCookieValue(TOKEN)) window.location.href = "/order-pay-member";
+  else window.location.href = "/order-pay-nonmember";
 }
 
-let tempData = [
-  {
-    _id: "249ee1e45022fa608b63e994",
-    category: "증류주",
-    brand: "전주이강주",
-    name: "조정형 명인 전주 이강주",
-    price: 5500,
-    volume: 375,
-    quantity: 1,
-    img: "../img/redmonkey.jpeg",
-    sold: 10,
-    alcoholType: "증류",
-    alcoholDegree: 19,
-    manufacturedDate: "2022-04-15",
-    createdAt: "2022-06-07T05:28:04.709Z",
-    updatedAt: "2022-06-07T05:32:19.548Z",
-  },
-  {
-    _id: "5555",
-    category: "청주",
-    brand: "토박이",
-    name: "한산 소곡주",
-    price: 11000,
-    volume: 500,
-    quantity: 3,
-    img: "../img/redmonkey.jpeg",
-    sold: 13,
-    alcoholType: "청주",
-    alcoholDegree: 16,
-    manufacturedDate: "2022-04-15",
-    createdAt: "2022-06-07T05:28:04.709Z",
-    updatedAt: "2022-06-07T05:32:19.548Z",
-  },
-  {
-    _id: "1234",
-    category: "증류주",
-    brand: "제이팍",
-    name: "원소주",
-    price: 25000,
-    volume: 375,
-    quantity: 2,
-    img: "../img/redmonkey.jpeg",
-    sold: 5,
-    alcoholType: "증류주",
-    alcoholDegree: 21,
-    manufacturedDate: "2022-11-05",
-    createdAt: "2022-11-07T05:28:04.709Z",
-    updatedAt: "2022-11-07T05:32:19.548Z",
-  },
-];
-saveProducts(tempData);
-
 renderCartContents();
-caculateTotalPrice();
+calculateTotalPrice();
 
 const deleteButtons = document.querySelectorAll(".product-remove-button");
 const minusButtons = document.querySelectorAll(".minus-button");
@@ -256,25 +204,27 @@ const checkboxes = document.querySelectorAll(".individual-checker");
 
 deleteButtons.forEach((deleteButton) => {
   deleteButton.addEventListener("click", deleteProductFromCart);
-  deleteButton.addEventListener("click", caculateTotalPrice);
+  deleteButton.addEventListener("click", calculateTotalPrice);
 });
 
 allChecker.addEventListener("click", checkAllProducts);
-allChecker.addEventListener("click", caculateTotalPrice);
+allChecker.addEventListener("click", calculateTotalPrice);
 
 selectedItemDeleteButton.addEventListener("click", deleteCheckedProducts);
-selectedItemDeleteButton.addEventListener("click", caculateTotalPrice);
+selectedItemDeleteButton.addEventListener("click", calculateTotalPrice);
 
 minusButtons.forEach((minusButton) => {
   minusButton.addEventListener("click", decreaseProductQuantity);
-  minusButton.addEventListener("click", caculateTotalPrice);
+  minusButton.addEventListener("click", calculateTotalPrice);
 });
 
 plusButtons.forEach((plusButton) => {
   plusButton.addEventListener("click", increaseProductQuantity);
-  plusButton.addEventListener("click", caculateTotalPrice);
+  plusButton.addEventListener("click", calculateTotalPrice);
 });
 
 checkboxes.forEach((checkbox) => {
-  checkbox.addEventListener("click", caculateTotalPrice);
+  checkbox.addEventListener("click", calculateTotalPrice);
 });
+
+checkoutButton.addEventListener("click", moveToPaymentPage);

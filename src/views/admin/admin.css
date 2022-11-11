@@ -116,6 +116,6 @@
   flex-direction: column;
 }
 
-.none {
+.orders-container .none {
   display: none;
 }

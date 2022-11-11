@@ -1,0 +1,294 @@
+@import url("https://fonts.googleapis.com/css2?family=Secular+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap");
+
+
+
+.body-container {
+    background-color: wheat;
+}
+
+.order-status-wrapper {
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    padding: 70px 0px 78px;
+}
+
+.order-status-wrapper .order-status-bar {
+    display: flex;
+}
+
+.order-status-wrapper .order-status-bar .order-status-highlighted {
+    display: flex;
+    font-family: "Secular One", sans-serif;
+    color: rgb(91, 58, 28);
+    font-size: 25px;
+    -webkit-box-align: center;
+    align-items: center;
+    font-weight: 500;
+    line-height: 20px;
+    justify-content: space-evenly;
+}
+
+.order-status-wrapper .order-status-bar .order-status {
+    font-family: "Secular One", sans-serif;
+    font-size: 25px;
+    color: rgba(0, 0, 0, 0.3);
+    -webkit-box-align: center;
+    align-items: center;
+    font-weight: 500;
+    line-height: 20px;
+    justify-content: space-evenly;
+}
+
+.order-status-wrapper .order-status-bar .order-arrow {
+    margin: 0 15px 0 15px;
+    opacity: 0.3;
+    font-size: 25px;
+    -webkit-box-align: center;
+    align-items: center;
+    line-height: 20px;
+    justify-content: space-evenly;
+}
+
+.container-order-list {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    -webkit-box-align: start;
+    align-items: start;
+    max-width: 1024px;
+    width: 100%;
+    min-height: 100vh;
+    margin: auto;
+}
+
+.order-section span {
+    font-weight: bold;
+}
+
+.order-section .add-product {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid rgb(224, 224, 224);
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.order-product {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid darkgray;
+}
+
+.order-product .thumbnail {
+    display: flex;
+    flex-direction: row;
+}
+
+.thumbnail img {
+    height: auto;
+    width: 86px;
+    min-width: 23px;
+    border-radius: 10px;
+    margin-right: 10px;
+}
+
+.order-product .product-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    padding-right: 20px;
+    align-items: flex-end;
+}
+
+.user-info-container .user-info-text {
+    margin-right: 15px;
+    font-weight: bold;
+}
+
+.user-info-container .user-info {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 15px;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid rgb(224, 224, 224);
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.user-info .info-text {
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+}
+
+.user-info .info-text p {
+    font-weight: bold;
+}
+
+
+.address-container .address-info-text {
+    margin-right: 15px;
+    font-weight: bold;
+}
+
+.address-container .address-info {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 15px;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid rgb(224, 224, 224);
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.address-info span {
+    font-weight: bold;
+    margin-right: 35px;
+}
+
+.address .user-address {
+    margin-bottom: 10px;
+}
+
+.address-status .status-input {
+    display: none;
+}
+
+.payment-container {
+    margin-bottom: 15px;
+}
+
+.payment-container span {
+    font-weight: bold;
+}
+
+.payment-container button {
+    cursor: pointer;
+    width: 100px;
+    height: 50px;
+    text-align: center;
+    background-color:#fdc78c;
+    border-radius: 5px;
+}
+
+.payment-container .creditCard {
+    display: none;
+}
+
+
+.address-container .user-address {
+    display: flex;
+    flex-direction: column;
+}
+
+.address-status {
+    display: flex;
+    flex-direction: column;
+}
+
+.address-status #select-status {
+    margin-bottom: 5px;
+}
+
+.status-input {
+    width: 200px;
+}
+
+.container-caculate-price .bill {
+    height: 100%;
+    padding: 20px;
+    border-radius: 10px;
+    border: 0.5px solid rgb(224, 224, 224);
+    margin-bottom: 60px;
+    background-color: rgba(255, 255, 255, 0.555);
+}
+
+.container-caculate-price .bill .content {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    display: flex;
+    flex-direction: column;
+    margin: 15px;
+}
+
+.bill-title {
+    margin-right: auto;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.container-caculate-price .bill .content .total-product-price {
+    margin-left: auto;
+    font-size: 17px;
+}
+
+.container-caculate-price .bill .content .delivery-fee {
+    margin-left: auto;
+    font-size: 17px;
+}
+
+.container-caculate-price .bill .border-bottom {
+    border: 0.5px solid rgb(224, 224, 224);
+}
+
+.container-caculate-price .bill .bill-footer {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    display: flex;
+    flex-direction: column;
+    margin: 15px;
+}
+
+.container-caculate-price .bill .bill-footer .total-payment-price {
+    margin-left: auto;
+    font-size: 22px;
+    font-weight: bold;
+    color: rgb(186, 101, 21);
+}
+
+.button-wrapper {
+    font-family: "Secular One", sans-serif;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#rounded-button {
+    background-color: #fdc78c;
+    border: 2px solid #422800;
+    border-radius: 30px;
+    box-shadow: #422800 4px 4px 0 0;
+    color: #422800;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 500;
+    font-size: 18px;
+    padding: 0 18px;
+    line-height: 50px;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    transition: all 0.2s linear;
+}
+
+#rounded-button:hover {
+    background-color: #fff;
+}
+
+#rounded-button:active {
+    box-shadow: #422800 2px 2px 0 0;
+    transform: translate(2px, 2px);
+}
+
+@media (min-width: 768px) {
+    #rounded-button {
+        min-width: 120px;
+        padding: 0 25px;
+    }
+}

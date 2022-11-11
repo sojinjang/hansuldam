@@ -11,4 +11,10 @@ const getCookieValue = (key) => {
   return matches ? JSON.parse(decodeURIComponent(matches[1]))[key] : undefined;
 };
 
-export { setCookie, getCookieValue };
+const deleteCookie = (key) => {
+  setCookie(key, "", {
+    "max-age": -1,
+  });
+};
+
+export { setCookie, getCookieValue, deleteCookie };
