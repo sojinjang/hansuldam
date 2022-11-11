@@ -36,7 +36,7 @@ async function noAuthOrder() {
         address1: "서울 성동구 아차산로17길 48",
       },
       status: "상품준비중",
-      priceSum: 0,
+      totalPrice: 0,
       productsInOrder: [],
     },
     {
@@ -47,7 +47,7 @@ async function noAuthOrder() {
         address1: "전주시 완산구 천변로1길 42",
       },
       status: "상품준비중",
-      priceSum: 0,
+      totalPrice: 0,
       productsInOrder: [],
     },
   ];
@@ -61,7 +61,7 @@ async function noAuthOrder() {
         const id = products[i]._id.toString();
         const quantity = getRandomInt(1, 5);
         cur.productsInOrder.push({ id, quantity });
-        cur.priceSum += products[i].price * quantity;
+        cur.totalPrice += products[i].price * quantity;
         i++;
       }
       return cur;
@@ -76,12 +76,12 @@ async function authOrder() {
   const orderDatas = [
     {
       status: "상품준비중",
-      priceSum: 0,
+      totalPrice: 0,
       productsInOrder: [],
     },
     {
       status: "상품준비중",
-      priceSum: 0,
+      totalPrice: 0,
       productsInOrder: [],
     },
   ];
@@ -100,7 +100,7 @@ async function authOrder() {
         const id = products[i]._id.toString();
         const quantity = getRandomInt(1, 5);
         cur.productsInOrder.push({ id, quantity });
-        cur.priceSum += products[i].price * quantity;
+        cur.totalPrice += products[i].price * quantity;
         i++;
       }
       return cur;

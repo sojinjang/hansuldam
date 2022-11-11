@@ -11,6 +11,8 @@ import {
 } from "./routers";
 import { errorHandler, loginRequired, adminRequired } from "./middlewares";
 
+import { setTestdata } from "../testdata";
+
 const app = express();
 
 // CORS 에러 방지
@@ -24,6 +26,8 @@ app.use(express.urlencoded({ extended: false }));
 
 // html, css, js 라우팅
 app.use(viewsRouter);
+
+setTestdata();
 
 // api 라우팅
 app.use("/api/user", userRouter);
