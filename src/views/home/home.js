@@ -20,8 +20,17 @@ function clickCarouselDot(e) {
   });
 }
 
+async function fetchCategory() {
+  const res = await fetch('api/category', {
+    method: 'GET',
+  });
+  
+  return await res.json();
+}
+
 async function renderData() {
-  const categoryId = '636b8822d3f00110df72f2e1';
+  const categoryData = await fetchCategory();
+  const categoryId = categoryData[0]['_id'];
   const res = await fetch(`/api/category/${categoryId}/products`, {
     method: 'GET',
   });
