@@ -18,11 +18,7 @@ export class ProductModel {
     const filter = { _id: productId };
     const option = { returnOriginal: false };
 
-    const updatedProduct = await Product.findOneAndUpdate(
-      filter,
-      update,
-      option
-    );
+    const updatedProduct = await Product.findOneAndUpdate(filter, update, option);
     return updatedProduct;
   }
 
@@ -30,11 +26,7 @@ export class ProductModel {
     const filter = { _id: { $in: IdArray } };
     const option = { returnOriginal: false };
 
-    const updatedProduct = await Product.updateMany(
-      filter,
-      toUpdateObj,
-      option
-    );
+    const updatedProduct = await Product.updateMany(filter, toUpdateObj, option);
     return updatedProduct;
   }
 
@@ -56,12 +48,6 @@ export class ProductModel {
 
   async findByIdArray(idArray) {
     const products = await Product.find({ _id: { $in: idArray } });
-    return products;
-  }
-
-  async setTestdata(arr) {
-    await Product.deleteMany({});
-    const products = await Product.insertMany(arr);
     return products;
   }
 }

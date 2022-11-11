@@ -17,11 +17,7 @@ export class CategoryModel {
   async update({ categoryId, update }) {
     const filter = { _id: categoryId };
     const option = { returnOriginal: false };
-    const updatedCategory = await Category.findOneAndUpdate(
-      filter,
-      update,
-      option
-    );
+    const updatedCategory = await Category.findOneAndUpdate(filter, update, option);
     return updatedCategory;
   }
 
@@ -35,12 +31,6 @@ export class CategoryModel {
     const category = await Category.findOne(obj);
 
     return category;
-  }
-
-  async setTestdata(arr) {
-    await Category.deleteMany({});
-    const categories = await Category.insertMany(arr);
-    return categories;
   }
 }
 
