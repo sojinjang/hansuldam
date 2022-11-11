@@ -8,6 +8,7 @@ import {
   adminRouter,
   orderRouter,
   authRouter,
+  naverRouter,
 } from "./routers";
 import { errorHandler, loginRequired, adminRequired } from "./middlewares";
 
@@ -36,6 +37,7 @@ app.use("/api/products", productRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/auth", loginRequired, authRouter);
 app.use("/api/admin", loginRequired, adminRequired, adminRouter);
+app.use("/api/naver", naverRouter);
 
 // 에러 라우팅
 app.use(errorHandler);
