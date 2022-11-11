@@ -7,8 +7,8 @@ const orderId = data.orders;
 
 orderId.forEach((id) => {
   async function setElement() {
-    const orderList = await get("/api/orders/", id);
-    const productList = await get("/api/orders/", `${id}/products`);
+    const orderList = await get("/api/orders", id);
+    const productList = await get("/api/orders", `${id}/products`);
 
     showProductStatus(orderList);
     productList.forEach(showProductList);
@@ -20,8 +20,8 @@ orderId.forEach((id) => {
   setElement();
 
   async function eventListenerBtn() {
-    const orderList = await get("/api/orders/", id);
-    const productList = await get("/api/orders/", `${id}/products`);
+    const orderList = await get("/api/orders", id);
+    const productList = await get("/api/orders", `${id}/products`);
 
     if (orderList.status == "상품준비중") {
       $(".button-container").style.display = "flex";
