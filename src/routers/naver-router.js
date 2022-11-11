@@ -4,33 +4,29 @@ import { userService } from "../services";
 
 const naverRouter = Router();
 
+const HSD_url = "http://localhost:7777";
 var client_id = process.env.Naver_clientID;
 var client_secret = process.env.Naver_clientSecret;
 var state = "RAMDOM_STATE";
-var redirectURI = encodeURI("http://localhost:7777/api/naver/callback");
-var api_url = "http://localhost:7777";
+var redirectURI = encodeURI(`${HSD_url}/api/naver/callback`);
+var naverApiUrl = ``;
 
 naverRouter.get("/login", function (req, res) {
-  api_url =
+  naverApiUrl =
     "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=" +
     client_id +
     "&redirect_uri=" +
     redirectURI +
     "&state=" +
     state;
-  res.writeHead(200, { "Content-Type": "text/html;charset=utf-8" });
-  const button =
-    "<a href='" +
-    api_url +
-    "'><img height='50' src='http://static.nid.naver.com/oauth/small_g_in.PNG'/></a>";
 
-  res.json({ button });
+  res.status(200).json({ naverApiUrl });
 });
 
 naverRouter.get("/callback", function (req, res) {
   const code = req.query.code;
   const state = req.query.state;
-  api_url =
+  naverApiUrl =
     "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&client_id=" +
     client_id +
     "&client_secret=" +
@@ -43,7 +39,7 @@ naverRouter.get("/callback", function (req, res) {
     state;
 
   var options = {
-    url: api_url,
+    url: naverApiUrl,
     headers: {
       "X-Naver-Client-Id": client_id,
       "X-Naver-Client-Secret": client_secret,
@@ -72,9 +68,9 @@ naverRouter.get("/callback", function (req, res) {
           const password = "naver";
           const naverUserInfo = { fullName, email, phoneNumber, password };
 
-          const userToken = await userService.OauthLogin(naverUserInfo);
+          const { token } = await userService.OauthLogin(naverUserInfo);
 
-          res.status(200).json(userToken);
+          res.redirect("/?valid=" + token);
         }
       );
     } else {
