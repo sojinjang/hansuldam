@@ -93,10 +93,11 @@ authRouter.post("/orders", isEmptyObject, async (req, res, next) => {
       address,
       shipping,
       payment,
-      totalPrice,
       productsInOrder,
       phoneNumber,
     } = req.body;
+
+    const totalPrice = Number(req.body.totalPrice);
 
     // 위 데이터를 주문 db에 추가하기
     const newOrder = await orderService.addOrder({
