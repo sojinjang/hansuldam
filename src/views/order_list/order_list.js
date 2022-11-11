@@ -209,3 +209,14 @@ function showChangeButton(item) {
   <button class="cancel-order" id="${item._id}-cancel-order">주문 취소</button>`;
   $(".order-list-container").append(product);
 }
+
+function showChangeButton(item) {
+  let product = undefined;
+  product = document.createElement("div");
+  product.setAttribute("class", "button-container");
+  product.setAttribute("id", `${item._id}-button-container`);
+  product.innerHTML = `<button class="info-change" id="${item._id}-info-change">정보 수정하기</button>
+  <button class="cancel-order" id="${item._id}-cancel-order">주문 취소</button>`;
+  $(".order-list-container").append(product);
+}
+
