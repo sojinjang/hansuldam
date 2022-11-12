@@ -29,10 +29,7 @@ orderId.forEach((id) => {
 
     $(".info-change").addEventListener("click", clickChangeButton);
     $(".cancel-order").addEventListener("click", cancelOrder);
-    selectId(`${orderList._id}-change-btn`).addEventListener(
-      "click",
-      setNewInformation
-    );
+    selectId(`${orderList._id}-change-btn`).addEventListener("click", setNewInformation);
 
     function clickChangeButton() {
       $(".user-change-container").style.display = "flex";
@@ -123,9 +120,9 @@ function showProductList(item) {
   product.innerHTML = `<img src="../img/ricewine_icon.png" alt="" />
   <div class="category-detail">
     <span class="category-name">${item.product.name}</span>
-    <span class="category-price">${(
-      item.product.price * item.quantity
-    ).toLocaleString("ko-KR")}원</span>
+    <span class="category-price">${(item.product.price * item.quantity).toLocaleString(
+      "ko-KR"
+    )}원</span>
     <span class="category-quantity">${item.quantity}개</span>
   </div>`;
   $(".order-list-container").append(product);
@@ -200,6 +197,16 @@ function showUserInformationChange(item) {
   </div>
   <button class="change-btn" id="${item._id}-change-btn">변경하기</button>
 </div>`;
+  $(".order-list-container").append(product);
+}
+
+function showChangeButton(item) {
+  let product = undefined;
+  product = document.createElement("div");
+  product.setAttribute("class", "button-container");
+  product.setAttribute("id", `${item._id}-button-container`);
+  product.innerHTML = `<button class="info-change" id="${item._id}-info-change">정보 수정하기</button>
+  <button class="cancel-order" id="${item._id}-cancel-order">주문 취소</button>`;
   $(".order-list-container").append(product);
 }
 

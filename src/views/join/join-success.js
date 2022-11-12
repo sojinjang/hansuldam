@@ -27,31 +27,31 @@ function examineIdNumber(e) {
   const idNumValue = idNum.value.trim();
   e.preventDefault();
   if (idNumValue.length === 0) {
-    alert("주민번호를 입력해주세요.");
+    alert("주민번호를 입력해주세요 👀");
     return;
   }
   if (!isIdNum(idNumValue)) {
     alert(
-      "주민번호 형식에 맞지 않는 입력값입니다.\n######-####### 형식으로 입력해주세요."
+      "주민번호 형식에 맞지 않는 입력값입니다.\n######-####### 형식으로 입력해주세요. 🤡"
     );
     return;
   }
   if (isAdult(idNumValue)) {
-    alert("성인 인증에 성공했습니다.");
+    alert("성인 인증에 성공했습니다 🪪");
     main_form.style.display = "flex";
     return;
   } else {
-    alert("미성년자는 가입 불가능합니다.");
+    alert("미성년자는 가입 불가능합니다 ❌");
     return;
   }
 }
 
 function checkPassword(password, passwordCheck) {
   if ((password == "") | (passwordCheck == "")) {
-    alert("비밀번호를 입력해주세요.");
+    alert("비밀번호를 입력해주세요 ❗️");
     return;
   } else if (password !== passwordCheck) {
-    alert("비밀번호 확인 값이 일치하지 않습니다.");
+    alert("비밀번호 확인 값이 일치하지 않습니다 😬");
     return;
   }
   return true;
@@ -59,7 +59,7 @@ function checkPassword(password, passwordCheck) {
 
 function checkAddress(address, detailedAddress) {
   if (address == "" || detailedAddress == "") {
-    alert("주소를 기입해주세요.");
+    alert("주소를 기입해주세요 🏠");
     return false;
   }
   return true;
@@ -67,10 +67,10 @@ function checkAddress(address, detailedAddress) {
 
 function checkPhoneNumber(phoneNumber) {
   if (phoneNumber.length === 0) {
-    alert("휴대폰 번호를 입력해주세요.");
+    alert("휴대폰 번호를 입력해주세요 📱");
     return;
   } else if (!isNum(phoneNumber)) {
-    alert("숫자만 입력 가능합니다.");
+    alert("숫자만 입력 가능합니다 🔢");
     return;
   }
   return true;

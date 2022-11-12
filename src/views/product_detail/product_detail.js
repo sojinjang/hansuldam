@@ -2,6 +2,8 @@ import { get } from "../api.js";
 import { changeToKoreanTime } from "../utils/useful_functions.js";
 import { getCookieValue } from "../utils/cookie.js";
 
+const PRODUCTS_KEY = "products";
+
 async function renderData() {
   const queryString = new Proxy(new URLSearchParams(window.location.search), {
     get: (params, prop) => params.get(prop),
@@ -40,10 +42,6 @@ async function renderData() {
 			<p class="content__desc">${description}</p>
 		</div>
 		<div class="content__detail-info">
-			<p>
-				<span class="content__sold">판매량</span>
-				<span class="content__item content__sold">${sales}개</span>
-			</p>
 			<p>
 				<span class="content__alcoholType">종류</span>
 				<span class="content__item content__alcoholType">${alcoholType}</span>
@@ -93,25 +91,32 @@ async function orderAndCart() {
 
   function clickOrder() {
     const TOKEN = "token";
-    if (!getCookieValue(TOKEN)) {
-      window.location.href = "/order-pay-member";
-    } else {
+    const PRODUCTS_KEY = "products";
+    productData.quantity = 1;
+
+    let tempArr = [productData];
+
+    localStorage.setItem(PRODUCTS_KEY, JSON.stringify(tempArr));
+
+    if (getCookieValue(TOKEN) === undefined || getCookieValue(TOKEN) == "") {
       window.location.href = "/order-pay-nonmember";
+    } else {
+      window.location.href = "/order-pay-member";
     }
   }
 
   function clickCart() {
-    const PRODUCTS_KEY = "products";
-    if (!localStorage.getItem(PRODUCTS_KEY)) {
-      let tempArr = [productData];
-      productData["quantity"] = 1;
-      localStorage.setItem(PRODUCTS_KEY, JSON.stringify(tempArr));
+    productData["quantity"] = 1;
+    let cartItems = JSON.parse(localStorage.getItem(PRODUCTS_KEY));
+    const existItemIdx = cartItems.findIndex(
+      (product) => product._id === productData._id
+    );
+    if (existItemIdx === -1) {
+      cartItems = [...cartItems, productData];
     } else {
-      let tempArr = JSON.parse(localStorage.getItem(PRODUCTS_KEY));
-      productData["quantity"] = 1;
-      tempArr.push(productData);
-      localStorage.setItem(PRODUCTS_KEY, JSON.stringify(tempArr));
+      cartItems[existItemIdx].quantity += 1;
     }
+    localStorage.setItem(PRODUCTS_KEY, JSON.stringify(cartItems));
 
     // Message
     const cartMessage = document.querySelector(".cart-message");

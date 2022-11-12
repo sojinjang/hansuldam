@@ -18,11 +18,7 @@ export class ProductModel {
     const filter = { _id: productId };
     const option = { returnOriginal: false };
 
-    const updatedProduct = await Product.findOneAndUpdate(
-      filter,
-      update,
-      option
-    );
+    const updatedProduct = await Product.findOneAndUpdate(filter, update, option);
     return updatedProduct;
   }
 
@@ -30,11 +26,7 @@ export class ProductModel {
     const filter = { _id: { $in: IdArray } };
     const option = { returnOriginal: false };
 
-    const updatedProduct = await Product.updateMany(
-      filter,
-      toUpdateObj,
-      option
-    );
+    const updatedProduct = await Product.updateMany(filter, toUpdateObj, option);
     return updatedProduct;
   }
 
