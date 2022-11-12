@@ -13,8 +13,13 @@
 	MONGODB_URL= "mongodb+srv://user:1234@cluster0.ca83syk.mongodb.net/test"
 	PORT= 8900
 	JWT_SECERT_KEY="ParaisePrison"
+	
 	GMAIL_ID= "dejaikeem@gmail.com"
 	GMAIL_PASSWORD= "eresifkjbelszxnx"
+	
+	# naver client 네이버 로그인 api
+	Naver_clientID="s9FiQEn_oNjmniDng5pR"
+	Naver_clientSecret= "4Og2hhjdRG"
 
 ```
 
