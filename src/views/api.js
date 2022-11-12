@@ -1,5 +1,5 @@
 import { getCookieValue } from "./utils/cookie.js";
-import { ErrorMessage } from "./Constants/ErrorMessage.js";
+import { ErrorMessage } from "./constants/ErrorMessage.js";
 
 const TOKEN = "token";
 
