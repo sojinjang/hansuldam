@@ -11,9 +11,6 @@
 ```bash
 	PORT= 8900
 	JWT_SECERT_KEY="ParaisePrison"
-	GMAIL_ID= "dejaikeem@gmail.com"
-	GMAIL_PASSWORD= "eresifkjbelszxnx"
-
 ```
 
 4. express 앱 실행
