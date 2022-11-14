@@ -2,6 +2,7 @@
 1. 레포지토리 클론
 ```bash
 	git clone <repo 주소>
+```
 2. module 설치
 ```bash
 	npm install
