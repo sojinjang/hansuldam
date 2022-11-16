@@ -1,6 +1,6 @@
 import { get } from "../api.js";
 import { getCookieValue } from "../utils/cookie.js";
-import { Keys } from "./constants/Keys.js";
+import { Keys } from "../constants/Keys.js";
 
 const $ = (selector) => document.querySelector(selector);
 
