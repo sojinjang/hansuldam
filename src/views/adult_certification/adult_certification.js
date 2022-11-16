@@ -1,6 +1,6 @@
 import { isName, isIdNum, isAdult } from "../utils/validator.js";
 import { setCookie } from "../utils/cookie.js";
-import { Keys } from "./constants/Keys.js";
+import { Keys } from "../constants/Keys.js";
 
 const name = document.querySelector("#nameForValidation");
 const idNum = document.querySelector("#idNum");
