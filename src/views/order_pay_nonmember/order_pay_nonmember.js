@@ -2,7 +2,7 @@ import * as api from "../api.js";
 import { getCookieValue } from "../utils/cookie.js";
 import { isName, isNum, isCardNum } from "../utils/validator.js";
 import { getSavedItems } from "../utils/localStorage.js";
-import { Keys } from "./constants/Keys.js";
+import { Keys } from "../constants/Keys.js";
 
 const $ = (seletor) => document.querySelector(seletor);
 
