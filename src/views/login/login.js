@@ -1,7 +1,7 @@
 import * as api from "../api.js";
 import { setCookie } from "../utils/cookie.js";
 import { isValidEmail, isValidPassword } from "../utils/validator.js";
-import { Keys } from "./constants/Keys.js";
+import { Keys } from "../constants/Keys.js";
 
 const loginBtn = document.querySelector("#submitButton");
 const buttonSection = document.querySelector(".login-form-text");
