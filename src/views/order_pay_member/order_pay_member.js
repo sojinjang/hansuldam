@@ -1,7 +1,7 @@
 import * as api from "../api.js";
 import { isCardNum } from "../utils/validator.js";
 import { getSavedItems } from "../utils/localStorage.js";
-import { Keys } from "./constants/Keys.js";
+import { Keys } from "../constants/Keys.js";
 
 const $ = (seletor) => document.querySelector(seletor);
 
