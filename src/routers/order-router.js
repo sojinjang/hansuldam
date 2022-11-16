@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { isEmptyObject } from "../middlewares";
-import { orderService, productService } from "../services";
+import { orderService } from "../services";
 
 const orderRouter = Router();
 
@@ -13,11 +13,10 @@ orderRouter.post("/", isEmptyObject, async (req, res, next) => {
       address,
       shipping,
       payment,
+      totalPrice,
       productsInOrder,
       phoneNumber,
     } = req.body;
-
-    const totalPrice = Number(totalPrice);
 
     // 위 데이터를 주문 db에 추가하기
     const newOrder = await orderService.addOrder({
@@ -106,7 +105,7 @@ orderRouter.get("/:orderId/products", async (req, res, next) => {
       throw new BadRequest("Undefined params", 4005);
     }
     //{ id , quantity }
-    const { productsInOrder } = await orderService.getOrderById(orderId);
+    const { productsInOrder } = await orderService.getOrderList(orderId);
 
     const productObjs = await productService.getProductObj(productsInOrder);
 

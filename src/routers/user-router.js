@@ -7,7 +7,7 @@ import bcrypt from "bcrypt";
 
 const userRouter = Router();
 
-// 로그인 api (아래는 /login 이지만, 실제로는 /api/user/login로 요청해야 함.)
+// 로그인 api
 userRouter.post("/login", isEmptyObject, async (req, res, next) => {
   try {
     // req (request) 에서 데이터 가져오기
@@ -56,10 +56,7 @@ userRouter.get("/emailCheck/:email", async (req, res, next) => {
     const needCheckEmail = req.params.email;
 
     // 위 데이터를 유저 db에 추가하기
-    const user = await userService.getUserOneByEmail(needCheckEmail);
-
-    const isDuplicatedEmail = user ? true : false;
-    const answer = { isDuplicatedEmail };
+    const answer = await userService.emailCheck(needCheckEmail);
 
     res.status(201).json(answer);
   } catch (error) {
