@@ -60,6 +60,30 @@ class ProductService {
     return product;
   }
 
+  async updateProductImage(productId, image) {
+    // 우선 해당 id의 상품이 db에 있는지 확인
+    let product = await this.productModel.findById(productId);
+
+    if (product.image) {
+      if (fs.existsSync(product.image)) {
+        // 파일이 존재한다면 true 그렇지 않은 경우 false 반환
+        try {
+          fs.unlinkSync(product.image);
+        } catch (error) {
+          throw new BadRequest("Fail Delete Image", 4007);
+        }
+      }
+    }
+
+    // 업데이트 진행
+    product = await this.productModel.update({
+      productId,
+      update: { image },
+    });
+
+    return product;
+  }
+
   async deleteProduct(productId) {
     // 우선 해당 id의 상품이 db에 있는지 확인
     let product = await this.productModel.findById(productId);
