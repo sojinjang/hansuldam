@@ -4,7 +4,6 @@ import { userService } from "../services";
 import { generateRandomPassword } from "../utils/generate-random-password";
 import { sendRandomPassword } from "../utils/send-mail";
 import bcrypt from "bcrypt";
-import { jwt } from "jsonwebtoken";
 
 const userRouter = Router();
 

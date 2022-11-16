@@ -43,10 +43,14 @@ orderRouter.patch("/:orderId", isEmptyObject, async (req, res, next) => {
     if (!orderId) {
       throw new BadRequest("Undefined params", 4005);
     }
-    const { fullName, productsInOrder, phoneNumber, address, payment } =
-      req.body;
-
-    const totalPrice = Number(totalPrice);
+    const {
+      fullName,
+      productsInOrder,
+      phoneNumber,
+      address,
+      payment,
+      totalPrice,
+    } = req.body;
 
     // 위 데이터를 카테고리 db에 추가하기
     const updateOrder = await orderService.updateOrder(orderId, {
