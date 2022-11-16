@@ -1,6 +1,7 @@
 import { get } from "../../api.js";
-import { deleteCookie, getCookieValue, setCookie } from "../../utils/cookie.js";
-
+import { deleteCookie, getCookieValue } from "../../utils/cookie.js";
+import { resetCart } from "../../utils/localStorage.js";
+import { Keys } from "../../constants/Keys.js";
 const $ = (selector) => document.querySelector(selector);
 
 function getHeader() {
@@ -46,15 +47,13 @@ function getHeader() {
 
 async function redirectPage() {
   const menuLabels = document.querySelectorAll(".menu-label");
-  const TOKEN = "token";
 
   $(".company-logo").addEventListener("click", () => (window.location.href = "/"));
   $(".join").addEventListener("click", () => (window.location.href = "/join"));
   $(".login").addEventListener("click", () => {
     window.location.href = "/login";
   });
-
-  if (getCookieValue(TOKEN)) {
+  if (getCookieValue(Keys.TOKEN_KEY)) {
     const user = await get("/api/auth/user");
     if (user && user["role"] === "admin") {
       $(".user-list").innerHTML = `<li class="admin">관리자페이지 |</li>
@@ -66,7 +65,8 @@ async function redirectPage() {
       $(".admin").addEventListener("click", () => (window.location.href = "/admin"));
 
       $(".logout").addEventListener("click", () => {
-        deleteCookie(TOKEN);
+        resetCart(Keys.PRODUCTS_KEY);
+        deleteCookie(Keys.TOKEN_KEY);
         window.location.href = "/";
       });
     } else {
@@ -80,9 +80,9 @@ async function redirectPage() {
         "click",
         () => (window.location.href = "/order-list")
       );
-
       $(".logout").addEventListener("click", () => {
-        deleteCookie(TOKEN);
+        resetCart(Keys.PRODUCTS_KEY);
+        deleteCookie(Keys.TOKEN_KEY);
         window.location.href = "/";
       });
     }
@@ -93,7 +93,6 @@ async function redirectPage() {
     "click",
     () => (window.location.href = "/event-page")
   );
-
   menuLabels.forEach((label) => {
     label.addEventListener("click", (e) => {
       const labelId = e.currentTarget.getAttribute("id");

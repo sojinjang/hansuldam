@@ -1,7 +1,6 @@
 import { getCookieValue } from "./utils/cookie.js";
 import { ErrorMessage } from "./constants/ErrorMessage.js";
-
-const TOKEN = "token";
+import { Keys } from "./constants/Keys.js";
 
 async function get(endpoint, params = "") {
   const apiUrl = `${endpoint}/${params}`;
@@ -9,7 +8,7 @@ async function get(endpoint, params = "") {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${getCookieValue(TOKEN)}`,
+      Authorization: `Bearer ${getCookieValue(Keys.TOKEN_KEY)}`,
     },
   });
 
@@ -29,7 +28,7 @@ async function post(endpoint, data) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${getCookieValue(TOKEN)}`,
+      Authorization: `Bearer ${getCookieValue(Keys.TOKEN_KEY)}`,
     },
     body: bodyData,
   });
@@ -50,7 +49,7 @@ async function patch(endpoint, params = "", data) {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${getCookieValue(TOKEN)}`,
+      Authorization: `Bearer ${getCookieValue(Keys.TOKEN_KEY)}`,
     },
     body: bodyData,
   });
@@ -72,7 +71,7 @@ async function del(endpoint, params = "", data = {}) {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${getCookieValue(TOKEN)}`,
+      Authorization: `Bearer ${getCookieValue(Keys.TOKEN_KEY)}`,
     },
     body: bodyData,
   });

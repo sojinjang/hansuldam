@@ -1,5 +1,6 @@
 import { getSavedItems, saveItems } from "../utils/localStorage.js";
 import { getCookieValue } from "../utils/cookie.js";
+import { Keys } from "../constants/Keys.js";
 
 const shoppingbagList = document.querySelector(".shoppingbag-list");
 
@@ -10,12 +11,10 @@ const deliveryFee = document.querySelector(".delivery-fee");
 const totalPrice = document.querySelector(".total-payment-price");
 const checkoutButton = document.querySelector(".checkout");
 
-const PRODUCTS_KEY = "products";
 const HIDDEN_CLASSNAME = "hidden";
-const TOKEN = "token";
 
 function removeProductFromDB(productId) {
-  let savedProducts = getSavedItems(PRODUCTS_KEY);
+  let savedProducts = getSavedItems(Keys.PRODUCTS_KEY);
   savedProducts = savedProducts.filter(
     (product) => String(product._id) !== String(productId)
   );
@@ -23,10 +22,10 @@ function removeProductFromDB(productId) {
 }
 
 function adjustQuantityFromDB(productId, quantity) {
-  const savedProducts = getSavedItems(PRODUCTS_KEY);
+  const savedProducts = getSavedItems(Keys.PRODUCTS_KEY);
   const index = savedProducts.findIndex((x) => x._id === productId);
   savedProducts[index].quantity = parseInt(quantity);
-  saveItems(PRODUCTS_KEY, savedProducts);
+  saveItems(Keys.PRODUCTS_KEY, savedProducts);
 }
 
 function isEmptyCart(productsList) {
@@ -97,7 +96,7 @@ function hideCheckout() {
 }
 
 function renderCartContents() {
-  const savedProducts = getSavedItems(PRODUCTS_KEY);
+  const savedProducts = getSavedItems(Keys.PRODUCTS_KEY);
   if (!isEmptyCart(savedProducts)) {
     checkoutButton.classList.remove(HIDDEN_CLASSNAME);
     savedProducts.forEach(showProduct);
@@ -115,7 +114,7 @@ function deleteProductFromCart(e) {
   const productDiv = e.target.parentElement.parentElement.parentElement;
   let savedProducts = removeProductFromDB(productDiv.id);
   productDiv.remove();
-  saveItems(PRODUCTS_KEY, savedProducts);
+  saveItems(Keys.PRODUCTS_KEY, savedProducts);
   if (isEmptyCart(savedProducts)) hideCheckout();
 }
 
@@ -129,7 +128,7 @@ function deleteCheckedProducts() {
     const productDiv = document.getElementById(item.id);
     let savedProducts = removeProductFromDB(productDiv.id);
     productDiv.remove();
-    saveItems(PRODUCTS_KEY, savedProducts);
+    saveItems(Keys.PRODUCTS_KEY, savedProducts);
     if (isEmptyCart(savedProducts)) hideCheckout();
   });
 }
@@ -190,7 +189,7 @@ function calculateTotalPrice() {
 }
 
 function moveToPaymentPage() {
-  if (getCookieValue(TOKEN)) window.location.href = "/order-pay-member";
+  if (getCookieValue(Keys.TOKEN_KEY)) window.location.href = "/order-pay-member";
   else window.location.href = "/order-pay-nonmember";
 }
 

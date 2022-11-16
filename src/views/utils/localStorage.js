@@ -6,4 +6,8 @@ function saveItems(key, itemArr) {
   localStorage.setItem(key, JSON.stringify(itemArr));
 }
 
-export { getSavedItems, saveItems };
+function resetCart(key) {
+  localStorage.setItem(key, JSON.stringify([]));
+}
+
+export { getSavedItems, saveItems, resetCart };
