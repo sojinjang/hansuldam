@@ -176,7 +176,6 @@ adminRouter.patch("/orders/:orderId", isEmptyObject, async (req, res, next) => {
       totalPrice,
       shipping,
     } = req.body;
-    // const totalPrice = Number(req.body.totalPrice);
     // 위 데이터를 카테고리 db에 추가하기
     const updateOrder = await orderService.updateOrderAdmin(orderId, {
       fullName,
