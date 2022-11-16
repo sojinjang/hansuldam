@@ -9,7 +9,6 @@ const buttonSection = document.querySelector(".login-form-text");
 async function showNaverLoginButton() {
   try {
     const res = await api.get("/api/naver/login");
-    console.log(res);
     const naverApiUrl = res["naverApiUrl"];
     const naverWrapper = document.createElement("div");
     naverWrapper.setAttribute("class", "naver-button");
@@ -36,7 +35,7 @@ async function logIn(e) {
 
   try {
     const token = await api.post("/api/user/login", loginInput);
-    setCookie(Keys.TOKEN, token);
+    setCookie(Keys.TOKEN_KEY, token);
     window.location.href = "/";
   } catch (err) {
     alert(err.message);

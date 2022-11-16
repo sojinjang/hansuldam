@@ -1,7 +1,6 @@
 import { get } from "../../api.js";
 import { deleteCookie, getCookieValue } from "../../utils/cookie.js";
-import { Keys } from "./constants/Keys.js";
-
+import { Keys } from "../../constants/Keys.js";
 const $ = (selector) => document.querySelector(selector);
 
 function getHeader() {
@@ -53,8 +52,7 @@ async function redirectPage() {
   $(".login").addEventListener("click", () => {
     window.location.href = "/login";
   });
-
-  if (getCookieValue(Keys.TOKEN)) {
+  if (getCookieValue(Keys.TOKEN_KEY)) {
     const user = await get("/api/auth/user");
     if (user && user["role"] === "admin") {
       $(".user-list").innerHTML = `<li class="admin">관리자페이지 |</li>
@@ -66,7 +64,7 @@ async function redirectPage() {
       $(".admin").addEventListener("click", () => (window.location.href = "/admin"));
 
       $(".logout").addEventListener("click", () => {
-        deleteCookie(Keys.TOKEN);
+        deleteCookie(Keys.TOKEN_KEY);
         window.location.href = "/";
       });
     } else {
@@ -82,7 +80,7 @@ async function redirectPage() {
       );
 
       $(".logout").addEventListener("click", () => {
-        deleteCookie(Keys.TOKEN);
+        deleteCookie(Keys.TOKEN_KEY);
         window.location.href = "/";
       });
     }

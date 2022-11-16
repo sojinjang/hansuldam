@@ -9,7 +9,7 @@ async function fetchProducts(index) {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${getCookieValue(Keys.TOKEN)}`,
+      Authorization: `Bearer ${getCookieValue(Keys.TOKEN_KEY)}`,
     },
   });
   const data = await res.json();
