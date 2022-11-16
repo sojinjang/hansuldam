@@ -173,11 +173,7 @@ authRouter.post("/comments", async (req, res, next) => {
   try {
     const userId = req.currentUser.userId;
     const { productId, content } = req.body;
-    console.log({
-      productId,
-      userId,
-      content,
-    });
+
     const commentInfo = await commentService.addComment({
       productId,
       userId,
