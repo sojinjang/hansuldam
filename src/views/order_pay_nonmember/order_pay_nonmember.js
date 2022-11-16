@@ -2,11 +2,9 @@ import * as api from "../api.js";
 import { getCookieValue } from "../utils/cookie.js";
 import { isName, isNum, isCardNum } from "../utils/validator.js";
 import { getSavedItems } from "../utils/localStorage.js";
+import { Keys } from "../constants/Keys.js";
 
 const $ = (seletor) => document.querySelector(seletor);
-
-const PRODUCTS_KEY = "products";
-const IS_ADULT_KEY = "isAdult";
 
 function showProduct(item) {
   let product = undefined;
@@ -111,12 +109,10 @@ function checkPayInfo() {
 }
 
 function makeProductsInOrder(items) {
-  console.log(savedProducts);
   const productsArr = items.map((item) => ({
     id: item._id,
     quantity: item.quantity,
   }));
-  console.log(productsArr);
   return productsArr;
 }
 
@@ -158,9 +154,9 @@ function sendPayInfo() {
   }
 }
 
-if (!getCookieValue(IS_ADULT_KEY)) window.location.href = "/adult-certification";
+if (!getCookieValue(Keys.IS_ADULT_KEY)) window.location.href = "/adult-certification";
 
-let savedProducts = getSavedItems(PRODUCTS_KEY);
+let savedProducts = getSavedItems(Keys.PRODUCTS_KEY);
 savedProducts.forEach(showProduct);
 caculateTotalPrice();
 

@@ -1,10 +1,9 @@
 import * as api from "../api.js";
 import { isCardNum } from "../utils/validator.js";
 import { getSavedItems } from "../utils/localStorage.js";
+import { Keys } from "../constants/Keys.js";
 
 const $ = (seletor) => document.querySelector(seletor);
-
-const PRODUCTS_KEY = "products";
 
 function showProduct(item) {
   let product = undefined;
@@ -158,7 +157,7 @@ function sendPayInfo() {
   }
 }
 
-let savedProducts = getSavedItems(PRODUCTS_KEY);
+let savedProducts = getSavedItems(Keys.PRODUCTS_KEY);
 savedProducts.forEach(showProduct);
 caculateTotalPrice();
 

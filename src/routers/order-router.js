@@ -13,8 +13,8 @@ orderRouter.post("/", isEmptyObject, async (req, res, next) => {
       address,
       shipping,
       payment,
-      totalPrice,
       productsInOrder,
+      totalPrice,
       phoneNumber,
     } = req.body;
 
@@ -24,8 +24,8 @@ orderRouter.post("/", isEmptyObject, async (req, res, next) => {
       address,
       shipping,
       payment,
-      totalPrice,
       productsInOrder,
+      totalPrice,
       phoneNumber,
     });
 
