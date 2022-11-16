@@ -130,6 +130,7 @@ function addProduct() {
       }
 
       if (!input.value || input.value == undefined) {
+        // 문자열은 undefined, 숫자는 null로 인식합니다.
         return (input.value = '빈 칸을 채워주세요!');
       } else {
         obj[input.getAttribute('id')] = input.value;
