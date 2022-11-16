@@ -19,6 +19,7 @@ async function openOrderMenu() {
 
   const orderContainerHTML = `<section class="orders-container">
   <button class="button close-button">닫기</button>
+  <button class="button modify-confirm-button">수정하기</button>
 <div class="columns title-container">
   <div class="column is-2">이름</div>
   <div class="column is-2">주소</div>
@@ -119,19 +120,19 @@ async function renderOrder(order) {
       return arr;
     }, []);
 
-    const test = document.createElement('div');
-    test.setAttribute('class', 'columns items-container items-detail none');
-    test.setAttribute('id', `detail-${_id}`);
+    const orderDetailDiv = document.createElement('div');
+    orderDetailDiv.setAttribute('class', 'columns items-container items-detail none');
+    orderDetailDiv.setAttribute('id', `detail-${_id}`);
 
     let detailText = ``;
     orderObj.forEach((obj) => {
       detailText += `${obj.name} ${obj.quantity}개 <br />`;
     });
 
-    test.innerHTML = `<div class="column is-8">${detailText}</div>
+    orderDetailDiv.innerHTML = `<div class="column is-8">${detailText}</div>
     <div class="column is-2">총 ${Number(totalPrice).toLocaleString('ko-KR')}원</div>`;
 
-    $('.orders-container').append(test);
+    $('.orders-container').append(orderDetailDiv);
   }
 
   orderDetail();
@@ -141,6 +142,8 @@ function changeStatus() {
   const statusSelectors = document.querySelectorAll(`.status-selector`);
   statusSelectors.forEach((selector) => {
     selector.addEventListener('change', async () => {
+      
+
       const currentId = selector.getAttribute('id');
       const newStatus = { status: selector.value };
 
@@ -153,6 +156,9 @@ function deleteOrder() {
   const deleteBtn = document.querySelectorAll('.delete-button');
   deleteBtn.forEach((button) => {
     button.addEventListener('click', (e) => {
+      if (e.target.id)
+      if (!$('.is-danger')) { alert('삭제 하려면 다시 한 번 눌러주세요!'); }
+
       const currentId = e.target.getAttribute('id');
 
       e.target.setAttribute(
@@ -175,13 +181,14 @@ async function renderOrderDetail() {
     button.addEventListener('click', (e) => {
       const currentId = e.target.getAttribute('id');
       $(`#detail-${currentId}`).classList.toggle('none');
+
       if (
         $(`#detail-${currentId}`).getAttribute('class') ===
-        'columns items-container'
+        'columns items-container items-detail none'
       ) {
-        button.innerHTML = '닫기';
+        e.target.innerHTML = '상세';
       } else {
-        button.innerHTML = '상세';
+        e.target.innerHTML = '닫기';
       }
     });
   });
