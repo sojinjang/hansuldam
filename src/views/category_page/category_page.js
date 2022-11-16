@@ -114,7 +114,7 @@ async function showProducts() {
       if (!currentPageData) {
         alert("데이터가 없습니다!");
       } else
-        currentPageData.forEach((product, index) => {
+        currentPageData.forEach(async (product) => {
           renderData(product);
         });
     });
@@ -152,8 +152,8 @@ async function goToDetailPage() {
   });
 }
 
-function renderData(product) {
-  const { _id, name, brand, price, volume, sales, category, alcoholDegree } = product;
+async function renderData(product) {
+  const { _id, name, brand, price, volume, alcoholDegree } = product;
 
   let productSection = document.createElement("section");
 
@@ -182,6 +182,5 @@ function renderData(product) {
 
   const bodyContainer = document.querySelector(".body-container");
   bodyContainer.append(productSection);
+  await goToDetailPage();
 }
-
-goToDetailPage();

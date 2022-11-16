@@ -1,8 +1,8 @@
 import { get } from '../api.js';
 import { changeToKoreanTime } from '../utils/useful_functions.js';
 import { getCookieValue } from '../utils/cookie.js';
-
-const PRODUCTS_KEY = 'products';
+import { Keys } from '../constants/Keys.js';
+import { getSavedItems, saveItems } from '../utils/localStorage.js';
 
 async function renderData() {
   const queryString = new Proxy(new URLSearchParams(window.location.search), {
@@ -90,41 +90,45 @@ async function orderAndCart() {
   basketButton.addEventListener('click', clickCart);
 
   function clickOrder() {
-    const TOKEN = 'token';
-    const PRODUCTS_KEY = 'products';
-    productData.quantity = 1;
+    if (confirm('현재 장바구니를 비우고 해당 항목을 주문할까요?')) {
+      productData.quantity = 1;
+      let tempArr = [productData];
 
-    let tempArr = [productData];
+      saveItems(Keys.PRODUCTS_KEY, tempArr);
 
-    localStorage.setItem(PRODUCTS_KEY, JSON.stringify(tempArr));
-
-    if (getCookieValue(TOKEN) === undefined || getCookieValue(TOKEN) == '') {
-      window.location.href = '/order-pay-nonmember';
+      if (
+        getCookieValue(Keys.TOKEN_KEY) === undefined ||
+        getCookieValue(Keys.TOKEN_KEY) == ''
+      ) {
+        window.location.href = '/order-pay-nonmember';
+      } else {
+        window.location.href = '/order-pay-member';
+      }
     } else {
-      window.location.href = '/order-pay-member';
+      window.location.href = '/cart';
     }
   }
 
   function clickCart() {
     productData['quantity'] = 1;
 
-    if (!JSON.parse(localStorage.getItem(PRODUCTS_KEY))) {
-      // 로컬스토리지 내 PRODUCTS_KEY값이 비어있을 때, null
+    if (!getSavedItems(Keys.PRODUCTS_KEY)) {
+      // 로컬스토리지 내 PRODUCTS_KEY값이 존재하지 않을 때
       let productArray = [productData];
-      localStorage.setItem(PRODUCTS_KEY, JSON.stringify(productArray));
+      saveItems(Keys.PRODUCTS_KEY, productArray);
     } else {
-      let cartItems = JSON.parse(localStorage.getItem(PRODUCTS_KEY));
+      let cartItems = getSavedItems(Keys.PRODUCTS_KEY);
       const existItemIdx = cartItems.findIndex(
         (product) => product._id === productData._id
       );
 
       if (existItemIdx === -1) {
-        // 로컬스토리지 내 PRODUCTS_KET값은 존재하나 비어있을 때, undefined
+        // 로컬스토리지 내 PRODUCTS_KEY값은 존재하나 비어있을 때
         cartItems = [...cartItems, productData];
       } else {
         cartItems[existItemIdx].quantity += 1;
       }
-      localStorage.setItem(PRODUCTS_KEY, JSON.stringify(cartItems));
+      saveItems(Keys.PRODUCTS_KEY, cartItems);
     }
 
     // Message
