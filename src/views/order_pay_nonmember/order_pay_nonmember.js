@@ -109,12 +109,10 @@ function checkPayInfo() {
 }
 
 function makeProductsInOrder(items) {
-  console.log(savedProducts);
   const productsArr = items.map((item) => ({
     id: item._id,
     quantity: item.quantity,
   }));
-  console.log(productsArr);
   return productsArr;
 }
 

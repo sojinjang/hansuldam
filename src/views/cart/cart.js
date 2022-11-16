@@ -97,7 +97,6 @@ function hideCheckout() {
 
 function renderCartContents() {
   const savedProducts = getSavedItems(Keys.PRODUCTS_KEY);
-  console.log(savedProducts);
   if (!isEmptyCart(savedProducts)) {
     checkoutButton.classList.remove(HIDDEN_CLASSNAME);
     savedProducts.forEach(showProduct);
