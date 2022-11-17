@@ -19,7 +19,7 @@ class ProductService {
     }
 
     //상품 중복 확인
-    const product = await this.productModel.findByName(name);
+    const product = await this.productModel.findByObj({ name });
     if (product) {
       throw new BadRequest("Same Name in DB", 4201);
     }
