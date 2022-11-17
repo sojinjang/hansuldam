@@ -82,6 +82,7 @@ async function renderData() {
 
 async function orderAndCart() {
   let productData = await renderData();
+  productData['quantity'] = 1;
 
   const orderButton = document.querySelector('#order-button');
   const basketButton = document.querySelector('#basket-button');
@@ -90,32 +91,19 @@ async function orderAndCart() {
   basketButton.addEventListener('click', clickCart);
 
   function clickOrder() {
-    if (confirm('현재 장바구니를 비우고 해당 항목을 주문할까요?')) {
-      productData.quantity = 1;
-      let tempArr = [productData];
-
-      saveItems(Keys.PRODUCTS_KEY, tempArr);
-
-      if (
-        getCookieValue(Keys.TOKEN_KEY) === undefined ||
-        getCookieValue(Keys.TOKEN_KEY) == ''
-      ) {
-        window.location.href = '/order-pay-nonmember';
-      } else {
-        window.location.href = '/order-pay-member';
-      }
+    if (
+      getCookieValue(Keys.TOKEN_KEY) === undefined ||
+      getCookieValue(Keys.TOKEN_KEY) == ''
+    ) {
+      window.location.href = '/order-pay-nonmember';
     } else {
-      window.location.href = '/cart';
+      window.location.href = '/order-pay-member';
     }
   }
 
   function clickCart() {
-    productData['quantity'] = 1;
-
-    if (!getSavedItems(Keys.PRODUCTS_KEY)) {
-      // 로컬스토리지 내 PRODUCTS_KEY값이 존재하지 않을 때
-      let productArray = [productData];
-      saveItems(Keys.PRODUCTS_KEY, productArray);
+    if (getSavedItems(Keys.PRODUCTS_KEY) === null || getSavedItems(Keys.PRODUCTS_KEY) === []) {
+      saveItems(Keys.PRODUCTS_KEY, [productData]);
     } else {
       let cartItems = getSavedItems(Keys.PRODUCTS_KEY);
       const existItemIdx = cartItems.findIndex(
@@ -123,15 +111,14 @@ async function orderAndCart() {
       );
 
       if (existItemIdx === -1) {
-        // 로컬스토리지 내 PRODUCTS_KEY값은 존재하나 비어있을 때
         cartItems = [...cartItems, productData];
       } else {
         cartItems[existItemIdx].quantity += 1;
       }
       saveItems(Keys.PRODUCTS_KEY, cartItems);
     }
-
-    // Message
+    
+    // 장바구니 담을 때 메시지 페이드 인-아웃
     const cartMessage = document.querySelector('.cart-message');
     cartMessage.classList.add('fade-message');
     setTimeout(() => {
