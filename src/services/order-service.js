@@ -2,7 +2,7 @@ import { orderModel, productModel, userModel } from "../db";
 import { NotFound, Forbidden } from "../utils/errorCodes";
 
 class OrderService {
-  constructor(orderModel, productModel) {
+  constructor(orderModel, productModel, userModel) {
     this.orderModel = orderModel;
     this.productModel = productModel;
     this.userModel = userModel;
