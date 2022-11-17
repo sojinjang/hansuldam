@@ -24,7 +24,7 @@ function removeProductFromDB(productId) {
 function adjustQuantityFromDB(productId, quantity) {
   const savedProducts = getSavedItems(Keys.PRODUCTS_KEY);
   const index = savedProducts.findIndex((x) => x._id === productId);
-  savedProducts[index].quantity = parseInt(quantity);
+  savedProducts[index].quantity = quantity;
   saveItems(Keys.PRODUCTS_KEY, savedProducts);
 }
 
@@ -73,7 +73,7 @@ function showProduct(item) {
                       />
                     </button>
                   </div>
-                  <div class="amount">${parseInt(item.quantity)}</div>
+                  <div class="amount">${item.quantity}</div>
                   <div class="increase" id=${item._id}>
                     <button class="plus-button" type="button">
                       <img
@@ -161,16 +161,16 @@ function setProductPrice(quantity, price) {
 
 function getPureDigit(numStr) {
   const regex = /[^0-9]/g;
-  return String(numStr).replace(regex, "");
+  return parseInt(String(numStr).replace(regex, ""));
 }
 
 function getTotalProductPrice() {
   const checkedItemList = getCheckedItems();
-  let addedPrice = parseInt(0);
+  let addedPrice = 0;
   checkedItemList.forEach((item) => {
     const productDiv = document.getElementById(item.id);
     let productPrice = productDiv.querySelector(".price").innerText.slice(0, -1);
-    addedPrice += parseInt(getPureDigit(productPrice));
+    addedPrice += getPureDigit(productPrice);
   });
   totalProductPrice.innerText = `${addedPrice.toLocaleString("ko-KR")}원`;
   return addedPrice;
