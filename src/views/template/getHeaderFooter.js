@@ -12,6 +12,7 @@ main.insertAdjacentHTML("afterend", getFooter());
 if (currentUrl.includes(Keys.NAVER_TOKEN_KEY)) {
   const token = currentUrl.split(Keys.NAVER_TOKEN_KEY)[1].slice(1);
   setCookie(Keys.TOKEN_KEY, { [Keys.TOKEN_KEY]: token });
+  getCartInfoFromDB();
 }
 
 redirectPage();
