@@ -3,4 +3,8 @@ function changeToKoreanTime(timestamp) {
   return date.toLocaleString("ko-KR");
 }
 
-export { changeToKoreanTime };
+function changeToKoreanWon(price) {
+  return Number(price).toLocaleString("ko-KR");
+}
+
+export { changeToKoreanTime, changeToKoreanWon };
