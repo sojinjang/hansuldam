@@ -1,0 +1,117 @@
+body {
+  overflow-x: hidden;
+  margin: 0;
+}
+
+header,
+.body-container,
+footer {
+  padding: 0 7vw 0 7vw;
+}
+
+.body-section-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.body-section-container .title {
+  font-size: 30px;
+  font-weight: bold;
+  border-bottom: solid;
+  border-bottom-width: thin;
+}
+
+.user-container section {
+  margin: 10px 10px;
+}
+
+.body-section-container .user-personal-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.user-personal-info .personal-info-title {
+  margin-bottom: 10px;
+}
+
+.personal-info-title span {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.user-personal-info .personal-info-contents {
+  display: flex;
+  flex-direction: column;
+}
+
+.personal-info-contents div {
+  margin: 10px 10px;
+}
+
+.personal-info-contents div p {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.personal-info-contents .password-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.password-container .password-info {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.password-container div button {
+  width: fit-content;
+}
+
+.personal-info-contents .address-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.address-container .user-address {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+.address-container button {
+  width: fit-content;
+}
+
+.change-info {
+  display: none;
+  flex-direction: column;
+}
+
+.change-info input {
+  margin-bottom: 5px;
+}
+
+.pwChangeBtn {
+  width: 70px;
+  height: 30px;
+}
+
+.numChangeBtn {
+  width: 70px;
+  height: 30px;
+}
+
+.adChangeBtn {
+  width: 100px;
+  height: 30px;
+}
+
+body button {
+  cursor: pointer;
+  text-align: center;
+  border: 1px solid;
+  border-radius: 15px;
+}
