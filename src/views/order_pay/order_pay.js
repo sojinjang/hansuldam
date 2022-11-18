@@ -1,9 +1,14 @@
 import * as api from "../api.js";
-import { isCardNum } from "../utils/validator.js";
+import { getCookieValue } from "../utils/cookie.js";
+import { isName, isNum, isCardNum } from "../utils/validator.js";
 import { getSavedItems } from "../utils/localStorage.js";
+import { getPureDigit } from "../utils/useful_functions.js";
 import { Keys } from "../constants/Keys.js";
+import { ApiUrl } from "../constants/ApiUrl.js";
 
 const $ = (seletor) => document.querySelector(seletor);
+const isLoggedIn = getCookieValue(Keys.TOKEN_KEY);
+const isAdult = getCookieValue(Keys.IS_ADULT_KEY);
 
 function showProduct(item) {
   let product = undefined;
@@ -24,11 +29,6 @@ function showProduct(item) {
     <p class="product-price">${(item.price * item.quantity).toLocaleString("ko-KR")}원</p>
 </div>`;
   $(".add-product").append(product);
-}
-
-function getPureDigit(numStr) {
-  const regex = /[^0-9]/g;
-  return parseInt(numStr.replace(regex, ""));
 }
 
 function getAllProductsPrice() {
@@ -69,6 +69,20 @@ function showInput(e) {
   }
 }
 
+function showCardInfoForm(e) {
+  e.preventDefault();
+  $(".creditCard").style.display = "block";
+}
+
+async function getUserInfo() {
+  try {
+    const userDataObj = await api.get(ApiUrl.USER_INFORMATION);
+    return userDataObj;
+  } catch (err) {
+    alert(err.message);
+  }
+}
+
 function writeUserInfo(userInfoObj) {
   $(".user-name").value = userInfoObj.fullName;
   $(".user-phoneNumber").value = userInfoObj.phoneNumber;
@@ -76,18 +90,16 @@ function writeUserInfo(userInfoObj) {
   $(".user-address2").value = userInfoObj.address.address2;
 }
 
-async function getUserInfo() {
-  try {
-    const userDataObj = await api.get("/api/auth/user");
-    return userDataObj;
-  } catch (err) {
-    alert(err.message);
+function checkUserInfo() {
+  if (!isName($(".user-name").value)) {
+    alert("이름 입력값을 확인해주세요 🪪");
+    return;
   }
-}
-
-function showCardInfoForm(e) {
-  e.preventDefault();
-  $(".creditCard").style.display = "block";
+  if (!isNum($(".user-phoneNumber").value)) {
+    alert("전화번호는 숫자만 입력 가능합니다 📱");
+    return;
+  }
+  return true;
 }
 
 function checkPayInfo() {
@@ -142,27 +154,38 @@ function makeOrderInfoObj() {
 }
 
 async function requestPostOrder(orderInfoObj) {
+  let ORDER_API_URL;
+  if (isLoggedIn) {
+    ORDER_API_URL = ApiUrl.USER_ORDERS;
+  } else {
+    ORDER_API_URL = ApiUrl.ORDERS;
+  }
+
   try {
-    const orderObj = await api.post("/api/auth/orders", orderInfoObj);
-    location.href = `order_completed.html?${orderObj["_id"]}`;
+    const orderObj = await api.post(ORDER_API_URL, orderInfoObj);
+    window.location.href = `order_completed.html?${orderObj["_id"]}`;
   } catch (err) {
     alert(err.message);
   }
 }
 
 function sendPayInfo() {
-  if (checkPayInfo()) {
+  if (checkUserInfo() && checkPayInfo()) {
     const orderInfoObj = makeOrderInfoObj();
     requestPostOrder(orderInfoObj);
   }
 }
 
+if (!isLoggedIn && !isAdult) window.location.href = "/adult-certification";
+
+if (isLoggedIn) {
+  const userInfoObj = await getUserInfo();
+  writeUserInfo(userInfoObj);
+}
+
 let savedProducts = getSavedItems(Keys.PRODUCTS_KEY);
 savedProducts.forEach(showProduct);
 caculateTotalPrice();
-
-const userInfoObj = await getUserInfo();
-writeUserInfo(userInfoObj);
 
 $("#delivery-select").addEventListener("change", showInput);
 $("#card-select").addEventListener("change", showInput);

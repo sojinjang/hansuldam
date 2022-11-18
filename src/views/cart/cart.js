@@ -1,5 +1,5 @@
 import { getSavedItems, saveItems } from "../utils/localStorage.js";
-import { getCookieValue } from "../utils/cookie.js";
+import { getPureDigit } from "../utils/useful_functions.js";
 import { Keys } from "../constants/Keys.js";
 
 const shoppingbagList = document.querySelector(".shoppingbag-list");
@@ -159,11 +159,6 @@ function setProductPrice(quantity, price) {
   price.innerText = `${productPrice.toLocaleString("ko-KR")}원`;
 }
 
-function getPureDigit(numStr) {
-  const regex = /[^0-9]/g;
-  return parseInt(String(numStr).replace(regex, ""));
-}
-
 function getTotalProductPrice() {
   const checkedItemList = getCheckedItems();
   let addedPrice = 0;
@@ -189,8 +184,7 @@ function calculateTotalPrice() {
 }
 
 function moveToPaymentPage() {
-  if (getCookieValue(Keys.TOKEN_KEY)) window.location.href = "/order-pay-member";
-  else window.location.href = "/order-pay-nonmember";
+  window.location.href = "/order-pay";
 }
 
 renderCartContents();
