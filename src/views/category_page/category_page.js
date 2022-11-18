@@ -1,18 +1,10 @@
 import { get } from "../api.js";
-import { getCookieValue } from "../utils/cookie.js";
-import { Keys } from "../constants/Keys.js";
+import { ApiUrl } from "../constants/ApiUrl.js";
 
 const $ = (selector) => document.querySelector(selector);
 
 async function fetchProducts(index) {
-  const res = await fetch(`/api/products?page=${index}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${getCookieValue(Keys.TOKEN_KEY)}`,
-    },
-  });
-  const data = await res.json();
+  const data = await get(`${ApiUrl.PRODUCTS_OVERALL_INFORMATION}${index}`);
 
   return data;
 }
@@ -30,7 +22,7 @@ $(".footer-container").insertAdjacentHTML("beforebegin", paginationHtml);
 let totalPage = 0;
 
 async function refineData() {
-  const fetchData = await get("/api/products");
+  const fetchData = await get(ApiUrl.PRODUCTS);
   const pageOneProducts = fetchData["products"];
   let productsTotalData = pageOneProducts;
 
@@ -96,7 +88,8 @@ async function showProducts() {
   paginationButton.forEach((button) => {
     button.addEventListener("click", async (e) => {
       if (document.querySelectorAll(".product-container")) {
-        const productContainers = document.querySelectorAll(".product-container");
+        const productContainers =
+          document.querySelectorAll(".product-container");
         productContainers.forEach((container) => container.remove());
       }
 
