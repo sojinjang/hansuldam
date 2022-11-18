@@ -50,6 +50,7 @@ function getHeader() {
 
 async function redirectPage() {
   const menuLabels = document.querySelectorAll(".menu-label");
+
   $(".company-logo").addEventListener("click", () => (window.location.href = "/"));
   $(".join").addEventListener("click", () => (window.location.href = "/join"));
   $(".login").addEventListener("click", () => {
@@ -76,19 +77,19 @@ async function redirectPage() {
       $(".myPage").addEventListener("click", () => (window.location.href = "/myPage"));
       handleLogout();
     }
-
-    $(".basket").addEventListener("click", () => (window.location.href = "/cart"));
-    $("#eventProducts").addEventListener(
-      "click",
-      () => (window.location.href = "/event-page")
-    );
-    menuLabels.forEach((label) => {
-      label.addEventListener("click", (e) => {
-        const labelId = e.currentTarget.getAttribute("id");
-        window.location.href = `/products?label=${labelId}`;
-      });
-    });
   }
+
+  $(".basket").addEventListener("click", () => (window.location.href = "/cart"));
+  $("#eventProducts").addEventListener(
+    "click",
+    () => (window.location.href = "/event-page")
+  );
+  menuLabels.forEach((label) => {
+    label.addEventListener("click", (e) => {
+      const labelId = e.currentTarget.getAttribute("id");
+      window.location.href = `/products?label=${labelId}`;
+    });
+  });
 }
 
 function handleLogout() {
@@ -99,7 +100,7 @@ function handleLogout() {
     deleteCookie(Keys.TOKEN_KEY);
     setTimeout(() => {
       window.location.href = "/";
-    }, 1000);
+    }, 50);
   });
 }
 
