@@ -1,5 +1,6 @@
 import { orderModel, productModel, userModel } from "../db";
 import { NotFound, Forbidden } from "../utils/errorCodes";
+import { sortingCart } from "../utils";
 
 class OrderService {
   constructor(orderModel, productModel, userModel) {
@@ -8,18 +9,16 @@ class OrderService {
     this.userModel = userModel;
   }
 
-  //주문 추가 // 여기에 user id false로 하고 주문을 하면 구분이 가능할듯?
+  //주문 추가
   async addOrder(orderInfo) {
     // db에 저장
     const createdNewOrder = await this.orderModel.create(orderInfo);
     return createdNewOrder;
   }
 
+  //  회원주문
   async authAddOrder(orderInfo) {
-    // db에 저장
-    const createdNewOrder = await this.orderModel.create(orderInfo);
-    const { userId, orderId: _id } = createdNewOrder;
-
+    const { userId } = orderInfo;
     // 우선 해당 id의 유저가 db에 있는지 확인
     let user = await this.userModel.findById(userId);
 
@@ -27,6 +26,10 @@ class OrderService {
     if (!user) {
       throw new NotFound("UserId does not in DB", 4104);
     }
+
+    // db에 저장
+    const createdNewOrder = await this.orderModel.create(orderInfo);
+    const orderId = createdNewOrder._id;
 
     const toUpdate = { $push: { orders: orderId } };
     // 업데이트 진행
@@ -104,29 +107,15 @@ class OrderService {
     const productIdArr = productsInOrder.map(({ id }) => id);
 
     const products = await this.productModel.findByIdArray(productIdArr);
-    function compareId(a, b) {
-      if (a > b) {
-        return 1;
-      }
-      if (a < b) {
-        return -1;
-      }
-      return 0;
+
+    if (products.length !== productIdArr.length) {
+      throw new NotFound(
+        "There is something missing on the product list",
+        4304
+      );
     }
-    await products.sort(function (a, b) {
-      return compareId(a._id.toString(), b._id.toString());
-    });
 
-    await productsInOrder.sort(function (a, b) {
-      return compareId(a.id, b.id);
-    });
-
-    let productsIn = [];
-    await productsInOrder.forEach((cur, idx) => {
-      const product = products[idx];
-      const quantity = cur.quantity;
-      productsIn.push({ product, quantity });
-    });
+    const productsIn = sortingCart(products, productsInOrder);
 
     return productsIn;
   }

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { isEmptyObject, loginRequired } from "../middlewares";
-import { userService } from "../services";
+import { cartService } from "../services";
 
 const cartRouter = Router();
 const authRouter = Router();
@@ -15,7 +15,7 @@ authRouter.patch("/", isEmptyObject, async (req, res, next) => {
     const { productsInCart } = req.body;
 
     // 위 데이터를 주문 db에 추가하기
-    const newCart = await userService.addCart({
+    const newCart = await cartService.addCart({
       userId,
       productsInCart,
     });
@@ -32,9 +32,8 @@ authRouter.get("/", async (req, res, next) => {
     const userId = req.currentUser.userId;
 
     // 위 데이터를 주문 db에 추가하기
-    const productsInCart = await userService.getCart(userId);
-    const gettedCart = { productsInCart };
-    res.status(201).json(gettedCart);
+    const productsInCart = await cartService.getCartList(userId);
+    res.status(201).json(productsInCart);
   } catch (error) {
     next(error);
   }

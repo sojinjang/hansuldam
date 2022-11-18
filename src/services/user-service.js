@@ -178,28 +178,6 @@ class UserService {
     return user;
   }
 
-  // 장바구니 update
-  async addCart(userInfo) {
-    // 객체 destructuring
-    const { userId, productsInCart } = userInfo;
-    // 이메일 중복 확인
-    const updateCart = await this.userModel.update(
-      { _id: userId },
-      { productsInCart }
-    );
-
-    return updateCart;
-  }
-
-  // 장바구니 get
-  async getCart(userId) {
-    // 객체 destructuring
-    // 이메일 중복 확인
-    const { productsInCart } = await this.userModel.findById(userId);
-
-    return productsInCart;
-  }
-
   //비밀번호 찾기 api
   async findUserByEmail(email) {
     const user = await this.userModel.findByEmail(email);
