@@ -20,7 +20,9 @@ export class ProductModel {
   }
 
   async findByIdArray(idArray) {
-    const products = await Product.find({ _id: { $in: idArray } });
+    const products = await Product.find({ _id: { $in: idArray } }).sort({
+      _id: 1,
+    });
     return products;
   }
 
