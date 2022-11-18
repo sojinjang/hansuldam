@@ -3,4 +3,9 @@ function changeToKoreanTime(timestamp) {
   return date.toLocaleString("ko-KR");
 }
 
-export { changeToKoreanTime };
+function getPureDigit(numStr) {
+  const regex = /[^0-9]/g;
+  return parseInt(numStr.replace(regex, ""));
+}
+
+export { changeToKoreanTime, getPureDigit };
