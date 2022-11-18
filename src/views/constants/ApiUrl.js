@@ -5,7 +5,7 @@ export const ApiUrl = Object.freeze({
   TEMPORARY_PASSWORD: "/api/user/random-password",
   ADMIN_USER_INFORMATION: "/api/users/admin",
   EMAIL_DOUBLE_CHECK: "/api/user/emailCheck",
-  USER_INPORMATION: "/api/user/auth",
+  USER_INFORMATION: "/api/user/auth",
   CATEGORY: "/api/category",
   ADMIN_CATEGORY: "/api/category/admin",
   IMAGE: "/api/image",
