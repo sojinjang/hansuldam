@@ -15,18 +15,16 @@ const checkoutButton = document.querySelector(".checkout");
 const HIDDEN_CLASSNAME = "hidden";
 
 function removeProductFromDB(productId) {
-  let savedProducts = getSavedItems(Keys.PRODUCTS_KEY);
-  savedProducts = savedProducts.filter(
-    (product) => String(product._id) !== String(productId)
-  );
+  let savedProducts = getSavedItems(Keys.CART_KEY);
+  savedProducts = savedProducts.filter((product) => String(product._id) !== String(productId));
   return savedProducts;
 }
 
 function adjustQuantityFromDB(productId, quantity) {
-  const savedProducts = getSavedItems(Keys.PRODUCTS_KEY);
+  const savedProducts = getSavedItems(Keys.CART_KEY);
   const index = savedProducts.findIndex((x) => x._id === productId);
   savedProducts[index].quantity = quantity;
-  saveItems(Keys.PRODUCTS_KEY, savedProducts);
+  saveItems(Keys.CART_KEY, savedProducts);
 }
 
 function showProduct(item) {
@@ -93,7 +91,7 @@ function hideCheckout() {
 }
 
 function renderCartContents() {
-  const savedProducts = getSavedItems(Keys.PRODUCTS_KEY);
+  const savedProducts = getSavedItems(Keys.CART_KEY);
   if (!isEmptyCart(savedProducts)) {
     checkoutButton.classList.remove(HIDDEN_CLASSNAME);
     savedProducts.forEach(showProduct);
@@ -111,12 +109,21 @@ function deleteProductFromCart(e) {
   const productDiv = e.target.parentElement.parentElement.parentElement;
   let savedProducts = removeProductFromDB(productDiv.id);
   productDiv.remove();
-  saveItems(Keys.PRODUCTS_KEY, savedProducts);
+  saveItems(Keys.CART_KEY, savedProducts);
   if (isEmptyCart(savedProducts)) hideCheckout();
 }
 
 function getCheckedItems() {
   return document.querySelectorAll("input[name=individual-checker]:checked");
+}
+
+function getCheckedItemsId() {
+  const checkedBoxList = getCheckedItems();
+  const checkedItemsIdList = [];
+  checkedBoxList.forEach((item) => {
+    checkedItemsIdList.push(item.getAttribute("id"));
+  });
+  return checkedItemsIdList;
 }
 
 function deleteCheckedProducts() {
@@ -125,7 +132,7 @@ function deleteCheckedProducts() {
     const productDiv = document.getElementById(item.id);
     let savedProducts = removeProductFromDB(productDiv.id);
     productDiv.remove();
-    saveItems(Keys.PRODUCTS_KEY, savedProducts);
+    saveItems(Keys.CART_KEY, savedProducts);
     if (isEmptyCart(savedProducts)) hideCheckout();
   });
 }
@@ -180,7 +187,19 @@ function calculateTotalPrice() {
   totalPrice.innerText = `${(totalProductPrice + deliveryFee).toLocaleString("ko-KR")}원`;
 }
 
+function getCheckedItemsInfo() {
+  const checkedItemsIdList = getCheckedItemsId();
+  const cartProducts = getSavedItems(Keys.CART_KEY);
+  const checkedItemsInfo = checkedItemsIdList.reduce((acc, cur) => {
+    return [...acc, cartProducts.find((cartItem) => cartItem._id === cur)];
+  }, []);
+  return checkedItemsInfo;
+}
+
 function moveToPaymentPage() {
+  const orderProducts = getCheckedItemsInfo();
+  saveItems(Keys.ORDER_KEY, orderProducts);
+  saveItems(Keys.IS_CART_ORDER, true);
   window.location.href = "/order-pay";
 }
 

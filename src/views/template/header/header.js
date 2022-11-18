@@ -80,10 +80,7 @@ async function redirectPage() {
   }
 
   $(".basket").addEventListener("click", () => (window.location.href = "/cart"));
-  $("#eventProducts").addEventListener(
-    "click",
-    () => (window.location.href = "/event-page")
-  );
+  $("#eventProducts").addEventListener("click", () => (window.location.href = "/event-page"));
   menuLabels.forEach((label) => {
     label.addEventListener("click", (e) => {
       const labelId = e.currentTarget.getAttribute("id");
@@ -94,9 +91,9 @@ async function redirectPage() {
 
 function handleLogout() {
   $(".logout").addEventListener("click", () => {
-    const cartItems = getSavedItems(Keys.PRODUCTS_KEY);
+    const cartItems = getSavedItems(Keys.CART_KEY);
     updateCartInfoToDB(cartItems);
-    resetCart(Keys.PRODUCTS_KEY);
+    resetCart(Keys.CART_KEY);
     deleteCookie(Keys.TOKEN_KEY);
     setTimeout(() => {
       window.location.href = "/";
