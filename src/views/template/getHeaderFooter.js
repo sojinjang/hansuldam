@@ -2,6 +2,7 @@ import { getFooter } from "./footer/footer.js";
 import { getHeader, redirectPage } from "./header/header.js";
 import { setCookie } from "../utils/cookie.js";
 import { Keys } from "../constants/Keys.js";
+import { getCartInfoFromDB } from "../utils/cart.js";
 
 const main = document.querySelector(".body-container");
 
