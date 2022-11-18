@@ -1,7 +1,8 @@
 import * as api from "../api.js";
 import { getCookieValue } from "../utils/cookie.js";
 import { isName, isNum, isCardNum } from "../utils/validator.js";
-import { getSavedItems } from "../utils/localStorage.js";
+import { getSavedItems, saveItems } from "../utils/localStorage.js";
+import { removeProductFromLocalDB } from "../utils/cart.js";
 import { getPureDigit } from "../utils/useful_functions.js";
 import { Keys } from "../constants/Keys.js";
 import { ApiUrl } from "../constants/ApiUrl.js";
@@ -9,6 +10,7 @@ import { ApiUrl } from "../constants/ApiUrl.js";
 const $ = (seletor) => document.querySelector(seletor);
 const isLoggedIn = getCookieValue(Keys.TOKEN_KEY);
 const isAdult = getCookieValue(Keys.IS_ADULT_KEY);
+const isCartOrder = getSavedItems(Keys.IS_CART_ORDER);
 
 function showProduct(item) {
   let product = undefined;
@@ -153,7 +155,13 @@ function makeOrderInfoObj() {
   };
 }
 
-function removeItemsFromCart() {}
+function removeItemsFromCart() {
+  orderProducts.forEach((product) =>
+    saveItems(Keys.CART_KEY, removeProductFromLocalDB(product._id))
+  );
+  saveItems(Keys.ORDER_KEY, []);
+  saveItems(Keys.IS_CART_ORDER, false);
+}
 
 async function requestPostOrder(orderInfoObj) {
   let ORDER_API_URL;
@@ -165,7 +173,7 @@ async function requestPostOrder(orderInfoObj) {
 
   try {
     const orderObj = await api.post(ORDER_API_URL, orderInfoObj);
-    if (getSavedItems(Keys.IS_CART_ORDER)) removeItemsFromCart();
+    if (isCartOrder) removeItemsFromCart();
     window.location.href = `order_completed.html?${orderObj["_id"]}`;
   } catch (err) {
     alert(err.message);

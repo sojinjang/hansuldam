@@ -1,10 +1,23 @@
 import * as api from "../api.js";
-import { saveItems } from "../../utils/localStorage.js";
+import { getSavedItems, saveItems } from "../../utils/localStorage.js";
 import { Keys } from "../constants/Keys.js";
 import { ApiUrl } from "../constants/ApiUrl.js";
 
 function isEmptyCart(productsList) {
   return productsList == null || productsList.length === 0;
+}
+
+function removeProductFromLocalDB(productId) {
+  let cartProducts = getSavedItems(Keys.CART_KEY);
+  cartProducts = cartProducts.filter((product) => String(product._id) !== String(productId));
+  return cartProducts;
+}
+
+function adjustQuantityFromLocalDB(productId, quantity) {
+  const savedProducts = getSavedItems(Keys.CART_KEY);
+  const index = savedProducts.findIndex((x) => x._id === productId);
+  savedProducts[index].quantity = quantity;
+  saveItems(Keys.CART_KEY, savedProducts);
 }
 
 function refineDataForPatch(productsArr) {
@@ -35,4 +48,10 @@ async function updateCartInfoToDB(productsArr) {
   }
 }
 
-export { isEmptyCart, getCartInfoFromDB, updateCartInfoToDB };
+export {
+  isEmptyCart,
+  adjustQuantityFromLocalDB,
+  removeProductFromLocalDB,
+  getCartInfoFromDB,
+  updateCartInfoToDB,
+};

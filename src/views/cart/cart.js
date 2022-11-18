@@ -1,6 +1,10 @@
 import { getSavedItems, saveItems } from "../utils/localStorage.js";
 import { getPureDigit } from "../utils/useful_functions.js";
-import { isEmptyCart } from "../utils/cart.js";
+import {
+  isEmptyCart,
+  removeProductFromLocalDB,
+  adjustQuantityFromLocalDB,
+} from "../utils/cart.js";
 import { Keys } from "../constants/Keys.js";
 
 const shoppingbagList = document.querySelector(".shoppingbag-list");
@@ -13,19 +17,6 @@ const totalPrice = document.querySelector(".total-payment-price");
 const checkoutButton = document.querySelector(".checkout");
 
 const HIDDEN_CLASSNAME = "hidden";
-
-function removeProductFromDB(productId) {
-  let savedProducts = getSavedItems(Keys.CART_KEY);
-  savedProducts = savedProducts.filter((product) => String(product._id) !== String(productId));
-  return savedProducts;
-}
-
-function adjustQuantityFromDB(productId, quantity) {
-  const savedProducts = getSavedItems(Keys.CART_KEY);
-  const index = savedProducts.findIndex((x) => x._id === productId);
-  savedProducts[index].quantity = quantity;
-  saveItems(Keys.CART_KEY, savedProducts);
-}
 
 function showProduct(item) {
   let product = undefined;
@@ -107,7 +98,7 @@ function checkAllProducts(e) {
 
 function deleteProductFromCart(e) {
   const productDiv = e.target.parentElement.parentElement.parentElement;
-  let savedProducts = removeProductFromDB(productDiv.id);
+  let savedProducts = removeProductFromLocalDB(productDiv.id);
   productDiv.remove();
   saveItems(Keys.CART_KEY, savedProducts);
   if (isEmptyCart(savedProducts)) hideCheckout();
@@ -130,7 +121,7 @@ function deleteCheckedProducts() {
   const checkedItemList = getCheckedItems();
   checkedItemList.forEach((item) => {
     const productDiv = document.getElementById(item.id);
-    let savedProducts = removeProductFromDB(productDiv.id);
+    let savedProducts = removeProductFromLocalDB(productDiv.id);
     productDiv.remove();
     saveItems(Keys.CART_KEY, savedProducts);
     if (isEmptyCart(savedProducts)) hideCheckout();
@@ -143,7 +134,7 @@ function decreaseProductQuantity(e) {
   const price = decreaseDiv.parentElement.nextElementSibling;
   if (quantity.innerText > 1) {
     quantity.innerText -= 1;
-    adjustQuantityFromDB(decreaseDiv.id, quantity.innerText);
+    adjustQuantityFromLocalDB(decreaseDiv.id, quantity.innerText);
     setProductPrice(quantity.innerText, price);
   }
 }
@@ -153,7 +144,7 @@ function increaseProductQuantity(e) {
   const quantity = increaseDiv.previousElementSibling;
   const price = increaseDiv.parentElement.nextElementSibling;
   quantity.innerText = parseInt(quantity.innerText) + 1;
-  adjustQuantityFromDB(increaseDiv.id, quantity.innerText);
+  adjustQuantityFromLocalDB(increaseDiv.id, quantity.innerText);
   setProductPrice(quantity.innerText, price);
 }
 
