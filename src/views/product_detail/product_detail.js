@@ -93,23 +93,18 @@ async function orderAndCart() {
   }
 
   function moveToCartPage() {
-    if (
-      getSavedItems(Keys.PRODUCTS_KEY) === null ||
-      getSavedItems(Keys.PRODUCTS_KEY) === []
-    ) {
-      saveItems(Keys.PRODUCTS_KEY, [productData]);
+    if (getSavedItems(Keys.CART_KEY) === null || getSavedItems(Keys.CART_KEY) === []) {
+      saveItems(Keys.CART_KEY, [productData]);
     } else {
-      let cartItems = getSavedItems(Keys.PRODUCTS_KEY);
-      const existItemIdx = cartItems.findIndex(
-        (product) => product._id === productData._id
-      );
+      let cartItems = getSavedItems(Keys.CART_KEY);
+      const existItemIdx = cartItems.findIndex((product) => product._id === productData._id);
 
       if (existItemIdx === -1) {
         cartItems = [...cartItems, productData];
       } else {
         cartItems[existItemIdx].quantity += 1;
       }
-      saveItems(Keys.PRODUCTS_KEY, cartItems);
+      saveItems(Keys.CART_KEY, cartItems);
     }
 
     // 장바구니 담을 때 메시지 페이드 인-아웃
