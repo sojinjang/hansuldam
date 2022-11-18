@@ -149,9 +149,11 @@ function makeOrderInfoObj() {
         $(".creditCardInput4").value,
     },
     totalPrice: getPureDigit($(".total-payment-price").innerText),
-    productsInOrder: makeProductsInOrder(savedProducts),
+    productsInOrder: makeProductsInOrder(orderProducts),
   };
 }
+
+function removeItemsFromCart() {}
 
 async function requestPostOrder(orderInfoObj) {
   let ORDER_API_URL;
@@ -163,6 +165,7 @@ async function requestPostOrder(orderInfoObj) {
 
   try {
     const orderObj = await api.post(ORDER_API_URL, orderInfoObj);
+    if (getSavedItems(Keys.IS_CART_ORDER)) removeItemsFromCart();
     window.location.href = `order_completed.html?${orderObj["_id"]}`;
   } catch (err) {
     alert(err.message);
@@ -183,8 +186,8 @@ if (isLoggedIn) {
   writeUserInfo(userInfoObj);
 }
 
-let savedProducts = getSavedItems(Keys.PRODUCTS_KEY);
-savedProducts.forEach(showProduct);
+let orderProducts = getSavedItems(Keys.ORDER_KEY);
+orderProducts.forEach(showProduct);
 caculateTotalPrice();
 
 $("#delivery-select").addEventListener("change", showInput);
