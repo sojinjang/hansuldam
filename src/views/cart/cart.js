@@ -1,5 +1,6 @@
 import { getSavedItems, saveItems } from "../utils/localStorage.js";
 import { getPureDigit } from "../utils/useful_functions.js";
+import { isEmptyCart } from "../utils/cart.js";
 import { Keys } from "../constants/Keys.js";
 
 const shoppingbagList = document.querySelector(".shoppingbag-list");
@@ -26,10 +27,6 @@ function adjustQuantityFromDB(productId, quantity) {
   const index = savedProducts.findIndex((x) => x._id === productId);
   savedProducts[index].quantity = quantity;
   saveItems(Keys.PRODUCTS_KEY, savedProducts);
-}
-
-function isEmptyCart(productsList) {
-  return productsList == null || productsList.length === 0;
 }
 
 function showProduct(item) {
