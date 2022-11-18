@@ -1,6 +1,7 @@
 import * as api from "../api.js";
 import { setCookie } from "../utils/cookie.js";
 import { isValidEmail, isValidPassword } from "../utils/validator.js";
+import { getCartInfoFromDB } from "../utils/cart.js";
 import { Keys } from "../constants/Keys.js";
 
 const loginBtn = document.querySelector("#submitButton");
@@ -36,6 +37,7 @@ async function logIn(e) {
   try {
     const token = await api.post("/api/user/login", loginInput);
     setCookie(Keys.TOKEN_KEY, token);
+    await getCartInfoFromDB();
     window.location.href = "/";
   } catch (err) {
     alert(err.message);

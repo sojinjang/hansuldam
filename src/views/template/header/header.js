@@ -1,6 +1,7 @@
 import { get } from "../../api.js";
 import { deleteCookie, getCookieValue } from "../../utils/cookie.js";
-import { resetCart } from "../../utils/localStorage.js";
+import { getSavedItems, resetCart } from "../../utils/localStorage.js";
+import { updateCartInfoToDB } from "../../utils/cart.js";
 import { Keys } from "../../constants/Keys.js";
 import { ApiUrl } from "../../constants/ApiUrl.js";
 
@@ -50,16 +51,13 @@ function getHeader() {
 async function redirectPage() {
   const menuLabels = document.querySelectorAll(".menu-label");
 
-  $(".company-logo").addEventListener(
-    "click",
-    () => (window.location.href = "/")
-  );
+  $(".company-logo").addEventListener("click", () => (window.location.href = "/"));
   $(".join").addEventListener("click", () => (window.location.href = "/join"));
   $(".login").addEventListener("click", () => {
     window.location.href = "/login";
   });
   if (getCookieValue(Keys.TOKEN_KEY)) {
-    const user = await get(ApiUrl.USER_INPORMATION);
+    const user = await get(ApiUrl.USER_INFORMATION);
     if (user && user["role"] === "admin") {
       $(".user-list").innerHTML = `<li class="admin">관리자페이지 |</li>
 <li class="logout">로그아웃</li>
@@ -67,16 +65,8 @@ async function redirectPage() {
   <img src="../img/shopping-bag.png" alt="cart-img">
 </div>`;
 
-      $(".admin").addEventListener(
-        "click",
-        () => (window.location.href = "/admin")
-      );
-
-      $(".logout").addEventListener("click", () => {
-        resetCart(Keys.PRODUCTS_KEY);
-        deleteCookie(Keys.TOKEN_KEY);
-        window.location.href = "/";
-      });
+      $(".admin").addEventListener("click", () => (window.location.href = "/admin"));
+      handleLogout();
     } else {
       $(".user-list").innerHTML = `<li class="myPage">마이페이지 |</li>
 <li class="logout">로그아웃</li>
@@ -84,22 +74,12 @@ async function redirectPage() {
   <img src="../img/shopping-bag.png" alt="cart-img">
 </div>`;
 
-      $(".myPage").addEventListener(
-        "click",
-        () => (window.location.href = "/myPage")
-      );
-      $(".logout").addEventListener("click", () => {
-        resetCart(Keys.PRODUCTS_KEY);
-        deleteCookie(Keys.TOKEN_KEY);
-        window.location.href = "/";
-      });
+      $(".myPage").addEventListener("click", () => (window.location.href = "/myPage"));
+      handleLogout();
     }
   }
 
-  $(".basket").addEventListener(
-    "click",
-    () => (window.location.href = "/cart")
-  );
+  $(".basket").addEventListener("click", () => (window.location.href = "/cart"));
   $("#eventProducts").addEventListener(
     "click",
     () => (window.location.href = "/event-page")
@@ -109,6 +89,18 @@ async function redirectPage() {
       const labelId = e.currentTarget.getAttribute("id");
       window.location.href = `/products?label=${labelId}`;
     });
+  });
+}
+
+function handleLogout() {
+  $(".logout").addEventListener("click", () => {
+    const cartItems = getSavedItems(Keys.PRODUCTS_KEY);
+    updateCartInfoToDB(cartItems);
+    resetCart(Keys.PRODUCTS_KEY);
+    deleteCookie(Keys.TOKEN_KEY);
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 50);
   });
 }
 

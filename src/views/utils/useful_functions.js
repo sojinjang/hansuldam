@@ -7,4 +7,9 @@ function changeToKoreanWon(price) {
   return Number(price).toLocaleString("ko-KR");
 }
 
-export { changeToKoreanTime, changeToKoreanWon };
+function getPureDigit(numStr) {
+  const regex = /[^0-9]/g;
+  return parseInt(numStr.replace(regex, ""));
+}
+
+export { changeToKoreanTime, changeToKoreanWon, getPureDigit };
