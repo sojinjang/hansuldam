@@ -12,12 +12,11 @@ const sortingCart = (products, productsInOrder) => {
   productsInOrder.sort(function (a, b) {
     return compareId(a.id, b.id);
   });
-
   let productsIn = [];
   productsInOrder.forEach((cur, idx) => {
-    const product = products[idx];
+    const product = products[idx]._doc;
     const quantity = cur.quantity;
-    productsIn.push({ product, quantity });
+    productsIn.push({ ...product, quantity });
   });
 
   return productsIn;
