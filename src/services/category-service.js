@@ -2,7 +2,7 @@ import { categoryModel, productModel } from "../db";
 import { BadRequest, NotFound } from "../utils/errorCodes";
 
 class CategoryService {
-  constructor(categoryModel) {
+  constructor(categoryModel, productModel) {
     this.categoryModel = categoryModel;
     this.productModel = productModel;
   }

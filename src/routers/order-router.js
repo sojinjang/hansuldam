@@ -212,10 +212,7 @@ orderRouter.get("/:orderId/products", async (req, res, next) => {
     if (!orderId) {
       throw new BadRequest("Undefined params", 4005);
     }
-    //{ id , quantity }
-    const { productsInOrder } = await orderService.getOrderList(orderId);
-
-    const productObjs = await productService.getProductObj(productsInOrder);
+    const productObjs = await orderService.getOrderList(orderId);
 
     // 주문 목록(배열)을 JSON 형태로 프론트에 보냄
     res.status(200).json(productObjs);
