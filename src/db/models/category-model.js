@@ -13,11 +13,19 @@ export class CategoryModel {
     const categories = await Category.find();
     return categories;
   }
+  async findByObj(obj) {
+    const category = await Category.findOne(obj);
 
-  async update({ categoryId, update }) {
-    const filter = { _id: categoryId };
+    return category;
+  }
+
+  async update(filterObj, updateObj) {
     const option = { returnOriginal: false };
-    const updatedCategory = await Category.findOneAndUpdate(filter, update, option);
+    const updatedCategory = await Category.findOneAndUpdate(
+      filterObj,
+      updateObj,
+      option
+    );
     return updatedCategory;
   }
 
@@ -25,12 +33,6 @@ export class CategoryModel {
     const filter = { _id: categoryId };
     const deletedCategory = await Category.deleteOne(filter);
     return deletedCategory;
-  }
-
-  async findByObj(obj) {
-    const category = await Category.findOne(obj);
-
-    return category;
   }
 }
 
