@@ -54,6 +54,12 @@
   font-size: 15px;
 }
 
+.bill-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+}
+
 .order-container .address-container {
   display: flex;
   flex-direction: column;
