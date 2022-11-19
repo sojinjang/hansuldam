@@ -92,6 +92,7 @@ async function orderAndCart() {
 
   function moveToOrderPage() {
     productData["quantity"] = +amountValue.value;
+    saveItems(Keys.IS_CART_ORDER, false);
     saveItems(Keys.ORDER_KEY, [productData]);
 
     window.location.href = "/order-pay";
