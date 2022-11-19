@@ -8,7 +8,7 @@ function isEmptyCart(productsList) {
 }
 
 function removeProductFromLocalDB(productId) {
-  let cartProducts = getSavedItems(Keys.CART_KEY);
+  let cartProducts = getSavedItems(Keys.v);
   cartProducts = cartProducts.filter((product) => String(product._id) !== String(productId));
   return cartProducts;
 }
@@ -33,7 +33,7 @@ function refineDataForPatch(productsArr) {
 async function getCartInfoFromDB() {
   try {
     const cartItemsFromDB = await api.get(ApiUrl.CART);
-    if (!isEmptyCart(cartItemsFromDB)) saveItems(Keys.PRODUCTS_KEY, cartItemsFromDB);
+    if (!isEmptyCart(cartItemsFromDB)) saveItems(Keys.CART_KEY, cartItemsFromDB);
   } catch (err) {
     alert(err.message);
   }

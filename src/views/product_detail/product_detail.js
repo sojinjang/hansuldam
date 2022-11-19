@@ -1,26 +1,19 @@
 import { get } from "../api.js";
-import { changeToKoreanTime } from "../utils/useful_functions.js";
-import { getCookieValue } from "../utils/cookie.js";
+import { changeToKoreanTime, changeToKoreanWon } from "../utils/useful_functions.js";
 import { Keys } from "../constants/Keys.js";
 import { getSavedItems, saveItems } from "../utils/localStorage.js";
+import { ApiUrl } from "../constants/ApiUrl.js";
+
+const $ = (selector) => document.querySelector(selector);
 
 async function renderData() {
   const queryString = new Proxy(new URLSearchParams(window.location.search), {
     get: (params, prop) => params.get(prop),
   });
   const currentId = queryString.id;
-  const fetchedData = await get("/api/products", currentId);
-  const {
-    _id,
-    category,
-    name,
-    price,
-    volume,
-    description,
-    alcoholType,
-    alcoholDegree,
-    manufacturedDate,
-  } = fetchedData;
+  const fetchedData = await get(ApiUrl.PRODUCTS, currentId);
+  const { _id, category, name, price, volume, description, alcoholType, alcoholDegree, _ } =
+    fetchedData;
 
   document.title = `${name} - 한술담 🍶`;
 
@@ -36,7 +29,7 @@ async function renderData() {
 		<div class="content__main-info">
     <p class="content__item content__name">${name}</p>
     <p class="content__item content__category">${category}</p>
-			<p class="content__item content__price">${Number(price).toLocaleString("ko-KR")}원</p>
+			<p class="content__item content__price">${changeToKoreanWon(price)}원</p>
 			<p class="content__desc">${description}</p>
 		</div>
 		<div class="content__detail-info">
@@ -52,16 +45,16 @@ async function renderData() {
 				<span class="content__volume">용량</span>
 				<span class="content__item content__volume">${volume}ml</span>
 			</p>
-			<p>
-				<span class="content__manufacturedDate">제조일자</span>
-				<span class="content__item content__manufacturedDate">${changeToKoreanTime(
-          manufacturedDate
-        )}</span>
-			</p>
 		</div>
+      <p class ="amount-container">
+        <a class="amount-minus-button">-</a>
+        <input value="1" type="number" class="amount-input" />
+        <a class="amount-plus-button">+</a>
+        <span class="amount-total-price">총 ${changeToKoreanWon(price)}원</span>
+      </p>
 		<div class="button-container">
 			<button class="button is-info ml-2" id="order-button">
-				주문하기
+        바로 주문하기
 			</button>
 			<button class="button" id="basket-button">장바구니 담기</button>
 			<p class="cart-message">
@@ -71,9 +64,7 @@ async function renderData() {
 	</div>
 </div>`;
 
-  const bodyContainer = document.querySelector(".body-container");
-
-  bodyContainer.append(productSection);
+  $(".body-container").append(productSection);
 
   return fetchedData;
 }
@@ -82,13 +73,19 @@ async function orderAndCart() {
   let productData = await renderData();
   productData["quantity"] = 1;
 
-  const orderButton = document.querySelector("#order-button");
-  const basketButton = document.querySelector("#basket-button");
+  const { stock } = productData;
+  const amountValue = document.querySelector(".amount-input");
 
-  orderButton.addEventListener("click", moveToOrderPage);
-  basketButton.addEventListener("click", moveToCartPage);
+  $("#order-button").addEventListener("click", moveToOrderPage);
+  $("#basket-button").addEventListener("click", moveToCartPage);
+  $(".amount-minus-button").addEventListener("click", decreaseAmount);
+  $(".amount-plus-button").addEventListener("click", increaseAmount);
 
   function moveToOrderPage() {
+    productData["quantity"] = +amountValue.value;
+    saveItems(Keys.IS_CART_ORDER, false);
+    saveItems(Keys.ORDER_KEY, [productData]);
+
     window.location.href = "/order-pay";
   }
 
@@ -107,12 +104,25 @@ async function orderAndCart() {
       saveItems(Keys.CART_KEY, cartItems);
     }
 
-    // 장바구니 담을 때 메시지 페이드 인-아웃
-    const cartMessage = document.querySelector(".cart-message");
-    cartMessage.classList.add("fade-message");
-    setTimeout(() => {
-      cartMessage.classList.remove("fade-message");
-    }, 1000);
+    (function applyCartMessage() {
+      const cartMessage = document.querySelector(".cart-message");
+      cartMessage.classList.add("fade-message");
+      setTimeout(() => {
+        cartMessage.classList.remove("fade-message");
+      }, 1000);
+    })();
+  }
+
+  function decreaseAmount() {
+    if (amountValue.value != 0) {
+      amountValue.value = +amountValue.value - 1;
+    }
+  }
+
+  function increaseAmount() {
+    if (amountValue.value <= stock) {
+      amountValue.value = +amountValue.value + 1;
+    }
   }
 }
 
