@@ -1,4 +1,5 @@
 import { patch } from "../api.js";
+import { ApiUrl } from "../constants/ApiUrl.js";
 
 const numChangeBox = document.querySelector("#change-phoneNumber-container");
 const userPhoneNumber = document.querySelector("#user-phoneNumber-number");
@@ -33,7 +34,7 @@ export async function changePhoneNumber(e) {
   }
 
   try {
-    await patch("/api/auth", "user", phoneNumber);
+    await patch(ApiUrl.USER_INFORMATION, phoneNumber);
     alert("전화번호가 변경되었습니다.");
     userPhoneNumber.innerHTML = changePhoneNumberInput.value;
     numChangeBox.style.display = "none";

@@ -8,7 +8,7 @@
   padding: 15px 15px;
 }
 
-.body-container .order-list-container {
+.body-container .order-container {
   display: flex;
   flex-direction: column;
   margin-bottom: 15px;
@@ -27,7 +27,7 @@
   font-size: 30px;
 }
 
-.order-list-container .order-date {
+.order-container .order-date {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -41,7 +41,7 @@
   font-size: 20px;
 }
 
-.order-list-container .category-container {
+.order-container .single-product-container {
   background-color: azure;
   border-radius: 15px;
   display: flex;
@@ -50,11 +50,17 @@
   margin-bottom: 10px;
 }
 
-.category-container span {
+.single-product-container span {
   font-size: 15px;
 }
 
-.order-list-container .address-container {
+.bill-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+}
+
+.order-container .address-container {
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
@@ -63,13 +69,14 @@
   padding: 15px 15px;
 }
 
-.order-list-container .user-change-container {
+.user-change-container {
   display: none;
   flex-direction: column;
   box-sizing: border-box;
   background-color: azure;
   border-radius: 15px;
   padding: 15px 15px;
+  margin-top: 10px;
 }
 
 .button-container {
@@ -89,22 +96,22 @@
   font-size: 15px;
 }
 
-.category-container img {
+.single-product-container img {
   width: 100px;
   height: 100px;
   margin-right: 20px;
 }
 
-.category-container .category-detail {
+.single-product-container .single-product-detail {
   display: flex;
   flex-direction: column;
 }
 
-.category-detail span {
+.single-product-detail span {
   margin: 0;
 }
 
-.category-detail .category-name {
+.single-product-detail .single-product-name {
   font-weight: bold;
   font-size: 20px;
 }
@@ -113,10 +120,35 @@
   font-size: 15px;
 }
 
-.user-change-container {
+.address-container .user-address {
+  display: flex;
+  flex-direction: row;
+}
+
+.user-address span {
+  margin-right: 10px;
+}
+
+.user-address div {
   display: flex;
   flex-direction: column;
-  margin-top: 10px;
+  justify-content: flex-start;
+}
+
+.address-container .user-credit-card {
+  display: flex;
+  flex-direction: row;
+  margin-right: 10px;
+}
+
+.user-credit-card span {
+  margin-right: 10px;
+}
+
+.user-credit-card div {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .user-change-container .change-wrapper {

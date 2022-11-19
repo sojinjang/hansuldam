@@ -28,10 +28,24 @@ footer {
   margin: 10px 0;
 }
 
-.none-user-page-container {
+.none-user-page-container .none-user-page-input {
+  width: 500px;
+  height: 200px;
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
   padding: 10px 10px;
+}
+
+.none-user-page-input span {
+  text-align: center;
+  font-size: 30px;
+}
+
+.none-user-page-input button {
+  text-align: center;
+  width: 200px;
+  justify-content: center;
 }
 
 .none-user-page-container .order-list-container {
@@ -45,27 +59,39 @@ footer {
   justify-content: space-between;
 }
 
-.order-list-container .category-container {
+.order-list-container .single-product-container {
   display: flex;
   flex-direction: row;
+  background-color: bisque;
+  margin: 5px;
 }
 
-.category-container img {
+.single-product-container img {
   width: 200px;
   height: 200px;
   margin-right: 10px;
 }
 
-.category-container .category-detail {
+.single-product-container .single-product-detail {
   display: flex;
   flex-direction: column;
+}
+
+.bill-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+}
+
+.bill-container span {
+  font-size: 20px;
 }
 
 .button-container {
   display: none;
 }
 
-.user-info-container {
+#change-info-container {
   display: none;
 }
 
@@ -82,4 +108,5 @@ footer {
 
 body button {
   cursor: pointer;
+  border: 1px solid;
 }

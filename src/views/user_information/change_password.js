@@ -1,4 +1,5 @@
 import { get, patch } from "../api.js";
+import { ApiUrl } from "../constants/ApiUrl.js";
 
 const pwChangeBox = document.querySelector("#change-password-container");
 const userPassword = document.querySelector("#user-password");
@@ -12,12 +13,10 @@ export function openPasswordPage(e) {
   pwChangeBox.style.display = "flex";
 }
 
-// 비밀번호 변경 확인 버튼 눌렀을 때
-// 기존 정보내용 바꾸고 db에 내용 보내기
 export async function changePassword(e) {
   e.preventDefault();
 
-  const userData = await get("/api/auth", "user");
+  const userData = await get(ApiUrl.USER_INFORMATION);
 
   const newPassword = {
     password: currentPassword.value,

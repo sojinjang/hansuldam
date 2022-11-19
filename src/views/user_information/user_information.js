@@ -5,6 +5,7 @@ import {
 } from "./change_phoneNumber.js";
 import { openAddressPage, changeAddress } from "./change_address.js";
 import { get } from "../api.js";
+import { ApiUrl } from "../constants/ApiUrl.js";
 
 const $ = (selector) => document.querySelector(selector);
 const pwChangeBtn = document.querySelector(".pwChangeBtn");
@@ -13,11 +14,8 @@ const adChangeBtn = document.querySelector(".adChangeBtn");
 const adConfrimBtn = document.querySelector(".adConfrimBtn");
 const numChangeBtn = document.querySelector(".numChangeBtn");
 const numConfirmBtn = document.querySelector(".numConfirmBtn");
+const userData = await get(ApiUrl.USER_INFORMATION);
 
-// db에서 데이터 가져오기
-const userData = await get("/api/auth", "user");
-
-// 개인정보공간에 사용자 정보 등록하기
 $("#user-name").innerHTML = userData.fullName;
 $("#user-email").innerHTML = userData.email;
 $("#user-phoneNumber-number").innerHTML = userData.phoneNumber;
