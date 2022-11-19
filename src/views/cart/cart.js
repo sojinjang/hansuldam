@@ -1,5 +1,11 @@
 import { getSavedItems, saveItems } from "../utils/localStorage.js";
-import { getCookieValue } from "../utils/cookie.js";
+import { getPureDigit } from "../utils/useful_functions.js";
+import {
+  isEmptyCart,
+  removeProductFromLocalDB,
+  adjustQuantityFromLocalDB,
+} from "../utils/cart.js";
+import { Keys } from "../constants/Keys.js";
 
 const shoppingbagList = document.querySelector(".shoppingbag-list");
 
@@ -10,28 +16,7 @@ const deliveryFee = document.querySelector(".delivery-fee");
 const totalPrice = document.querySelector(".total-payment-price");
 const checkoutButton = document.querySelector(".checkout");
 
-const PRODUCTS_KEY = "products";
 const HIDDEN_CLASSNAME = "hidden";
-const TOKEN = "token";
-
-function removeProductFromDB(productId) {
-  let savedProducts = getSavedItems(PRODUCTS_KEY);
-  savedProducts = savedProducts.filter(
-    (product) => String(product._id) !== String(productId)
-  );
-  return savedProducts;
-}
-
-function adjustQuantityFromDB(productId, quantity) {
-  const savedProducts = getSavedItems(PRODUCTS_KEY);
-  const index = savedProducts.findIndex((x) => x._id === productId);
-  savedProducts[index].quantity = parseInt(quantity);
-  saveItems(PRODUCTS_KEY, savedProducts);
-}
-
-function isEmptyCart(productsList) {
-  return productsList == null || productsList.length === 0;
-}
 
 function showProduct(item) {
   let product = undefined;
@@ -74,7 +59,7 @@ function showProduct(item) {
                       />
                     </button>
                   </div>
-                  <div class="amount">${parseInt(item.quantity)}</div>
+                  <div class="amount">${item.quantity}</div>
                   <div class="increase" id=${item._id}>
                     <button class="plus-button" type="button">
                       <img
@@ -97,7 +82,7 @@ function hideCheckout() {
 }
 
 function renderCartContents() {
-  const savedProducts = getSavedItems(PRODUCTS_KEY);
+  const savedProducts = getSavedItems(Keys.CART_KEY);
   if (!isEmptyCart(savedProducts)) {
     checkoutButton.classList.remove(HIDDEN_CLASSNAME);
     savedProducts.forEach(showProduct);
@@ -113,9 +98,9 @@ function checkAllProducts(e) {
 
 function deleteProductFromCart(e) {
   const productDiv = e.target.parentElement.parentElement.parentElement;
-  let savedProducts = removeProductFromDB(productDiv.id);
+  let savedProducts = removeProductFromLocalDB(productDiv.id);
   productDiv.remove();
-  saveItems(PRODUCTS_KEY, savedProducts);
+  saveItems(Keys.CART_KEY, savedProducts);
   if (isEmptyCart(savedProducts)) hideCheckout();
 }
 
@@ -123,13 +108,22 @@ function getCheckedItems() {
   return document.querySelectorAll("input[name=individual-checker]:checked");
 }
 
+function getCheckedItemsId() {
+  const checkedBoxList = getCheckedItems();
+  const checkedItemsIdList = [];
+  checkedBoxList.forEach((item) => {
+    checkedItemsIdList.push(item.getAttribute("id"));
+  });
+  return checkedItemsIdList;
+}
+
 function deleteCheckedProducts() {
   const checkedItemList = getCheckedItems();
   checkedItemList.forEach((item) => {
     const productDiv = document.getElementById(item.id);
-    let savedProducts = removeProductFromDB(productDiv.id);
+    let savedProducts = removeProductFromLocalDB(productDiv.id);
     productDiv.remove();
-    saveItems(PRODUCTS_KEY, savedProducts);
+    saveItems(Keys.CART_KEY, savedProducts);
     if (isEmptyCart(savedProducts)) hideCheckout();
   });
 }
@@ -140,7 +134,7 @@ function decreaseProductQuantity(e) {
   const price = decreaseDiv.parentElement.nextElementSibling;
   if (quantity.innerText > 1) {
     quantity.innerText -= 1;
-    adjustQuantityFromDB(decreaseDiv.id, quantity.innerText);
+    adjustQuantityFromLocalDB(decreaseDiv.id, quantity.innerText);
     setProductPrice(quantity.innerText, price);
   }
 }
@@ -150,7 +144,7 @@ function increaseProductQuantity(e) {
   const quantity = increaseDiv.previousElementSibling;
   const price = increaseDiv.parentElement.nextElementSibling;
   quantity.innerText = parseInt(quantity.innerText) + 1;
-  adjustQuantityFromDB(increaseDiv.id, quantity.innerText);
+  adjustQuantityFromLocalDB(increaseDiv.id, quantity.innerText);
   setProductPrice(quantity.innerText, price);
 }
 
@@ -160,18 +154,13 @@ function setProductPrice(quantity, price) {
   price.innerText = `${productPrice.toLocaleString("ko-KR")}원`;
 }
 
-function getPureDigit(numStr) {
-  const regex = /[^0-9]/g;
-  return String(numStr).replace(regex, "");
-}
-
 function getTotalProductPrice() {
   const checkedItemList = getCheckedItems();
-  let addedPrice = parseInt(0);
+  let addedPrice = 0;
   checkedItemList.forEach((item) => {
     const productDiv = document.getElementById(item.id);
     let productPrice = productDiv.querySelector(".price").innerText.slice(0, -1);
-    addedPrice += parseInt(getPureDigit(productPrice));
+    addedPrice += getPureDigit(productPrice);
   });
   totalProductPrice.innerText = `${addedPrice.toLocaleString("ko-KR")}원`;
   return addedPrice;
@@ -189,9 +178,20 @@ function calculateTotalPrice() {
   totalPrice.innerText = `${(totalProductPrice + deliveryFee).toLocaleString("ko-KR")}원`;
 }
 
+function getCheckedItemsInfo() {
+  const checkedItemsIdList = getCheckedItemsId();
+  const cartProducts = getSavedItems(Keys.CART_KEY);
+  const checkedItemsInfo = checkedItemsIdList.reduce((acc, cur) => {
+    return [...acc, cartProducts.find((cartItem) => cartItem._id === cur)];
+  }, []);
+  return checkedItemsInfo;
+}
+
 function moveToPaymentPage() {
-  if (getCookieValue(TOKEN)) window.location.href = "/order-pay-member";
-  else window.location.href = "/order-pay-nonmember";
+  const orderProducts = getCheckedItemsInfo();
+  saveItems(Keys.ORDER_KEY, orderProducts);
+  saveItems(Keys.IS_CART_ORDER, true);
+  window.location.href = "/order-pay";
 }
 
 renderCartContents();

@@ -1,26 +1,19 @@
 import { get } from "../api.js";
-import { changeToKoreanTime } from "../utils/useful_functions.js";
-import { getCookieValue } from "../utils/cookie.js";
+import { changeToKoreanTime, changeToKoreanWon } from "../utils/useful_functions.js";
+import { Keys } from "../constants/Keys.js";
+import { getSavedItems, saveItems } from "../utils/localStorage.js";
+import { ApiUrl } from "../constants/ApiUrl.js";
+
+const $ = (selector) => document.querySelector(selector);
 
 async function renderData() {
   const queryString = new Proxy(new URLSearchParams(window.location.search), {
     get: (params, prop) => params.get(prop),
   });
   const currentId = queryString.id;
-  const fetchedData = await get("/api/products", currentId);
-  const {
-    _id,
-    category,
-    brand,
-    name,
-    price,
-    volume,
-    description,
-    sales,
-    alcoholType,
-    alcoholDegree,
-    manufacturedDate,
-  } = fetchedData;
+  const fetchedData = await get(ApiUrl.PRODUCTS, currentId);
+  const { _id, category, name, price, volume, description, alcoholType, alcoholDegree, _ } =
+    fetchedData;
 
   document.title = `${name} - 한술담 🍶`;
 
@@ -36,14 +29,10 @@ async function renderData() {
 		<div class="content__main-info">
     <p class="content__item content__name">${name}</p>
     <p class="content__item content__category">${category}</p>
-			<p class="content__item content__price">${Number(price).toLocaleString("ko-KR")}원</p>
+			<p class="content__item content__price">${changeToKoreanWon(price)}원</p>
 			<p class="content__desc">${description}</p>
 		</div>
 		<div class="content__detail-info">
-			<p>
-				<span class="content__sold">판매량</span>
-				<span class="content__item content__sold">${sales}개</span>
-			</p>
 			<p>
 				<span class="content__alcoholType">종류</span>
 				<span class="content__item content__alcoholType">${alcoholType}</span>
@@ -56,16 +45,16 @@ async function renderData() {
 				<span class="content__volume">용량</span>
 				<span class="content__item content__volume">${volume}ml</span>
 			</p>
-			<p>
-				<span class="content__manufacturedDate">제조일자</span>
-				<span class="content__item content__manufacturedDate">${changeToKoreanTime(
-          manufacturedDate
-        )}</span>
-			</p>
 		</div>
+      <p class ="amount-container">
+        <a class="amount-minus-button">-</a>
+        <input value="1" type="number" class="amount-input" />
+        <a class="amount-plus-button">+</a>
+        <span class="amount-total-price">총 ${changeToKoreanWon(price)}원</span>
+      </p>
 		<div class="button-container">
 			<button class="button is-info ml-2" id="order-button">
-				주문하기
+        바로 주문하기
 			</button>
 			<button class="button" id="basket-button">장바구니 담기</button>
 			<p class="cart-message">
@@ -75,50 +64,65 @@ async function renderData() {
 	</div>
 </div>`;
 
-  const bodyContainer = document.querySelector(".body-container");
-
-  bodyContainer.append(productSection);
+  $(".body-container").append(productSection);
 
   return fetchedData;
 }
 
 async function orderAndCart() {
   let productData = await renderData();
+  productData["quantity"] = 1;
 
-  const orderButton = document.querySelector("#order-button");
-  const basketButton = document.querySelector("#basket-button");
+  const { stock } = productData;
+  const amountValue = document.querySelector(".amount-input");
 
-  orderButton.addEventListener("click", clickOrder);
-  basketButton.addEventListener("click", clickCart);
+  $("#order-button").addEventListener("click", moveToOrderPage);
+  $("#basket-button").addEventListener("click", moveToCartPage);
+  $(".amount-minus-button").addEventListener("click", decreaseAmount);
+  $(".amount-plus-button").addEventListener("click", increaseAmount);
 
-  function clickOrder() {
-    const TOKEN = "token";
-    if (!getCookieValue(TOKEN)) {
-      window.location.href = "/order-pay-member";
+  function moveToOrderPage() {
+    productData["quantity"] = +amountValue.value;
+    saveItems(Keys.IS_CART_ORDER, false);
+    saveItems(Keys.ORDER_KEY, [productData]);
+
+    window.location.href = "/order-pay";
+  }
+
+  function moveToCartPage() {
+    if (getSavedItems(Keys.CART_KEY) === null || getSavedItems(Keys.CART_KEY) === []) {
+      saveItems(Keys.CART_KEY, [productData]);
     } else {
-      window.location.href = "/order-pay-nonmember";
+      let cartItems = getSavedItems(Keys.CART_KEY);
+      const existItemIdx = cartItems.findIndex((product) => product._id === productData._id);
+
+      if (existItemIdx === -1) {
+        cartItems = [...cartItems, productData];
+      } else {
+        cartItems[existItemIdx].quantity += 1;
+      }
+      saveItems(Keys.CART_KEY, cartItems);
+    }
+
+    (function applyCartMessage() {
+      const cartMessage = document.querySelector(".cart-message");
+      cartMessage.classList.add("fade-message");
+      setTimeout(() => {
+        cartMessage.classList.remove("fade-message");
+      }, 1000);
+    })();
+  }
+
+  function decreaseAmount() {
+    if (amountValue.value != 0) {
+      amountValue.value = +amountValue.value - 1;
     }
   }
 
-  function clickCart() {
-    const PRODUCTS_KEY = "products";
-    if (!localStorage.getItem(PRODUCTS_KEY)) {
-      let tempArr = [productData];
-      productData["quantity"] = 1;
-      localStorage.setItem(PRODUCTS_KEY, JSON.stringify(tempArr));
-    } else {
-      let tempArr = JSON.parse(localStorage.getItem(PRODUCTS_KEY));
-      productData["quantity"] = 1;
-      tempArr.push(productData);
-      localStorage.setItem(PRODUCTS_KEY, JSON.stringify(tempArr));
+  function increaseAmount() {
+    if (amountValue.value <= stock) {
+      amountValue.value = +amountValue.value + 1;
     }
-
-    // Message
-    const cartMessage = document.querySelector(".cart-message");
-    cartMessage.classList.add("fade-message");
-    setTimeout(() => {
-      cartMessage.classList.remove("fade-message");
-    }, 1000);
   }
 }
 

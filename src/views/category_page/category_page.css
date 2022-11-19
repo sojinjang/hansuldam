@@ -43,6 +43,7 @@ button {
   width: 28%;
   min-width: 290px;
   max-width: 350px;
+  user-select: none;
 }
 
 .product-div-container {

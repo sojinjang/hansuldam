@@ -25,15 +25,17 @@ export class UserModel {
   }
 
   // updateObj 에는 객체가 들어가야함
-  async update({ userId, updateObj }) {
-    const filter = { _id: userId };
+  async update(filterObj, updateObj) {
     const option = { returnOriginal: false };
-
-    const updatedUser = await User.findOneAndUpdate(filter, updateObj, option);
+    const updatedUser = await User.findOneAndUpdate(
+      filterObj,
+      updateObj,
+      option
+    );
     return updatedUser;
   }
 
-  async delete(userId) {
+  async deleteById(userId) {
     const filter = { _id: userId };
     const deletedUser = await User.deleteOne(filter);
     return deletedUser;

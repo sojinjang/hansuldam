@@ -13,6 +13,9 @@
             src="https://kit.fontawesome.com/9daa42bcef.js"
             crossorigin="anonymous"
         ></script>
+        <script
+            src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
+        ></script>
         <link rel="stylesheet" href="join-success.css" />
         <link rel="stylesheet" href="../template/footer/footer.css" />
         <link rel="stylesheet" href="../template/header/header.css" />
@@ -98,6 +101,7 @@
                                 type="password"
                                 required
                                 placeholder="********"
+                                minlength="4"
                                 autocomplete="on">
                         </div>
                     </section>
@@ -116,20 +120,29 @@
                     <section class="join-form-input">
                         <label for="addressInput">주소</label>
                         <div>
+                        <button class="find-address-button" type="submit">
+                            주소 찾기
+                        </button>
+                            <input 
+                                class="input"
+                                id="addressPostalCode"
+                                type="text"
+                                required
+                                placeholder="주소 찾기를 클릭하세요."
+                                readonly>
                             <input 
                                 class="input"
                                 id="addressLocation"
                                 type="text"
                                 required
-                                placeholder="oo시 ㅇㅇ구 ㅇㅇ동"
-                                autocomplete="on">
+                                placeholder="주소"
+                                readonly>
                             <input 
                                 class="input"
                                 id="addressDetail"
-                                type=""
+                                type="text"
                                 required
-                                placeholder="나머지 주소 입력"
-                                value="한남대로 91"
+                                placeholder="나머지 주소 직접 입력"
                                 autocomplete="on">
                         </div>
                     </section>
@@ -140,10 +153,8 @@
                                 class="input"
                                 id="phoneNumber"
                                 type="tel"
-                                pattern="/(^02|^0504|^0505|^0\d{2})(\d+)?(\d{4})$/, '$1-$2-$3'"
                                 required
-                                placeholder="01x-xxxx-xxxx"
-                                value="01029906119"
+                                placeholder="01xxxxxxxxx"
                                 autocomplete="on">
                         </div>
                     </section>

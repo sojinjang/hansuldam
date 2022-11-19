@@ -1,45 +1,37 @@
-import { get, post, patch, delete as del } from '../api.js';
-import { getCookieValue } from '../utils/cookie.js';
-import removeContainer from './remove_container.js';
-import { changeToKoreanTime } from '../utils/useful_functions.js';
+import { get, post, patch, delete as del } from "../api.js";
+import removeContainer from "./remove_container.js";
+import { changeToKoreanTime } from "../utils/useful_functions.js";
+import { ApiUrl } from "../constants/ApiUrl.js";
 
 const $ = (selector) => document.querySelector(selector);
 
 async function initFunc() {
-  $('.product-menu').addEventListener('click', () => {
+  $(".product-menu").addEventListener("click", () => {
     removeContainer();
     openProductMenu();
   });
 }
 
 async function fetchProducts(index) {
-  const TOKEN = 'token';
-  const res = await fetch(`/api/products?page=${index}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${getCookieValue(TOKEN)}`,
-    },
-  });
-  const data = await res.json();
+  const data = await get(`${ApiUrl.PRODUCTS_OVERALL_INFORMATION}${index}`);
 
   return data;
 }
 
 async function openProductMenu() {
-  const fetchData = await get('/api/products');
+  const fetchData = await get(ApiUrl.PRODUCTS);
   const { totalPage } = fetchData;
-  const pageOneProducts = fetchData['products'];
+  const pageOneProducts = fetchData["products"];
 
   let productsData = pageOneProducts;
 
   for (let i = 2; i <= totalPage; i++) {
-    (await fetchProducts(i))['products'].forEach((product) => {
+    (await fetchProducts(i))["products"].forEach((product) => {
       productsData.push(product);
     });
   }
 
-  $('.product-menu').classList.add('isClicked');
+  $(".product-menu").classList.add("isClicked");
 
   const productContainerHTML = `<section class="products-container">
   <button class="button add-button">추가</button>
@@ -55,7 +47,7 @@ async function openProductMenu() {
 </div>
 </section>`;
 
-  await $('.admin-menu').insertAdjacentHTML('afterend', productContainerHTML);
+  await $(".admin-menu").insertAdjacentHTML("afterend", productContainerHTML);
   productsData.forEach(async (product, index) => {
     await renderProduct(product);
     if (index === productsData.length - 1) {
@@ -64,32 +56,32 @@ async function openProductMenu() {
     }
   });
 
-  $('.close-button').addEventListener('click', closeSection);
-  $('.add-button').addEventListener('click', addProduct);
+  $(".close-button").addEventListener("click", closeSection);
+  $(".add-button").addEventListener("click", addProduct);
 }
 
 function closeSection() {
-  if ($('.modify-product-modal')) {
-    $('.modify-product-modal').remove();
+  if ($(".modify-product-modal")) {
+    $(".modify-product-modal").remove();
   }
 
-  if ($('.add-product-modal')) {
-    $('.add-product-modal').remove();
+  if ($(".add-product-modal")) {
+    $(".add-product-modal").remove();
   }
 
-  $('.product-menu').classList.remove('isClicked');
-  $('.products-container').remove();
+  $(".product-menu").classList.remove("isClicked");
+  $(".products-container").remove();
 }
 
 function addProduct() {
-  if ($('.modify-product-modal')) {
-    $('.modify-product-modal').remove();
+  if ($(".modify-product-modal")) {
+    $(".modify-product-modal").remove();
   }
 
-  if ($('.modify-product-modal')) {
+  if ($(".modify-product-modal")) {
   }
-  $('.add-button').classList.add('none');
-  $('.close-button').classList.add('none');
+  $(".add-button").classList.add("none");
+  $(".close-button").classList.add("none");
 
   const productModalHtml = `<label class="add-product-modal">
   <div class="left-modal">
@@ -113,45 +105,46 @@ function addProduct() {
 </label>
 </form>`;
 
-  $('.admin-menu').insertAdjacentHTML('afterend', productModalHtml);
+  $(".admin-menu").insertAdjacentHTML("afterend", productModalHtml);
 
-  $('.add-product-button').addEventListener('click', async (e) => {
+  $(".add-product-button").addEventListener("click", async (e) => {
     e.preventDefault();
-    const productInput = [...document.querySelectorAll('.product-input')];
+    const productInput = [...document.querySelectorAll(".product-input")];
     const inputObj = productInput.reduce((obj, input) => {
       if (
-        input.getAttribute('id') === price ||
-        input.getAttribute('id') === volume ||
-        input.getAttribute('id') === stock ||
-        input.getAttribute('id') === sales ||
-        input.getAttribute('id') === alcoholDegree
+        input.getAttribute("id") === price ||
+        input.getAttribute("id") === volume ||
+        input.getAttribute("id") === stock ||
+        input.getAttribute("id") === sales ||
+        input.getAttribute("id") === alcoholDegree
       ) {
         input.value = Number(input.value);
       }
 
       if (!input.value || input.value == undefined) {
-        return (input.value = '빈 칸을 채워주세요!');
+        // 문자열은 undefined, 숫자는 null로 인식합니다.
+        return (input.value = "빈 칸을 채워주세요!");
       } else {
-        obj[input.getAttribute('id')] = input.value;
+        obj[input.getAttribute("id")] = input.value;
         return obj;
       }
     }, {});
 
     try {
-      await post('/api/admin/products', inputObj);
+      await post(ApiUrl.ADMIN_PRODUCTS, inputObj);
 
-      $('.add-product-modal').remove();
-      if ($('.add-category-modal')) {
-        $('.add-category-modal').remove();
+      $(".add-product-modal").remove();
+      if ($(".add-category-modal")) {
+        $(".add-category-modal").remove();
       }
-      alert('추가 되었습니다. 페이지를 다시 로드해주세요.');
+      alert("추가 되었습니다. 페이지를 다시 로드해주세요.");
     } catch (e) {
       alert(e);
     }
   });
 
-  $('.close-modal-button').addEventListener('click', () => {
-    $('.add-product-modal').remove();
+  $(".close-modal-button").addEventListener("click", () => {
+    $(".add-product-modal").remove();
     refreshData();
   });
 }
@@ -159,13 +152,13 @@ function addProduct() {
 async function renderProduct(product) {
   const { _id, name, price, volume, category, alcoholType } = await product;
 
-  let productSection = document.createElement('div');
+  let productSection = document.createElement("div");
 
-  productSection.setAttribute('class', 'columns items-container');
-  productSection.setAttribute('id', _id);
+  productSection.setAttribute("class", "columns items-container");
+  productSection.setAttribute("id", _id);
   productSection.innerHTML = `<div class="column is-2 row-name">${name}</div>
 <div class="column is-2 row-price">${Number(price).toLocaleString(
-    'ko-KR'
+    "ko-KR"
   )}원</div>
 <div class="column is-2 row-volumn">${volume}ml</div>
 <div class="column is-2 row-category">${category}</div>
@@ -174,29 +167,29 @@ async function renderProduct(product) {
 <div class="column is-1"><button id="${_id}" class="button column delete-button">삭제</button></div>
 `;
 
-  $('.products-container').append(productSection);
+  $(".products-container").append(productSection);
 }
 
 let totalPage = 0;
 
 async function renderProductDetail() {
-  const fetchData = await get('/api/products');
-  const productsData = fetchData['products'];
+  const fetchData = await get(ApiUrl.PRODUCTS);
+  const productsData = fetchData["products"];
   let productsTotalData = productsData;
 
-  totalPage = fetchData['totalPage'];
+  totalPage = fetchData["totalPage"];
 
   for (let i = 2; i <= totalPage; i++) {
-    (await fetchProducts(i))['products'].forEach((product) => {
+    (await fetchProducts(i))["products"].forEach((product) => {
       productsTotalData.push(product);
     });
   }
 
-  const detailBtn = document.querySelectorAll('.detail-button');
+  const detailBtn = document.querySelectorAll(".detail-button");
 
   detailBtn.forEach((button) => {
-    button.addEventListener('click', (e) => {
-      const currentId = e.target.getAttribute('id');
+    button.addEventListener("click", (e) => {
+      const currentId = e.target.getAttribute("id");
       const currentIndex = productsData.findIndex(
         (product) => product._id === currentId
       );
@@ -223,25 +216,25 @@ async function renderProductDetail() {
       </div>
       </div>`;
 
-      if (e.target.innerHTML === '상세') {
-        if ($('.items-detail')) {
-          $('.opened').remove();
+      if (e.target.innerHTML === "상세") {
+        if ($(".items-detail")) {
+          $(".opened").remove();
         }
         e.target.parentNode.parentNode.insertAdjacentHTML(
-          'afterend',
+          "afterend",
           detailHtml
         );
-        e.target.innerHTML = '닫기';
+        e.target.innerHTML = "닫기";
       } else {
-        e.target.innerHTML = '상세';
-        $('.opened').remove();
+        e.target.innerHTML = "상세";
+        $(".opened").remove();
       }
 
-      const modifyBtn = document.querySelector('.modify-button');
+      const modifyBtn = document.querySelector(".modify-button");
       if (modifyBtn) {
-        modifyBtn.addEventListener('click', () => {
-          if ($('.add-product-modal')) {
-            $('.add-product-modal').remove();
+        modifyBtn.addEventListener("click", () => {
+          if ($(".add-product-modal")) {
+            $(".add-product-modal").remove();
           }
           modifyProduct();
           window.scrollTo(0, 580);
@@ -252,20 +245,21 @@ async function renderProductDetail() {
 }
 
 function deleteProduct() {
-  const deleteBtn = document.querySelectorAll('.delete-button');
+  const deleteBtn = document.querySelectorAll(".delete-button");
   deleteBtn.forEach((button) => {
-    button.addEventListener('click', (e) => {
-      const currentId = e.target.getAttribute('id');
-      if (!$('.is-danger')) { alert('삭제 하려면 다시 한 번 눌러주세요!'); }
-      
+    button.addEventListener("click", (e) => {
+      const currentId = e.target.getAttribute("id");
+      if (!$(".is-danger")) {
+        alert("삭제 하려면 다시 한 번 눌러주세요!");
+      }
+
       e.target.setAttribute(
-        'class',
-        'button column is-danger delete-button-confirm'
+        "class",
+        "button column is-danger delete-button-confirm"
       );
 
-
-      $('.delete-button-confirm').addEventListener('click', async () => {
-        await del('/api/admin/products', currentId);
+      $(".delete-button-confirm").addEventListener("click", async () => {
+        await del(ApiUrl.ADMIN_PRODUCTS, currentId);
         refreshData();
       });
     });
@@ -273,10 +267,10 @@ function deleteProduct() {
 }
 
 function modifyProduct() {
-  if ($('.modify-product-modal')) {
-    $('.modify-product-modal').remove();
+  if ($(".modify-product-modal")) {
+    $(".modify-product-modal").remove();
   }
-  const productId = $('.opened').getAttribute('id');
+  const productId = $(".opened").getAttribute("id");
   const productModalHtml = `<form>
 <label class="modify-product-modal">
 <div class="left-modal">
@@ -300,46 +294,46 @@ function modifyProduct() {
 </label>
 </form>`;
 
-  $('.admin-menu').insertAdjacentHTML('afterend', productModalHtml);
+  $(".admin-menu").insertAdjacentHTML("afterend", productModalHtml);
 
-  $('.modify-product-button').addEventListener('click', async () => {
-    const productInput = [...document.querySelectorAll('.product-input')];
+  $(".modify-product-button").addEventListener("click", async () => {
+    const productInput = [...document.querySelectorAll(".product-input")];
     const inputObj = productInput.reduce((obj, input) => {
       if (
-        input.getAttribute('id') === price ||
-        input.getAttribute('id') === volume ||
-        input.getAttribute('id') === stock ||
-        input.getAttribute('id') === sales ||
-        input.getAttribute('id') === alcoholDegree
+        input.getAttribute("id") === price ||
+        input.getAttribute("id") === volume ||
+        input.getAttribute("id") === stock ||
+        input.getAttribute("id") === sales ||
+        input.getAttribute("id") === alcoholDegree
       ) {
         input.value = Number(input.value);
       }
       if (!input.value || input.value == undefined) {
-        return (input.value = '빈 칸을 채워주세요!');
+        return (input.value = "빈 칸을 채워주세요!");
       } else {
-        obj[input.getAttribute('id')] = input.value;
+        obj[input.getAttribute("id")] = input.value;
         return obj;
       }
     }, {});
 
     try {
-      await patch('/api/admin/products', productId, inputObj);
+      await patch(ApiUrl.ADMIN_PRODUCTS, productId, inputObj);
 
-      alert('수정 되었습니다. 페이지를 다시 로드해주세요.');
-      $('.modify-product-modal').remove();
+      alert("수정 되었습니다. 페이지를 다시 로드해주세요.");
+      $(".modify-product-modal").remove();
     } catch (e) {
       alert(e);
     }
   });
 
-  $('.close-modal-button').addEventListener('click', () => {
-    $('.modify-product-modal').remove();
+  $(".close-modal-button").addEventListener("click", () => {
+    $(".modify-product-modal").remove();
     refreshData();
   });
 }
 
 function refreshData() {
-  $('.products-container').remove();
+  $(".products-container").remove();
   openProductMenu();
 }
 

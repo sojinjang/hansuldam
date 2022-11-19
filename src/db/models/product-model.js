@@ -14,24 +14,35 @@ export class ProductModel {
     return products;
   }
 
-  async update({ productId, update }) {
-    const filter = { _id: productId };
+  async findByObj(Obj) {
+    const product = await Product.findOne(Obj);
+    return product;
+  }
+
+  async findByIdArray(idArray) {
+    const products = await Product.find({ _id: { $in: idArray } }).sort({
+      _id: 1,
+    });
+    return products;
+  }
+
+  async update(filterObj, updateObj) {
     const option = { returnOriginal: false };
 
     const updatedProduct = await Product.findOneAndUpdate(
-      filter,
-      update,
+      filterObj,
+      updateObj,
       option
     );
     return updatedProduct;
   }
 
   async updateManyByIdArr(IdArray, toUpdateObj) {
-    const filter = { _id: { $in: IdArray } };
+    const filterObj = { _id: { $in: IdArray } };
     const option = { returnOriginal: false };
 
     const updatedProduct = await Product.updateMany(
-      filter,
+      filterObj,
       toUpdateObj,
       option
     );
@@ -42,21 +53,6 @@ export class ProductModel {
     const filter = { _id: productId };
     const deletedProduct = await Product.deleteOne(filter);
     return deletedProduct;
-  }
-
-  async findByName(name) {
-    const product = await Product.findOne({ name });
-    return product;
-  }
-
-  async findById(productId) {
-    const product = await Product.findOne({ _id: productId });
-    return product;
-  }
-
-  async findByIdArray(idArray) {
-    const products = await Product.find({ _id: { $in: idArray } });
-    return products;
   }
 
   async setTestdata(arr) {

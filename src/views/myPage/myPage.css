@@ -1,0 +1,112 @@
+body {
+  overflow-x: hidden;
+  margin: 0;
+}
+
+header,
+.body-container,
+footer {
+  padding: 0 7vw 0 7vw;
+}
+
+.body-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.body-container .body-section-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.body-section-container a {
+  width: 350px;
+  border-style: solid;
+  margin: 10px 0;
+}
+
+.none-user-page-container .none-user-page-input {
+  width: 500px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 10px 10px;
+}
+
+.none-user-page-input span {
+  text-align: center;
+  font-size: 30px;
+}
+
+.none-user-page-input button {
+  text-align: center;
+  width: 200px;
+  justify-content: center;
+}
+
+.none-user-page-container .order-list-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.order-list-container .order-date {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.order-list-container .single-product-container {
+  display: flex;
+  flex-direction: row;
+  background-color: bisque;
+  margin: 5px;
+}
+
+.single-product-container img {
+  width: 200px;
+  height: 200px;
+  margin-right: 10px;
+}
+
+.single-product-container .single-product-detail {
+  display: flex;
+  flex-direction: column;
+}
+
+.bill-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+}
+
+.bill-container span {
+  font-size: 20px;
+}
+
+.button-container {
+  display: none;
+}
+
+#change-info-container {
+  display: none;
+}
+
+.user-info-container .user-info-box {
+  display: flex;
+  flex-direction: row;
+}
+
+.user-info-box .user-info {
+  display: flex;
+  flex-direction: column;
+  margin-right: 10px;
+}
+
+body button {
+  cursor: pointer;
+  border: 1px solid;
+}
