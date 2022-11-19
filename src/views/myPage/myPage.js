@@ -2,14 +2,13 @@ import * as api from "../api.js";
 import { getCookieValue, deleteCookie } from "../utils/cookie.js";
 import { Keys } from "../constants/Keys.js";
 import { ApiUrl } from "../constants/ApiUrl.js";
-import { ErrorMessage } from "../constants/ErrorMessage.js";
 
 const $ = (selector) => document.querySelector(selector);
 const selectId = (selector) => document.getElementById(selector);
 
-const TOKEN = getCookieValue(Keys.TOKEN_KEY);
+const loginTOKEN = getCookieValue(Keys.TOKEN_KEY);
 
-if (TOKEN !== undefined) {
+if (loginTOKEN !== undefined) {
   let page = undefined;
   page = document.createElement("div");
   page.setAttribute("class", "user-page-container");
@@ -24,10 +23,11 @@ if (TOKEN !== undefined) {
   $(".delete-user").addEventListener("click", deleteUserId);
 }
 
-async function deleteUserId() {
+async function deleteUserId(e) {
+  e.preventDefault();
   try {
-    await api.delete(ApiUrl.USER_INPORMATION);
-    deleteCookie(TOKEN);
+    await api.delete(ApiUrl.USER_INFORMATION);
+    deleteCookie(Keys.TOKEN_KEY);
     alert("정보가 삭제되었습니다.");
     window.location.href = "/";
   } catch (e) {
@@ -35,7 +35,7 @@ async function deleteUserId() {
   }
 }
 
-if (TOKEN == undefined) {
+if (loginTOKEN == undefined) {
   let page = undefined;
   page = document.createElement("div");
   page.setAttribute("class", "none-user-page-container");
