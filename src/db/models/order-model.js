@@ -14,10 +14,13 @@ export class OrderModel {
     return orders;
   }
 
-  async update({ orderId, update }) {
-    const filter = { _id: orderId };
+  async update(filterObj, updateObj) {
     const option = { returnOriginal: false };
-    const updatedOrder = await Order.findOneAndUpdate(filter, update, option);
+    const updatedOrder = await Order.findOneAndUpdate(
+      filterObj,
+      updateObj,
+      option
+    );
     return updatedOrder;
   }
 

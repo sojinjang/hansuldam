@@ -21,7 +21,7 @@ function examineIdNumber() {
   if (isAdult(idNumValue)) {
     setCookie(Keys.IS_ADULT_KEY, { [Keys.IS_ADULT_KEY]: true });
     alert("성인 인증에 성공했습니다 🪪");
-    window.location.href = "/order-pay-nonmember";
+    window.location.href = "/order-pay";
     return;
   } else {
     alert("미성년자는 구입 불가능합니다 ❌");
