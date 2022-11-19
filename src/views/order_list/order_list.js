@@ -3,11 +3,11 @@ import { ApiUrl } from "../constants/ApiUrl.js";
 
 const $ = (selector) => document.querySelector(selector);
 const selectId = (selector) => document.getElementById(selector);
-const userData = await get(ApiUrl.USER_INPORMATION);
+const userData = await get(ApiUrl.USER_INFORMATION);
 const orderId = userData.orders;
 
 orderId.forEach((id) => {
-  async function setElement() {
+  async function setOrderListContainer() {
     const orderList = await get(ApiUrl.ORDERS, id);
     const productList = await get(ApiUrl.ORDERS, `${id}/products`);
 
@@ -17,6 +17,9 @@ orderId.forEach((id) => {
         createProductListContainer(product)
       );
     });
+    selectId(`${orderList._id}-order-container`).append(
+      createTotalBillContainer(orderList)
+    );
     selectId(`${orderList._id}-order-container`).append(
       createDeliveryInformaionContainer(orderList)
     );
@@ -107,7 +110,7 @@ orderId.forEach((id) => {
       }
     }
   }
-  setElement();
+  setOrderListContainer();
 });
 
 function createSingleOrderContainer(item = "") {
@@ -126,7 +129,7 @@ function createOrderStatus(item) {
   Page.setAttribute("id", item._id);
   Page.innerHTML = `<div class="order-status">
   <div class="order-date">
-    <span class="orderDate">${item.createdAt.substr(0, 10)}</span>
+    <span class="orderDate">총 ${item.createdAt.substr(0, 10)}</span>
     <span>${item._id}</span>
   </div>
   <span class="order-status">${item.status}</span>
@@ -148,6 +151,17 @@ function createProductListContainer(item) {
     <span class="single-product-quantity">${item.quantity}개</span>
   </div>`;
   return product;
+}
+
+function createTotalBillContainer(item) {
+  let page = undefined;
+  page = document.createElement("div");
+  page.setAttribute("class", "bill-container");
+  page.setAttribute("id", `${item._id}-bill-container`);
+  page.innerHTML = `<span>총 ${item.totalPrice.toLocaleString(
+    "ko-KR"
+  )}원</span>`;
+  return page;
 }
 
 function createDeliveryInformaionContainer(item) {

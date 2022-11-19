@@ -1,10 +1,13 @@
-import { getCookieValue } from "../utils/cookie.js";
 import * as api from "../api.js";
+import { getCookieValue, deleteCookie } from "../utils/cookie.js";
+import { Keys } from "../constants/Keys.js";
+import { ApiUrl } from "../constants/ApiUrl.js";
+import { ErrorMessage } from "../constants/ErrorMessage.js";
 
 const $ = (selector) => document.querySelector(selector);
 const selectId = (selector) => document.getElementById(selector);
 
-const TOKEN = getCookieValue("token");
+const TOKEN = getCookieValue(Keys.TOKEN_KEY);
 
 if (TOKEN !== undefined) {
   let page = undefined;
@@ -18,12 +21,13 @@ if (TOKEN !== undefined) {
   </div>`;
   $(".body-container").append(page);
 
-  $(".delete-user").addEventListener("click", deleteUserInfomation);
+  $(".delete-user").addEventListener("click", deleteUserId);
 }
 
-async function deleteUserInfomation() {
+async function deleteUserId() {
   try {
-    await api.delete("/auth/user");
+    await api.delete(ApiUrl.USER_INPORMATION);
+    deleteCookie(TOKEN);
     alert("정보가 삭제되었습니다.");
     window.location.href = "/";
   } catch (e) {
@@ -42,35 +46,35 @@ if (TOKEN == undefined) {
 </div>`;
   $(".body-container").append(page);
 
-  $(".check-order-btn").addEventListener("click", showOrderPage);
+  $(".check-order-btn").addEventListener("click", showOrderListPage);
 }
 
-async function showOrderPage() {
+async function showOrderListPage() {
   const orderID = $(".order-id").value;
-  const orderData = await api.get("/api/orders", orderID);
-  const productList = await api.get("/api/orders", `${orderID}/products`);
-
-  console.log(productList);
 
   if ($(".order-id").value == "") {
     alert("주문번호를 입력해주세요");
     return;
   }
 
-  if ($(".order-id").value !== orderData._id) {
+  try {
+    await api.get(ApiUrl.ORDERS, orderID);
+  } catch {
     alert("일치하는 주문번호가 없습니다.");
-    return;
   }
 
-  $(".none-user-page-input").style.display = "none";
-  $(".none-user-page-container").style.display = "flex";
+  const orderData = await api.get(ApiUrl.ORDERS, orderID);
+  const productList = await api.get(ApiUrl.ORDERS, `${orderID}/products`);
 
-  showOrderDate(orderData);
-  productList.forEach(showProductList);
-  showTotalBill(orderData);
-  showOrderUserInformation(orderData);
-  showChangeInformationBox();
-  showButton();
+  $(".none-user-page-input").style.display = "none";
+  $(".none-user-page-container").style.display = "block";
+
+  createOrderDateContainer(orderData);
+  productList.forEach(createProductListContainer);
+  createTotalBillContainer(orderData);
+  createDeliveryInformationContainer(orderData);
+  createChangeDeliveryInformationContainer();
+  createButtonContainer();
 
   if ($("#order-status").innerHTML == "상품준비중") {
     $(".button-container").style.display = "flex";
@@ -112,7 +116,7 @@ async function showOrderPage() {
       };
 
       try {
-        await api.patch("/api/orders", orderID, changeInfo);
+        await api.patch(ApiUrl.ORDERS, orderID, changeInfo);
         alert("정보가 수정되었습니다.");
         $(".user-name").innerHTML = $(".name-input").value;
         $(".user-phoneNumber").innerHTML = $(".phoneNumber-input").value;
@@ -128,17 +132,16 @@ async function showOrderPage() {
       try {
         await api.delete("/api/orders", orderID);
         alert("주문취소가 성공적으로 처리되었습니다.");
+        location.reload();
       } catch (e) {
         alert("문제가 발생했습니다. 다시 시도해주세요.");
       }
-      // 주문 내역 요소 지우기
     }
   }
   eventListenerBtn();
 }
 
-// 주문 날짜, 주문아이디, 배송현황 생성
-function showOrderDate(item) {
+function createOrderDateContainer(item) {
   let page = undefined;
   page = document.createElement("div");
   page.setAttribute("class", "order-list-container");
@@ -152,55 +155,50 @@ function showOrderDate(item) {
   $(".none-user-page-container").append(page);
 }
 
-// 주문 상품 정보 생성
-function showProductList(item) {
+function createProductListContainer(item) {
   let page = undefined;
   page = document.createElement("section");
   page.setAttribute("class", "order-lists");
-  page.innerHTML = `<div class="category-container">
+  page.innerHTML = `<div class="single-product-container">
     <img src="../img/ricewine_icon.png" alt="" />
-    <div class="category-detail">
-      <span>${item.product.name}</span>
+    <div class="single-product-detail">
+      <span>${item.name}</span>
       <span>${item.quantity}개</span>
-      <span>${item.product.price.toLocaleString("ko-KR")}원</span>
+      <span>${item.price.toLocaleString("ko-KR")}원</span>
     </div>
   </div>`;
   $(".order-list-container").append(page);
 }
 
-// 주문자 정보 생성
-function showOrderUserInformation(item) {
+function createDeliveryInformationContainer(item) {
   let page = undefined;
   page = document.createElement("div");
   page.setAttribute("class", "user-info-container");
-  page.innerHTML = `<section>
-  <div class="user-info-box">
-    <div class="user-info" id="user-info-text">
-      <span class="user-name" id="${item._id}-user-name">수령인</span>
-      <span class="user-phoneNumber" id="${item._id}-user-phoneNumber"
-        >전화번호</span
-      >
-      <span class="user-phoneNumber" id="${item._id}-user-phoneNumber"
-        >주소</span
-      >
-    </div>
-    <div class="user-info">
-      <span class="user-name">${item.fullName}</span>
-      <span class="user-phoneNumber">${item.phoneNumber}</span>
-      <span class="user-address1" id="${item._id}-user-address1"
-        >${item.address.address1}</span
-      >
-      <span class="user-address2" id="${item._id}-user-address2"
-        >${item.address.address2}</span
-      >
-    </div>
+  page.innerHTML = `<div>
+  <span class="user-name" id="${item._id}-user-name">수령인  ${item.fullName}</span>
+</div>
+<div>
+  <span class="user-phoneNumber" id="${item._id}-user-phoneNumber">전화번호  ${item.phoneNumber}</span>
+</div>
+<div class="user-address">
+  <span class="user-address-container" id="${item._id}-user-address-container">주소</span>
+  <div>
+    <span class="user-address1" id="${item._id}-user-address1">${item.address.address1}</span>
+    <span class="user-address2" id="${item._id}-user-address2">${item.address.address2}</span>
   </div>
-</section>`;
-  $(".none-user-page-container").append(page);
+</div>
+<div class="user-credit-card">
+  <span class="user-credit-card" id="${item._id}-user-credit-card">카드정보</span>
+  <div class="credit-card">
+    <span>${item.payment.detail}</span>
+    <span>${item.payment.number}</span>
+    <span></span>
+  </div>
+</div>`;
+  $(".order-list-container").append(page);
 }
 
-// 상세 정보 수정 페이지
-function showChangeInformationBox() {
+function createChangeDeliveryInformationContainer() {
   let page = undefined;
   page = document.createElement("div");
   page.setAttribute("class", "user-info-container");
@@ -225,24 +223,24 @@ function showChangeInformationBox() {
   </div>
   <button class="input-btn">수정</button>
 </section>`;
-  $(".none-user-page-container").append(page);
+  $(".order-list-container").append(page);
 }
 
-// 수정, 취소 버튼
-function showButton() {
+function createButtonContainer() {
   let page = undefined;
   page = document.createElement("div");
   page.setAttribute("class", "button-container");
   page.innerHTML = `<button class="change-btn">정보 수정하기</button>
   <button class="cancel-btn">주문 취소하기</button>`;
-  $(".none-user-page-container").append(page);
+  $(".order-list-container").append(page);
 }
 
-// 총 합산 금액
-function showTotalBill(item) {
+function createTotalBillContainer(item) {
   let page = undefined;
   page = document.createElement("div");
   page.setAttribute("class", "bill-container");
-  page.innerHTML = `<span>${item.totalPrice.toLocaleString("ko-KR")}원</span>`;
+  page.innerHTML = `<span>총 ${item.totalPrice.toLocaleString(
+    "ko-KR"
+  )}원</span>`;
   $(".order-list-container").append(page);
 }
