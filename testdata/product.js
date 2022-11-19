@@ -3,8 +3,8 @@ const { categoryService } = require("../src/services");
 const { productDatas } = require("./productSample");
 
 async function product() {
-  console.log(productDatas[1]);
   try {
+    console.log(productDatas[0]);
     const products = await productModel.setTestdata(productDatas);
     await Promise.all(
       products.map(async (cur) => {
