@@ -12,17 +12,8 @@ async function renderData() {
   });
   const currentId = queryString.id;
   const fetchedData = await get(ApiUrl.PRODUCTS, currentId);
-  const {
-    _id,
-    category,
-    name,
-    price,
-    volume,
-    description,
-    alcoholType,
-    alcoholDegree,
-    manufacturedDate,
-  } = fetchedData;
+  const { _id, category, name, price, volume, description, alcoholType, alcoholDegree, _ } =
+    fetchedData;
 
   document.title = `${name} - 한술담 🍶`;
 
