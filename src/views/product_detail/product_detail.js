@@ -54,12 +54,6 @@ async function renderData() {
 				<span class="content__volume">용량</span>
 				<span class="content__item content__volume">${volume}ml</span>
 			</p>
-			<p>
-				<span class="content__manufacturedDate">제조일자</span>
-				<span class="content__item content__manufacturedDate">${changeToKoreanTime(
-          manufacturedDate
-        )}</span>
-			</p>
 		</div>
       <p class ="amount-container">
         <a class="amount-minus-button">-</a>
