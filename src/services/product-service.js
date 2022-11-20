@@ -123,7 +123,7 @@ class ProductService {
     );
 
     const total = await this.productModel.totalCount(filterObj);
-    const totalPage = totalPageCacul(perPage, total);
+    const { totalPage } = totalPageCacul(perPage, total);
 
     return { products, totalPage };
   }
