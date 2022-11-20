@@ -128,7 +128,7 @@ productRouter.get("/filter-search", async (req, res, next) => {
       throw new BadRequest("Undefined key", 4204);
     }
     const page = Number(req.query.page || 1);
-    const perPage = Number(req.query.perPage || 8);
+    const perPage = Number(req.query.perPage || 9);
     const str = req.query.str;
     const min = Number(req.query.min || 0);
     const max = Number(req.query.max || 0);
