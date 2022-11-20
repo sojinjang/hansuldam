@@ -127,9 +127,19 @@ input[type="number"]::-webkit-inner-spin-button {
   text-indent: 0;
 }
 
-.amount-total-price {
-  vertical-align: middle;
+.total-price-container {
+  display: flex;
+  flex-direction: column;
   margin-left: 30px;
+  align-items: flex-end;
+}
+
+.total-price-container .amount-total-price {
+  font-size: 1.2rem;
+}
+
+.total-price-container .total-price-text {
+  font-size: 0.7rem;
 }
 
 .button-container button {
