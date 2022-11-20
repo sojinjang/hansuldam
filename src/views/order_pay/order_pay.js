@@ -6,6 +6,7 @@ import { removeProductFromLocalDB } from "../utils/cart.js";
 import { getPureDigit } from "../utils/useful_functions.js";
 import { Keys } from "../constants/Keys.js";
 import { ApiUrl } from "../constants/ApiUrl.js";
+import { findAddress } from "../utils/findAddress.js";
 
 const $ = (seletor) => document.querySelector(seletor);
 const isLoggedIn = getCookieValue(Keys.TOKEN_KEY);
@@ -85,9 +86,16 @@ async function getUserInfo() {
   }
 }
 
+async function insertFoundAddress(){
+  const {foundZoneCode, foundAddress} = await findAddress();
+  $(".user-postal-code").value = foundZoneCode
+  $(".user-address1").value = foundAddress
+}
+
 function writeUserInfo(userInfoObj) {
   $(".user-name").value = userInfoObj.fullName;
   $(".user-phoneNumber").value = userInfoObj.phoneNumber;
+  $(".user-postal-code").value = userInfoObj.address.postalCode;
   $(".user-address1").value = userInfoObj.address.address1;
   $(".user-address2").value = userInfoObj.address.address2;
 }
@@ -138,6 +146,7 @@ function makeOrderInfoObj() {
     fullName: $(".user-name").value,
     phoneNumber: $(".user-phoneNumber").value,
     address: {
+      postalCode: $(".user-postal-code").value,
       address1: $(".user-address1").value,
       address2: $(".user-address2").value,
     },
@@ -203,3 +212,4 @@ $("#card-select").addEventListener("change", showInput);
 $(".creditCardBtn").addEventListener("click", showCardInfoForm);
 
 $(".pay-button").addEventListener("click", sendPayInfo);
+$(".find-address-button").addEventListener("click", insertFoundAddress);

@@ -157,6 +157,16 @@
     margin-bottom: 10px;
 }
 
+.address .user-address .find-address-button {
+    cursor: pointer;
+    width: 75px;
+    height: 30px;
+    text-align: center;
+    background-color:#fdc78c;
+    border-radius: 5px;
+    margin-bottom : 15px;
+}
+
 .address-status .status-input {
     display: none;
 }
