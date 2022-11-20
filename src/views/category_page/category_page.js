@@ -4,7 +4,7 @@ import { ApiUrl } from "../constants/ApiUrl.js";
 const $ = (selector) => document.querySelector(selector);
 
 async function fetchProducts(index) {
-  const data = await get(`${ApiUrl.PRODUCTS_OVERALL_INFORMATION}${index}`);
+  const data = await get(`${ApiUrl.PRODUCTS_OVERALL_INFORMATION}${index}&perpage=9`);
 
   return data;
 }
@@ -19,20 +19,9 @@ const paginationHtml = `<nav class="pagination-container" role="navigation" aria
 
 $(".footer-container").insertAdjacentHTML("beforebegin", paginationHtml);
 
-let totalPage = 0;
-
 async function refineData() {
-  const fetchData = await get(ApiUrl.PRODUCTS);
-  const pageOneProducts = fetchData["products"];
-  let productsTotalData = pageOneProducts;
-
-  totalPage = fetchData["totalPage"];
-
-  for (let i = 2; i <= totalPage; i++) {
-    let pageButton = document.createElement("li");
-    pageButton.innerHTML = `<a class="pagination-link" aria-label="${i}" aria-current="page">${i}</a>`;
-    $(".pagination-list").append(pageButton);
-  }
+  const { products, totalPage } = await fetchProducts(1);
+  let productsTotalData = products;
 
   for (let i = 2; i <= totalPage; i++) {
     (await fetchProducts(i))["products"].forEach((product) => {
@@ -40,11 +29,16 @@ async function refineData() {
     });
   }
 
-  const queryString = new Proxy(new URLSearchParams(window.location.search), {
-    get: (params, prop) => params.get(prop),
-  });
+  (function generatePagenationButton() {
+    for (let i = 2; i <= totalPage; i++) {
+      const pageButton = document.createElement("li");
+      pageButton.innerHTML = `<a class="pagination-link" aria-label="${i}" aria-current="page">${i}</a>`;
+      $(".pagination-list").append(pageButton);
+    }
+  })();
 
-  const label = queryString.label;
+  const params = new URLSearchParams(window.location.search);
+  const label = params.get("label");
 
   switch (label) {
     case "totalProducts":
@@ -57,7 +51,8 @@ async function refineData() {
         if (a.updatedAt < b.updatedAt) return 1;
         if (a.updatedAt > b.updatedAt) return -1;
       });
-      return sortNew;
+      $(".pagination-list").remove();
+      return sortNew.slice(0, 9);
 
     case "bestProducts":
       document.title = "최고의 상품 - 한술담 🍶";
@@ -72,24 +67,29 @@ async function refineData() {
 async function showProducts() {
   const productsTotalData = await refineData();
 
+  function filterProducts() {
+    // productsTotalData를 가져와 filtering을 해준 값을 리턴하여 변수에 할당해주시면 됩니다!
+  }
+
   let productsArr = [];
 
   for (let i = 0; i < productsTotalData.length; i += 9) {
     productsArr.push(productsTotalData.slice(i, i + 9));
   }
-  let currentPageData = productsArr[0];
 
-  currentPageData.forEach((product) => {
-    renderData(product);
-  });
+  let currentPageData = productsArr[0];
+  (function showProductsPageOne() {
+    currentPageData.forEach((product) => {
+      renderData(product);
+    });
+  })();
 
   const paginationButton = document.querySelectorAll(".pagination-link");
 
   paginationButton.forEach((button) => {
     button.addEventListener("click", async (e) => {
       if (document.querySelectorAll(".product-container")) {
-        const productContainers =
-          document.querySelectorAll(".product-container");
+        const productContainers = document.querySelectorAll(".product-container");
         productContainers.forEach((container) => container.remove());
       }
 
@@ -113,24 +113,24 @@ async function showProducts() {
     });
   });
 
-  const queryString = new Proxy(new URLSearchParams(window.location.search), {
-    get: (params, prop) => params.get(prop),
-  });
-  const label = queryString.label;
+  (function addClickedClass() {
+    const params = new URLSearchParams(window.location.search);
+    const label = params.get("label");
 
-  switch (label) {
-    case "totalProducts":
-      $("#totalProducts").setAttribute("class", "menu-label clicked-label");
-      break;
+    switch (label) {
+      case "totalProducts":
+        $("#totalProducts").setAttribute("class", "menu-label clicked-label");
+        break;
 
-    case "newProducts":
-      $("#newProducts").setAttribute("class", "menu-label clicked-label");
-      break;
+      case "newProducts":
+        $("#newProducts").setAttribute("class", "menu-label clicked-label");
+        break;
 
-    case "bestProducts":
-      $("#bestProducts").setAttribute("class", "menu-label clicked-label");
-      break;
-  }
+      case "bestProducts":
+        $("#bestProducts").setAttribute("class", "menu-label clicked-label");
+        break;
+    }
+  })();
 }
 
 await showProducts();
