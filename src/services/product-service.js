@@ -1,3 +1,4 @@
+import fs from "fs";
 import { productModel, categoryModel } from "../db";
 import { BadRequest, NotFound } from "../utils/errorCodes";
 import { pagination, totalPageCacul, makeFilterObj } from "../utils";
@@ -82,6 +83,17 @@ class ProductService {
       throw new NotFound("This Product Not In DB", 4203);
     }
 
+    if (product.image) {
+      if (fs.existsSync(product.image)) {
+        // 파일이 존재한다면 true 그렇지 않은 경우 false 반환
+        try {
+          fs.unlinkSync(product.image);
+        } catch (error) {
+          throw new BadRequest("Fail Delete Image", 4007);
+        }
+      }
+    }
+
     const filterObj = { name: product.category };
     const updateObj = { $pull: { products: productId } };
 
@@ -134,10 +146,20 @@ class ProductService {
     return products;
   }
 
-  //-------- v2 수정
+  // 이미지 경로 저장
   async updateProductImage(productId, image) {
     // 우선 해당 id의 상품이 db에 있는지 확인
-    let product = await this.productModel.findById(productId);
+    const filterObj = { _id: productId };
+    let product = await this.productModel.findByObj(filterObj);
+
+    if (!product) {
+      try {
+        fs.unlinkSync(image);
+      } catch (error) {
+        throw new BadRequest("Fail Delete Image", 4007);
+      }
+      throw new NotFound("This Product Not In DB", 4203);
+    }
 
     if (product.image) {
       if (fs.existsSync(product.image)) {
@@ -149,12 +171,9 @@ class ProductService {
         }
       }
     }
-
+    const updateObj = { image };
     // 업데이트 진행
-    product = await this.productModel.update({
-      productId,
-      update: { image },
-    });
+    product = await this.productModel.update(filterObj, updateObj);
 
     return product;
   }
