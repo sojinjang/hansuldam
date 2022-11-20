@@ -1,6 +1,6 @@
 import { productModel, categoryModel } from "../db";
 import { BadRequest, NotFound } from "../utils/errorCodes";
-import { pagination, totalPageCacul } from "../utils";
+import { pagination, totalPageCacul, makeFilterObj } from "../utils";
 
 class ProductService {
   constructor(productModel, categoryModel) {
@@ -113,16 +113,7 @@ class ProductService {
 
     const { skip, limit } = pagination(page, perPage);
 
-    const { key, min, max, sort } = inputFilterObj;
-
-    const filterObj = {};
-    filterObj[key] = min ? { $gte: min } : {};
-    filterObj[key] = max
-      ? { ...filterObj[key], $lt: max }
-      : { ...filterObj[key] };
-
-    const sortObj = {};
-    sortObj[key] = sort;
+    const { filterObj, sortObj } = makeFilterObj(inputFilterObj);
 
     const products = await this.productModel.findFiltered(
       skip,

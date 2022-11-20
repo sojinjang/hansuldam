@@ -129,11 +129,12 @@ productRouter.get("/filter-search", async (req, res, next) => {
     }
     const page = Number(req.query.page || 1);
     const perPage = Number(req.query.perPage || 8);
+    const str = req.query.str;
     const min = Number(req.query.min || 0);
     const max = Number(req.query.max || 0);
     const sort = Number(req.query.sort) === -1 ? -1 : 1;
     const pageObj = { page, perPage };
-    const inputFilterObj = { key, min, max, sort };
+    const inputFilterObj = { key, str, min, max, sort };
 
     let { products, totalPage } = await productService.getfilteredProducts(
       pageObj,
