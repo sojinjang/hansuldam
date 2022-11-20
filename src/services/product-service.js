@@ -1,5 +1,6 @@
 import { productModel, categoryModel } from "../db";
 import { BadRequest, NotFound } from "../utils/errorCodes";
+import { pagination, totalPageCacul, makeFilterObj } from "../utils";
 
 class ProductService {
   constructor(productModel, categoryModel) {
@@ -93,9 +94,38 @@ class ProductService {
   }
 
   // 상품 목록 조회
-  async getProducts() {
-    const products = await this.productModel.findAll();
-    return products;
+  async getProducts(pageObj) {
+    const { page, perPage } = pageObj;
+
+    const { skip, limit } = pagination(page, perPage);
+
+    const total = await this.productModel.totalCount({});
+    const totalPage = totalPageCacul(perPage, total);
+
+    const products = await this.productModel.findAll(skip, limit);
+
+    return { products, totalPage };
+  }
+
+  // 상품 필터링 조회
+  async getfilteredProducts(pageObj, inputFilterObj) {
+    const { page, perPage } = pageObj;
+
+    const { skip, limit } = pagination(page, perPage);
+
+    const { filterObj, sortObj } = makeFilterObj(inputFilterObj);
+
+    const products = await this.productModel.findFiltered(
+      skip,
+      limit,
+      sortObj,
+      filterObj
+    );
+
+    const total = await this.productModel.totalCount(filterObj);
+    const { totalPage } = totalPageCacul(perPage, total);
+
+    return { products, totalPage };
   }
 
   // 상품 목록 조회

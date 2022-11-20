@@ -108,31 +108,41 @@ adminRouter.delete("/:productId", async (req, res, next) => {
 productRouter.get("/", async (req, res, next) => {
   try {
     const page = Number(req.query.page || 1);
-    const perPage = Number(req.query.perPage || 9);
-
+    const perPage = Number(req.query.perPage || 8);
+    const pageObj = { page, perPage };
     // 전체 상품 목록을 얻음
-    let products = await productService.getProducts();
-    // 페이지네이션
-    let arr = [];
-    for (let i = 0; i < products.length; i++) {
-      arr.push(products[i]);
-    }
+    let { products, totalPage } = await productService.getProducts(pageObj);
 
-    const productsPerPage = arr.slice(
-      perPage * (page - 1),
-      perPage * (page - 1) + perPage
+    // 상품 목록(배열)을 JSON 형태로 프론트에 보냄
+    res.status(200).json({ products, totalPage });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// 상품 필터링 조회
+productRouter.get("/filter-search", async (req, res, next) => {
+  try {
+    const key = req.query.key;
+    if (!key) {
+      throw new BadRequest("Undefined key", 4204);
+    }
+    const page = Number(req.query.page || 1);
+    const perPage = Number(req.query.perPage || 9);
+    const str = req.query.str;
+    const min = Number(req.query.min || 0);
+    const max = Number(req.query.max || 0);
+    const sort = Number(req.query.sort) === -1 ? -1 : 1;
+    const pageObj = { page, perPage };
+    const inputFilterObj = { key, str, min, max, sort };
+
+    let { products, totalPage } = await productService.getfilteredProducts(
+      pageObj,
+      inputFilterObj
     );
 
-    const total = arr.length;
-    const totalPage = Math.ceil(total / perPage);
-    products = productsPerPage;
-    const result = {
-      totalPage,
-      total,
-      products,
-    };
     // 상품 목록(배열)을 JSON 형태로 프론트에 보냄
-    res.status(200).json(result);
+    res.status(200).json({ products, totalPage });
   } catch (error) {
     next(error);
   }
