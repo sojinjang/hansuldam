@@ -5,7 +5,6 @@ const pwChangeBox = document.querySelector("#change-password-container");
 const userPassword = document.querySelector("#user-password");
 const changePasswordInput = document.querySelector(".changePassword");
 const changePasswordCheck = document.querySelector(".changePasswordCheck");
-const currentPassword = document.querySelector(".currentPassword");
 
 export function openPasswordPage(e) {
   e.preventDefault();
@@ -18,16 +17,7 @@ export async function changePassword(e) {
 
   const userData = await get(ApiUrl.USER_INFORMATION);
 
-  const newPassword = {
-    password: currentPassword.value,
-    newPassword: changePasswordInput.value,
-  };
-
-  if (
-    currentPassword.value == "" ||
-    changePasswordInput.value == "" ||
-    changePasswordCheck.value == ""
-  ) {
+  if (changePasswordInput.value == "" || changePasswordCheck.value == "") {
     alert("비밀번호 입력칸을 확인해주세요.");
     return;
   }
@@ -36,8 +26,13 @@ export async function changePassword(e) {
     return;
   }
 
+  const newPassword = {
+    password: userData.password,
+    newPassword: changePasswordInput.value,
+  };
+
   try {
-    await patch("/api/auth", "user", newPassword);
+    await patch(ApiUrl.USER_INFORMATION, "", newPassword);
     console.log("비밀번호가 변경되었습니다.");
     userPassword.innerHTML = changePasswordInput.value;
     pwChangeBox.style.display = "none";
