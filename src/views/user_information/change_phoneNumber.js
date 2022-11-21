@@ -34,11 +34,11 @@ export async function changePhoneNumber(e) {
   }
 
   try {
-    await patch(ApiUrl.USER_INFORMATION, phoneNumber);
+    await patch(ApiUrl.USER_INFORMATION, "", phoneNumber);
     alert("전화번호가 변경되었습니다.");
     userPhoneNumber.innerHTML = changePhoneNumberInput.value;
     numChangeBox.style.display = "none";
   } catch (e) {
-    alert("문제가 발생했습니다. 다시 확인해주세요.");
+    console.log(phoneNumber);
   }
 }
