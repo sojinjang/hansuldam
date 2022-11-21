@@ -5,6 +5,7 @@ import {
   userRouter,
   categoryRouter,
   productRouter,
+  imageRouter,
   commentRouter,
   orderRouter,
   cartRouter,
@@ -30,6 +31,7 @@ app.use(viewsRouter);
 app.use("/api/user", userRouter);
 app.use("/api/category", categoryRouter);
 app.use("/api/products", productRouter);
+app.use("/api/image", imageRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/comments", commentRouter);
