@@ -12,17 +12,8 @@ async function renderData() {
   });
   const currentId = queryString.id;
   const fetchedData = await get(ApiUrl.PRODUCTS, currentId);
-  const {
-    _id,
-    category,
-    name,
-    price,
-    volume,
-    description,
-    alcoholType,
-    alcoholDegree,
-    _,
-  } = fetchedData;
+  const { _id, category, name, price, volume, description, alcoholType, alcoholDegree, _ } =
+    fetchedData;
 
   document.title = `${name} - 한술담 🍶`;
 
@@ -83,7 +74,7 @@ async function renderData() {
 
 async function orderAndCart() {
   let productData = await renderData();
-  productData["quantity"] = 1;
+  productData["quantity"] = 0;
 
   const { price, stock } = productData;
   const amountInput = document.querySelector(".amount-input");
@@ -103,21 +94,17 @@ async function orderAndCart() {
   }
 
   function moveToCartPage() {
-    if (
-      getSavedItems(Keys.CART_KEY) === null ||
-      getSavedItems(Keys.CART_KEY) === []
-    ) {
+    productData["quantity"] = +amountInput.value;
+    if (getSavedItems(Keys.CART_KEY) === null || getSavedItems(Keys.CART_KEY) === []) {
       saveItems(Keys.CART_KEY, [productData]);
     } else {
       let cartItems = getSavedItems(Keys.CART_KEY);
-      const existItemIdx = cartItems.findIndex(
-        (product) => product._id === productData._id
-      );
+      const existItemIdx = cartItems.findIndex((product) => product._id === productData._id);
 
       if (existItemIdx === -1) {
         cartItems = [...cartItems, productData];
       } else {
-        cartItems[existItemIdx].quantity += 1;
+        cartItems[existItemIdx].quantity += +amountInput.value;
       }
       saveItems(Keys.CART_KEY, cartItems);
     }

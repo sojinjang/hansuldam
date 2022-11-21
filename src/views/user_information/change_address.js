@@ -36,7 +36,7 @@ export async function changeAddress(e) {
   }
 
   try {
-    await patch(ApiUrl.USER_INFORMATION, address);
+    await patch(ApiUrl.USER_INFORMATION, "", address);
     alert("주소 변경이 완료되었습니다.");
     userAddress1.innerHTML = changeAddress1.value;
     userAddress2.innerHTML = changeAddress2.value;

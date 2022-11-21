@@ -11,8 +11,8 @@ const adminRouter = Router();
 commentRouter.use("/auth", loginRequired, authRouter);
 commentRouter.use("/admin", loginRequired, adminRequired, adminRouter);
 
-//댓글 조회(회원)
-authRouter.get("/:productId", async (req, res, next) => {
+//댓글 조회
+commentRouter.get("/:productId", async (req, res, next) => {
   try {
     const { productId } = req.params;
     if (!productId) {

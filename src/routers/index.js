@@ -9,3 +9,4 @@ export * from "./comment-router";
 export * from "./order-router";
 export * from "./cart-router";
 export * from "./naver-router";
+export * from "./image-router";
