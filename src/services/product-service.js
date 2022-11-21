@@ -47,8 +47,10 @@ class ProductService {
     if (!categoryCheck) {
       throw new NotFound("This Category Not in DB", 4403);
     }
+
+    let filterObj = { _id: productId };
     // 우선 해당 id의 상품이 db에 있는지 확인
-    let product = await this.productModel.findByObj({ _id: productId });
+    let product = await this.productModel.findByObj(filterObj);
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!product) {
       throw new NotFound("This Product Not In DB", 4203);
@@ -61,13 +63,10 @@ class ProductService {
     }
 
     // 업데이트 진행
-    product = await this.productModel.update({
-      productId,
-      update: toUpdate,
-    });
+    product = await this.productModel.update(filterObj, { ...toUpdate });
 
     // category 모델에 product._id 추가
-    const filterObj = { _id: categoryCheck._id };
+    filterObj = { _id: categoryCheck._id };
     const updateObj = { $push: { products: productId } };
     await this.categoryModel.update(filterObj, updateObj);
 
