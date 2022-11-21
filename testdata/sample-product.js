@@ -1,4 +1,4 @@
-const productDatas = [
+const sampleProductDatas = [
   {
     name: "솔송주 약주",
     price: 18000,
@@ -407,4 +407,4 @@ const productDatas = [
   },
 ];
 
-module.exports = { productDatas };
+module.exports = { sampleProductDatas };

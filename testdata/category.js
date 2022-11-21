@@ -6,6 +6,7 @@ async function category() {
     { name: "방방곡곡 전국여행" },
     { name: "캠핑엔 막걸리" },
     { name: "한여름밤의 하이볼" },
+    { name: "없음" },
   ];
   try {
     await categoryModel.setTestdata(categoryDatas);
