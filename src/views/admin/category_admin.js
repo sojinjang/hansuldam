@@ -169,7 +169,7 @@ function modifyCategory() {
 
       $(".modify-category-button").addEventListener("click", async () => {
         const modifyValue = { name: $(".modify-category-input").value };
-        await patch("/api/admin/category", currentId, modifyValue);
+        await patch("/api/category/admin", currentId, modifyValue);
         $(".categories-container").remove();
       });
     });
