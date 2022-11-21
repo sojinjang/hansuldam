@@ -8,6 +8,7 @@ export class ProductModel {
     const totalCount = await Product.count(filterObj);
     return totalCount;
   }
+
   async create(productInfo) {
     const createdNewProduct = await Product.create(productInfo);
     return createdNewProduct;
@@ -19,10 +20,7 @@ export class ProductModel {
   }
 
   async findFiltered(skip, limit, sortObj, filterObj) {
-    const products = await Product.find(filterObj)
-      .sort(sortObj)
-      .skip(skip)
-      .limit(limit);
+    const products = await Product.find(filterObj).sort(sortObj).skip(skip).limit(limit);
     return products;
   }
 
@@ -41,11 +39,7 @@ export class ProductModel {
   async update(filterObj, updateObj) {
     const option = { returnOriginal: false };
 
-    const updatedProduct = await Product.findOneAndUpdate(
-      filterObj,
-      updateObj,
-      option
-    );
+    const updatedProduct = await Product.findOneAndUpdate(filterObj, updateObj, option);
     return updatedProduct;
   }
 
@@ -53,11 +47,7 @@ export class ProductModel {
     const filterObj = { _id: { $in: IdArray } };
     const option = { returnOriginal: false };
 
-    const updatedProduct = await Product.updateMany(
-      filterObj,
-      toUpdateObj,
-      option
-    );
+    const updatedProduct = await Product.updateMany(filterObj, toUpdateObj, option);
     return updatedProduct;
   }
 
