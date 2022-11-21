@@ -8,7 +8,7 @@ function isEmptyCart(productsList) {
 }
 
 function removeProductFromLocalDB(productId) {
-  let cartProducts = getSavedItems(Keys.v);
+  let cartProducts = getSavedItems(Keys.CART_KEY);
   cartProducts = cartProducts.filter((product) => String(product._id) !== String(productId));
   return cartProducts;
 }
