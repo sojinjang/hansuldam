@@ -7,7 +7,7 @@ const pagination = (page, perPage) => {
 const totalPageCacul = (perPage, total) => {
   const totalPage = Math.ceil(total / perPage);
 
-  return { totalPage };
+  return totalPage;
 };
 
 export { pagination, totalPageCacul };
