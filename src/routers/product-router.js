@@ -72,7 +72,6 @@ adminRouter.patch("/:productId", isEmptyObject, async (req, res, next) => {
       price,
       volume,
       category,
-      image,
       brand,
       description,
       stock,
