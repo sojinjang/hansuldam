@@ -3,7 +3,7 @@ import {
   openPhoneNumberPage,
   changePhoneNumber,
 } from "./change_phoneNumber.js";
-import { openAddressPage, changeAddress } from "./change_address.js";
+import { openAddressPage, changeAddress, insertFoundAddress } from "./change_address.js";
 import { get } from "../api.js";
 import { ApiUrl } from "../constants/ApiUrl.js";
 
@@ -15,10 +15,12 @@ const adConfrimBtn = document.querySelector(".adConfrimBtn");
 const numChangeBtn = document.querySelector(".numChangeBtn");
 const numConfirmBtn = document.querySelector(".numConfirmBtn");
 const userData = await get(ApiUrl.USER_INFORMATION);
+const findAddressBtn = document.querySelector(".find-address-button");
 
 $("#user-name").innerHTML = userData.fullName;
 $("#user-email").innerHTML = userData.email;
 $("#user-phoneNumber-number").innerHTML = userData.phoneNumber;
+$("#user-postalCode").innerHTML = userData.address.postalCode;
 $("#user-address1").innerHTML = userData.address.address1;
 $("#user-address2").innerHTML = userData.address.address2;
 
@@ -31,5 +33,7 @@ numChangeBtn.addEventListener("click", openPhoneNumberPage);
 numConfirmBtn.addEventListener("click", changePhoneNumber);
 
 adChangeBtn.addEventListener("click", openAddressPage);
+
+findAddressBtn.addEventListener("click", insertFoundAddress);
 
 adConfrimBtn.addEventListener("click", changeAddress);

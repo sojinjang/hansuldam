@@ -99,6 +99,7 @@ async function showOrderListPage() {
         return;
       }
       if (
+        $(".postalCode-input").value == "" ||
         $(".address1-input").value == "" ||
         $(".address2-input").value == ""
       ) {
@@ -110,6 +111,7 @@ async function showOrderListPage() {
         fullName: $(".name-input").value,
         phoneNumber: $(".phoneNumber-input").value,
         address: {
+          postalCode: $(".postalCode-input").value,
           address1: $(".address1-input").value,
           address2: $(".address2-input").value,
         },
@@ -120,6 +122,7 @@ async function showOrderListPage() {
         alert("정보가 수정되었습니다.");
         $(".user-name").innerHTML = $(".name-input").value;
         $(".user-phoneNumber").innerHTML = $(".phoneNumber-input").value;
+        $(".user-postalCode").innerHTML = $(".postalCode-input").value;
         $(".user-address1").innerHTML = $(".address1-input").value;
         $(".user-address2").innerHTML = $(".address2-input").value;
         $(".user-info-container").style.display = "none";
@@ -183,6 +186,7 @@ function createDeliveryInformationContainer(item) {
 <div class="user-address">
   <span class="user-address-container" id="${item._id}-user-address-container">주소</span>
   <div>
+    <span class="user-postalCode" id="${item._id}-user-postalCode">${item.address.postalCode}</span>
     <span class="user-address1" id="${item._id}-user-address1">${item.address.address1}</span>
     <span class="user-address2" id="${item._id}-user-address2">${item.address.address2}</span>
   </div>
@@ -217,6 +221,7 @@ function createChangeDeliveryInformationContainer() {
     <div class="user-info" id="change-info">
       <input type="text" class="name-input">
       <input type="text" class="phoneNumber-input">
+      <input type="text" class="postalCode-input">
       <input type="text" class="address1-input">
       <input type="text" class="address2-input">
     </div>
