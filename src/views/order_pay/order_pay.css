@@ -132,6 +132,15 @@
     font-weight: bold;
 }
 
+.user-info .user-name {
+    display: flex;
+    flex-direction: row;
+    margin-top: 2px;
+}
+
+.user-info .user-phoneNumber {
+    margin-top: 3px;
+}
 
 .address-container .address-info-text {
     margin-right: 15px;
@@ -155,6 +164,20 @@
 
 .address .user-address {
     margin-bottom: 10px;
+}
+
+.address .user-address .user-postal-code {
+    width: 100px;
+}
+
+.address .user-address .find-address-button {
+    cursor: pointer;
+    width: 75px;
+    height: 30px;
+    text-align: center;
+    background-color:#fdc78c;
+    border-radius: 5px;
+    margin-bottom : 15px;
 }
 
 .address-status .status-input {
