@@ -1,10 +1,9 @@
 const { productModel } = require("../src/db");
 const { categoryService } = require("../src/services");
-const { productDatas } = require("./productSample");
+const { productDatas } = require("./sample-product");
 
 async function product() {
   try {
-    console.log(productDatas[0]);
     const products = await productModel.setTestdata(productDatas);
     await Promise.all(
       products.map(async (cur) => {
@@ -18,5 +17,4 @@ async function product() {
     console.log(error);
   }
 }
-product();
 module.exports = { product };
