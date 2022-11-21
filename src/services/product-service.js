@@ -115,15 +115,10 @@ class ProductService {
 
     const { filterObj, sortObj } = makeFilterObj(inputFilterObj);
 
-    const products = await this.productModel.findFiltered(
-      skip,
-      limit,
-      sortObj,
-      filterObj
-    );
+    const products = await this.productModel.findFiltered(skip, limit, sortObj, filterObj);
 
     const total = await this.productModel.totalCount(filterObj);
-    const { totalPage } = totalPageCacul(perPage, total);
+    const totalPage = totalPageCacul(perPage, total);
 
     return { products, totalPage };
   }
