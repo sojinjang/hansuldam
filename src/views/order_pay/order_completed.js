@@ -28,7 +28,9 @@ async function writeOrderInfo() {
   username.innerText = orderInfoObj["fullName"];
   phoneNumber.innerText = orderInfoObj["phoneNumber"];
   address.innerText =
-    orderInfoObj["address"]["address1"] + orderInfoObj["address"]["address2"];
+    orderInfoObj["address"]["postalCode"] +
+    orderInfoObj["address"]["address1"] +
+    orderInfoObj["address"]["address2"];
   cardType.innerText = orderInfoObj["payment"]["detail"] + "카드";
   cardNumber.innerText = orderInfoObj["payment"]["number"];
   totalPrice.innerText = `${orderInfoObj["totalPrice"].toLocaleString("ko-KR")}원`;
