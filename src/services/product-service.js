@@ -1,5 +1,5 @@
 import fs from "fs";
-import { productModel, categoryModel } from "../db";
+import { productModel, categoryModel, commentModel } from "../db";
 import { BadRequest, NotFound } from "../utils/errorCodes";
 import { pagination, totalPageCacul, makeFilterObj } from "../utils";
 
@@ -110,6 +110,9 @@ class ProductService {
     const updateObj = { $pull: { products: productId } };
 
     await this.categoryModel.update(filterObj, updateObj);
+
+    // 상품의 댓글 지우기
+    await this.commentModel.deleteByProduct(productId);
 
     // 삭제 진행
     const deletedProduct = await this.productModel.delete(productId);
