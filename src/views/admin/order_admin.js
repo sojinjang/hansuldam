@@ -3,8 +3,13 @@ import removeContainer from "./remove_container.js";
 import { ApiUrl } from "../constants/ApiUrl.js";
 
 const $ = (selector) => document.querySelector(selector);
-const fetchProductsData = await get(ApiUrl.PRODUCTS);
-const productsData = fetchProductsData["products"];
+let productsTotalData = [];
+
+async function fetchProducts(index) {
+  const data = await get(`${ApiUrl.PRODUCTS_OVERALL_INFORMATION}${index}&perpage=9`);
+
+  return data;
+}
 
 function initFunc() {
   $(".order-menu").addEventListener("click", () => {
@@ -15,12 +20,19 @@ function initFunc() {
 
 async function openOrderMenu() {
   const ordersData = await get(ApiUrl.ADMIN_ORDERS);
+  const { products, totalPage } = await fetchProducts(1);
+  productsTotalData = products;
+
+  for (let i = 2; i <= totalPage; i++) {
+    (await fetchProducts(i))["products"].forEach((product) => {
+      productsTotalData.push(product);
+    });
+  }
 
   $(".order-menu").classList.add("isClicked");
 
   const orderContainerHTML = `<section class="orders-container">
   <button class="button close-button">닫기</button>
-  <button class="button modify-confirm-button">수정하기</button>
 <div class="columns title-container">
   <div class="column is-2">이름</div>
   <div class="column is-2">주소</div>
@@ -98,13 +110,13 @@ async function renderOrder(order) {
 
   function orderDetail() {
     const orderObj = productsInOrder.reduce((arr, orderList) => {
-      const currentProductIndex = productsData.findIndex(
+      const currentProductIndex = productsTotalData.findIndex(
         (product) => product._id === orderList["id"]
       );
 
       if (currentProductIndex !== -1) {
         const obj = {
-          name: productsData[currentProductIndex]["name"],
+          name: productsTotalData[currentProductIndex]["name"],
           quantity: orderList["quantity"],
         };
 
@@ -122,10 +134,7 @@ async function renderOrder(order) {
     }, []);
 
     const orderDetailDiv = document.createElement("div");
-    orderDetailDiv.setAttribute(
-      "class",
-      "columns items-container items-detail none"
-    );
+    orderDetailDiv.setAttribute("class", "columns items-container items-detail none");
     orderDetailDiv.setAttribute("id", `detail-${_id}`);
 
     let detailText = ``;
@@ -134,9 +143,7 @@ async function renderOrder(order) {
     });
 
     orderDetailDiv.innerHTML = `<div class="column is-8">${detailText}</div>
-    <div class="column is-2">총 ${Number(totalPrice).toLocaleString(
-      "ko-KR"
-    )}원</div>`;
+    <div class="column is-2">총 ${Number(totalPrice).toLocaleString("ko-KR")}원</div>`;
 
     $(".orders-container").append(orderDetailDiv);
   }
@@ -167,10 +174,7 @@ function deleteOrder() {
 
       const currentId = e.target.getAttribute("id");
 
-      e.target.setAttribute(
-        "class",
-        "button column is-danger delete-button-confirm"
-      );
+      e.target.setAttribute("class", "button column is-danger delete-button-confirm");
 
       $(".delete-button-confirm").addEventListener("click", async () => {
         await del(ApiUrl.ADMIN_ORDERS, currentId);

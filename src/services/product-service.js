@@ -122,12 +122,12 @@ class ProductService {
 
   // 상품 목록 조회
   async getProducts(pageObj) {
-    const { page, perPage } = pageObj;
+    const { page, perpage } = pageObj;
 
-    const { skip, limit } = pagination(page, perPage);
+    const { skip, limit } = pagination(page, perpage);
 
     const total = await this.productModel.totalCount({});
-    const totalPage = totalPageCacul(perPage, total);
+    const totalPage = totalPageCacul(perpage, total);
 
     const products = await this.productModel.findAll(skip, limit);
 
@@ -136,16 +136,16 @@ class ProductService {
 
   // 상품 필터링 조회
   async getfilteredProducts(pageObj, inputFilterObj) {
-    const { page, perPage } = pageObj;
+    const { page, perpage } = pageObj;
 
-    const { skip, limit } = pagination(page, perPage);
+    const { skip, limit } = pagination(page, perpage);
 
     const { filterObj, sortObj } = makeFilterObj(inputFilterObj);
 
     const products = await this.productModel.findFiltered(skip, limit, sortObj, filterObj);
 
     const total = await this.productModel.totalCount(filterObj);
-    const totalPage = totalPageCacul(perPage, total);
+    const totalPage = totalPageCacul(perpage, total);
 
     return { products, totalPage };
   }
