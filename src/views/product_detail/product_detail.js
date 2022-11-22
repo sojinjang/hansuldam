@@ -12,8 +12,18 @@ async function renderData() {
   });
   const currentId = queryString.id;
   const fetchedData = await get(ApiUrl.PRODUCTS, currentId);
-  const { _id, category, name, price, volume, description, alcoholType, alcoholDegree, _ } =
-    fetchedData;
+  const {
+    _id,
+    image,
+    category,
+    name,
+    price,
+    volume,
+    description,
+    alcoholType,
+    alcoholDegree,
+  } = fetchedData;
+  const imageUrl = "../" + decodeURIComponent(image).split("views")[1];
 
   document.title = `${name} - 한술담 🍶`;
 
@@ -23,29 +33,29 @@ async function renderData() {
   productSection.setAttribute("id", _id);
   productSection.innerHTML = `<div class="product-container">
   <div class="image-warpper">
-    <img src="../img/ricewine_icon.png" alt="상품 이미지" />
+    <img src="${imageUrl}" alt="상품 이미지" />
   </div>
-	<div class="content__container">
-		<div class="content__main-info">
+  <div class="content__container">
+    <div class="content__main-info">
     <p class="content__item content__name">${name}</p>
     <p class="content__item content__category">${category}</p>
-			<p class="content__item content__price">${changeToKoreanWon(price)}원</p>
-			<p class="content__desc">${description}</p>
-		</div>
-		<div class="content__detail-info">
-			<p>
-				<span class="content__alcoholType">종류</span>
-				<span class="content__item content__alcoholType">${alcoholType}</span>
-			</p>
-			<p>
-				<span class="content__alcoholDegree">도수</span>
-				<span class="content__item content__alcoholDegree">${alcoholDegree}도</span>
-			</p>
-			<p>
-				<span class="content__volume">용량</span>
-				<span class="content__item content__volume">${volume}ml</span>
-			</p>
-		</div>
+      <p class="content__item content__price">${changeToKoreanWon(price)}원</p>
+      <p class="content__desc">${description}</p>
+    </div>
+    <div class="content__detail-info">
+      <p>
+        <span class="content__alcoholType">종류</span>
+        <span class="content__item content__alcoholType">${alcoholType}</span>
+      </p>
+      <p>
+        <span class="content__alcoholDegree">도수</span>
+        <span class="content__item content__alcoholDegree">${alcoholDegree}도</span>
+      </p>
+      <p>
+        <span class="content__volume">용량</span>
+        <span class="content__item content__volume">${volume}ml</span>
+      </p>
+    </div>
       <div class="amount-container">
         <a class="amount-minus-button">-</a>
         <input value="1" type="number" class="amount-input" />
@@ -55,19 +65,19 @@ async function renderData() {
           <span class="amount-total-price">${changeToKoreanWon(price)}</span>
         </div>
       </div>
-		<div class="button-container">
-			<button class="button is-info ml-2" id="order-button">
+    <div class="button-container">
+      <button class="button is-info ml-2" id="order-button">
         바로 주문하기
-			</button>
-			<button class="button" id="basket-button">장바구니 담기</button>
-			<p class="cart-message">
-				장바구니에 담았습니다!
-			</p>
-		</div>
-	</div>
+      </button>
+      <button class="button" id="basket-button">장바구니 담기</button>
+      <p class="cart-message">
+        장바구니에 담았습니다!
+      </p>
+    </div>
+  </div>
 </div>`;
 
-  $(".body-container").append(productSection);
+  $(".body-container").prepend(productSection);
 
   return fetchedData;
 }
