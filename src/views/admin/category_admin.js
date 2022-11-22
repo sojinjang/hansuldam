@@ -11,8 +11,23 @@ function initFunc() {
   });
 }
 
+async function fetchProducts(index) {
+  const data = await get(`${ApiUrl.PRODUCTS_OVERALL_INFORMATION}${index}&perpage=9`);
+
+  return data;
+}
+
 async function openCategoryMenu() {
   const categoriesData = await get(ApiUrl.CATEGORY);
+  const { products, totalPage } = await fetchProducts(1);
+  let productsTotalData = products;
+
+  for (let i = 2; i <= totalPage; i++) {
+    (await fetchProducts(i))["products"].forEach((product) => {
+      productsTotalData.push(product);
+    });
+  }
+
   $(".category-menu").classList.add("isClicked");
 
   const productContainerHTML = `<section class="categories-container">
@@ -26,7 +41,7 @@ async function openCategoryMenu() {
 
   await $(".admin-menu").insertAdjacentHTML("afterend", productContainerHTML);
   categoriesData.forEach(async (category, index) => {
-    await renderCategory(category);
+    await renderCategory(category, productsTotalData);
     if (index == categoriesData.length - 1) {
       modifyCategory();
       deleteCategory();
@@ -76,26 +91,9 @@ async function postCategory(inputValue) {
   await post("/api/admin/category", inputValueObject);
 }
 
-async function fetchProducts(index) {
-  const data = await get(`${ApiUrl.PRODUCTS_OVERALL_INFORMATION}${index}`)
-
-  return data;
-}
-
-async function renderCategory(category) {
+async function renderCategory(category, productsTotalData) {
   const { _id, name } = await category;
-  const fetchProductsData = await get(ApiUrl.PRODUCTS);
-  const pageOneProducts = fetchProductsData["products"];
   let { products } = await category;
-  let productsTotalData = pageOneProducts;
-
-  let totalPage = fetchProductsData["totalPage"];
-
-  for (let i = 2; i <= totalPage; i++) {
-    (await fetchProducts(i))["products"].forEach((product) => {
-      productsTotalData.push(product);
-    });
-  }
 
   const productsArr = products.reduce((arr, productId) => {
     const currentProductIndex = productsTotalData.findIndex(
@@ -171,7 +169,7 @@ function modifyCategory() {
 
       $(".modify-category-button").addEventListener("click", async () => {
         const modifyValue = { name: $(".modify-category-input").value };
-        await patch("/api/admin/category", currentId, modifyValue);
+        await patch("/api/category/admin", currentId, modifyValue);
         $(".categories-container").remove();
       });
     });
