@@ -18,7 +18,6 @@
 
 .body-container button {
   cursor: pointer;
-  border: 1px solid;
   box-sizing: content-box;
 }
 
@@ -30,11 +29,25 @@
 .order-container .order-date {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
 }
 
 .order-date span {
-  font-size: 20px;
+  font-size: 15px;
+}
+
+.order-date .orderDate {
+  padding-right: 5px;
+  border-right: 1px solid;
+}
+
+.order-date .order-id {
+  padding-left: 5px;
+}
+
+.order-status div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .order-container .order-status {
@@ -54,19 +67,68 @@
   font-size: 15px;
 }
 
-.bill-container {
+.detail-info-button-container {
   display: flex;
-  flex-direction: row;
-  justify-content: end;
+  justify-content: center;
+}
+
+.detail-info-button-container .detail-info-btn {
+  font-size: 17px;
+  border-style: none;
 }
 
 .order-container .address-container {
-  display: flex;
+  display: none;
   flex-direction: column;
   box-sizing: border-box;
-  background-color: azure;
-  border-radius: 15px;
-  padding: 15px 15px;
+  margin-bottom: 20px;
+}
+
+.address-container .address-text {
+  font-size: 20px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid;
+}
+
+.address-container .address-info-text {
+  color: rgb(91, 90, 90);
+  width: 70px;
+}
+
+.payment-information-container {
+  display: none;
+  flex-direction: column;
+}
+
+.payment-information-container .payment-text {
+  font-size: 20px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid;
+}
+
+.payment-wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.payment-information-container .payment-wrapper span {
+  font-size: 15px;
+  margin: 5px 0;
+}
+
+.payment-wrapper .payment-info-text {
+  color: rgb(91, 90, 90);
+  margin: 5px 0;
+  width: 70px;
+}
+
+#payment-method-wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.payment-method {
+  margin: 5px 0;
 }
 
 .user-change-container {
@@ -76,7 +138,23 @@
   background-color: azure;
   border-radius: 15px;
   padding: 15px 15px;
-  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.user-change-container div {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 7px;
+}
+
+.user-change-container div span {
+  width: 70px;
+  margin: 0;
+}
+
+.user-change-container input {
+  border-style: none;
+  border-radius: 0;
 }
 
 .button-container {
@@ -120,32 +198,22 @@
   font-size: 15px;
 }
 
-.address-container .user-address {
+.address-container .address-info-wrapper {
   display: flex;
   flex-direction: row;
+  margin: 5px 0;
 }
 
-.user-address span {
-  margin-right: 10px;
+.address-info-wrapper span {
+  margin: 0;
 }
 
-.user-address div {
+.address-info-wrapper div {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
 }
 
-.address-container .user-credit-card {
-  display: flex;
-  flex-direction: row;
-  margin-right: 10px;
-}
-
-.user-credit-card span {
-  margin-right: 10px;
-}
-
-.user-credit-card div {
+.address-info-wrapper div {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -184,5 +252,6 @@
 .change-btn {
   width: 70px;
   border-radius: 10px;
+  background-color: darkkhaki;
   text-align: center;
 }
