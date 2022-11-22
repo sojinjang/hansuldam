@@ -13,6 +13,9 @@
         src="https://kit.fontawesome.com/9daa42bcef.js"
         crossorigin="anonymous"
         ></script>
+        <script
+            src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
+        ></script>
         <link rel="stylesheet" href="order_pay.css" />
         <link rel="stylesheet" href="../template/footer/footer.css" />
         <link rel="stylesheet" href="../template/header/header.css" />
@@ -55,8 +58,10 @@
                         <span>배송지</span>
                         <div class="address">
                             <div class="user-address">
-                                <input class="user-address1"></input>
-                                <input class="user-address2"></input>
+                                <button class="find-address-button" type="submit">주소 찾기</button>
+                                <input class="user-postal-code" type="text" placeholder="우편번호" readonly></input>
+                                <input class="user-address1" type="text" placeholder="주소" readonly></input>
+                                <input class="user-address2" type="text" placeholder="상세주소" autocomplete="on"></input>
                             </div>
                             <div class="address-status">
                                 <select name="" id="delivery-select">
