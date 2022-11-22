@@ -4,8 +4,8 @@ import { CommentSchema } from "../schemas/comment-schema";
 const Comment = model("comments", CommentSchema);
 
 export class CommentModel {
-  async findById(commentId) {
-    const comment = await Comment.findOne({ _id: commentId });
+  async findByObj(filterObj) {
+    const comment = await Comment.findOne(filterObj);
     return comment;
   }
 
@@ -24,20 +24,20 @@ export class CommentModel {
     return comments;
   }
 
-  async update({ commentId, update }) {
-    const filter = { _id: commentId };
+  async update(filterObj, updateObj) {
     const option = { returnOriginal: false };
 
-    const updatedcomment = await Comment.findOneAndUpdate(
-      filter,
-      update,
-      option
-    );
+    const updatedcomment = await Comment.findOneAndUpdate(filterObj, updateObj, option);
     return updatedcomment;
   }
 
   async deleteById(commentId) {
     const result = await Comment.deleteOne({ _id: commentId });
+    return result;
+  }
+
+  async deleteByProduct(productId) {
+    const result = await Comment.deleteMany({ _id: productId });
     return result;
   }
 }
