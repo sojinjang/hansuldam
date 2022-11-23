@@ -272,6 +272,30 @@ input[type="number"]::-webkit-inner-spin-button {
   padding: 10px;
 }
 
+@media (min-width: 400px) {
+  #modal .modal-window {
+    width: 390px;
+  }
+}
+
+@media (min-width: 640px) {
+  #modal .modal-window {
+    width: 500px;
+  }
+}
+
+@media (min-width: 768px) {
+  #modal .modal-window {
+    width: 550px;
+  }
+}
+
+@media (min-width: 1024px) {
+  #modal .modal-window {
+    width: 650px;
+  }
+}
+
 #modal .modal-window .review-input {
   width: 90%;
   height: 200px;
