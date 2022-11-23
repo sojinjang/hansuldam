@@ -4,9 +4,10 @@ import { BadRequest, NotFound } from "../utils/errorCodes";
 import { pagination, totalPageCacul, makeFilterObj } from "../utils";
 
 class ProductService {
-  constructor(productModel, categoryModel) {
+  constructor(productModel, categoryModel, commentModel) {
     this.productModel = productModel;
     this.categoryModel = categoryModel;
+    this.commentModel = commentModel;
   }
 
   // 상품추가(관리자)
@@ -194,6 +195,6 @@ class ProductService {
   }
 }
 
-const productService = new ProductService(productModel, categoryModel);
+const productService = new ProductService(productModel, categoryModel, commentModel);
 
 export { productService };

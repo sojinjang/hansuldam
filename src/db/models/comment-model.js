@@ -5,12 +5,12 @@ const Comment = model("comments", CommentSchema);
 
 export class CommentModel {
   async findByObj(filterObj) {
-    const comment = await Comment.findOne(filterObj);
+    const comment = await Comment.findOne(filterObj).populate("userId", "fullName");
     return comment;
   }
 
   async findAllByProductId(productId) {
-    const comments = await Comment.find({ productId });
+    const comments = await Comment.find({ productId }).populate("userId", "fullName");
     return comments;
   }
 
@@ -20,7 +20,7 @@ export class CommentModel {
   }
 
   async findAll() {
-    const comments = await Comment.find({});
+    const comments = await Comment.find({}).populate("userId", "fullName");
     return comments;
   }
 
