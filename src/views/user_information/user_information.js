@@ -3,6 +3,9 @@ import { openPhoneNumberPage, changePhoneNumber } from "./change_phoneNumber.js"
 import { openAddressPage, changeAddress, insertFoundAddress } from "./change_address.js";
 import * as api from "../api.js";
 import { ApiUrl } from "../constants/ApiUrl.js";
+import { deleteCookie } from "../utils/cookie.js";
+import { Keys } from "../constants/Keys.js";
+import { resetCart } from "../utils/localStorage.js";
 
 const $ = (selector) => document.querySelector(selector);
 const pwChangeBtn = document.querySelector(".pwChangeBtn");
@@ -42,11 +45,12 @@ async function deleteUserInformation(e) {
   try {
     if (confirm("정말 탈퇴하시겠습니까?")) {
       await api.delete(ApiUrl.USER_INFORMATION);
+      resetCart(Keys.CART_KEY);
       deleteCookie(Keys.TOKEN_KEY);
       alert("성공적으로 탈퇴되셨습니다.");
       window.location.href = "/";
     }
   } catch (e) {
-    alert("문제가 발생했습니다. 다시 시도해주세요");
+    alert(e.message);
   }
 }
