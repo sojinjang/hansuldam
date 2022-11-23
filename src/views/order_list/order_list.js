@@ -1,6 +1,7 @@
 import { get, patch, delete as del } from "../api.js";
 import { ApiUrl } from "../constants/ApiUrl.js";
 import { isName } from "../utils/validator.js";
+import { findAddress } from "../utils/findAddress.js";
 
 const $ = (selector) => document.querySelector(selector);
 const selectId = (selector) => document.getElementById(selector);
@@ -45,6 +46,10 @@ orderId.forEach((id) => {
     );
     selectId(`${orderList._id}-cancel-order`).addEventListener("click", cancelOrder);
     selectId(`${orderList._id}-change-btn`).addEventListener("click", setNewInformation);
+    selectId(`${orderList._id}-find-address-btn`).addEventListener(
+      "click",
+      insertFoundAddress
+    );
 
     function showDetailInformationPage() {
       selectId(`${orderList._id}-address-container`).style.display = "flex";
@@ -56,6 +61,12 @@ orderId.forEach((id) => {
 
     function showDeliveryInformationChangePage() {
       selectId(`${orderList._id}-user-change-container`).style.display = "flex";
+    }
+
+    async function insertFoundAddress() {
+      const { foundZoneCode, foundAddress } = await findAddress();
+      selectId(`${orderList._id}-input-postalCode`).value = foundZoneCode;
+      selectId(`${orderList._id}-input-address1`).value = foundAddress;
     }
 
     async function setNewInformation() {
@@ -79,6 +90,7 @@ orderId.forEach((id) => {
         fullName: selectId(`${orderList._id}-input-name`).value,
         phoneNumber: selectId(`${orderList._id}-input-phoneNumber`).value,
         address: {
+          postalCode: selectId(`${orderList._id}-input-postalCode`).value,
           address1: selectId(`${orderList._id}-input-address1`).value,
           address2: selectId(`${orderList._id}-input-address2`).value,
         },
@@ -92,6 +104,9 @@ orderId.forEach((id) => {
         ).value;
         selectId(`${orderList._id}-user-phoneNumber`).innerHTML = selectId(
           `${orderList._id}-input-phoneNumber`
+        ).value;
+        selectId(`${orderList._id}-user-postalCode`).innerHTML = selectId(
+          `${orderList._id}-input-postalCode`
         ).value;
         selectId(`${orderList._id}-user-address1`).innerHTML = selectId(
           `${orderList._id}-input-address1`
@@ -205,6 +220,7 @@ function createDeliveryInformaionContainer(item) {
 <div class="address-info-wrapper">
   <span class="address-info-text" id="${item._id}-user-address-container">주소</span>
   <div>
+    <span class="user-address1" id="${item._id}-user-postalCode">${item.address.postalCode}</span>
     <span class="user-address1" id="${item._id}-user-address1">${item.address.address1}</span>
     <span class="user-address2" id="${item._id}-user-address2">${item.address.address2}</span>
   </div>
@@ -277,6 +293,13 @@ function createDeliveryInformationChangeContainer(item) {
     <div>
       <input
         type="text"
+        id="${item._id}-input-postalCode"
+        required
+        placeholder="우편번호"
+        autocomplete="on"
+      />
+      <input
+        type="text"
         id="${item._id}-input-address1"
         required
         placeholder="oo시 ㅇㅇ구 ㅇㅇ동"
@@ -290,6 +313,7 @@ function createDeliveryInformationChangeContainer(item) {
         autocomplete="on"
       />
     </div>
+    <button id="${item._id}-find-address-btn">찾기</button>
   </div>
   <button class="change-btn" id="${item._id}-change-btn">변경하기</button>
 </div>`;
