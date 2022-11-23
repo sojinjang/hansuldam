@@ -4,10 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>상세페이지 - 한술담 🍶</title>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
-    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
     <script
       defer
       src="https://kit.fontawesome.com/9daa42bcef.js"
@@ -23,15 +20,30 @@
         <div class="review-title-container">
           <div class="review-title">리뷰</div>
           <div class="review-button-wrapper">
-            <button class="review-write-button" role="button">리뷰 작성</button>
+            <button class="review-write-button" role="button">리뷰쓰기</button>
           </div>
         </div>
         <div class="review-list-container">이 상품의 첫 리뷰를 작성해보세요.</div>
+        <div id="modal" class="modal-overlay">
+          <div class="modal-window">
+            <div class="modal-upper-section">
+              <div class="title">
+                <h2>리뷰 쓰기</h2>
+              </div>
+              <div class="close-area">X</div>
+            </div>
+            <div class="content">
+              <div>사진 첨부하기</div>
+              <div>상품은 어떠셨나요?</div>
+              <input class="review-input" placeholder="최소 10자 이상 작성해주세요."></input>
+              <button class="review-submit-button" role="button"><span class="text">등록하기</span></button>
+            </div>
+          </div>
+        </div>
       </section>
     </main>
-    
     <script type="module" src="../template/getHeaderFooter.js"></script>
     <script type="module" src="product_detail.js"></script>
+    <script type="module" src="product_review.js"></script>
   </body>
 </html>
-
