@@ -84,9 +84,19 @@ async function verifyBuyer(productId) {
   return productArr.includes(productId);
 }
 
-function submitReview() {
+function makeCommentObj(comment) {
+  return { productId: productId, content: comment };
+}
+async function submitReview() {
   const comment = document.querySelector(".review-input").value;
   if (!isValidComment(comment)) return alert("최소 10자 이상 작성해주세요. ✍️");
+  const commentObj = makeCommentObj(comment);
+  try {
+    await api.post(ApiUrl.AUTH_COMMENTS, commentObj);
+    location.reload();
+  } catch (err) {
+    alert(err.message);
+  }
 }
 
 if (isLoggedIn) isBuyer = await verifyBuyer(productId);
