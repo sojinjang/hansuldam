@@ -16,10 +16,10 @@ export function openAddressPage(e) {
   adChangeBox.style.display = "flex";
 }
 
-export async function insertFoundAddress(){
-  const {foundZoneCode, foundAddress} = await findAddress();
-  changePostalCode.value = foundZoneCode
-  changeAddress1.value = foundAddress
+export async function insertFoundAddress() {
+  const { foundZoneCode, foundAddress } = await findAddress();
+  changePostalCode.value = foundZoneCode;
+  changeAddress1.value = foundAddress;
 }
 
 export async function changeAddress(e) {
@@ -38,22 +38,26 @@ export async function changeAddress(e) {
     changeAddress1.value == userAddress1.innerHTML &&
     changeAddress2.value == userAddress2.innerHTML
   ) {
-    alert("주소를 다르게 입력하세요.");
+    alert("주소를 다시 확인해주세요");
     return;
   }
-  if (changePostalCode.value == "" || changeAddress1.value == "" || changeAddress2.value == "") {
+  if (
+    changePostalCode.value == "" ||
+    changeAddress1.value == "" ||
+    changeAddress2.value == ""
+  ) {
     alert("주소를 입력해주세요");
     return;
   }
 
   try {
     await patch(ApiUrl.USER_INFORMATION, "", address);
-    alert("주소 변경이 완료되었습니다.");
+    alert("주소가 성공적으로 변경되었습니다🎉");
     userPostalCode.innerHTML = changePostalCode.value;
     userAddress1.innerHTML = changeAddress1.value;
     userAddress2.innerHTML = changeAddress2.value;
     adChangeBox.style.display = "none";
   } catch (e) {
-    alert("문제가 발생했습니다. 다시 확인해주세요.");
+    alert(e.message);
   }
 }

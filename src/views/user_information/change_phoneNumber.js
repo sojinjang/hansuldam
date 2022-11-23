@@ -35,10 +35,10 @@ export async function changePhoneNumber(e) {
 
   try {
     await patch(ApiUrl.USER_INFORMATION, "", phoneNumber);
-    alert("전화번호가 변경되었습니다.");
+    alert("전화번호가 변경되었습니다🎉");
     userPhoneNumber.innerHTML = changePhoneNumberInput.value;
     numChangeBox.style.display = "none";
   } catch (e) {
-    console.log(phoneNumber);
+    console.log(e.message);
   }
 }
