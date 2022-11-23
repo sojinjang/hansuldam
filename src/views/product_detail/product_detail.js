@@ -3,6 +3,7 @@ import { changeToKoreanWon } from "../utils/useful_functions.js";
 import { Keys } from "../constants/Keys.js";
 import { getSavedItems, saveItems } from "../utils/localStorage.js";
 import { ApiUrl } from "../constants/ApiUrl.js";
+import { countCart } from "../template/header/header.js";
 
 const $ = (selector) => document.querySelector(selector);
 
@@ -69,7 +70,7 @@ async function renderData() {
 			<button class="button is-info ml-2" id="order-button">
         바로 주문하기
 			</button>
-			<button class="button" id="basket-button">장바구니 담기</button>
+			<button class="button" id="cart-button">장바구니 담기</button>
 			<p class="cart-message">
 				장바구니에 담았습니다!
 			</p>
@@ -91,7 +92,7 @@ async function orderAndCart() {
   const totalPrice = document.querySelector(".amount-total-price");
 
   $("#order-button").addEventListener("click", moveToOrderPage);
-  $("#basket-button").addEventListener("click", moveToCartPage);
+  $("#cart-button").addEventListener("click", moveToCartPage);
   $(".amount-minus-button").addEventListener("click", decreaseAmount);
   $(".amount-plus-button").addEventListener("click", increaseAmount);
 
@@ -117,6 +118,7 @@ async function orderAndCart() {
         cartItems[existItemIdx].quantity += +amountInput.value;
       }
       saveItems(Keys.CART_KEY, cartItems);
+      countCart();
     }
 
     (function applyCartMessage() {
