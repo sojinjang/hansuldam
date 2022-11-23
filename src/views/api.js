@@ -42,6 +42,23 @@ async function post(endpoint, data) {
   return result;
 }
 
+async function postImg(endpoint, data) {
+  const apiUrl = endpoint;
+  const bodyData = JSON.stringify(data);
+  const res = await fetch(apiUrl, {
+    method: "POST",
+    body: bodyData,
+  });
+
+  if (!res.ok) {
+    const error = await res.json();
+    throw new Error(ErrorMessage[error.errorCode]);
+  }
+
+  const result = await res.json();
+  return result;
+}
+
 async function patch(endpoint, params = "", data) {
   const apiUrl = params === "" ? endpoint : `${endpoint}/${params}`;
   const bodyData = JSON.stringify(data);
@@ -85,4 +102,4 @@ async function del(endpoint, params = "", data = {}) {
   return result;
 }
 
-export { get, post, patch, del as delete };
+export { get, post, postImg, patch, del as delete };
