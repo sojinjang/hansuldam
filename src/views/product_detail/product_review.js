@@ -1,5 +1,6 @@
 import * as api from "../api.js";
 import { ApiUrl } from "../constants/ApiUrl.js";
+import { changeToKoreanTime } from "../utils/useful_functions.js";
 
 const reviewModalForm = document.querySelector(".modal-overlay");
 const reviewWriteButton = document.querySelector(".review-write-button");
@@ -21,28 +22,57 @@ async function getReviewList() {
   }
 }
 
+function refineTitleAndDirectory(review) {
+  let reviewTitle = "";
+  let imgDirectory = null;
+
+  if (review.content.length > 60) reviewTitle = review.content.slice(0, 60) + "...";
+  else reviewTitle = review.content;
+  if (review.image) {
+    imgDirectory = "../" + decodeURIComponent(review.image).split("views")[1];
+  }
+
+  return { reviewTitle, imgDirectory };
+}
+
 function showReview(review) {
-  const userName = review.userId.fullName;
-  const reviewContent = review.content;
-  console.log(review);
+  const { reviewTitle, imgDirectory } = refineTitleAndDirectory(review);
   const reviewContainer = document.createElement("div");
+  console.log(imgDirectory);
   reviewContainer.setAttribute("class", "single-review-container");
   reviewContainer.setAttribute("id", review._id);
-  reviewContainer.innerHTML = `
+  let reviewElements = `
               <div style='display:flex' class="single-review-title-container">
-                <div class="single-review-title-content">리뷰제목</div>
+                <div class="single-review-title-content">${reviewTitle}</div>
+  `;
+  if (imgDirectory) {
+    reviewElements += `
                 <div class="image-icon"><img src="../img/image-icon.png"></div>
-                <div class="single-review-title-username">장고객</div>
+                <div class="single-review-title-username">${review.userId.fullName}</div>
             </div>
             <div style='display:none' class="single-review-detail-container">
               <div class="review-info">
-                <div class="review-date">2022-11-22</div>
-                <div class="review-username">장고객</div>
+                <div class="review-date">${changeToKoreanTime(review.createdAt)}</div>
+                <div class="review-username">${review.userId.fullName}</div>
               </div>
-              <div class="review-content-detail">리뷰내용</div>
-              <div ><img class="review-img" src="../img/redmonkey.jpeg"></div>
+              <div class="review-content-detail">${review.content}</div>
+              <div ><img class="review-img" src=${imgDirectory}></div>
             </div>
-  `;
+    `;
+  } else {
+    reviewElements += `
+                <div class="single-review-title-username">${review.userId.fullName}</div>
+            </div>
+            <div style='display:none' class="single-review-detail-container">
+              <div class="review-info">
+                <div class="review-date">${changeToKoreanTime(review.createdAt)}</div>
+                <div class="review-username">${review.userId.fullName}</div>
+              </div>
+              <div class="review-content-detail">${review.content}</div>
+            </div>
+    `;
+  }
+  reviewContainer.innerHTML = reviewElements;
   reviewListContainer.append(reviewContainer);
 }
 
@@ -63,7 +93,6 @@ function showReviewDetail(e) {
 }
 
 function hideReviewDetail(e) {
-  console.log(e.target);
   const detailSection = e.target.parentElement;
   const titleSection = e.target.parentElement.previousElementSibling;
   detailSection.style.display = "none";
