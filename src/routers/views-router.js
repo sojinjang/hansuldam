@@ -17,6 +17,7 @@ viewsRouter.use("/order-list", serveStatic("order_list"));
 viewsRouter.use("/find-password", serveStatic("find_password"));
 viewsRouter.use("/user-information", serveStatic("user_information"));
 viewsRouter.use("/myPage", serveStatic("myPage"));
+viewsRouter.use("/search", serveStatic("search"));
 
 viewsRouter.use("/", serveStatic(""));
 

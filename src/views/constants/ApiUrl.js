@@ -12,6 +12,7 @@ export const ApiUrl = Object.freeze({
   ADMIN_PRODUCTS: "/api/products/admin",
   PRODUCTS: "/api/products",
   PRODUCTS_OVERALL_INFORMATION: "/api/products?page=",
+  PRODUCTS_FILTER: "/api/products/filter-search?key=",
   ORDERS: "/api/orders",
   USER_ORDERS: "/api/orders/auth",
   ADMIN_ORDERS: "/api/orders/admin",
