@@ -13,26 +13,98 @@ footer {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-top: 20px;
 }
 
 .body-container .body-section-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   box-sizing: border-box;
 }
 
-.body-section-container a {
-  width: 350px;
-  border-style: solid;
+.body-section-container .user-information-container {
+  display: flex;
+  flex-direction: column;
+  margin-right: 50px;
+  width: 250px;
+}
+
+.user-information-container span {
+  font-size: 25px;
+  text-align: center;
+  border-bottom: 1px solid black;
+  padding-bottom: 15px;
+  font-weight: bold;
+}
+
+.body-section-container .user-order-information-container {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+}
+
+.user-order-information-container span {
+  font-size: 25px;
+  text-align: center;
+  border-bottom: 1px solid black;
+  padding-bottom: 15px;
+  font-weight: bold;
+}
+
+.body-section-container button {
+  font-size: 20px;
+  text-align: center;
+  color: black;
+  border: 0;
   margin: 10px 0;
+}
+
+.body-section-container a {
+  font-size: 20px;
+  text-align: center;
+  color: black;
+  margin: 10px 0;
+}
+
+.password-container {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  width: 400px;
+}
+
+.password-container span {
+  font-size: 25px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.password-container input {
+  height: 35px;
+  padding-left: 10px;
+  margin-bottom: 15px;
+}
+
+.password-container button {
+  height: 35px;
+  text-align: center;
+  background-color: black;
+  color: white;
+}
+
+.body-container .none-user-page-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 }
 
 .none-user-page-container .none-user-page-input {
   width: 500px;
-  height: 200px;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
   justify-content: space-around;
   padding: 10px 10px;
 }
@@ -40,12 +112,30 @@ footer {
 .none-user-page-input span {
   text-align: center;
   font-size: 30px;
+  margin-bottom: 20px;
+}
+
+.none-user-page-input p {
+  text-align: center;
+  color: gray;
+  margin-bottom: 50px;
+}
+
+.none-user-page-input input {
+  height: 50px;
+  font-size: 17px;
+  padding-left: 10px;
+  margin-bottom: 10px;
 }
 
 .none-user-page-input button {
+  height: 50px;
   text-align: center;
-  width: 200px;
   justify-content: center;
+  box-sizing: border-box;
+  background-color: black;
+  color: white;
+  margin-bottom: 10px;
 }
 
 .none-user-page-container .order-list-container {
@@ -56,7 +146,16 @@ footer {
 .order-list-container .order-date {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+}
+
+.order-date span {
+  font-size: 15px;
+}
+
+.order-date .orderDate {
+  padding-right: 5px;
+  margin-right: 5px;
+  border-right: 1px solid;
 }
 
 .order-list-container .single-product-container {
@@ -77,33 +176,136 @@ footer {
   flex-direction: column;
 }
 
-.bill-container {
+.detail-info-button-container {
   display: flex;
-  flex-direction: row;
-  justify-content: end;
+  justify-content: center;
 }
 
-.bill-container span {
+.detail-info-button-container .detail-info-btn {
+  font-size: 17px;
+  border-style: none;
+}
+
+.address-container {
+  display: none;
+  flex-direction: column;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+}
+
+.address-container .address-text {
   font-size: 20px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid;
+}
+
+.address-container .address-info-text {
+  color: rgb(91, 90, 90);
+  width: 70px;
+}
+
+.address-container .address-info-wrapper {
+  display: flex;
+  flex-direction: row;
+  margin: 5px 0;
+}
+
+.address-info-wrapper div {
+  display: flex;
+  flex-direction: column;
+}
+
+.payment-information-container {
+  display: none;
+  flex-direction: column;
+}
+
+.payment-information-container .payment-text {
+  font-size: 20px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid;
+}
+
+.payment-wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.payment-information-container .payment-wrapper span {
+  font-size: 15px;
+  margin: 5px 0;
+}
+
+.payment-wrapper .payment-info-text {
+  color: rgb(91, 90, 90);
+  margin: 5px 0;
+  width: 70px;
+}
+
+#payment-method-wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.payment-method {
+  margin: 5px 0;
 }
 
 .button-container {
   display: none;
 }
 
-#change-info-container {
+.user-change-container {
   display: none;
+  flex-direction: column;
+  box-sizing: border-box;
+  background-color: azure;
+  border-radius: 15px;
+  padding: 15px 15px;
+  margin-bottom: 10px;
 }
 
-.user-info-container .user-info-box {
+.user-change-container div {
   display: flex;
   flex-direction: row;
+  margin-bottom: 7px;
 }
 
-.user-info-box .user-info {
+.user-change-container div span {
+  width: 70px;
+  margin: 0;
+  font-size: 15px;
+}
+
+.user-change-container .change-wrapper {
   display: flex;
   flex-direction: column;
-  margin-right: 10px;
+}
+
+.user-change-container input {
+  border-style: none;
+  border-radius: 0;
+}
+
+.address-input-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.address-input-container span {
+  margin: 0;
+  margin-right: 15px;
+  text-align: start;
+}
+
+.address-input-container div {
+  display: flex;
+  flex-direction: column;
+}
+
+.address-input-container div input {
+  margin-bottom: 5px;
 }
 
 body button {
