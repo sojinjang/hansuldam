@@ -1,5 +1,6 @@
 import * as api from "../api.js";
 import { getCookieValue } from "../utils/cookie.js";
+import { isValidComment } from "../utils/validator.js";
 import { ApiUrl } from "../constants/ApiUrl.js";
 import { Keys } from "../constants/Keys.js";
 
@@ -83,7 +84,10 @@ async function verifyBuyer(productId) {
   return productArr.includes(productId);
 }
 
-function submitReview() {}
+function submitReview() {
+  const comment = document.querySelector(".review-input").value;
+  if (!isValidComment(comment)) return alert("최소 10자 이상 작성해주세요. ✍️");
+}
 
 if (isLoggedIn) isBuyer = await verifyBuyer(productId);
 handlOpenReviewForm(reviewModalForm, isBuyer);
