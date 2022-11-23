@@ -47,7 +47,7 @@ function createPasswordInputContainer() {
   page = document.createElement("div");
   page.setAttribute("class", "password-container");
   page.innerHTML = `
-  <span>비밀번호를 입력해주세요</span>
+  <span>비밀번호 확인이 필요합니다.</span>
   <input class="password-input" type="password" placeholder="비밀번호"/>
   <button class="password-check-btn">확인</button>
   `;
