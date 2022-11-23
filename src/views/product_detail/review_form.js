@@ -8,6 +8,7 @@ const reviewModalForm = document.querySelector(".modal-overlay");
 const reviewWriteButton = document.querySelector(".review-write-button");
 const reviewWriteCloseButton = document.querySelector(".close-area");
 const reviewSubmitButton = document.querySelector(".review-submit-button");
+const reviewImgInput = document.querySelector("input[type=file]");
 
 const queryString = new Proxy(new URLSearchParams(window.location.search), {
   get: (params, prop) => params.get(prop),
@@ -87,12 +88,26 @@ async function verifyBuyer(productId) {
 function makeCommentObj(comment) {
   return { productId: productId, content: comment };
 }
+
+async function uploadImage(commentId) {
+  if (!reviewImgInput.files[0]) return;
+  const formData = new FormData();
+  formData.set("uploadImg", reviewImgInput.files[0]);
+  try {
+    api.postImg(`${ApiUrl.IMAGE}/${commentId}?location=comments`, formData);
+  } catch (err) {
+    alert(err.message);
+  }
+  return;
+}
+
 async function submitReview() {
   const comment = document.querySelector(".review-input").value;
   if (!isValidComment(comment)) return alert("최소 10자 이상 작성해주세요. ✍️");
   const commentObj = makeCommentObj(comment);
   try {
-    await api.post(ApiUrl.AUTH_COMMENTS, commentObj);
+    const response = await api.post(ApiUrl.AUTH_COMMENTS, commentObj);
+    uploadImage(response._id);
     location.reload();
   } catch (err) {
     alert(err.message);
@@ -103,3 +118,12 @@ if (isLoggedIn) isBuyer = await verifyBuyer(productId);
 handlOpenReviewForm(reviewModalForm, isBuyer);
 addFormCloseEvent(reviewModalForm);
 reviewSubmitButton.addEventListener("click", submitReview);
+
+reviewImgInput.onchange = () => {
+  if (reviewImgInput.files.length > 0) {
+    const fileName = document.querySelector("#file-js-example .file-name");
+    fileName.textContent = reviewImgInput.files[0].name;
+  }
+  const reader = new FileReader();
+  reader.readAsDataURL(reviewImgInput.files[0]);
+};
