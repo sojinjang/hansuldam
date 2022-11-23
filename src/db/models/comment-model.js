@@ -4,13 +4,13 @@ import { CommentSchema } from "../schemas/comment-schema";
 const Comment = model("comments", CommentSchema);
 
 export class CommentModel {
-  async findById(commentId) {
-    const comment = await Comment.findOne({ _id: commentId });
+  async findByObj(filterObj) {
+    const comment = await Comment.findOne(filterObj).populate("userId", "fullName");
     return comment;
   }
 
   async findAllByProductId(productId) {
-    const comments = await Comment.find({ productId });
+    const comments = await Comment.find({ productId }).populate("userId", "fullName");
     return comments;
   }
 
@@ -20,24 +20,24 @@ export class CommentModel {
   }
 
   async findAll() {
-    const comments = await Comment.find({});
+    const comments = await Comment.find({}).populate("userId", "fullName");
     return comments;
   }
 
-  async update({ commentId, update }) {
-    const filter = { _id: commentId };
+  async update(filterObj, updateObj) {
     const option = { returnOriginal: false };
 
-    const updatedcomment = await Comment.findOneAndUpdate(
-      filter,
-      update,
-      option
-    );
+    const updatedcomment = await Comment.findOneAndUpdate(filterObj, updateObj, option);
     return updatedcomment;
   }
 
   async deleteById(commentId) {
     const result = await Comment.deleteOne({ _id: commentId });
+    return result;
+  }
+
+  async deleteByProduct(productId) {
+    const result = await Comment.deleteMany({ _id: productId });
     return result;
   }
 }

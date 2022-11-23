@@ -1,12 +1,13 @@
 import fs from "fs";
-import { productModel, categoryModel } from "../db";
+import { productModel, categoryModel, commentModel } from "../db";
 import { BadRequest, NotFound } from "../utils/errorCodes";
 import { pagination, totalPageCacul, makeFilterObj } from "../utils";
 
 class ProductService {
-  constructor(productModel, categoryModel) {
+  constructor(productModel, categoryModel, commentModel) {
     this.productModel = productModel;
     this.categoryModel = categoryModel;
+    this.commentModel = commentModel;
   }
 
   // 상품추가(관리자)
@@ -111,6 +112,9 @@ class ProductService {
 
     await this.categoryModel.update(filterObj, updateObj);
 
+    // 상품의 댓글 지우기
+    await this.commentModel.deleteByProduct(productId);
+
     // 삭제 진행
     const deletedProduct = await this.productModel.delete(productId);
 
@@ -191,6 +195,6 @@ class ProductService {
   }
 }
 
-const productService = new ProductService(productModel, categoryModel);
+const productService = new ProductService(productModel, categoryModel, commentModel);
 
 export { productService };
