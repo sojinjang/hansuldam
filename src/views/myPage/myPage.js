@@ -14,7 +14,6 @@ if (loginTOKEN !== undefined) {
   createUserPageContainer();
   createPasswordInputContainer();
 
-  $(".delete-user").addEventListener("click", deleteUserId);
   $(".user-profile-btn").addEventListener("click", showPasswordInputPage);
   $(".password-check-btn").addEventListener("click", checkUserPassword);
 }
@@ -31,8 +30,7 @@ function createUserPageContainer() {
   page.innerHTML = `<div class="body-section-container">
     <div class="user-information-container">
       <span>내 정보</span>
-      <button class="user-profile-btn"> 내 프로필 </button>
-      <a href="" class="delete-user"> 회원탈퇴 </a>
+      <button class="user-profile-btn">계정 정보 확인</button>
     </div>
     <div class="user-order-information-container">
       <span>쇼핑 정보</span>
@@ -47,7 +45,7 @@ function createPasswordInputContainer() {
   page = document.createElement("div");
   page.setAttribute("class", "password-container");
   page.innerHTML = `
-  <span>비밀번호 확인이 필요합니다.</span>
+  <span>비밀번호 확인이 필요합니다</span>
   <input class="password-input" type="password" placeholder="비밀번호"/>
   <button class="password-check-btn">확인</button>
   `;
@@ -69,20 +67,6 @@ async function checkUserPassword(e) {
     window.location = "/user-information";
   } catch (e) {
     alert(e.message);
-  }
-}
-
-async function deleteUserId(e) {
-  e.preventDefault();
-  try {
-    if (confirm("정말 탈퇴하시겠습니까?")) {
-      await api.delete(ApiUrl.USER_INFORMATION);
-      deleteCookie(Keys.TOKEN_KEY);
-      alert("성공적으로 탈퇴했습니다.");
-      window.location.href = "/";
-    }
-  } catch (e) {
-    alert("문제가 발생했습니다. 다시 시도해주세요");
   }
 }
 
@@ -188,7 +172,7 @@ async function showOrderListPage() {
 
       try {
         await api.patch(ApiUrl.ORDERS, orderID, changeInfo);
-        alert("정보가 수정되었습니다.");
+        alert("정보가 성공적으로 수정되었습니다🎉");
         $(".user-name").innerHTML = $(".name-input").value;
         $(".user-phoneNumber").innerHTML = $(".phoneNumber-input").value;
         $(".user-postalCode").innerHTML = $(".postalCode-input").value;
@@ -203,10 +187,10 @@ async function showOrderListPage() {
     async function cancelOrder() {
       try {
         await api.delete("/api/orders", orderID);
-        alert("주문취소가 성공적으로 처리되었습니다.");
+        alert("주문이 취소되었습니다🎉");
         location.reload();
       } catch (e) {
-        alert("문제가 발생했습니다. 다시 시도해주세요.");
+        alert(e.message);
       }
     }
   }
