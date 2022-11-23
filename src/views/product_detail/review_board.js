@@ -2,9 +2,6 @@ import * as api from "../api.js";
 import { ApiUrl } from "../constants/ApiUrl.js";
 import { changeToKoreanTime } from "../utils/useful_functions.js";
 
-const reviewModalForm = document.querySelector(".modal-overlay");
-const reviewWriteButton = document.querySelector(".review-write-button");
-const reviewWriteCloseButton = document.querySelector(".close-area");
 const emptyReview = document.querySelector(".empty-review");
 const reviewListContainer = document.querySelector(".review-list-container");
 
@@ -114,27 +111,4 @@ async function renderReviewData() {
   });
 }
 
-function addCloseFormEvent(modalForm) {
-  reviewWriteCloseButton.addEventListener("click", () => {
-    modalForm.style.display = "none";
-  });
-
-  modalForm.addEventListener("click", (e) => {
-    const evTarget = e.target;
-    if (evTarget.classList.contains("modal-overlay")) {
-      modalForm.style.display = "none";
-    }
-  });
-  window.addEventListener("keyup", (e) => {
-    if (modalForm.style.display === "flex" && e.key === "Escape") {
-      modalForm.style.display = "none";
-    }
-  });
-}
-
 renderReviewData();
-
-reviewWriteButton.addEventListener("click", () => {
-  reviewModalForm.style.display = "flex";
-});
-addCloseFormEvent(reviewModalForm);
