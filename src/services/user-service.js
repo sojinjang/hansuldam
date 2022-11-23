@@ -28,12 +28,13 @@ class UserService {
 
     const secretKey = process.env.JWT_SECRET_KEY;
 
+    const userId = user._id;
     // 2개 프로퍼티를 jwt 토큰에 담음
-    const token = jwt.sign({ userId: user._id, role: user.role }, secretKey, {
+    const token = jwt.sign({ userId, role: user.role }, secretKey, {
       expiresIn: "1h",
     });
 
-    return { token };
+    return { token, userId };
   }
 
   // 회원가입
@@ -76,10 +77,7 @@ class UserService {
     const correctPasswordHash = user.password; // db에 저장되어 있는 암호화된 비밀번호
 
     // 매개변수의 순서 중요 (1번째는 프론트가 보내온 비밀번호, 2번쨰는 db에 있떤 암호화된 비밀번호)
-    const isPasswordCorrect = await bcrypt.compare(
-      password,
-      correctPasswordHash
-    );
+    const isPasswordCorrect = await bcrypt.compare(password, correctPasswordHash);
 
     if (!isPasswordCorrect) {
       throw new Unauthorized("Incorrect Password", 4103);
@@ -88,12 +86,13 @@ class UserService {
     // 로그인 성공 -> JWT 웹 토큰 생성
     const secretKey = process.env.JWT_SECRET_KEY;
 
+    const userId = user._id;
     // 2개 프로퍼티를 jwt 토큰에 담음
-    const token = jwt.sign({ userId: user._id, role: user.role }, secretKey, {
+    const token = jwt.sign({ userId, role: user.role }, secretKey, {
       expiresIn: "1h",
     });
 
-    return { token };
+    return { token, userId };
   }
 
   // 사용자 목록을 받음(관리자)
@@ -141,10 +140,7 @@ class UserService {
 
     // 비밀번호 일치 여부 확인
     const correctPasswordHash = user.password;
-    const isPasswordCorrect = await bcrypt.compare(
-      currentPassword,
-      correctPasswordHash
-    );
+    const isPasswordCorrect = await bcrypt.compare(currentPassword, correctPasswordHash);
 
     if (!isPasswordCorrect) {
       throw new Unauthorized("Incorrect Password", 4103);
