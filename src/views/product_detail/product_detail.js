@@ -12,8 +12,18 @@ async function renderData() {
   });
   const currentId = queryString.id;
   const fetchedData = await get(ApiUrl.PRODUCTS, currentId);
-  const { _id, category, name, price, volume, description, alcoholType, alcoholDegree, _ } =
-    fetchedData;
+  const {
+    _id,
+    image,
+    category,
+    name,
+    price,
+    volume,
+    description,
+    alcoholType,
+    alcoholDegree,
+  } = fetchedData;
+  const imageUrl = "../" + decodeURIComponent(image).split("views")[1];
 
   document.title = `${name} - 한술담 🍶`;
 
@@ -23,7 +33,7 @@ async function renderData() {
   productSection.setAttribute("id", _id);
   productSection.innerHTML = `<div class="product-container">
   <div class="image-warpper">
-    <img src="../img/ricewine_icon.png" alt="상품 이미지" />
+    <img src="${imageUrl}" alt="상품 이미지" />
   </div>
 	<div class="content__container">
 		<div class="content__main-info">

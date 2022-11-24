@@ -146,7 +146,8 @@ async function goToDetailPage() {
 }
 
 async function renderData(product) {
-  const { _id, name, brand, price, volume, alcoholDegree } = product;
+  const { _id, name, brand, price, volume, alcoholDegree, image } = product;
+  const imageUrl = '../' + decodeURIComponent(image).split("views")[1];
 
   let productSection = document.createElement("section");
 
@@ -154,7 +155,7 @@ async function renderData(product) {
   productSection.setAttribute("id", _id);
   productSection.innerHTML = `<div class="product-div-container">
   <div class="product-image-wrapper">
-    <img src="../img/ricewine_icon.png" alt="Product Image" />
+    <img src="${imageUrl}" alt="Product Image" />
   </div>
   <div class="product-content-container">
     <div class="content-title-wrapper">
