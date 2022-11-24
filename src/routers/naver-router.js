@@ -90,8 +90,9 @@ naverRouter.get("/callback", (req, res) => {
 
 naverRouter.get("/:userId", (req, res, next) => {
   const { userId } = req.params;
-  if (userId === authUserId) {
-    res.status(200).json({ token, authUserId });
+
+  if (userId === authUserId.toString()) {
+    res.status(200).json({ token, userId });
   } else {
     next(new BadRequest("Incorrect Request user-id", 4701));
   }
