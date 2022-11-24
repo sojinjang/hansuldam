@@ -3,6 +3,7 @@ import { CartSchema } from "./cart-schema";
 
 const UserSchema = new Schema(
   {
+    auth: { type: Boolean, default: false },
     email: {
       type: String,
       required: true,
@@ -23,7 +24,7 @@ const UserSchema = new Schema(
     address: {
       type: new Schema(
         {
-          postalCode: { type: String, required: true},
+          postalCode: { type: String, required: true },
           address1: { type: String, required: true },
           address2: { type: String, required: false },
         },
