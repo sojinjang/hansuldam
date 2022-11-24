@@ -121,7 +121,7 @@ reviewSubmitButton.addEventListener("click", submitReview);
 
 reviewImgInput.onchange = () => {
   if (reviewImgInput.files.length > 0) {
-    const fileName = document.querySelector("#file-js-example .file-name");
+    const fileName = document.querySelector(".file-name");
     fileName.textContent = reviewImgInput.files[0].name;
   }
   const reader = new FileReader();
