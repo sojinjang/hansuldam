@@ -95,10 +95,12 @@ class OrderService {
     }
 
     // 유저에서 주문id 지우기
-    const filterObj = { _id: order.userId };
-    const updateObj = { $pull: { orders: orderId } };
+    if (!!order.userId) {
+      const filterObj = { _id: order.userId };
+      const updateObj = { $pull: { orders: orderId } };
 
-    await this.userModel.update(filterObj, updateObj);
+      await this.userModel.update(filterObj, updateObj);
+    }
 
     // 삭제 진행
     const deletedOrder = await this.orderModel.delete({ orderId });
