@@ -7,7 +7,7 @@ async function fetchProducts(index) {
   const params = new URLSearchParams(window.location.search);
   const keyword = params.get("keyword");
   const data = await get(
-    `${ApiUrl.PRODUCTS_FILTER}name&str=${keyword}&min=&max=&page=${index}&perpage=9&sort=`
+    `${ApiUrl.PRODUCTS_SEARCH}${keyword}&sortKey=sales&sort=1&page=${index}&perpage=9`
   );
   return data;
 }
@@ -31,6 +31,15 @@ async function refineData() {
       productsTotalData.push(product);
     });
   }
+
+  (function generatePagenationButton() {
+    for (let i = 2; i <= totalPage; i++) {
+      const pageButton = document.createElement("li");
+      pageButton.innerHTML = `<a class="pagination-link" aria-label="${i}" aria-current="page">${i}</a>`;
+      $(".pagination-list").append(pageButton);
+    }
+  })();
+
   return productsTotalData;
 }
 
@@ -44,6 +53,9 @@ async function showProducts() {
   }
 
   let currentPageData = productsArr[0];
+  if (!currentPageData) {
+    $(".search-result-messege").innerText = `검색 결과가 존재하지 않습니다.`
+  }
   (function showProductsPageOne() {
     currentPageData.forEach((product) => {
       renderData(product);
@@ -69,13 +81,9 @@ async function showProducts() {
       e.target.classList.add("is-current");
 
       currentPageData = productsArr[currentPage - 1];
-
-      if (!currentPageData) {
-        alert("데이터가 없습니다!");
-      } else
-        currentPageData.forEach(async (product) => {
-          renderData(product);
-        });
+      currentPageData.forEach(async (product) => {
+        renderData(product);
+      });
     });
   });
 }

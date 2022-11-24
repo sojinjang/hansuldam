@@ -31,6 +31,12 @@
       padding: 0 7vw 0 7vw;
     margin-top: 50px;
   }
+
+  .body-container .search-result-messege {
+    font-size: 25px;
+    margin-top: 150px;
+    margin-bottom: 200px;
+  }
   
   /* product */
   
