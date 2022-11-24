@@ -213,18 +213,19 @@ white-brown */
 /* 50 */
 /* black
 white */
+
 .button-50-black {
   appearance: button;
   background-color: var(--black-400);
   background-image: none;
   border: 1px solid var(--black-400);
   border-radius: 4px;
-  box-shadow: var(--white-200) 4px 4px 0 0,var(--black-400) 4px 4px 0 1px;
+  box-shadow: var(--white-200) 4px 4px 0 0, var(--black-400) 4px 4px 0 1px;
   box-sizing: border-box;
   color: var(--white-200);
   cursor: pointer;
   display: inline-block;
-  font-family: ITCAvantGardeStd-Bk,Arial,sans-serif;
+  font-family: ITCAvantGardeStd-Bk, Arial, sans-serif;
   font-size: 14px;
   font-weight: 400;
   line-height: 20px;
@@ -249,7 +250,7 @@ white */
 }
 
 .button-50-black:active {
-  box-shadow: rgba(0, 0, 0, .125) 0 3px 5px inset;
+  box-shadow: rgba(0, 0, 0, 0.125) 0 3px 5px inset;
   outline: 0;
 }
 
@@ -270,12 +271,12 @@ white */
   background-image: none;
   border: 1.5px solid var(--white-200);
   border-radius: 4px;
-  box-shadow: var() 4px 4px 0 0,var(--white-200) 4px 4px 0 1px;
+  box-shadow: var() 4px 4px 0 0, var(--white-200) 4px 4px 0 1px;
   box-sizing: border-box;
   color: var(--black-400);
   cursor: pointer;
   display: inline-block;
-  font-family: ITCAvantGardeStd-Bk,Arial,sans-serif;
+  font-family: ITCAvantGardeStd-Bk, Arial, sans-serif;
   font-size: 14px;
   font-weight: 400;
   line-height: 20px;
@@ -300,7 +301,7 @@ white */
 }
 
 .button-50-white:active {
-  box-shadow: rgba(0, 0, 0, .125) 0 3px 5px inset;
+  box-shadow: rgba(0, 0, 0, 0.125) 0 3px 5px inset;
   outline: 0;
 }
 
@@ -318,6 +319,7 @@ white */
 /* 35
 white
 black */
+
 .button-35-white {
   align-items: center;
   background-color: var(--white-200);
@@ -329,7 +331,7 @@ black */
   display: inline-flex;
   flex: 1 1 auto;
   font-family: Inter, sans-serif;
-  font-size: 1.0rem;
+  font-size: 1rem;
   font-weight: 550;
   justify-content: center;
   line-height: 1;
@@ -350,7 +352,6 @@ black */
   box-shadow: var(--black-400) 0 0 0 1.5px, transparent 0 0 0 0;
 }
 
-
 .button-35-black {
   align-items: center;
   background-color: var(--black-400);
@@ -362,7 +363,7 @@ black */
   display: inline-flex;
   flex: 1 1 auto;
   font-family: Inter, sans-serif;
-  font-size: 1.0rem;
+  font-size: 1rem;
   font-weight: 550;
   justify-content: center;
   line-height: 1;
@@ -382,5 +383,3 @@ black */
 .button-35-black:hover {
   box-shadow: var(--black-400) 0 0 0 1.5px, transparent 0 0 0 0;
 }
-
-
