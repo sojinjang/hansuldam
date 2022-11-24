@@ -98,7 +98,7 @@ orderId.forEach((id) => {
 
       try {
         await patch("/api/orders", id, changeInfo);
-        alert("정보가 수정되었습니다.");
+        alert("정보가 수정되었습니다🎉");
         selectId(`${orderList._id}-user-name`).innerHTML = selectId(
           `${orderList._id}-input-name`
         ).value;
@@ -117,7 +117,7 @@ orderId.forEach((id) => {
 
         selectId(`${orderList._id}-user-change-container`).style.display = "none";
       } catch (e) {
-        alert("문제가 발생했습니다. 다시 시도해주세요.");
+        alert(e.message);
       }
     }
 
@@ -125,11 +125,11 @@ orderId.forEach((id) => {
       try {
         if (confirm("주문을 취소하시겠습니까?")) {
           await del("/api/orders", id, productList);
-          alert("주문취소가 성공적으로 처리되었습니다.");
+          alert("주문취소가 성공적으로 처리되었습니다🎉");
           location.reload();
         }
       } catch (e) {
-        alert("문제가 발생했습니다. 다시 시도해주세요.");
+        alert(e.message);
       }
     }
   }
@@ -275,7 +275,7 @@ function createDeliveryInformationChangeContainer(item) {
       type="text"
       id="${item._id}-input-name"
       required
-      placeholder="이름"
+      placeholder="이름을 입력해주세요"
       autocomplete="on"
     />
   </div>
@@ -302,14 +302,14 @@ function createDeliveryInformationChangeContainer(item) {
         type="text"
         id="${item._id}-input-address1"
         required
-        placeholder="oo시 ㅇㅇ구 ㅇㅇ동"
+        placeholder="주소를 입력해주세요"
         autocomplete="on"
       />
       <input
         type="text"
         id="${item._id}-input-address2"
         required
-        placeholder="나머지 주소 입력"
+        placeholder="상세주소를 입력해주세요"
         autocomplete="on"
       />
     </div>
