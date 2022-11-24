@@ -26,7 +26,7 @@ function refineTitleAndDirectory(review) {
   if (review.content.length > 60) reviewTitle = review.content.slice(0, 60) + "...";
   else reviewTitle = review.content;
   if (review.image) {
-    imgDirectory = "../" + decodeURIComponent(review.image).split("views")[1];
+    imgDirectory = ".." + decodeURIComponent(review.image).split("views")[1];
   }
 
   return { reviewTitle, imgDirectory };
