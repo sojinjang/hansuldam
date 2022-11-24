@@ -17,8 +17,7 @@ function isValidPassword(passwordInput) {
 }
 
 function isIdNum(idNumInput) {
-  const idRegExp =
-    /^(?:[0-9]{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[1,2][0-9]|3[0,1]))-[1-4][0-9]{6}$/;
+  const idRegExp = /^(?:[0-9]{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[1,2][0-9]|3[0,1]))-[1-4][0-9]{6}$/;
   return idRegExp.test(idNumInput);
 }
 
@@ -41,4 +40,17 @@ function isCardNum(cardNumInput) {
   return cardRegExp.test(cardNumInput);
 }
 
-export { isName, isNum, isValidEmail, isValidPassword, isIdNum, isAdult, isCardNum };
+function isValidComment(reviewInput) {
+  return reviewInput.length >= 10;
+}
+
+export {
+  isName,
+  isNum,
+  isValidEmail,
+  isValidPassword,
+  isIdNum,
+  isAdult,
+  isCardNum,
+  isValidComment,
+};
