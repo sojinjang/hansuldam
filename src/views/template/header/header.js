@@ -96,6 +96,7 @@ function handleLogout() {
     updateCartInfoToDB(cartItems);
     resetCart(Keys.CART_KEY);
     deleteCookie(Keys.TOKEN_KEY);
+    deleteCookie(Keys.USER_ID_KEY);
     setTimeout(() => {
       window.location.href = "/";
     }, 50);

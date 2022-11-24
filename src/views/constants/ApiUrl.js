@@ -1,6 +1,7 @@
 export const ApiUrl = Object.freeze({
   LOGIN: "/api/user/login",
   NAVER_LOGIN: "/api/naver/login",
+  NAVER_OAUTH: "/api/naver",
   REGISTER: "/api/user/register",
   TEMPORARY_PASSWORD: "/api/user/random-password",
   ADMIN_USER_INFORMATION: "/api/users/admin",
