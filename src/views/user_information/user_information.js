@@ -7,6 +7,9 @@ import {
   changeAddress,
   insertFoundAddress,
   deleteUserInformation,
+  cancelChangeAddress,
+  cancelChangePassword,
+  cancelChangePhoneNumber,
 } from "./change_user_information.js";
 import * as api from "../api.js";
 import { ApiUrl } from "../constants/ApiUrl.js";
@@ -44,3 +47,9 @@ findAddressBtn.addEventListener("click", insertFoundAddress);
 adConfrimBtn.addEventListener("click", changeAddress);
 
 $(".delete-user-information-btn").addEventListener("click", deleteUserInformation);
+
+$(".pwCancelBtn").addEventListener("click", cancelChangePassword);
+
+$(".numCancelBtn").addEventListener("click", cancelChangePhoneNumber);
+
+$(".adCancelBtn").addEventListener("click", cancelChangeAddress);

@@ -18,6 +18,8 @@ function openPhoneNumberPage(e) {
   e.preventDefault();
 
   $("#change-phoneNumber-container").style.display = "flex";
+  $("#phoneNumber-btn-container").style.display = "flex";
+  $(".numChangeBtn").style.display = "none";
 }
 
 async function changePhoneNumber(e) {
@@ -42,18 +44,28 @@ async function changePhoneNumber(e) {
 
   try {
     await patch(ApiUrl.USER_INFORMATION, "", phoneNumber);
-    alert("전화번호가 변경되었습니다🎉");
+    alert("전화번호가 변경되었습니다 🎉");
     $("#user-phoneNumber-number").innerHTML = $(".changePhoneNumber").value;
     $("#change-phoneNumber-container").style.display = "none";
+    $("#phoneNumber-btn-container").style.display = "none";
+    $(".numChangeBtn").style.display = "block";
   } catch (e) {
     console.log(e.message);
   }
+}
+
+function cancelChangePhoneNumber() {
+  $("#change-phoneNumber-container").style.display = "none";
+  $("#phoneNumber-btn-container").style.display = "none";
+  $(".numChangeBtn").style.display = "block";
 }
 
 function openAddressPage(e) {
   e.preventDefault();
 
   $("#change-address-container").style.display = "flex";
+  $("#address-btn-container").style.display = "flex";
+  $(".adChangeBtn").style.display = "none";
 }
 
 async function insertFoundAddress() {
@@ -92,20 +104,30 @@ async function changeAddress(e) {
 
   try {
     await patch(ApiUrl.USER_INFORMATION, "", address);
-    alert("주소가 성공적으로 변경되었습니다🎉");
+    alert("주소가 성공적으로 변경되었습니다 🎉");
     $("#user-postalCode").innerHTML = $(".changePostalCode").value;
     $("#user-address1").innerHTML = $(".changeAddress1").value;
     $("#user-address2").innerHTML = $(".changeAddress2").value;
     $("#change-address-container").style.display = "none";
+    $("#address-btn-container").style.display = "none";
+    $(".adChangeBtn").style.display = "block";
   } catch (e) {
     alert(e.message);
   }
+}
+
+function cancelChangeAddress() {
+  $("#change-address-container").style.display = "none";
+  $("#address-btn-container").style.display = "none";
+  $(".adChangeBtn").style.display = "block";
 }
 
 function openPasswordPage(e) {
   e.preventDefault();
 
   $("#change-password-container").style.display = "flex";
+  $("#password-btn-container").style.display = "flex";
+  $(".pwChangeBtn").style.display = "none";
 }
 
 async function changePassword(e) {
@@ -129,11 +151,19 @@ async function changePassword(e) {
 
   try {
     await patch(ApiUrl.USER_INFORMATION, "", newPassword);
-    console.log("비밀번호가 변경되었습니다🎉");
+    console.log("비밀번호가 변경되었습니다 🎉");
     $("#change-password-container").style.display = "none";
+    $("#password-btn-container").style.display = "none";
+    $(".pwChangeBtn").style.display = "block";
   } catch (e) {
     alert(e.message);
   }
+}
+
+function cancelChangePassword() {
+  $("#change-password-container").style.display = "none";
+  $("#password-btn-container").style.display = "none";
+  $(".pwChangeBtn").style.display = "block";
 }
 
 async function deleteUserInformation(e) {
@@ -143,7 +173,8 @@ async function deleteUserInformation(e) {
       await api.delete(ApiUrl.USER_INFORMATION);
       resetCart(Keys.CART_KEY);
       deleteCookie(Keys.TOKEN_KEY);
-      alert("성공적으로 탈퇴되셨습니다.");
+      deleteCookie(Keys.USER_ID_KEY);
+      alert("성공적으로 탈퇴되셨습니다 😔");
       window.location.href = "/";
     }
   } catch (e) {
@@ -160,4 +191,7 @@ export {
   changeAddress,
   insertFoundAddress,
   deleteUserInformation,
+  cancelChangeAddress,
+  cancelChangePassword,
+  cancelChangePhoneNumber,
 };
