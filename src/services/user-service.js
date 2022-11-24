@@ -21,6 +21,7 @@ class UserService {
       phoneNumber,
     };
 
+    // email이 있는지 확인
     let user = await this.userModel.findByEmail(email);
     if (!user) {
       user = await this.userModel.create(newUserInfo);
@@ -71,6 +72,10 @@ class UserService {
     const user = await this.userModel.findByEmail(email);
     if (!user) {
       throw new NotFound("This Email Not in DB", 4102);
+    }
+    //auth 회원인지 확인
+    if (user.auth) {
+      throw new BadRequest("This user is Auth user", 4702);
     }
 
     // 비밀번호 일치 여부 확인
