@@ -1,5 +1,7 @@
-import { post, get, patch, delete as del } from "../api.js";
+import { get, patch, delete as del } from "../api.js";
 import { ApiUrl } from "../constants/ApiUrl.js";
+import { isName } from "../utils/validator.js";
+import { findAddress } from "../utils/findAddress.js";
 
 const $ = (selector) => document.querySelector(selector);
 const selectId = (selector) => document.getElementById(selector);
@@ -13,12 +15,10 @@ orderId.forEach((id) => {
 
     createSingleOrderContainer(orderList).append(createOrderStatus(orderList));
     productList.forEach((product) => {
-      selectId(`${orderList._id}-order-container`).append(
-        createProductListContainer(product)
-      );
+      selectId(`${orderList._id}-order-container`).append(createProductListContainer(product));
     });
     selectId(`${orderList._id}-order-container`).append(
-      createTotalBillContainer(orderList)
+      createShowDetailInformationButton(orderList)
     );
     selectId(`${orderList._id}-order-container`).append(
       createDeliveryInformaionContainer(orderList)
@@ -27,32 +27,50 @@ orderId.forEach((id) => {
       createDeliveryInformationChangeContainer(orderList)
     );
     selectId(`${orderList._id}-order-container`).append(
+      createPaymentInformationContainer(orderList)
+    );
+    selectId(`${orderList._id}-order-container`).append(
       createChangeButtonContainer(orderList)
     );
 
-    if (orderList.status == "상품준비중") {
-      selectId(`${orderList._id}-button-container`).style.display = "flex";
-    }
+    getDeliveryFee(orderList);
+    getTotalPrice(orderList);
 
+    selectId(`${orderList._id}-detail-info-btn`).addEventListener(
+      "click",
+      showDetailInformationPage
+    );
     selectId(`${orderList._id}-info-change`).addEventListener(
       "click",
       showDeliveryInformationChangePage
     );
-    selectId(`${orderList._id}-cancel-order`).addEventListener(
+    selectId(`${orderList._id}-cancel-order`).addEventListener("click", cancelOrder);
+    selectId(`${orderList._id}-change-btn`).addEventListener("click", setNewInformation);
+    selectId(`${orderList._id}-find-address-btn`).addEventListener(
       "click",
-      cancelOrder
+      insertFoundAddress
     );
-    selectId(`${orderList._id}-change-btn`).addEventListener(
-      "click",
-      setNewInformation
-    );
+
+    function showDetailInformationPage() {
+      selectId(`${orderList._id}-address-container`).style.display = "flex";
+      selectId(`${orderList._id}-payment-information-container`).style.display = "flex";
+      if (orderList.status == "상품준비중") {
+        selectId(`${orderList._id}-button-container`).style.display = "flex";
+      }
+    }
 
     function showDeliveryInformationChangePage() {
       selectId(`${orderList._id}-user-change-container`).style.display = "flex";
     }
 
+    async function insertFoundAddress() {
+      const { foundZoneCode, foundAddress } = await findAddress();
+      selectId(`${orderList._id}-input-postalCode`).value = foundZoneCode;
+      selectId(`${orderList._id}-input-address1`).value = foundAddress;
+    }
+
     async function setNewInformation() {
-      if (selectId(`${orderList._id}-input-name`).value.length < 2) {
+      if (!isName(selectId(`${orderList._id}-input-name`).value)) {
         alert("이름을 다시 확인해주세요");
         return;
       }
@@ -72,6 +90,7 @@ orderId.forEach((id) => {
         fullName: selectId(`${orderList._id}-input-name`).value,
         phoneNumber: selectId(`${orderList._id}-input-phoneNumber`).value,
         address: {
+          postalCode: selectId(`${orderList._id}-input-postalCode`).value,
           address1: selectId(`${orderList._id}-input-address1`).value,
           address2: selectId(`${orderList._id}-input-address2`).value,
         },
@@ -80,12 +99,15 @@ orderId.forEach((id) => {
       try {
         await patch("/api/orders", id, changeInfo);
         alert("정보가 수정되었습니다.");
-        selectId(`${orderList._id}-user-name`).innerHTML = `수령인 : ${
-          selectId(`${orderList._id}-input-name`).value
-        }`;
-        selectId(`${orderList._id}-user-phoneNumber`).innerHTML = `전화번호 : ${
-          selectId(`${orderList._id}-input-phoneNumber`).value
-        }`;
+        selectId(`${orderList._id}-user-name`).innerHTML = selectId(
+          `${orderList._id}-input-name`
+        ).value;
+        selectId(`${orderList._id}-user-phoneNumber`).innerHTML = selectId(
+          `${orderList._id}-input-phoneNumber`
+        ).value;
+        selectId(`${orderList._id}-user-postalCode`).innerHTML = selectId(
+          `${orderList._id}-input-postalCode`
+        ).value;
         selectId(`${orderList._id}-user-address1`).innerHTML = selectId(
           `${orderList._id}-input-address1`
         ).value;
@@ -93,8 +115,7 @@ orderId.forEach((id) => {
           `${orderList._id}-input-address2`
         ).value;
 
-        selectId(`${orderList._id}-user-change-container`).style.display =
-          "none";
+        selectId(`${orderList._id}-user-change-container`).style.display = "none";
       } catch (e) {
         alert("문제가 발생했습니다. 다시 시도해주세요.");
       }
@@ -102,9 +123,11 @@ orderId.forEach((id) => {
 
     async function cancelOrder() {
       try {
-        await del("/api/orders", id, productList);
-        alert("주문취소가 성공적으로 처리되었습니다.");
-        location.reload();
+        if (confirm("주문을 취소하시겠습니까?")) {
+          await del("/api/orders", id, productList);
+          alert("주문취소가 성공적으로 처리되었습니다.");
+          location.reload();
+        }
       } catch (e) {
         alert("문제가 발생했습니다. 다시 시도해주세요.");
       }
@@ -112,6 +135,23 @@ orderId.forEach((id) => {
   }
   setOrderListContainer();
 });
+
+function getDeliveryFee(item) {
+  const deliveryFee = item.totalPrice < 50000 ? (item.totalPrice > 0 ? 3000 : 0) : 0;
+  selectId(`${item._id}-delivery-fee`).innerText = `(+) ${deliveryFee.toLocaleString(
+    "ko-KR"
+  )}원`;
+  return deliveryFee;
+}
+
+function getTotalPrice(item) {
+  const TotalProductsPrice = item.totalPrice;
+  const deliveryFee = TotalProductsPrice < 50000 ? (TotalProductsPrice > 0 ? 3000 : 0) : 0;
+
+  selectId(`${item._id}-total-pay`).innerHTML = `${(
+    TotalProductsPrice + deliveryFee
+  ).toLocaleString("ko-KR")}원`;
+}
 
 function createSingleOrderContainer(item = "") {
   let page = undefined;
@@ -128,9 +168,12 @@ function createOrderStatus(item) {
   Page.setAttribute("class", "order-list-container");
   Page.setAttribute("id", item._id);
   Page.innerHTML = `<div class="order-status">
-  <div class="order-date">
-    <span class="orderDate">총 ${item.createdAt.substr(0, 10)}</span>
-    <span>${item._id}</span>
+  <div>
+    <div class="order-date">
+      <span class="orderDate">${item.createdAt.substr(0, 10)}</span>
+      <span class="order-id">주문번호: ${item._id}</span>
+    </div>
+    
   </div>
   <span class="order-status">${item.status}</span>
 </div>`;
@@ -145,22 +188,18 @@ function createProductListContainer(item) {
   product.innerHTML = `<img src="../img/ricewine_icon.png" alt="" />
   <div class="single-product-detail">
     <span class="single-product-name">${item.name}</span>
-    <span class="single-product-price">${(
-      item.price * item.quantity
-    ).toLocaleString("ko-KR")}원</span>
+    <span class="single-product-price">${item.price.toLocaleString("ko-KR")}원</span>
     <span class="single-product-quantity">${item.quantity}개</span>
   </div>`;
   return product;
 }
 
-function createTotalBillContainer(item) {
+function createShowDetailInformationButton(item) {
   let page = undefined;
   page = document.createElement("div");
-  page.setAttribute("class", "bill-container");
-  page.setAttribute("id", `${item._id}-bill-container`);
-  page.innerHTML = `<span>총 ${item.totalPrice.toLocaleString(
-    "ko-KR"
-  )}원</span>`;
+  page.setAttribute("class", "detail-info-button-container");
+  page.setAttribute("id", `${item._id}-detail-info-button-container`);
+  page.innerHTML = `<button class="detail-info-btn" id="${item._id}-detail-info-btn">주문상세정보∨</button>`;
   return page;
 }
 
@@ -168,28 +207,59 @@ function createDeliveryInformaionContainer(item) {
   let page = undefined;
   page = document.createElement("div");
   page.setAttribute("class", "address-container");
-  page.setAttribute("id", item._id);
-  page.innerHTML = `<div>
-  <span class="user-name" id="${item._id}-user-name">수령인  ${item.fullName}</span>
+  page.setAttribute("id", `${item._id}-address-container`);
+  page.innerHTML = `<div class="address-text">배송지 정보</div>
+<div class="address-info-wrapper">
+  <span class="address-info-text">수령인</span>
+  <span class="user-name" id="${item._id}-user-name">${item.fullName}</span>
 </div>
-<div>
-  <span class="user-phoneNumber" id="${item._id}-user-phoneNumber">전화번호  ${item.phoneNumber}</span>
+<div class="address-info-wrapper">
+  <span class="address-info-text">전화번호</span>
+  <span class="user-phoneNumber" id="${item._id}-user-phoneNumber">${item.phoneNumber}</span>
 </div>
-<div class="user-address">
-  <span class="user-address-container" id="${item._id}-user-address-container">주소</span>
+<div class="address-info-wrapper">
+  <span class="address-info-text" id="${item._id}-user-address-container">주소</span>
   <div>
+    <span class="user-address1" id="${item._id}-user-postalCode">${item.address.postalCode}</span>
     <span class="user-address1" id="${item._id}-user-address1">${item.address.address1}</span>
     <span class="user-address2" id="${item._id}-user-address2">${item.address.address2}</span>
   </div>
 </div>
-<div class="user-credit-card">
-  <span class="user-credit-card" id="${item._id}-user-credit-card">카드정보</span>
-  <div class="credit-card">
-    <span>${item.payment.detail}</span>
-    <span>${item.payment.number}</span>
-    <span></span>
+`;
+  return page;
+}
+
+function createPaymentInformationContainer(item) {
+  let page = undefined;
+  page = document.createElement("div");
+  page.setAttribute("class", "payment-information-container");
+  page.setAttribute("id", `${item._id}-payment-information-container`);
+  page.innerHTML = `<div class="payment-text">결제정보</div>
+  <div class="payment-wrapper">
+    <span class="payment-info-text">상품 금액</span>
+    <span class="products-pay">${item.totalPrice.toLocaleString("ko-KR")}원</span>
   </div>
-</div>`;
+  <div class="payment-wrapper">
+    <span class="payment-info-text">배송비</span>
+    <span class="delivery-fee" id="${item._id}-delivery-fee">[배송비]</span>
+  </div>
+  <div class="payment-wrapper">
+    <span class="payment-info-text">결제 금액</span>
+    <span class="total-pay" id="${item._id}-total-pay">[총 결제 금액]</span>
+  </div>
+  <div class="payment-wrapper" id="payment-method-wrapper">
+    <span class="payment-info-text">결제 방법</span>
+    <div class="payment-method">
+      <span>${item.payment.method}</span>
+      <div>
+        <span class="creditcard-information">${item.payment.detail}</span>
+        <span class="creditcard-information">${item.payment.number.slice(
+          0,
+          4
+        )}-****-*****-****</span>
+      </div>
+    </div>
+  </div>`;
   return page;
 }
 
@@ -223,6 +293,13 @@ function createDeliveryInformationChangeContainer(item) {
     <div>
       <input
         type="text"
+        id="${item._id}-input-postalCode"
+        required
+        placeholder="우편번호"
+        autocomplete="on"
+      />
+      <input
+        type="text"
         id="${item._id}-input-address1"
         required
         placeholder="oo시 ㅇㅇ구 ㅇㅇ동"
@@ -236,6 +313,7 @@ function createDeliveryInformationChangeContainer(item) {
         autocomplete="on"
       />
     </div>
+    <button id="${item._id}-find-address-btn">찾기</button>
   </div>
   <button class="change-btn" id="${item._id}-change-btn">변경하기</button>
 </div>`;
