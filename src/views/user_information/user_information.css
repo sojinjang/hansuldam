@@ -1,3 +1,15 @@
+@font-face {
+  font-family: "GangwonEdu_OTFBoldA";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  font-family: "GangwonEdu_OTFBoldA";
+}
+
 body {
   overflow-x: hidden;
   margin: 0;
@@ -17,8 +29,8 @@ footer {
 .body-section-container .title {
   font-size: 30px;
   font-weight: bold;
-  border-bottom: solid;
-  border-bottom-width: thin;
+  padding: 20px 0;
+  border-bottom: 2px solid;
 }
 
 .user-container section {
@@ -45,18 +57,32 @@ footer {
   flex-direction: column;
 }
 
-.personal-info-contents div {
-  margin: 10px 10px;
-}
-
-.personal-info-contents div p {
-  font-weight: bold;
-  font-size: 20px;
-}
-
-.personal-info-contents .password-container {
+.personal-info-contents #info-wrapper {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  border-bottom: 1px solid lightgray;
+  padding: 20px 5px;
+}
+
+#info-wrapper p {
+  font-weight: bold;
+  width: 100px;
+  margin-right: 50px;
+}
+
+#info-wrapper span {
+  width: 200px;
+}
+
+#info-wrapper .user-address {
+  width: 200px;
+}
+
+.adChangeBtn,
+.numChangeBtn,
+.pwChangeBtn {
+  position: absolute;
+  left: 83%;
 }
 
 .password-container .password-info {
@@ -66,19 +92,26 @@ footer {
   margin: 0;
 }
 
-.password-container div button {
-  width: fit-content;
+.password-container .change-password-container {
+  flex-direction: column;
 }
 
-.personal-info-contents .address-container {
-  display: flex;
-  flex-direction: column;
+.password-container div button {
+  width: fit-content;
 }
 
 .address-container .user-address {
   display: flex;
   flex-direction: column;
   margin: 0;
+}
+
+.address-container #change-address-container {
+  flex-direction: row;
+}
+
+#change-address-container button {
+  height: 30px;
 }
 
 .address-container button {
@@ -90,28 +123,71 @@ footer {
   flex-direction: column;
 }
 
+.change-info .address-input-container {
+  display: flex;
+  flex-direction: column;
+  margin-right: 5px;
+}
+
 .change-info input {
   margin-bottom: 5px;
 }
 
-.pwChangeBtn {
-  width: 70px;
+#buttons {
   height: 30px;
-}
-
-.numChangeBtn {
-  width: 70px;
-  height: 30px;
-}
-
-.adChangeBtn {
-  width: 100px;
-  height: 30px;
-}
-
-body button {
+  background-color: #ffffff;
+  border: 0;
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+  color: #111827;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 0.5rem;
+  padding: 0.75rem 1rem;
+  text-align: start;
+  text-decoration: none #d1d5db solid;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   cursor: pointer;
-  text-align: center;
-  border: 1px solid;
-  border-radius: 15px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+#buttons:hover {
+  background-color: rgb(249, 250, 251);
+}
+
+#buttons:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+#buttons:focus-visible {
+  box-shadow: none;
+}
+
+.adConfrimBtn,
+.numConfirmBtn,
+.pwConfirmBtn {
+  margin-right: 5px;
+}
+
+.btn-container {
+  display: none;
+  position: absolute;
+  left: 78%;
+}
+
+input {
+  border: 1px solid gray;
+}
+
+.delete-user-information-btn {
+  border-bottom: 1px solid gray;
+  border-radius: 0;
+  font-size: 13px;
+  color: gray;
+  position: absolute;
+  left: 85%;
+  margin-top: 10px;
 }
