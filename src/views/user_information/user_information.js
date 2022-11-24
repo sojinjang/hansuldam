@@ -1,11 +1,15 @@
-import { openPasswordPage, changePassword } from "./change_password.js";
-import { openPhoneNumberPage, changePhoneNumber } from "./change_phoneNumber.js";
-import { openAddressPage, changeAddress, insertFoundAddress } from "./change_address.js";
+import {
+  openPasswordPage,
+  changePassword,
+  openPhoneNumberPage,
+  changePhoneNumber,
+  openAddressPage,
+  changeAddress,
+  insertFoundAddress,
+  deleteUserInformation,
+} from "./change_user_information.js";
 import * as api from "../api.js";
 import { ApiUrl } from "../constants/ApiUrl.js";
-import { deleteCookie } from "../utils/cookie.js";
-import { Keys } from "../constants/Keys.js";
-import { resetCart } from "../utils/localStorage.js";
 
 const $ = (selector) => document.querySelector(selector);
 const pwChangeBtn = document.querySelector(".pwChangeBtn");
@@ -14,8 +18,9 @@ const adChangeBtn = document.querySelector(".adChangeBtn");
 const adConfrimBtn = document.querySelector(".adConfrimBtn");
 const numChangeBtn = document.querySelector(".numChangeBtn");
 const numConfirmBtn = document.querySelector(".numConfirmBtn");
-const userData = await api.get(ApiUrl.USER_INFORMATION);
 const findAddressBtn = document.querySelector(".find-address-button");
+
+const userData = await api.get(ApiUrl.USER_INFORMATION);
 
 $("#user-name").innerHTML = userData.fullName;
 $("#user-email").innerHTML = userData.email;
@@ -39,18 +44,3 @@ findAddressBtn.addEventListener("click", insertFoundAddress);
 adConfrimBtn.addEventListener("click", changeAddress);
 
 $(".delete-user-information-btn").addEventListener("click", deleteUserInformation);
-
-async function deleteUserInformation(e) {
-  e.preventDefault();
-  try {
-    if (confirm("정말 탈퇴하시겠습니까?")) {
-      await api.delete(ApiUrl.USER_INFORMATION);
-      resetCart(Keys.CART_KEY);
-      deleteCookie(Keys.TOKEN_KEY);
-      alert("성공적으로 탈퇴되셨습니다.");
-      window.location.href = "/";
-    }
-  } catch (e) {
-    alert(e.message);
-  }
-}
