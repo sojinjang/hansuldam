@@ -1,5 +1,5 @@
 import * as api from "../api.js";
-import { getCookieValue, deleteCookie } from "../utils/cookie.js";
+import { getCookieValue } from "../utils/cookie.js";
 import { Keys } from "../constants/Keys.js";
 import { ApiUrl } from "../constants/ApiUrl.js";
 import { isName } from "../utils/validator.js";
@@ -16,58 +16,6 @@ if (loginTOKEN !== undefined) {
 
   $(".user-profile-btn").addEventListener("click", showPasswordInputPage);
   $(".password-check-btn").addEventListener("click", checkUserPassword);
-}
-
-function showPasswordInputPage() {
-  $(".password-container").style.display = "flex";
-  $(".user-page-container").style.display = "none";
-}
-
-function createUserPageContainer() {
-  let page = undefined;
-  page = document.createElement("div");
-  page.setAttribute("class", "user-page-container");
-  page.innerHTML = `<div class="body-section-container">
-    <div class="user-information-container">
-      <span>내 정보</span>
-      <button class="user-profile-btn">계정 정보 확인</button>
-    </div>
-    <div class="user-order-information-container">
-      <span>쇼핑 정보</span>
-      <a href="/order-list"> 주문내역 </a>
-    </div>
-  </div>`;
-  $(".body-container").append(page);
-}
-
-function createPasswordInputContainer() {
-  let page = undefined;
-  page = document.createElement("div");
-  page.setAttribute("class", "password-container");
-  page.innerHTML = `
-  <span>비밀번호 확인이 필요합니다</span>
-  <input class="password-input" type="password" placeholder="비밀번호"/>
-  <button class="password-check-btn">확인</button>
-  `;
-  $(".body-container").append(page);
-}
-
-async function checkUserPassword(e) {
-  e.preventDefault();
-
-  const userData = await api.get(ApiUrl.USER_INFORMATION);
-  const userEmail = userData.email;
-  const userInfo = {
-    email: userEmail,
-    password: $(".password-input").value,
-  };
-
-  try {
-    await api.post(ApiUrl.LOGIN, userInfo);
-    window.location = "/user-information";
-  } catch (e) {
-    alert(e.message);
-  }
 }
 
 if (loginTOKEN == undefined) {
@@ -123,78 +71,97 @@ async function showOrderListPage() {
   getTotalPrice(orderData);
 
   $(".find-address-btn").addEventListener("click", insertFoundAddress);
+  $(".change-btn").addEventListener("click", clickChangeButton);
+  $(".input-btn").addEventListener("click", setNewInformation);
+  $(".cancel-btn").addEventListener("click", cancelOrder);
+  $(".detail-info-btn").addEventListener("click", showDetailInformationPage);
 
-  async function eventListenerBtn() {
-    $(".change-btn").addEventListener("click", clickChangeButton);
-    $(".input-btn").addEventListener("click", setNewInformation);
-    $(".cancel-btn").addEventListener("click", cancelOrder);
-    $(".detail-info-btn").addEventListener("click", showDetailInformationPage);
-
-    function showDetailInformationPage() {
-      $(".address-container").style.display = "flex";
-      $(".payment-information-container").style.display = "flex";
-      if (orderData.status == "상품준비중") {
-        $(".button-container").style.display = "flex";
-      }
-    }
-
-    function clickChangeButton() {
-      $("#change-info-container").style.display = "flex";
-    }
-
-    async function setNewInformation() {
-      if ($(".name-input").value.length < 2) {
-        alert("이름을 다시 확인해주세요");
-        return;
-      }
-      if ($(".phoneNumber-input").value.length < 11) {
-        alert("전화번호를 다시 확인해주세요");
-        return;
-      }
-      if (
-        $(".postalCode-input").value == "" ||
-        $(".address1-input").value == "" ||
-        $(".address2-input").value == ""
-      ) {
-        alert("주소를 다시 확인해주세요");
-        return;
-      }
-
-      const changeInfo = {
-        fullName: $(".name-input").value,
-        phoneNumber: $(".phoneNumber-input").value,
-        address: {
-          postalCode: $(".postalCode-input").value,
-          address1: $(".address1-input").value,
-          address2: $(".address2-input").value,
-        },
-      };
-
-      try {
-        await api.patch(ApiUrl.ORDERS, orderID, changeInfo);
-        alert("정보가 성공적으로 수정되었습니다🎉");
-        $(".user-name").innerHTML = $(".name-input").value;
-        $(".user-phoneNumber").innerHTML = $(".phoneNumber-input").value;
-        $(".user-postalCode").innerHTML = $(".postalCode-input").value;
-        $(".user-address1").innerHTML = $(".address1-input").value;
-        $(".user-address2").innerHTML = $(".address2-input").value;
-        $(".user-change-container").style.display = "none";
-      } catch (e) {
-        alert(e.message);
-      }
-    }
-
-    async function cancelOrder() {
-      try {
-        await api.delete("/api/orders", orderID);
-        alert("주문이 취소되었습니다🎉");
-        location.reload();
-      } catch (e) {
-        alert(e.message);
-      }
+  function showDetailInformationPage() {
+    $(".address-container").style.display = "flex";
+    $(".payment-information-container").style.display = "flex";
+    if (orderData.status == "상품준비중") {
+      $(".button-container").style.display = "flex";
     }
   }
-  eventListenerBtn();
+
+  function clickChangeButton() {
+    $("#change-info-container").style.display = "flex";
+  }
+
+  async function setNewInformation() {
+    if ($(".name-input").value.length < 2) {
+      alert("이름을 다시 확인해주세요");
+      return;
+    }
+    if ($(".phoneNumber-input").value.length < 11) {
+      alert("전화번호를 다시 확인해주세요");
+      return;
+    }
+    if (
+      $(".postalCode-input").value == "" ||
+      $(".address1-input").value == "" ||
+      $(".address2-input").value == ""
+    ) {
+      alert("주소를 다시 확인해주세요");
+      return;
+    }
+
+    const changeInfo = {
+      fullName: $(".name-input").value,
+      phoneNumber: $(".phoneNumber-input").value,
+      address: {
+        postalCode: $(".postalCode-input").value,
+        address1: $(".address1-input").value,
+        address2: $(".address2-input").value,
+      },
+    };
+
+    try {
+      await api.patch(ApiUrl.ORDERS, orderID, changeInfo);
+      alert("정보가 성공적으로 수정되었습니다🎉");
+      $(".user-name").innerHTML = $(".name-input").value;
+      $(".user-phoneNumber").innerHTML = $(".phoneNumber-input").value;
+      $(".user-postalCode").innerHTML = $(".postalCode-input").value;
+      $(".user-address1").innerHTML = $(".address1-input").value;
+      $(".user-address2").innerHTML = $(".address2-input").value;
+      $(".user-change-container").style.display = "none";
+    } catch (e) {
+      alert(e.message);
+    }
+  }
+
+  async function cancelOrder() {
+    try {
+      await api.delete("/api/orders", orderID);
+      alert("주문이 취소되었습니다🎉");
+      location.reload();
+    } catch (e) {
+      alert(e.message);
+    }
+  }
+}
+
+async function checkUserPassword(e) {
+  e.preventDefault();
+
+  const userData = await api.get(ApiUrl.USER_INFORMATION);
+  const userEmail = userData.email;
+  const userInfo = {
+    email: userEmail,
+    password: $(".password-input").value,
+  };
+
+  try {
+    await api.post(ApiUrl.LOGIN, userInfo);
+    window.location = "/user-information";
+  } catch (e) {
+    alert(e.message);
+  }
+}
+
+function showPasswordInputPage() {
+  $(".password-container").style.display = "flex";
+  $(".user-page-container").style.display = "none";
 }
 
 async function insertFoundAddress() {
@@ -218,6 +185,35 @@ function getTotalPrice(item) {
   selectId(`${item._id}-total-pay`).innerHTML = `${(
     TotalProductsPrice + deliveryFee
   ).toLocaleString("ko-KR")}원`;
+}
+
+function createUserPageContainer() {
+  let page = undefined;
+  page = document.createElement("div");
+  page.setAttribute("class", "user-page-container");
+  page.innerHTML = `<div class="body-section-container">
+    <div class="user-information-container">
+      <span>내 정보</span>
+      <button class="user-profile-btn">계정 정보 확인</button>
+    </div>
+    <div class="user-order-information-container">
+      <span>쇼핑 정보</span>
+      <a href="/order-list"> 주문내역 </a>
+    </div>
+  </div>`;
+  $(".body-container").append(page);
+}
+
+function createPasswordInputContainer() {
+  let page = undefined;
+  page = document.createElement("div");
+  page.setAttribute("class", "password-container");
+  page.innerHTML = `
+  <span>비밀번호 확인이 필요합니다</span>
+  <input class="password-input" type="password" placeholder="비밀번호"/>
+  <button class="password-check-btn">확인</button>
+  `;
+  $(".body-container").append(page);
 }
 
 function createOrderDateContainer(item) {
