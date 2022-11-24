@@ -73,6 +73,10 @@
   margin-left: auto;
 }
 
+.single-review-detail-container .review-content-detail {
+  white-space: pre;
+}
+
 .single-review-detail-container .review-img {
   height: 350px;
 }
@@ -163,7 +167,6 @@
 }
 
 /* button */
-
 .review-write-button {
   align-items: center;
   background-color: #fee6e3;
