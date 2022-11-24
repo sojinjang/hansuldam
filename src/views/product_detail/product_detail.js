@@ -92,7 +92,7 @@ async function orderAndCart() {
   const totalPrice = document.querySelector(".amount-total-price");
 
   $("#order-button").addEventListener("click", moveToOrderPage);
-  $("#cart-button").addEventListener("click", moveToCartPage);
+  $("#cart-button").addEventListener("click", addToCart);
   $(".amount-minus-button").addEventListener("click", decreaseAmount);
   $(".amount-plus-button").addEventListener("click", increaseAmount);
 
@@ -104,7 +104,7 @@ async function orderAndCart() {
     window.location.href = "/order-pay";
   }
 
-  function moveToCartPage() {
+  function addToCart() {
     productData["quantity"] = +amountInput.value;
     if (getSavedItems(Keys.CART_KEY) === null || getSavedItems(Keys.CART_KEY) === []) {
       saveItems(Keys.CART_KEY, [productData]);
@@ -112,11 +112,10 @@ async function orderAndCart() {
       let cartItems = getSavedItems(Keys.CART_KEY);
       const existItemIdx = cartItems.findIndex((product) => product._id === productData._id);
 
-      if (existItemIdx === -1) {
-        cartItems = [...cartItems, productData];
-      } else {
-        cartItems[existItemIdx].quantity += +amountInput.value;
-      }
+      existItemIdx === -1
+        ? (cartItems = [...cartItems, productData])
+        : (cartItems[existItemIdx].quantity += +amountInput.value);
+
       saveItems(Keys.CART_KEY, cartItems);
       countCart();
     }
