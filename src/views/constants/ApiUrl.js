@@ -17,6 +17,7 @@ export const ApiUrl = Object.freeze({
   USER_ORDERS: "/api/orders/auth",
   ADMIN_ORDERS: "/api/orders/admin",
   CART: "/api/cart/auth",
-  COMMENTS: "/api/comments/auth",
+  COMMENTS: "/api/comments",
+  AUTH_COMMENTS: "/api/comments/auth",
   ADMIN_COMMENTS: "/api/comments/admin",
 });
