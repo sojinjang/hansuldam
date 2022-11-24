@@ -16,8 +16,8 @@ main.insertAdjacentHTML("afterend", getFooter());
 async function logInByLogin(userId) {
   try {
     const response = await api.get(ApiUrl.NAVER_OAUTH, userId);
-    setCookie(Keys.TOKEN_KEY, { [Keys.TOKEN_KEY]: response.token });
-    setCookie(Keys.USER_ID_KEY, { [Keys.USER_ID_KEY]: response.userId });
+    setCookie(Keys.TOKEN_KEY, response.token);
+    setCookie(Keys.USER_ID_KEY, response.userId);
     getCartInfoFromDB();
   } catch (err) {
     alert(err.message);
