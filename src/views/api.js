@@ -44,10 +44,9 @@ async function post(endpoint, data) {
 
 async function postImg(endpoint, data) {
   const apiUrl = endpoint;
-  const bodyData = JSON.stringify(data);
   const res = await fetch(apiUrl, {
     method: "POST",
-    body: bodyData,
+    body: data,
   });
 
   if (!res.ok) {
