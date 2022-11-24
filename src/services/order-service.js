@@ -94,7 +94,15 @@ class OrderService {
       throw new NotFound("This Order Not in DB", 4303);
     }
 
-    // 업데이트 진행
+    // 유저에서 주문id 지우기
+    if (!!order.userId) {
+      const filterObj = { _id: order.userId };
+      const updateObj = { $pull: { orders: orderId } };
+
+      await this.userModel.update(filterObj, updateObj);
+    }
+
+    // 삭제 진행
     const deletedOrder = await this.orderModel.delete({ orderId });
     return deletedOrder;
   }
@@ -109,10 +117,7 @@ class OrderService {
     const products = await this.productModel.findByIdArray(productIdArr);
 
     if (products.length !== productIdArr.length) {
-      throw new NotFound(
-        "There is something missing on the product list",
-        4304
-      );
+      throw new NotFound("There is something missing on the product list", 4304);
     }
 
     const productsIn = sortingCart(products, productsInOrder);
