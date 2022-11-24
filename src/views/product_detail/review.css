@@ -74,7 +74,7 @@
 }
 
 .single-review-detail-container .review-img {
-  height: 500px;
+  height: 350px;
 }
 
 /* modal */
@@ -131,6 +131,7 @@
 #modal .modal-window .review-input {
   width: 90%;
   height: 200px;
+  white-space: pre-wrap;
 }
 
 #modal .modal-upper-section {
