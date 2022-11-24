@@ -52,6 +52,7 @@ async function redirectPage() {
   const menuLabels = document.querySelectorAll(".menu-label");
 
   $(".company-logo").addEventListener("click", () => (window.location.href = "/"));
+  $(".search-img").addEventListener("click", handleSearch);
   $(".join").addEventListener("click", () => (window.location.href = "/join"));
   $(".login").addEventListener("click", () => {
     window.location.href = "/login";
@@ -100,6 +101,13 @@ function handleLogout() {
       window.location.href = "/";
     }, 50);
   });
+}
+
+function handleSearch(e){
+  e.preventDefault();
+  const input = $(".input");
+  const query = input.value;
+  window.location.href = `/search/?keyword=${query}`;
 }
 
 export { getHeader, redirectPage };
