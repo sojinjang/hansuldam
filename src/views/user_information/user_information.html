@@ -66,7 +66,11 @@
                 <span class="user-info" id="user-phoneNumber-number">[전화번호]</span>
                 <button class="numChangeBtn">변경</button>
                 <div class="change-info" id="change-phoneNumber-container">
-                  <input type="text" class="changePhoneNumber" />
+                  <input
+                    type="text"
+                    class="changePhoneNumber"
+                    placeholder="-를 빼고 입력해주세요"
+                  />
                   <button class="numConfirmBtn">확인</button>
                 </div>
               </div>
@@ -80,9 +84,14 @@
                 <button class="adChangeBtn">수정</button>
                 <div class="change-info" id="change-address-container">
                   <button class="find-address-button" type="submit">주소 찾기</button>
-                  <input type="text" class="changePostalCode" readonly />
-                  <input type="text" class="changeAddress1" readonly />
-                  <input type="text" class="changeAddress2" />
+                  <input
+                    type="text"
+                    class="changePostalCode"
+                    placeholder="우편번호"
+                    readonly
+                  />
+                  <input type="text" class="changeAddress1" placeholder="주소" readonly />
+                  <input type="text" class="changeAddress2" placeholder="상세주소" />
                   <button class="adConfrimBtn">확인</button>
                 </div>
               </div>
