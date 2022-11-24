@@ -8,11 +8,11 @@
 
 .review-title-container {
   display: flex;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 .review-title {
   margin-right: auto;
-  font-size: 30px;
+  font-size: 25px;
   font-weight: 600;
   vertical-align: middle;
 }
@@ -20,8 +20,7 @@
 .review-list-container {
   display: flex;
   flex-direction: column;
-  margin-top: 10px;
-  border-top: 4px solid rgb(91, 58, 28);
+  border-top: 2px solid;
   padding-left: 8px;
   padding-right: 8px;
 }
@@ -36,12 +35,15 @@
   display: flex;
   flex-direction: column;
   padding: 10px;
-  cursor: pointer;
   transition: all 0.4s linear;
 }
 
 .review-list-container .single-review-container:hover {
-  color: rgb(91, 58, 28);
+  color: #9a8669;
+}
+
+.single-review-title-container .single-review-title-content {
+  cursor: pointer;
 }
 
 .single-review-title-container .image-icon {
@@ -55,8 +57,7 @@
 
 .single-review-detail-container {
   flex-direction: column;
-  background-color: #ffe8c827;
-  border-radius: 30px;
+  border-bottom: 1px solid;
 }
 
 .single-review-detail-container .review-info {
@@ -79,6 +80,7 @@
 .single-review-detail-container .review-content-detail {
   margin: 10px;
   white-space: pre;
+  cursor: pointer;
 }
 
 .single-review-detail-container .review-img {
@@ -100,7 +102,7 @@
   border-radius: 10px;
 }
 #modal .modal-window {
-  background: #ffe8c857;
+  background: #bdaa8e31;
   box-shadow: 0 8px 32px 0 #cbb69773;
   backdrop-filter: blur(13.5px);
   -webkit-backdrop-filter: blur(13.5px);
@@ -174,8 +176,8 @@
 /* button */
 .review-write-button {
   align-items: center;
-  background-color: #ffe8c8;
-  border: 2px solid #111;
+  background-color: #cbb6978d;
+  border: 1px solid #cbb6978d;
   border-radius: 8px;
   box-sizing: border-box;
   color: #111;
@@ -197,7 +199,7 @@
 }
 
 .review-write-button:after {
-  background-color: #111;
+  background-color: #cbb69759;
   border-radius: 8px;
   content: "";
   display: block;
@@ -216,7 +218,7 @@
 }
 
 .review-write-button:active {
-  background-color: #ffe8c8;
+  background-color: #cbb69759;
   outline: 0;
 }
 
