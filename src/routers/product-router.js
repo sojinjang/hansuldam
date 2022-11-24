@@ -135,9 +135,38 @@ productRouter.get("/filter-search", async (req, res, next) => {
     const pageObj = { page, perpage };
     const inputFilterObj = { key, str, min, max, sort };
 
-    let { products, totalPage } = await productService.getfilteredProducts(
+    let { products, totalPage } = await productService.getFilteredProducts(
       pageObj,
       inputFilterObj
+    );
+
+    // 상품 목록(배열)을 JSON 형태로 프론트에 보냄
+    res.status(200).json({ products, totalPage });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// 상품 키워드 조회
+productRouter.get("/search", async (req, res, next) => {
+  try {
+    const key = req.query.key;
+    const str = req.query.str;
+
+    if (!key || !str) {
+      throw new BadRequest("Undefined key", 4204);
+    }
+    const page = Number(req.query.page || 1);
+    const perpage = Number(req.query.perpage || 9);
+
+    const sortKey = req.query.sortKey || "price";
+    const sort = Number(req.query.sort) === -1 ? -1 : 1;
+    const pageObj = { page, perpage };
+    const inputWordObj = { key, str, sort, sortKey };
+
+    let { products, totalPage } = await productService.getSearchedProducts(
+      pageObj,
+      inputWordObj
     );
 
     // 상품 목록(배열)을 JSON 형태로 프론트에 보냄

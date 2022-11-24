@@ -1,7 +1,7 @@
 import fs from "fs";
 import { productModel, categoryModel, commentModel } from "../db";
 import { BadRequest, NotFound } from "../utils/errorCodes";
-import { pagination, totalPageCacul, makeFilterObj } from "../utils";
+import { pagination, totalPageCacul, makeFilterObj, makeKeywordObj } from "../utils";
 
 class ProductService {
   constructor(productModel, categoryModel, commentModel) {
@@ -136,12 +136,27 @@ class ProductService {
   }
 
   // 상품 필터링 조회
-  async getfilteredProducts(pageObj, inputFilterObj) {
+  async getFilteredProducts(pageObj, inputFilterObj) {
     const { page, perpage } = pageObj;
 
     const { skip, limit } = pagination(page, perpage);
 
     const { filterObj, sortObj } = makeFilterObj(inputFilterObj);
+
+    const products = await this.productModel.findFiltered(skip, limit, sortObj, filterObj);
+
+    const total = await this.productModel.totalCount(filterObj);
+    const totalPage = totalPageCacul(perpage, total);
+
+    return { products, totalPage };
+  }
+
+  // 상품 키워드 조회
+  async getSearchedProducts(pageObj, inputWordObj) {
+    const { page, perpage } = pageObj;
+
+    const { skip, limit } = pagination(page, perpage);
+    const { filterObj, sortObj } = makeKeywordObj(inputWordObj);
 
     const products = await this.productModel.findFiltered(skip, limit, sortObj, filterObj);
 
