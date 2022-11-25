@@ -1,17 +1,25 @@
 import { Router } from "express";
 import request from "request";
 import { userService } from "../services";
+import { BadRequest } from "../utils/errorCodes";
 
 const naverRouter = Router();
 
+<<<<<<< HEAD
 const HSD_url = `http://localhost:${process.env.PORT}`;
+=======
+const HSD_url = "http://localhost:7777/";
+>>>>>>> c8250f61b55d4b28f8c949eaac5e5a7dfaab96e5
 var client_id = process.env.Naver_clientID;
 var client_secret = process.env.Naver_clientSecret;
 var state = "RAMDOM_STATE";
 var redirectURI = encodeURI(`${HSD_url}/api/naver/callback`);
 var naverApiUrl = ``;
 
-naverRouter.get("/login", function (req, res) {
+let token = ``;
+let authUserId = ``;
+
+naverRouter.get("/login", (req, res) => {
   naverApiUrl =
     "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=" +
     client_id +
@@ -23,7 +31,7 @@ naverRouter.get("/login", function (req, res) {
   res.status(200).json({ naverApiUrl });
 });
 
-naverRouter.get("/callback", function (req, res) {
+naverRouter.get("/callback", (req, res) => {
   const code = req.query.code;
   const state = req.query.state;
   naverApiUrl =
@@ -46,7 +54,7 @@ naverRouter.get("/callback", function (req, res) {
     },
   };
 
-  request.get(options, async function (error, response, body) {
+  request.get(options, async (error, response, body) => {
     if (!error && response.statusCode == 200) {
       const { access_token } = JSON.parse(body);
       request.get(
@@ -62,15 +70,19 @@ naverRouter.get("/callback", function (req, res) {
           if (!result.message == "success") {
             throw new Error("네이버 로그인 실패");
           }
+          const auth = true;
           const fullName = result.response.nickname;
           const email = result.response.email;
           const phoneNumber = result.response.mobile.split("-").join("");
           const password = "naver";
-          const naverUserInfo = { fullName, email, phoneNumber, password };
+          const naverUserInfo = { auth, fullName, email, phoneNumber, password };
 
-          const { token } = await userService.OauthLogin(naverUserInfo);
+          const authUser = await userService.OauthLogin(naverUserInfo);
 
-          res.redirect("/?valid=" + token);
+          token = authUser.token;
+          authUserId = authUser.userId;
+
+          res.redirect("/?valid=" + authUserId);
         }
       );
     } else {
@@ -78,6 +90,16 @@ naverRouter.get("/callback", function (req, res) {
       console.log("error = " + response.statusCode);
     }
   });
+});
+
+naverRouter.get("/:userId", (req, res, next) => {
+  const { userId } = req.params;
+
+  if (userId === authUserId.toString()) {
+    res.status(200).json({ token, userId });
+  } else {
+    next(new BadRequest("Incorrect Request user-id", 4701));
+  }
 });
 
 export { naverRouter };

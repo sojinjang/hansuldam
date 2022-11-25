@@ -111,10 +111,10 @@ userRouter.post("/login", isEmptyObject, async (req, res, next) => {
     const password = req.body.password;
 
     // 로그인 진행 (로그인 성공 시 jwt 토큰을 프론트에 보내 줌)
-    const userToken = await userService.getUserToken({ email, password });
+    const { token, userId } = await userService.getUserToken({ email, password });
 
     // jwt 토큰을 프론트에 보냄 (jwt 토큰은, 문자열임)
-    res.status(200).json(userToken);
+    res.status(200).json({ token, userId });
   } catch (error) {
     next(error);
   }

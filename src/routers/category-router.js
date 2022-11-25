@@ -37,10 +37,7 @@ adminRouter.patch("/:categoryId", isEmptyObject, async (req, res, next) => {
     const { name } = req.body;
 
     // 위 데이터를 카테고리 db에 추가하기
-    const updateCategory = await categoryService.updateCategory(
-      categoryId,
-      name
-    );
+    const updateCategory = await categoryService.updateCategory(categoryId, name);
 
     // 업데이트 이후의 데이터를 프론트에 보내 줌
     res.status(200).json(updateCategory);
@@ -56,9 +53,9 @@ adminRouter.delete("/:categoryId", async (req, res, next) => {
     if (!categoryId) {
       throw new BadRequest("Undefined params", 4005);
     }
-    const category = await categoryService.deleteCategory(categoryId);
+    const noneCategory = await categoryService.deleteCategory(categoryId);
 
-    res.status(200).json(category);
+    res.status(200).json(noneCategory);
   } catch (error) {
     next(error);
   }
@@ -110,10 +107,7 @@ categoryRouter.get("/:categoryId/products", async (req, res, next) => {
       arr.push(productList[i]);
     }
 
-    const productsPerPage = arr.slice(
-      perPage * (page - 1),
-      perPage * (page - 1) + perPage
-    );
+    const productsPerPage = arr.slice(perPage * (page - 1), perPage * (page - 1) + perPage);
 
     const total = arr.length;
     const totalPage = Math.ceil(total / perPage);

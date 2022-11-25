@@ -27,9 +27,7 @@ async function fetchCategory() {
   const categoryData = await get(ApiUrl.CATEGORY);
   const categoryId = categoryData[0]["_id"];
 
-  const productsInCategory = await get(
-    `${ApiUrl.CATEGORY}/${categoryId}/products`
-  );
+  const productsInCategory = await get(`${ApiUrl.CATEGORY}/${categoryId}/products`);
 
   return productsInCategory;
 }
@@ -39,13 +37,15 @@ async function renderData() {
   const eventProducts = productsInCategory["productList"];
 
   eventProducts.forEach((product) => {
-    const { _id, name } = product;
+    const { _id, name, image } = product;
+    const imageUrl = "../" + decodeURIComponent(image).split("views")[1];
+
     let productContainer = document.createElement("div");
     productContainer.setAttribute("class", "products-image-list");
     productContainer.setAttribute("id", _id);
     productContainer.innerHTML = `<div>
 		<img
-			src="https://d38cxpfv0ljg7q.cloudfront.net/admin_contents/thumbnail/Xp8J-1666763020027-1011ssgp_9241.jpg"
+			src="${imageUrl}"
 		/>
 	</div>
 <span>${name}</span>`;
@@ -60,8 +60,7 @@ async function clickSliderButton() {
   goToDetailPage();
 
   const productsContainer = document.querySelector(".products-container");
-  const maxSlidePage =
-    document.querySelectorAll(".products-image-list").length - 4;
+  const maxSlidePage = document.querySelectorAll(".products-image-list").length - 4;
   let sliderXValue = 0;
   let count = 0;
 

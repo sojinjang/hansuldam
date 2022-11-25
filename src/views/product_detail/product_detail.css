@@ -24,12 +24,20 @@ input[type="number"]::-webkit-inner-spin-button {
 
 /* main */
 .body-container {
-  padding: 0 7vw 0 7vw;
-  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  -webkit-box-align: start;
+  max-width: 1000px;
+  width: 100%;
+  min-height: 100vh;
+  margin: auto;
+  margin-top: 40px;
 }
 
 .product-container {
   display: flex;
+  justify-content: center;
 }
 
 /* image */

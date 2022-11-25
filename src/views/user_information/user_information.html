@@ -4,21 +4,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>사용자 정보 창</title>
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="/elice-rabbit-favicon.png"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
-    />
+    <link rel="icon" type="image/png" sizes="16x16" href="/elice-rabbit-favicon.png" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
     <script
       defer
       src="https://kit.fontawesome.com/9daa42bcef.js"
       crossorigin="anonymous"
     ></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <link rel="stylesheet" href="user_information.css" />
     <link rel="stylesheet" href="../template/header/header.css" />
     <link rel="stylesheet" href="../template/footer/footer.css" />
@@ -47,37 +40,63 @@
               <div class="password-container">
                 <p>비밀번호</p>
                 <div class="password-info">
-                  <button class="pwChangeBtn">변경하기</button>
+                  <button class="pwChangeBtn">변경</button>
                 </div>
                 <div class="change-info" id="change-password-container">
-                  <input type="text" class="changePassword" />
-                  <input type="text" class="changePasswordCheck" />
+                  <input
+                    type="text"
+                    class="user-password"
+                    placeholder="기존의 비밀번호를 입력하세요"
+                  />
+                  <input
+                    type="text"
+                    class="changePassword"
+                    placeholder="새로운 비밀번호를 입력하세요"
+                  />
+                  <input
+                    type="text"
+                    class="changePasswordCheck"
+                    placeholder="새로운 비밀번호를 한번 더 입력하세요"
+                  />
                   <button class="pwConfirmBtn">확인</button>
                 </div>
               </div>
               <div class="phoneNumber-container">
                 <p>전화번호</p>
-                <span class="user-info" id="user-phoneNumber-number"
-                  >[전화번호]</span
-                >
-                <button class="numChangeBtn">변경하기</button>
+                <span class="user-info" id="user-phoneNumber-number">[전화번호]</span>
+                <button class="numChangeBtn">변경</button>
                 <div class="change-info" id="change-phoneNumber-container">
-                  <input type="text" class="changePhoneNumber" />
+                  <input
+                    type="text"
+                    class="changePhoneNumber"
+                    placeholder="-를 빼고 입력해주세요"
+                  />
                   <button class="numConfirmBtn">확인</button>
                 </div>
               </div>
               <div class="address-container">
                 <p>주소</p>
                 <div class="user-address">
+                  <span class="user-info" id="user-postalCode">[주소1]</span>
                   <span class="user-info" id="user-address1">[주소1]</span>
                   <span class="user-info" id="user-address2">[주소2]</span>
                 </div>
-                <button class="adChangeBtn">주소 변경하기</button>
+                <button class="adChangeBtn">수정</button>
                 <div class="change-info" id="change-address-container">
-                  <input type="text" class="changeAddress1" />
-                  <input type="text" class="changeAddress2" />
+                  <button class="find-address-button" type="submit">주소 찾기</button>
+                  <input
+                    type="text"
+                    class="changePostalCode"
+                    placeholder="우편번호"
+                    readonly
+                  />
+                  <input type="text" class="changeAddress1" placeholder="주소" readonly />
+                  <input type="text" class="changeAddress2" placeholder="상세주소" />
                   <button class="adConfrimBtn">확인</button>
                 </div>
+              </div>
+              <div class="delete-user-information-btn-container">
+                <button class="delete-user-information-btn">탈퇴하기</button>
               </div>
             </div>
           </section>

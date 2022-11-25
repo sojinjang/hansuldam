@@ -16,7 +16,7 @@ function removeProductFromLocalDB(productId) {
 function adjustQuantityFromLocalDB(productId, quantity) {
   const savedProducts = getSavedItems(Keys.CART_KEY);
   const index = savedProducts.findIndex((x) => x._id === productId);
-  savedProducts[index].quantity = quantity;
+  savedProducts[index].quantity = parseInt(quantity);
   saveItems(Keys.CART_KEY, savedProducts);
 }
 

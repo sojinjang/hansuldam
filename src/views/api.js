@@ -3,7 +3,7 @@ import { ErrorMessage } from "./constants/ErrorMessage.js";
 import { Keys } from "./constants/Keys.js";
 
 async function get(endpoint, params = "") {
-  const apiUrl = `${endpoint}/${params}`;
+  const apiUrl = params === "" ? endpoint : `${endpoint}/${params}`;
   const res = await fetch(apiUrl, {
     method: "GET",
     headers: {
@@ -42,8 +42,24 @@ async function post(endpoint, data) {
   return result;
 }
 
+async function postImg(endpoint, data) {
+  const apiUrl = endpoint;
+  const res = await fetch(apiUrl, {
+    method: "POST",
+    body: data,
+  });
+
+  if (!res.ok) {
+    const error = await res.json();
+    throw new Error(ErrorMessage[error.errorCode]);
+  }
+
+  const result = await res.json();
+  return result;
+}
+
 async function patch(endpoint, params = "", data) {
-  const apiUrl = `${endpoint}/${params}`;
+  const apiUrl = params === "" ? endpoint : `${endpoint}/${params}`;
   const bodyData = JSON.stringify(data);
   const res = await fetch(apiUrl, {
     method: "PATCH",
@@ -64,7 +80,7 @@ async function patch(endpoint, params = "", data) {
 }
 
 async function del(endpoint, params = "", data = {}) {
-  const apiUrl = `${endpoint}/${params}`;
+  const apiUrl = params === "" ? endpoint : `${endpoint}/${params}`;
   const bodyData = JSON.stringify(data);
 
   const res = await fetch(apiUrl, {
@@ -85,4 +101,4 @@ async function del(endpoint, params = "", data = {}) {
   return result;
 }
 
-export { get, post, patch, del as delete };
+export { get, post, postImg, patch, del as delete };

@@ -21,9 +21,11 @@ function getHeader() {
         </section>
         <section class="user-menu">
           <ul class="user-list">
+            <li class="myPage">비회원 주문 조회 |</li>
             <li class="login">로그인 |</li>
             <li class="join">회원가입</li>
-            <div class="basket">
+            <div class="cart">
+              <span class="cart-count">0</span>
               <img src="../img/shopping-bag.png" alt="cart-img">
             </div>
           </ul>
@@ -52,34 +54,24 @@ async function redirectPage() {
   const menuLabels = document.querySelectorAll(".menu-label");
 
   $(".company-logo").addEventListener("click", () => (window.location.href = "/"));
+  $(".search-img").addEventListener("click", handleSearch);
   $(".join").addEventListener("click", () => (window.location.href = "/join"));
-  $(".login").addEventListener("click", () => {
-    window.location.href = "/login";
-  });
+  $(".login").addEventListener("click", () => (window.location.href = "/login"));
+  $(".myPage").addEventListener("click", () => (window.location.href = "/myPage"));
+
   if (getCookieValue(Keys.TOKEN_KEY)) {
     const user = await get(ApiUrl.USER_INFORMATION);
-    if (user && user["role"] === "admin") {
-      $(".user-list").innerHTML = `<li class="admin">관리자페이지 |</li>
-<li class="logout">로그아웃</li>
-<div class="basket">
-  <img src="../img/shopping-bag.png" alt="cart-img">
-</div>`;
 
-      $(".admin").addEventListener("click", () => (window.location.href = "/admin"));
+    if (user["role"] === "admin") {
+      loginAsAdmin();
       handleLogout();
     } else {
-      $(".user-list").innerHTML = `<li class="myPage">마이페이지 |</li>
-<li class="logout">로그아웃</li>
-<div class="basket">
-  <img src="../img/shopping-bag.png" alt="cart-img">
-</div>`;
-
-      $(".myPage").addEventListener("click", () => (window.location.href = "/myPage"));
+      loginAsUser();
       handleLogout();
     }
   }
 
-  $(".basket").addEventListener("click", () => (window.location.href = "/cart"));
+  $(".cart").addEventListener("click", () => (window.location.href = "/cart"));
   $("#eventProducts").addEventListener("click", () => (window.location.href = "/event-page"));
   menuLabels.forEach((label) => {
     label.addEventListener("click", (e) => {
@@ -89,16 +81,47 @@ async function redirectPage() {
   });
 }
 
+function loginAsUser() {
+  $(".user-list").innerHTML = `<li class="myPage">마이페이지 |</li>
+<li class="logout">로그아웃</li>
+<div class="cart">
+<span class="cart-count">0</span>
+<img src="../img/shopping-bag.png" alt="cart-img">
+</div>`;
+
+  $(".myPage").addEventListener("click", () => (window.location.href = "/myPage"));
+}
+
+function loginAsAdmin() {
+  $(".user-list").innerHTML = `<li class="myPage"> 마이페이지 |</li>
+<li class="admin"> 관리자페이지 |</li>
+<li class="logout"> 로그아웃</li>
+<div class="cart">
+<span class="cart-count">0</span>
+<img src="../img/shopping-bag.png" alt="cart-img">
+</div>`;
+
+  $(".admin").addEventListener("click", () => (window.location.href = "/admin"));
+  $(".myPage").addEventListener("click", () => (window.location.href = "/myPage"));
+}
+
 function handleLogout() {
   $(".logout").addEventListener("click", () => {
     const cartItems = getSavedItems(Keys.CART_KEY);
     updateCartInfoToDB(cartItems);
     resetCart(Keys.CART_KEY);
     deleteCookie(Keys.TOKEN_KEY);
+    deleteCookie(Keys.USER_ID_KEY);
     setTimeout(() => {
       window.location.href = "/";
     }, 50);
   });
 }
 
-export { getHeader, redirectPage };
+function updateCartCnt() {
+  const cartLength = getSavedItems(Keys.CART_KEY);
+
+  $(".cart-count").innerHTML = cartLength.length;
+}
+
+export { getHeader, redirectPage, updateCartCnt };

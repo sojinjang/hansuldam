@@ -4,11 +4,9 @@ const setCookie = (key, value) => {
 
 const getCookieValue = (key) => {
   let matches = document.cookie.match(
-    new RegExp(
-      "(?:^|; )" + key.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") + "=([^;]*)"
-    )
+    new RegExp("(?:^|; )" + key.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") + "=([^;]*)")
   );
-  return matches ? JSON.parse(decodeURIComponent(matches[1]))[key] : undefined;
+  return matches ? JSON.parse(decodeURIComponent(matches[1])) : undefined;
 };
 
 const deleteCookie = (key) => {
