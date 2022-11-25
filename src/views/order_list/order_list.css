@@ -2,17 +2,12 @@
   padding: 20px 68.6px;
 }
 
-.order-container {
-  display: flex;
-  flex-direction: column;
-  padding: 15px 15px;
-}
-
 .body-container .order-container {
   display: flex;
   flex-direction: column;
+  border-radius: 15px;
   margin-bottom: 15px;
-  background-color: bisque;
+  background-color: #cbb69786;
   padding: 15px 15px;
 }
 
@@ -21,8 +16,8 @@
   box-sizing: content-box;
 }
 
-.body-container span {
-  margin: 10px 0;
+.body-container .order-list-text {
+  margin: 15px 0;
   font-size: 30px;
 }
 
@@ -32,12 +27,11 @@
 }
 
 .order-date span {
-  font-size: 15px;
+  font-size: 1rem;
 }
 
 .order-date .orderDate {
-  padding-right: 5px;
-  border-right: 1px solid;
+  margin-right: 20px;
 }
 
 .order-date .order-id {
@@ -47,15 +41,16 @@
 .order-status div {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  margin-bottom: 10px;
 }
 
 .order-container .order-status {
-  font-size: 20px;
+  font-size: 1.5rem;
+  margin-bottom: 5px;
 }
 
 .order-container .single-product-container {
-  background-color: azure;
+  background-color: rgba(255, 255, 255, 0.5);
   border-radius: 15px;
   display: flex;
   flex-direction: row;
@@ -64,7 +59,7 @@
 }
 
 .single-product-container span {
-  font-size: 15px;
+  font-size: 1rem;
 }
 
 .detail-info-button-container {
@@ -73,7 +68,7 @@
 }
 
 .detail-info-button-container .detail-info-btn {
-  font-size: 17px;
+  font-size: 1.125rem;
   border-style: none;
 }
 
@@ -81,27 +76,36 @@
   display: none;
   flex-direction: column;
   box-sizing: border-box;
-  margin-bottom: 20px;
+  margin: 10px 0;
+  border-radius: 15px;
+  padding: 10px 10px;
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 .address-container .address-text {
-  font-size: 20px;
+  font-size: 1.25rem;
   padding-bottom: 5px;
-  border-bottom: 1px solid;
+  margin-bottom: 10px;
+  font-weight: 600;
 }
 
 .address-container .address-info-text {
   color: rgb(91, 90, 90);
-  width: 70px;
+  width: 100px;
 }
 
 .payment-information-container {
   display: none;
   flex-direction: column;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  border-radius: 15px;
+  padding: 10px 10px;
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 .payment-information-container .payment-text {
-  font-size: 20px;
+  font-size: 1.25rem;
   padding-bottom: 5px;
   border-bottom: 1px solid;
 }
@@ -112,14 +116,14 @@
 }
 
 .payment-information-container .payment-wrapper span {
-  font-size: 15px;
+  font-size: 1.125rem;
   margin: 5px 0;
 }
 
 .payment-wrapper .payment-info-text {
   color: rgb(91, 90, 90);
   margin: 5px 0;
-  width: 70px;
+  width: 100px;
 }
 
 #payment-method-wrapper {
@@ -131,11 +135,16 @@
   margin: 5px 0;
 }
 
+.pay-date {
+  color: gray;
+  font-size: 1rem;
+}
+
 .user-change-container {
   display: none;
   flex-direction: column;
   box-sizing: border-box;
-  background-color: azure;
+  background-color: rgba(255, 255, 255, 0.5);
   border-radius: 15px;
   padding: 15px 15px;
   margin-bottom: 10px;
@@ -148,30 +157,28 @@
 }
 
 .user-change-container div span {
-  width: 70px;
+  width: 100px;
   margin: 0;
+  font-size: 1.125rem;
 }
 
 .user-change-container input {
   border-style: none;
   border-radius: 0;
+  height: 25px;
+  font-size: 1rem;
+  padding-left: 5px;
 }
 
 .button-container {
-  margin-top: 15px;
+  margin-top: 5px;
   display: none;
   flex-direction: row;
   justify-content: center;
 }
 
 .button-container button {
-  width: 100px;
-  height: 50px;
-  background-color: lightsteelblue;
-  border-radius: 15px;
-  text-align: center;
-  margin: 0 5px;
-  font-size: 15px;
+  font-size: 1.125rem;
 }
 
 .single-product-container img {
@@ -191,11 +198,11 @@
 
 .single-product-detail .single-product-name {
   font-weight: bold;
-  font-size: 20px;
+  font-size: 1.25rem;
 }
 
 .address-container div span {
-  font-size: 15px;
+  font-size: 1.125rem;
 }
 
 .address-container .address-info-wrapper {
@@ -211,21 +218,12 @@
 .address-info-wrapper div {
   display: flex;
   flex-direction: column;
-}
-
-.address-info-wrapper div {
-  display: flex;
-  flex-direction: column;
   justify-content: flex-start;
 }
 
 .user-change-container .change-wrapper {
   display: flex;
   flex-direction: column;
-}
-
-.user-change-container div span {
-  font-size: 15px;
 }
 
 .address-input-container {
@@ -243,15 +241,59 @@
 .address-input-container div {
   display: flex;
   flex-direction: column;
+  margin-right: 5px;
 }
 
 .address-input-container div input {
   margin-bottom: 5px;
 }
 
+.address-btn-container {
+  display: flex;
+  flex-direction: row;
+  margin-left: 100px;
+}
+
+body button {
+  cursor: pointer;
+}
+
 .change-btn {
-  width: 70px;
-  border-radius: 10px;
-  background-color: darkkhaki;
-  text-align: center;
+  margin-right: 5px;
+}
+
+.info-change {
+  margin-right: 5px;
+}
+
+.button-38 {
+  background-color: #ffffff;
+  border: 0;
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+  color: #111827;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 0.5rem;
+  padding: 0.75rem 1rem;
+  text-align: start;
+  text-decoration: none #d1d5db solid;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-38:hover {
+  background-color: rgb(249, 250, 251);
+}
+
+.button-38:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.button-38:focus-visible {
+  box-shadow: none;
 }
