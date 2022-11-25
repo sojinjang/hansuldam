@@ -46,6 +46,7 @@ orderId.forEach((id) => {
     );
     selectId(`${orderList._id}-cancel-order`).addEventListener("click", cancelOrder);
     selectId(`${orderList._id}-change-btn`).addEventListener("click", setNewInformation);
+    selectId(`${orderList._id}-cancel-btn`).addEventListener("click", cancelChangeInformation);
     selectId(`${orderList._id}-find-address-btn`).addEventListener(
       "click",
       insertFoundAddress
@@ -98,7 +99,7 @@ orderId.forEach((id) => {
 
       try {
         await patch("/api/orders", id, changeInfo);
-        alert("정보가 수정되었습니다🎉");
+        alert("정보가 수정되었습니다 🎉");
         selectId(`${orderList._id}-user-name`).innerHTML = selectId(
           `${orderList._id}-input-name`
         ).value;
@@ -121,11 +122,15 @@ orderId.forEach((id) => {
       }
     }
 
+    function cancelChangeInformation() {
+      selectId(`${orderList._id}-user-change-container`).style.display = "none";
+    }
+
     async function cancelOrder() {
       try {
         if (confirm("주문을 취소하시겠습니까?")) {
           await del("/api/orders", id, productList);
-          alert("주문취소가 성공적으로 처리되었습니다🎉");
+          alert("주문취소가 성공적으로 처리되었습니다 😔");
           location.reload();
         }
       } catch (e) {
@@ -170,8 +175,8 @@ function createOrderStatus(item) {
   Page.innerHTML = `<div class="order-status">
   <div>
     <div class="order-date">
-      <span class="orderDate">${item.createdAt.substr(0, 10)}</span>
-      <span class="order-id">주문번호: ${item._id}</span>
+      <span class="orderDate">주문일자 <strong>${item.createdAt.substr(0, 10)}</strong></span>
+      <span class="order-id">주문번호 <strong>${item._id}</strong></span>
     </div>
     
   </div>
@@ -184,7 +189,11 @@ function createProductListContainer(item) {
   let product = undefined;
   product = document.createElement("div");
   product.setAttribute("class", "single-product-container");
-  product.setAttribute("id", item._id);
+  product.setAttribute("id", `${item._id}-single-product-container`);
+  product.setAttribute(
+    "style",
+    `cursor: pointer; onclick="location.href='/product-detail/?id=${item._id}';"`
+  );
   product.innerHTML = `<img src="../img/ricewine_icon.png" alt="" />
   <div class="single-product-detail">
     <span class="single-product-name">${item.name}</span>
@@ -248,7 +257,7 @@ function createPaymentInformationContainer(item) {
     <span class="total-pay" id="${item._id}-total-pay">[총 결제 금액]</span>
   </div>
   <div class="payment-wrapper" id="payment-method-wrapper">
-    <span class="payment-info-text">결제 방법</span>
+    <span class="payment-info-text">결제 상세</span>
     <div class="payment-method">
       <span>${item.payment.method}</span>
       <div>
@@ -258,6 +267,11 @@ function createPaymentInformationContainer(item) {
           4
         )}-****-*****-****</span>
       </div>
+      <span class="pay-date">(${item.createdAt
+        .slice(0, 16)
+        .replace("T", " ")
+        .replace("-", ".")
+        .replace("-", ".")})</span>
     </div>
   </div>`;
   return page;
@@ -313,9 +327,12 @@ function createDeliveryInformationChangeContainer(item) {
         autocomplete="on"
       />
     </div>
-    <button id="${item._id}-find-address-btn">찾기</button>
+    <button class="button-38" id="${item._id}-find-address-btn">찾기</button>
   </div>
-  <button class="change-btn" id="${item._id}-change-btn">변경하기</button>
+  <div class="address-btn-container" id="${item._id}-address-btn-container">
+    <button class="change-btn button-38" id="${item._id}-change-btn">변경</button>
+    <button class="cancel-btn button-38" id="${item._id}-cancel-btn">취소</button>
+  </div>
 </div>`;
   return page;
 }
@@ -325,7 +342,7 @@ function createChangeButtonContainer(item) {
   page = document.createElement("div");
   page.setAttribute("class", "button-container");
   page.setAttribute("id", `${item._id}-button-container`);
-  page.innerHTML = `<button class="info-change" id="${item._id}-info-change">정보 수정하기</button>
-  <button class="cancel-order" id="${item._id}-cancel-order">주문 취소</button>`;
+  page.innerHTML = `<button class="info-change button-38" id="${item._id}-info-change">정보 수정하기</button>
+  <button class="cancel-order button-38" id="${item._id}-cancel-order">주문 취소</button>`;
   return page;
 }
