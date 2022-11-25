@@ -5,11 +5,7 @@ import { BadRequest } from "../utils/errorCodes";
 
 const naverRouter = Router();
 
-<<<<<<< HEAD
 const HSD_url = `http://localhost:${process.env.PORT}`;
-=======
-const HSD_url = "http://localhost:7777/";
->>>>>>> c8250f61b55d4b28f8c949eaac5e5a7dfaab96e5
 var client_id = process.env.Naver_clientID;
 var client_secret = process.env.Naver_clientSecret;
 var state = "RAMDOM_STATE";
