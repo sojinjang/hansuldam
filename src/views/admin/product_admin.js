@@ -105,11 +105,12 @@ function addProduct() {
   $(".add-product-button").addEventListener("click", async () => {
     const productInput = [...document.querySelectorAll(".product-input")];
     const inputObj = productInput.reduce((obj, input) => {
+      const fieldName = input.getAttribute("id");
       if (!input.value || input.value == undefined) {
         // 빈 문자열은 undefined, 빈 숫자는 null로 인식합니다.
-        return null;
+        obj[fieldName] = undefined;
+        return obj;
       } else {
-        const fieldName = input.getAttribute("id");
         obj[fieldName] = input.value;
         return obj;
       }
@@ -138,8 +139,10 @@ function addProduct() {
 }
 
 function uploadImageModal(uploadedProduct) {
-  const { _id } = uploadedProduct;
-  const productModalImageHTML = `<figure class="image"><img class="preview-image" src=""></figure>
+  const { _id, image } = uploadedProduct;
+  const imageUrl = "../" + decodeURIComponent(image).split("views")[1];
+
+  const productModalImageHTML = `<figure class="image"><img class="preview-image" src="${imageUrl}"></figure>
 <div class="file">
   <label class="file-label">
     <input class="file-input upload-image-input" type="file" name="resume" accept="image/*">
@@ -178,7 +181,7 @@ function uploadImageModal(uploadedProduct) {
     const formData = new FormData();
     formData.set("uploadImg", document.querySelector(".upload-image-input").files[0]);
 
-    const res = await fetch(`${ApiUrl.IMAGE}/${_id}`, {
+    const res = await fetch(`${ApiUrl.IMAGE}/${_id}?location=products`, {
       method: "POST",
       body: formData,
     });
@@ -224,7 +227,7 @@ async function renderProductDetail(productsTotalData) {
       const currentId = e.target.getAttribute("id").split("-")[1];
       const currentIndex = productsTotalData.findIndex((product) => product._id === currentId);
       const currentData = productsTotalData[currentIndex];
-      const { _id, stock, brand, description, sales, manufacturedDate, alcoholDegree } =
+      const { stock, brand, description, sales, manufacturedDate, alcoholDegree } =
         currentData;
 
       const detailHtml = `<div class="columns items-container items-detail opened">
@@ -271,18 +274,13 @@ async function renderProductDetail(productsTotalData) {
 function deleteProduct() {
   const deleteBtn = document.querySelectorAll(".delete-button");
   deleteBtn.forEach((button) => {
-    button.addEventListener("click", (e) => {
+    button.addEventListener("click", async (e) => {
       const currentId = e.target.getAttribute("id");
-      if (!$(".is-danger")) {
-        alert("삭제 하려면 다시 한 번 눌러주세요!");
-      }
 
-      e.target.setAttribute("class", "button column is-danger delete-button-confirm");
-
-      $(".delete-button-confirm").addEventListener("click", async () => {
+      if (confirm("정말 삭제할까요?")) {
         await del(ApiUrl.ADMIN_PRODUCTS, currentId);
         refreshData();
-      });
+      }
     });
   });
 }
@@ -298,18 +296,22 @@ function modifyProduct(currentData) {
   const productsInput = [...document.querySelectorAll(".product-input")];
 
   productsInput.forEach((input) => {
-    const fieldName = input.getAttribute("id");
+    const fieldId = input.getAttribute("id");
+    const fieldName = input.getAttribute("placeholder");
 
-    input.value = currentData[fieldName];
+    fieldId === "category"
+      ? (input.value = currentData[fieldId])
+      : input.setAttribute("placeholder", `${fieldName}: ${currentData[fieldId]}`);
   });
 
   $(".add-product-button").addEventListener("click", async () => {
     const inputObj = productsInput.reduce((obj, input) => {
+      const fieldName = input.getAttribute("id");
       if (!input.value || input.value == undefined) {
         // 빈 문자열은 undefined, 빈 숫자는 null로 인식합니다.
-        return null;
+        obj[fieldName] = undefined;
+        return obj;
       } else {
-        const fieldName = input.getAttribute("id");
         obj[fieldName] = input.value;
         return obj;
       }
@@ -319,8 +321,7 @@ function modifyProduct(currentData) {
       await patch(ApiUrl.ADMIN_PRODUCTS, _id, inputObj);
       uploadImageModal(currentData);
 
-      alert("수정 되었습니다. 페이지를 다시 로드해주세요.");
-      $(".modal").remove();
+      alert("수정 되었습니다.\n(선택)이미지를 변경하세요.");
     } catch (e) {
       alert(
         "빈 칸을 채워주세요!\n혹은 카테고리명이 존재하는지 확인하거나 \n다음 에러메시지를 확인해주세요."

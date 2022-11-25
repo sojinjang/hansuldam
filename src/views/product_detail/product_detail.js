@@ -3,6 +3,7 @@ import { changeToKoreanWon } from "../utils/useful_functions.js";
 import { Keys } from "../constants/Keys.js";
 import { getSavedItems, saveItems } from "../utils/localStorage.js";
 import { ApiUrl } from "../constants/ApiUrl.js";
+import { countCart } from "../template/header/header.js";
 
 const $ = (selector) => document.querySelector(selector);
 
@@ -68,13 +69,13 @@ async function renderData() {
     <div class="button-container">
       <button class="button is-info ml-2" id="order-button">
         바로 주문하기
-      </button>
-      <button class="button" id="basket-button">장바구니 담기</button>
-      <p class="cart-message">
-        장바구니에 담았습니다!
-      </p>
-    </div>
-  </div>
+			</button>
+			<button class="button" id="cart-button">장바구니 담기</button>
+			<p class="cart-message">
+				장바구니에 담았습니다!
+			</p>
+		</div>
+	</div>
 </div>`;
 
   $(".body-container").prepend(productSection);
@@ -91,7 +92,7 @@ async function orderAndCart() {
   const totalPrice = document.querySelector(".amount-total-price");
 
   $("#order-button").addEventListener("click", moveToOrderPage);
-  $("#basket-button").addEventListener("click", moveToCartPage);
+  $("#cart-button").addEventListener("click", addToCart);
   $(".amount-minus-button").addEventListener("click", decreaseAmount);
   $(".amount-plus-button").addEventListener("click", increaseAmount);
 
@@ -103,7 +104,7 @@ async function orderAndCart() {
     window.location.href = "/order-pay";
   }
 
-  function moveToCartPage() {
+  function addToCart() {
     productData["quantity"] = +amountInput.value;
     if (getSavedItems(Keys.CART_KEY) === null || getSavedItems(Keys.CART_KEY) === []) {
       saveItems(Keys.CART_KEY, [productData]);
@@ -111,12 +112,12 @@ async function orderAndCart() {
       let cartItems = getSavedItems(Keys.CART_KEY);
       const existItemIdx = cartItems.findIndex((product) => product._id === productData._id);
 
-      if (existItemIdx === -1) {
-        cartItems = [...cartItems, productData];
-      } else {
-        cartItems[existItemIdx].quantity += +amountInput.value;
-      }
+      existItemIdx === -1
+        ? (cartItems = [...cartItems, productData])
+        : (cartItems[existItemIdx].quantity += +amountInput.value);
+
       saveItems(Keys.CART_KEY, cartItems);
+      countCart();
     }
 
     (function applyCartMessage() {
