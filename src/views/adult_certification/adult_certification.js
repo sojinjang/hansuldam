@@ -19,7 +19,7 @@ function examineIdNumber() {
     return;
   }
   if (isAdult(idNumValue)) {
-    setCookie(Keys.IS_ADULT_KEY, { [Keys.IS_ADULT_KEY]: true });
+    setCookie(Keys.IS_ADULT_KEY, true);
     alert("성인 인증에 성공했습니다 🪪");
     window.location.href = "/order-pay";
     return;

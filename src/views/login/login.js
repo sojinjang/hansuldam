@@ -35,8 +35,9 @@ async function logIn(e) {
   const loginInput = { email, password };
 
   try {
-    const token = await api.post("/api/user/login", loginInput);
-    setCookie(Keys.TOKEN_KEY, token);
+    const response = await api.post("/api/user/login", loginInput);
+    setCookie(Keys.TOKEN_KEY, response.token);
+    setCookie(Keys.USER_ID_KEY, response.userId);
     await getCartInfoFromDB();
     window.location.href = "/";
   } catch (err) {

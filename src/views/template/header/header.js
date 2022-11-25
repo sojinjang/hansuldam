@@ -54,6 +54,7 @@ async function redirectPage() {
   const menuLabels = document.querySelectorAll(".menu-label");
 
   $(".company-logo").addEventListener("click", () => (window.location.href = "/"));
+  $(".search-img").addEventListener("click", handleSearch);
   $(".join").addEventListener("click", () => (window.location.href = "/join"));
   $(".login").addEventListener("click", () => (window.location.href = "/login"));
   $(".myPage").addEventListener("click", () => (window.location.href = "/myPage"));
@@ -110,6 +111,7 @@ function handleLogout() {
     updateCartInfoToDB(cartItems);
     resetCart(Keys.CART_KEY);
     deleteCookie(Keys.TOKEN_KEY);
+    deleteCookie(Keys.USER_ID_KEY);
     setTimeout(() => {
       window.location.href = "/";
     }, 50);
