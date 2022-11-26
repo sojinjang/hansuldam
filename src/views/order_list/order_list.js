@@ -1,6 +1,6 @@
 import { get, patch, delete as del } from "../api.js";
 import { ApiUrl } from "../constants/ApiUrl.js";
-import { isName } from "../utils/validator.js";
+import { isName, isNum } from "../utils/validator.js";
 import { findAddress } from "../utils/findAddress.js";
 
 const $ = (selector) => document.querySelector(selector);
@@ -72,18 +72,22 @@ orderId.forEach((id) => {
 
     async function setNewInformation() {
       if (!isName(selectId(`${orderList._id}-input-name`).value)) {
-        alert("이름을 다시 확인해주세요");
+        alert("이름을 다시 확인해주세요 📛");
         return;
       }
       if (selectId(`${orderList._id}-input-phoneNumber`).value.length < 11) {
-        alert("전화번호를 다시 확인해주세요");
+        alert("휴대폰 번호를 다시 확인해주세요 📱");
+        return;
+      } else if (!isNum($(".phoneNumber-input").value)) {
+        alert("숫자만 입력 가능합니다 🔢");
         return;
       }
       if (
+        selectId(`${orderList._id}-input-postalCode`).value == "" ||
         selectId(`${orderList._id}-input-address1`).value == "" ||
         selectId(`${orderList._id}-input-address2`).value == ""
       ) {
-        alert("주소를 다시 확인해주세요");
+        alert("주소를 기입해주세요 🏠");
         return;
       }
 
