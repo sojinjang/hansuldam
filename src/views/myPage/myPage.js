@@ -39,18 +39,18 @@ async function showOrderListPage() {
   const orderID = $(".order-id").value;
 
   if (!isName($(".order-user-name").value)) {
-    alert("이름을 입력해주세요");
+    alert("이름을 입력해주세요 📛");
     return;
   }
   if ($(".order-id").value == "") {
-    alert("주문번호를 입력해주세요");
+    alert("주문번호를 입력해주세요 📛");
     return;
   }
 
   try {
     await api.get(ApiUrl.ORDERS, orderID);
   } catch {
-    alert("일치하는 주문번호가 없습니다.");
+    alert("일치하는 주문번호가 없습니다 😔");
   }
 
   const orderData = await api.get(ApiUrl.ORDERS, orderID);
