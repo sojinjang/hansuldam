@@ -190,10 +190,7 @@ function createProductListContainer(item) {
   product = document.createElement("div");
   product.setAttribute("class", "single-product-container");
   product.setAttribute("id", `${item._id}-single-product-container`);
-  product.setAttribute(
-    "style",
-    `cursor: pointer; onclick="location.href='/product-detail/?id=${item._id}';"`
-  );
+  product.setAttribute("onclick", `window.location.href='/product-detail/?id=${item._id}'`);
   product.innerHTML = `<img src="../img/ricewine_icon.png" alt="" />
   <div class="single-product-detail">
     <span class="single-product-name">${item.name}</span>
