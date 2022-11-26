@@ -2,7 +2,7 @@ import * as api from "../api.js";
 import { getCookieValue } from "../utils/cookie.js";
 import { Keys } from "../constants/Keys.js";
 import { ApiUrl } from "../constants/ApiUrl.js";
-import { isName } from "../utils/validator.js";
+import { isName, isNum } from "../utils/validator.js";
 import { findAddress } from "../utils/findAddress.js";
 
 const $ = (selector) => document.querySelector(selector);
@@ -96,20 +96,24 @@ async function showOrderListPage() {
   }
 
   async function setNewInformation() {
-    if ($(".name-input").value.length < 2) {
-      alert("이름을 다시 확인해주세요");
+    if (!isName($(".name-input").value)) {
+      alert("이름을 다시 확인해주세요 📛");
       return;
     }
     if ($(".phoneNumber-input").value.length < 11) {
-      alert("전화번호를 다시 확인해주세요");
+      alert("휴대폰 번호를 다시 확인해주세요 📱");
+      return;
+    } else if (!isNum($(".phoneNumber-input").value)) {
+      alert("숫자만 입력 가능합니다 🔢");
       return;
     }
+
     if (
       $(".postalCode-input").value == "" ||
       $(".address1-input").value == "" ||
       $(".address2-input").value == ""
     ) {
-      alert("주소를 다시 확인해주세요");
+      alert("주소를 기입해주세요 🏠");
       return;
     }
 
@@ -125,7 +129,7 @@ async function showOrderListPage() {
 
     try {
       await api.patch(ApiUrl.ORDERS, orderID, changeInfo);
-      alert("정보가 성공적으로 수정되었습니다🎉");
+      alert("정보가 성공적으로 수정되었습니다 🎉");
       $(".user-name").innerHTML = $(".name-input").value;
       $(".user-phoneNumber").innerHTML = $(".phoneNumber-input").value;
       $(".user-postalCode").innerHTML = $(".postalCode-input").value;
@@ -337,18 +341,18 @@ function createChangeDeliveryInformationContainer() {
     <input
       type="text"
       class="name-input"
-      required
       placeholder="이름"
       autocomplete="on"
+      required
     />
   </div>
   <div class="phoneNumber-input-container">
     <span>전화번호</span>
     <input
       class="phoneNumber-input"
-      required
       placeholder="-을 빼고 입력해주세요"
       autocomplete="on"
+      required
     />
   </div>
   <div class="address-input-container">
@@ -357,23 +361,23 @@ function createChangeDeliveryInformationContainer() {
       <input
         type="text"
         class="postalCode-input"
-        required
         placeholder="우편번호"
         autocomplete="on"
+        required
       />
       <input
         type="text"
         class="address1-input"
-        required
-        placeholder="oo시 ㅇㅇ구 ㅇㅇ동"
+        placeholder="주소"
         autocomplete="on"
+        required
       />
       <input
         type="text"
         class="address2-input"
-        required
-        placeholder="나머지 주소 입력"
+        placeholder="상세주소"
         autocomplete="on"
+        required
       />
     </div>
     <button class="find-address-btn button-38">찾기</button>
