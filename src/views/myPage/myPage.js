@@ -10,7 +10,7 @@ const selectId = (selector) => document.getElementById(selector);
 
 const loginTOKEN = getCookieValue(Keys.TOKEN_KEY);
 
-if (loginTOKEN !== undefined) {
+if (loginTOKEN !== "") {
   createUserPageContainer();
   createPasswordInputContainer();
 
@@ -18,7 +18,7 @@ if (loginTOKEN !== undefined) {
   $(".password-check-btn").addEventListener("click", checkUserPassword);
 }
 
-if (loginTOKEN == undefined) {
+if (loginTOKEN == "") {
   let page = undefined;
   page = document.createElement("div");
   page.setAttribute("class", "none-user-page-container");
@@ -71,9 +71,10 @@ async function showOrderListPage() {
   getTotalPrice(orderData);
 
   $(".find-address-btn").addEventListener("click", insertFoundAddress);
-  $(".change-btn").addEventListener("click", clickChangeButton);
-  $(".input-btn").addEventListener("click", setNewInformation);
-  $(".cancel-btn").addEventListener("click", cancelOrder);
+  $(".info-change-btn").addEventListener("click", clickChangeButton);
+  $(".change-btn").addEventListener("click", setNewInformation);
+  $(".cancel-btn").addEventListener("click", cancelChangeInformation);
+  $(".cancel-order-btn").addEventListener("click", cancelOrder);
   $(".detail-info-btn").addEventListener("click", showDetailInformationPage);
 
   function showDetailInformationPage() {
@@ -130,10 +131,14 @@ async function showOrderListPage() {
     }
   }
 
+  function cancelChangeInformation() {
+    $(".user-change-container").style.display = "none";
+  }
+
   async function cancelOrder() {
     try {
       await api.delete("/api/orders", orderID);
-      alert("주문이 취소되었습니다🎉");
+      alert("주문이 취소되었습니다 😔");
       location.reload();
     } catch (e) {
       alert(e.message);
@@ -222,8 +227,8 @@ function createOrderDateContainer(item) {
   page.setAttribute("class", "order-list-container");
   page.innerHTML = `<div class="order-status">
   <div class="order-date">
-    <span class="orderDate">${item.createdAt.substr(0, 10)}</span>
-    <span class="order-id">주문번호: ${item._id}</span>
+    <span class="orderDate">주문날짜 <strong>${item.createdAt.substr(0, 10)}</strong></span>
+    <span class="order-id">주문번호 <strong>${item._id}</strong></span>
   </div>
   <span id="order-status">${item.status}</span>
 </div>`;
@@ -234,12 +239,13 @@ function createProductListContainer(item) {
   let page = undefined;
   page = document.createElement("section");
   page.setAttribute("class", "order-lists");
+  page.setAttribute("onclick", `window.location.href='/product-detail/?id=${item._id}'`);
   page.innerHTML = `<div class="single-product-container">
     <img src="../img/ricewine_icon.png" alt="" />
     <div class="single-product-detail">
-      <span>${item.name}</span>
-      <span>${item.price.toLocaleString("ko-KR")}원</span>
-      <span>${item.quantity}개</span>
+      <span class="single-product-name">${item.name}</span>
+      <span class="single-product-price">${item.price.toLocaleString("ko-KR")}원</span>
+      <span class="single-product-quantity">${item.quantity}개</span>
     </div>
   </div>`;
   $(".order-list-container").append(page);
@@ -364,7 +370,10 @@ function createChangeDeliveryInformationContainer() {
     </div>
     <button class="find-address-btn">찾기</button>
   </div>
-  <button class="input-btn">수정</button>
+  <div class="address-btn-container">
+    <button class="change-btn button-38">변경</button>
+    <button class="cancel-btn button-38">취소</button>
+  </div>
 </div>`;
   $(".order-list-container").append(page);
 }
@@ -373,7 +382,7 @@ function createButtonContainer() {
   let page = undefined;
   page = document.createElement("div");
   page.setAttribute("class", "button-container");
-  page.innerHTML = `<button class="change-btn">정보 수정하기</button>
-  <button class="cancel-btn">주문 취소하기</button>`;
+  page.innerHTML = `<button class="info-change-btn">정보 수정하기</button>
+  <button class="cancel-order-btn">주문 취소하기</button>`;
   $(".order-list-container").append(page);
 }
