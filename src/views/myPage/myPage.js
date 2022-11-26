@@ -10,7 +10,7 @@ const selectId = (selector) => document.getElementById(selector);
 
 const loginTOKEN = getCookieValue(Keys.TOKEN_KEY);
 
-if (loginTOKEN !== "") {
+if (loginTOKEN !== undefined) {
   createUserPageContainer();
   createPasswordInputContainer();
 
@@ -18,7 +18,7 @@ if (loginTOKEN !== "") {
   $(".password-check-btn").addEventListener("click", checkUserPassword);
 }
 
-if (loginTOKEN == "") {
+if (loginTOKEN == undefined) {
   let page = undefined;
   page = document.createElement("div");
   page.setAttribute("class", "none-user-page-container");
@@ -78,10 +78,16 @@ async function showOrderListPage() {
   $(".detail-info-btn").addEventListener("click", showDetailInformationPage);
 
   function showDetailInformationPage() {
-    $(".address-container").style.display = "flex";
-    $(".payment-information-container").style.display = "flex";
-    if (orderData.status == "상품준비중") {
-      $(".button-container").style.display = "flex";
+    if (($(".address-container").style.display = "none")) {
+      $(".address-container").style.display = "flex";
+      $(".payment-information-container").style.display = "flex";
+      if (orderData.status == "상품준비중") {
+        $(".button-container").style.display = "flex";
+      }
+    } else if (($(".address-container").style.display = "flex")) {
+      $(".address-container").style.display = "none";
+      $(".payment-information-container").style.display = "none";
+      $(".button-container").style.display = "none";
     }
   }
 
@@ -137,9 +143,11 @@ async function showOrderListPage() {
 
   async function cancelOrder() {
     try {
-      await api.delete("/api/orders", orderID);
-      alert("주문이 취소되었습니다 😔");
-      location.reload();
+      if (confirm("정말 취소하시겠습니까?")) {
+        await api.delete("/api/orders", orderID);
+        alert("주문이 취소되었습니다 😔");
+        location.reload();
+      }
     } catch (e) {
       alert(e.message);
     }
@@ -368,7 +376,7 @@ function createChangeDeliveryInformationContainer() {
         autocomplete="on"
       />
     </div>
-    <button class="find-address-btn">찾기</button>
+    <button class="find-address-btn button-38">찾기</button>
   </div>
   <div class="address-btn-container">
     <button class="change-btn button-38">변경</button>
@@ -382,7 +390,7 @@ function createButtonContainer() {
   let page = undefined;
   page = document.createElement("div");
   page.setAttribute("class", "button-container");
-  page.innerHTML = `<button class="info-change-btn">정보 수정하기</button>
-  <button class="cancel-order-btn">주문 취소하기</button>`;
+  page.innerHTML = `<button class="info-change-btn button-38">정보 수정하기</button>
+  <button class="cancel-order-btn button-38">주문 취소하기</button>`;
   $(".order-list-container").append(page);
 }
