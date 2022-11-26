@@ -56,6 +56,7 @@
   flex-direction: row;
   padding: 10px 10px;
   margin-bottom: 10px;
+  cursor: pointer;
 }
 
 .single-product-container span {
@@ -107,7 +108,8 @@
 .payment-information-container .payment-text {
   font-size: 1.25rem;
   padding-bottom: 5px;
-  border-bottom: 1px solid;
+  margin-bottom: 10px;
+  font-weight: 600;
 }
 
 .payment-wrapper {
@@ -242,6 +244,7 @@
   display: flex;
   flex-direction: column;
   margin-right: 5px;
+  margin-top: 2px;
 }
 
 .address-input-container div input {
