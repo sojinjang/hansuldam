@@ -63,15 +63,15 @@ async function redirectPage() {
   });
 
   $(".company-logo").addEventListener("click", () => (window.location.href = "/"));
-  $(".search-button").addEventListener("click", () => (appendSearchModal()));
+  $(".search-button").addEventListener("click", () => appendSearchModal());
   $(".join").addEventListener("click", () => (window.location.href = "/join"));
   $(".login").addEventListener("click", () => (window.location.href = "/login"));
   $(".myPage").addEventListener("click", () => (window.location.href = "/myPage"));
   $("#eventProducts").addEventListener("click", () => (window.location.href = "/event-page"));
-  
+
   if (getCookieValue(Keys.TOKEN_KEY)) {
     const user = await get(ApiUrl.USER_INFORMATION);
-    
+
     user["role"] === "admin" ? loginAsAdmin() : loginAsUser();
     handleLogout();
 
@@ -134,12 +134,16 @@ function appendSearchModal() {
 </div>
 `;
   const bodyContainer = document.querySelector("body");
-  bodyContainer.insertAdjacentHTML('beforebegin', searchModalHTML);
+  bodyContainer.insertAdjacentHTML("beforebegin", searchModalHTML);
 
-  $('.modal-close-button').addEventListener('click', () => ($('.modal').remove()));
+  $(".modal-close-button").addEventListener("click", () => $(".modal").remove());
   $(".search-image").addEventListener("click", handleSearch);
-  $(".search-input").addEventListener('keydown', (e) => {
-    if(e.keyCode ==13){
+  $(".search-input").addEventListener("keydown", (e) => {
+    if (e.keyCode == 13) {
+      if (e.target.value == "") {
+        alert("검색어를 입력해주세요!");
+        window.location.assign();
+      }
       window.location.href = `/search/?keyword=${e.target.value}`;
     }
   });
@@ -149,6 +153,10 @@ function handleSearch(e) {
   e.preventDefault();
   const input = $(".search-input");
   const query = input.value;
+  if (query == "") {
+    alert("검색어를 입력해주세요!");
+    window.location.assign();
+  }
   window.location.href = `/search/?keyword=${query}`;
 }
 
