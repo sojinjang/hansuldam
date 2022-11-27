@@ -8,12 +8,6 @@ body {
   margin: 0;
 }
 
-header,
-.body-container,
-footer {
-  padding: 0 7vw 0 7vw;
-}
-
 .body-section-container {
   display: flex;
   flex-direction: column;
