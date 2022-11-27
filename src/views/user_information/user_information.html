@@ -25,78 +25,81 @@
         </div>
         <div class="user-container">
           <section class="user-personal-info" id="user-container">
-            <div class="personal-info-title">
-              <span>계정</span>
-            </div>
             <div class="personal-info-contents">
-              <div class="email-contents">
+              <div class="email-contents" id="info-wrapper">
                 <p>이메일</p>
                 <span class="user-info" id="user-email">[email]</span>
               </div>
-              <div class="name-contents">
+              <div class="name-contents" id="info-wrapper">
                 <p>이름</p>
                 <span class="user-info" id="user-name">[이름]</span>
               </div>
-              <div class="password-container">
+              <div class="password-container" id="info-wrapper">
                 <p>비밀번호</p>
-                <div class="password-info">
-                  <button class="pwChangeBtn">변경</button>
-                </div>
+                <span>●●●●●●</span>
                 <div class="change-info" id="change-password-container">
-                  <input
-                    type="text"
-                    class="user-password"
-                    placeholder="기존의 비밀번호를 입력하세요"
-                  />
-                  <input
-                    type="text"
-                    class="changePassword"
-                    placeholder="새로운 비밀번호를 입력하세요"
-                  />
+                  <input type="text" class="user-password" placeholder="기존 비밀번호" />
+                  <input type="text" class="changePassword" placeholder="새로운 비밀번호" />
                   <input
                     type="text"
                     class="changePasswordCheck"
-                    placeholder="새로운 비밀번호를 한번 더 입력하세요"
+                    placeholder="새로운 비밀번호 확인"
                   />
-                  <button class="pwConfirmBtn">확인</button>
+                </div>
+                <div class="btn-container" id="password-btn-container">
+                  <button class="pwConfirmBtn" id="buttons">확인</button>
+                  <button class="pwCancelBtn" id="buttons">취소</button>
+                </div>
+                <div class="password-info">
+                  <button class="pwChangeBtn" id="buttons">수정</button>
                 </div>
               </div>
-              <div class="phoneNumber-container">
+              <div class="phoneNumber-container" id="info-wrapper">
                 <p>전화번호</p>
                 <span class="user-info" id="user-phoneNumber-number">[전화번호]</span>
-                <button class="numChangeBtn">변경</button>
                 <div class="change-info" id="change-phoneNumber-container">
                   <input
                     type="text"
                     class="changePhoneNumber"
                     placeholder="-를 빼고 입력해주세요"
                   />
-                  <button class="numConfirmBtn">확인</button>
                 </div>
+                <div class="btn-container" id="phoneNumber-btn-container">
+                  <button class="numConfirmBtn" id="buttons">확인</button>
+                  <button class="numCancelBtn" id="buttons">취소</button>
+                </div>
+                <button class="numChangeBtn" id="buttons">수정</button>
               </div>
-              <div class="address-container">
+              <div class="address-container" id="info-wrapper">
                 <p>주소</p>
                 <div class="user-address">
                   <span class="user-info" id="user-postalCode">[주소1]</span>
                   <span class="user-info" id="user-address1">[주소1]</span>
                   <span class="user-info" id="user-address2">[주소2]</span>
                 </div>
-                <button class="adChangeBtn">수정</button>
                 <div class="change-info" id="change-address-container">
-                  <button class="find-address-button" type="submit">주소 찾기</button>
-                  <input
-                    type="text"
-                    class="changePostalCode"
-                    placeholder="우편번호"
-                    readonly
-                  />
-                  <input type="text" class="changeAddress1" placeholder="주소" readonly />
-                  <input type="text" class="changeAddress2" placeholder="상세주소" />
-                  <button class="adConfrimBtn">확인</button>
+                  <div class="address-input-container">
+                    <input
+                      type="text"
+                      class="changePostalCode"
+                      placeholder="우편번호"
+                      readonly
+                    />
+                    <input type="text" class="changeAddress1" placeholder="주소" readonly />
+                    <input type="text" class="changeAddress2" placeholder="상세주소" />
+                  </div>
+                  <button class="find-address-button" type="submit" id="buttons">
+                    주소 찾기
+                  </button>
                 </div>
+                <div class="btn-container" id="address-btn-container">
+                  <button class="adConfrimBtn" id="buttons">확인</button>
+                  <button class="adCancelBtn" id="buttons">취소</button>
+                </div>
+                <button class="adChangeBtn" id="buttons">수정</button>
               </div>
-              <div class="delete-user-information-btn-container">
-                <button class="delete-user-information-btn">탈퇴하기</button>
+              <div>
+                <button class="delete-user-information-btn">회원탈퇴</button>
               </div>
             </div>
           </section>
