@@ -50,7 +50,7 @@ async function changePhoneNumber(e) {
     $("#phoneNumber-btn-container").style.display = "none";
     $(".numChangeBtn").style.display = "block";
   } catch (e) {
-    console.log(e.message);
+    alert(e.message);
   }
 }
 
