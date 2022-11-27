@@ -1,73 +1,20 @@
 @font-face {
-  font-family: 'GangwonEdu_OTFBoldA';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff') format('woff');
+  font-family: "GangwonEdu_OTFBoldA";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff")
+    format("woff");
   font-weight: normal;
   font-style: normal;
 }
 
 * {
-  font-family: 'GangwonEdu_OTFBoldA';
+  font-family: "GangwonEdu_OTFBoldA";
 }
-/* body */
+
 body {
-    overflow-x : hidden;
-    margin: 0;
+  overflow-x: hidden;
+  margin: 0;
 }
 
-    header, .body-container, footer {
-        padding: 0 7vw 0 7vw;
-    }
-
-  /* header */
-header {
-    padding-top: 30px;
-}
-
-.header-container {
-    width: 100%;
-    height: 44px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.navigation-menu {
-    width: 100%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-}
-
-.navigation-menu .company-logo{
-    width: 37px;
-    height: 26px;
-    vertical-align: middle;
-}
-
-.user-menu {
-    margin-left: 5px;
-    width: 100%;
-    min-width: 200px;
-    max-width: 300px;
-    display: flex;
-    -webkit-box-pack: start;
-    justify-content: flex-end;
-    -webkit-box-align: center;
-    align-items: center;
-}
-
-.user-menu .user-img {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    overflow: hidden;
-}
-
-.user-menu .user-img a img {
-    width: 45px;
-    height: 45px;
-}
-
-/* main */
 .main-section-container {
   display: flex;
   box-sizing: border-box;
@@ -86,59 +33,89 @@ header {
   height: 500px;
 }
 
+.main-join-form section {
+  margin: 20px 0;
+}
+
 .main-join-form .join-form-hello p {
   margin: 20px 0;
   font-size: 30px;
   text-align: center;
 }
 
-.main-join-form .join-form-input {
-  margin: 10px 0;
+.main-join-form input {
+  height: 50px;
+  font-size: 1.125rem;
+  padding-left: 10px;
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid grey;
 }
 
+#emailInput {
+  margin-bottom: 3px;
+}
 
 .main-join-form .join-form-button {
-  margin: 40px 0 20px 0;
-  height: 40px;
-  background-color: dodgerblue;
-  border: none;
-  border-radius: 5%;
+  margin: 30px 0;
+  font-size: 1.125rem;
+  height: 50px;
+  align-items: center;
+  background-color: var(--brown-500);
+  border-radius: 12px;
+  box-shadow: transparent 0 0 0 3px, rgba(18, 18, 18, 0.1) 0 6px 20px;
+  box-sizing: border-box;
+  color: var(--white-200);
   cursor: pointer;
+  display: inline-flex;
+  font-family: Inter, sans-serif;
+  font-weight: 550;
+  justify-content: center;
+  line-height: 1;
+  outline: none;
+  padding: 1rem 1.1rem;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  border: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  transition: all 0.3s linear;
 }
 
-/* footer */
+.join-form-button:hover {
+  box-shadow: var(--brown-500) 0 0 0 1.5px, transparent 0 0 0 0;
+}
 
-.footer-container {
-    display: flex;
-    box-sizing: border-box;
-    flex-direction: column;
-    border-top: 1px solid rgb(243, 243, 243);
-    margin-top: 50px;
-  
-    padding: 30px 0 70px 0;
-  }
-  
-  .footer-container .footer-policy {
-    display: flex;
-    margin-bottom: 11px;
-    box-sizing: border-box;
-  }
-  
-  .footer-container .footer-policy .policy__item {
-    display: flex;
-  }
-  
-  .footer-container .footer-policy .policy__item .footer-item-text {
-    font-size: 17px;
-    margin-right: 40px;
-    text-decoration: none;
-    color: black;
-  }
-  
-  .footer-info li .footer-item-text {
-    font-size: 8px;
-  }
-  
-  .footer-info .info__item {
-    height: 14px;
-  }
+.emailOverlap {
+  align-items: center;
+  background-color: var(--white-200);
+  border-radius: 12px;
+  box-shadow: transparent 0 0 0 3px, rgba(18, 18, 18, 0.1) 0 6px 20px;
+  box-sizing: border-box;
+  color: var(--black-400);
+  cursor: pointer;
+  display: inline-flex;
+  height: 30px;
+  font-family: Inter, sans-serif;
+  font-size: 1rem;
+  font-weight: 550;
+  justify-content: center;
+  line-height: 1;
+  margin-left: 71%;
+  outline: none;
+  padding: 1rem 1.1rem;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  border: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  transition: all 0.3s linear;
+}
+
+.emailOverlap:hover {
+  box-shadow: var(--black-400) 0 0 0 1.5px, transparent 0 0 0 0;
+}
