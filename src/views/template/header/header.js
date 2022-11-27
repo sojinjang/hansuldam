@@ -63,20 +63,18 @@ async function redirectPage() {
   });
 
   $(".company-logo").addEventListener("click", () => (window.location.href = "/"));
-  $(".search-button").addEventListener("click", () => (appendSearchModal()));
+  $(".search-button").addEventListener("click", () => appendSearchModal());
   $(".join").addEventListener("click", () => (window.location.href = "/join"));
   $(".login").addEventListener("click", () => (window.location.href = "/login"));
   $(".myPage").addEventListener("click", () => (window.location.href = "/myPage"));
+  $(".cart").addEventListener("click", () => (window.location.href = "/cart"));
   $("#eventProducts").addEventListener("click", () => (window.location.href = "/event-page"));
-  
+
   if (getCookieValue(Keys.TOKEN_KEY)) {
     const user = await get(ApiUrl.USER_INFORMATION);
-    
+
     user["role"] === "admin" ? loginAsAdmin() : loginAsUser();
     handleLogout();
-
-    $(".cart").addEventListener("click", () => (window.location.href = "/cart"));
-    $(".myPage").addEventListener("click", () => (window.location.href = "/myPage"));
   }
 }
 
@@ -127,14 +125,19 @@ function appendSearchModal() {
   const searchModalHTML = `
 <div class="modal">
   <div class="search-container">
-    <input class="search-input" placeholder="검색어를 입력하세요." />
-    <img class="search-image" src="../img/search-icon.png" alt="검색" />
+    <div class="search-input-wrapper">
+      <input class="search-input" placeholder="검색어를 입력하세요." />
+    </div>
+    <img class="search-icon" src="../img/search-icon.png" alt="검색" />
   </div>
   <button class="modal-close-button">X</button>
 </div>
 `;
-  const bodyContainer = document.querySelector("body");
-  bodyContainer.insertAdjacentHTML('beforebegin', searchModalHTML);
+  $('body').insertAdjacentHTML("beforebegin", searchModalHTML);
+
+  const searchInputWrapper = document.querySelector(".search-input-wrapper");
+  const modal = document.querySelector(".modal");
+  const searchIcon = document.querySelector(".search-icon");
 
   (function handleSearchFadeIn() {
     setTimeout(() => {
@@ -144,13 +147,38 @@ function appendSearchModal() {
       searchIcon.style.transform = "translateX(0px)";
     }, 50);
   })();
+  
+  (function handleCloseSearchWithESC() {
+    window.onkeydown = (e) => {
+      if (e.keyCode === 27 && modal) {
+        modal.remove();
+      }
+    };
+  })();
+
+  $(".modal-close-button").addEventListener("click", () => modal.remove());
+  $(".search-input").addEventListener("keydown", handleSearchWithEnter);
+  searchIcon.addEventListener("click", handleSearchWithClick);
+  
 }
 
-function handleSearch(e) {
+function handleSearchWithClick(e) {
   e.preventDefault();
   const input = $(".search-input");
-  const query = input.value;
-  window.location.href = `/search/?keyword=${query}`;
+  const inputValue = input.value.trim();
+  inputValue === ""
+    ? alert("검색어를 입력해주세요.")
+    : (window.location.href = `/search/?keyword=${inputValue}`);
+}
+
+function handleSearchWithEnter(e) {
+  const inputValue = e.target.value.trim();
+
+  if (e.keyCode === 13) {
+    inputValue === ""
+      ? alert("검색어를 입력해주세요.")
+      : (window.location.href = `/search/?keyword=${inputValue}`);
+  }
 }
 
 export { getHeader, redirectPage };
