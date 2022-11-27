@@ -21,16 +21,16 @@ orderId.forEach((id) => {
       createShowDetailInformationButton(orderList)
     );
     selectId(`${orderList._id}-order-container`).append(
-      createDeliveryInformaionContainer(orderList)
+      createShippingDestinationContainer(orderList)
     );
     selectId(`${orderList._id}-order-container`).append(
-      createDeliveryInformationChangeContainer(orderList)
+      createChangeShippingDestinationContainer(orderList)
     );
     selectId(`${orderList._id}-order-container`).append(
       createPaymentInformationContainer(orderList)
     );
     selectId(`${orderList._id}-order-container`).append(
-      createChangeButtonContainer(orderList)
+      createChangeInformationButtonContainer(orderList)
     );
 
     getDeliveryFee(orderList);
@@ -213,7 +213,7 @@ function createShowDetailInformationButton(item) {
   return page;
 }
 
-function createDeliveryInformaionContainer(item) {
+function createShippingDestinationContainer(item) {
   let page = undefined;
   page = document.createElement("div");
   page.setAttribute("class", "address-container");
@@ -278,7 +278,7 @@ function createPaymentInformationContainer(item) {
   return page;
 }
 
-function createDeliveryInformationChangeContainer(item) {
+function createChangeShippingDestinationContainer(item) {
   let page = undefined;
   page = document.createElement("div");
   page.setAttribute("class", "user-change-container");
@@ -338,7 +338,7 @@ function createDeliveryInformationChangeContainer(item) {
   return page;
 }
 
-function createChangeButtonContainer(item) {
+function createChangeInformationButtonContainer(item) {
   let page = undefined;
   page = document.createElement("div");
   page.setAttribute("class", "button-container");
