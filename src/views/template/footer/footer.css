@@ -3,21 +3,6 @@
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap");
 @import url("../main_style.css");
 
-:root {
-  --hover-background-color: #f5f5f5;
-}
-
-/* reset */
-* {
-  margin: 0; padding:0;
-  font-family: "IBM Plex Sans KR", sans-serif;
-}
-li {list-style: none;}
-a {
-  text-decoration: none;
-}
-button{all:unset;}
-
 /* footer */
 .footer-container {
   display: flex;
