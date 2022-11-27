@@ -17,35 +17,32 @@
 
 .body-login-form p {
   margin: 20px 0;
-  font-size: 30px;
-  font-weight: bold;
+  font-size: 1.85rem;
   text-align: center;
+}
+
+.body-login-form label {
+  font-size: 1rem;
+  margin-bottom: 5px;
 }
 
 .body-login-form .login-form-input {
   margin: 20px 0;
 }
 
-#emailInput {
-  border: 0px;
-  border-radius: 0;
-  border-bottom: 1px solid;
-}
-
-#passwordInput {
-  border: 0px;
-  border-radius: 0;
-  border-bottom: 1px solid;
+.login-form-input input {
+  height: 50px;
+  font-size: 1.125rem;
+  padding-left: 10px;
+  margin-bottom: 10px;
+  border: none;
+  border-bottom: 1px solid grey;
 }
 
 .body-login-form .login-form-button {
   margin: 20px 0 20px;
   padding: 0;
   height: 40px;
-  background-color: #d67e37;
-  color: antiquewhite;
-  border: none;
-  border-radius: 15px;
   text-align: center;
 }
 
@@ -56,13 +53,12 @@
   height: 40px;
 }
 
-.body-login-form .login-form-text div .join-button, .find-button {
-  color: dimgray;
+.join-button,
+.find-button {
   width: 110px;
-  height: 30px;
-  border-radius: 15px;
-  border: 2px solid #d67e37;
+  height: 40px;
   display: inline-block;
+  font-size: 0.875rem;
   text-align: center;
   align-items: center;
 }
