@@ -8,101 +8,100 @@ import { ApiUrl } from "../../constants/ApiUrl.js";
 const $ = (selector) => document.querySelector(selector);
 
 function getHeader() {
-  return `<header> 
-      <div class="header-container">
-        <section class="navigation-menu">
-          <div class="company-logo-wrapper">
-            <img class="company-logo" src="../img/logo.png" alt="company-logo">
-          </div>
-          <div class="search-container">
-            <img class="search-img" src="../img/search-icon.png" alt="search-logo">
-            <input class="input is-rounded search-bar" type="text" placeholder="제품검색" />
-          </div>
-        </section>
-        <section class="user-menu">
-          <ul class="user-list">
-            <li class="myPage">비회원 주문 조회 |</li>
-            <li class="login">로그인 |</li>
-            <li class="join">회원가입</li>
-            <div class="cart">
-              <span class="cart-count">0</span>
-              <img src="../img/shopping-bag.png" alt="cart-img">
-            </div>
-          </ul>
-        </section>
+  return `
+<header> 
+  <div class="header-container">
+      <div class="company-logo-wrapper">
+        <img class="company-logo" src="../img/logo.png" alt="company-logo">
       </div>
-      <div class="header-menu-wrapper">
-        <ul class="menu-list">
-          <li class="menu-label" id="totalProducts">
-            <a class="products">전체상품</a>
-          </li>
-          <li class="menu-label" id="newProducts">
-            <a>신상품</a>
-          </li>
-          <li class="menu-label" id="bestProducts">
-            <a>베스트</a>
-          </li>
-          <li class="menu-event-label" id="eventProducts">
-            <a>기획전</a>
-          </li>
-        </ul>
-      </div>
-    </header>`;
+    <section class="user-menu">
+      <ul class="user-list">
+        <li class="myPage">비회원 주문 조회</li>
+        <span class="separator">/</span>
+        <li class="login">로그인</li>
+        <span class="separator">/</span>
+        <li class="join">회원가입</li>
+        <div class="cart">
+          <span class="cart-count">0</span>
+          <img src="../img/shopping-bag.png" alt="cart-img">
+        </div>
+      </ul>
+    </section>
+  </div>
+  <div class="header-menu-wrapper">
+    <ul class="menu-list">
+      <li class="menu-label" id="totalProducts">
+        <a>전체상품</a>
+      </li>
+      <li class="menu-label" id="newProducts">
+        <a>신상품</a>
+      </li>
+      <li class="menu-label" id="bestProducts">
+        <a>베스트</a>
+      </li>
+      <li class="menu-event-label menu-label" id="eventProducts">
+        <a>기획전</a>
+      </li>
+      <li class="search-wrapper">
+        <button class="search-button">
+          <img src="../img/search-icon.png" alt="검색" />
+        </button>
+      </li>
+    </ul>
+  </div>
+</header>`;
 }
 
 async function redirectPage() {
   const menuLabels = document.querySelectorAll(".menu-label");
 
-  $(".company-logo").addEventListener("click", () => (window.location.href = "/"));
-  $(".search-img").addEventListener("click", handleSearch);
-  $(".join").addEventListener("click", () => (window.location.href = "/join"));
-  $(".login").addEventListener("click", () => (window.location.href = "/login"));
-  $(".myPage").addEventListener("click", () => (window.location.href = "/myPage"));
-
-  if (getCookieValue(Keys.TOKEN_KEY)) {
-    const user = await get(ApiUrl.USER_INFORMATION);
-
-    if (user["role"] === "admin") {
-      loginAsAdmin();
-      handleLogout();
-    } else {
-      loginAsUser();
-      handleLogout();
-    }
-  }
-
-  $(".cart").addEventListener("click", () => (window.location.href = "/cart"));
-  $("#eventProducts").addEventListener("click", () => (window.location.href = "/event-page"));
   menuLabels.forEach((label) => {
     label.addEventListener("click", (e) => {
       const labelId = e.currentTarget.getAttribute("id");
       window.location.href = `/products?label=${labelId}`;
     });
   });
+
+  $(".company-logo").addEventListener("click", () => (window.location.href = "/"));
+  $(".search-button").addEventListener("click", () => appendSearchModal());
+  $(".join").addEventListener("click", () => (window.location.href = "/join"));
+  $(".login").addEventListener("click", () => (window.location.href = "/login"));
+  $(".myPage").addEventListener("click", () => (window.location.href = "/myPage"));
+  $("#eventProducts").addEventListener("click", () => (window.location.href = "/event-page"));
+
+  if (getCookieValue(Keys.TOKEN_KEY)) {
+    const user = await get(ApiUrl.USER_INFORMATION);
+
+    user["role"] === "admin" ? loginAsAdmin() : loginAsUser();
+    handleLogout();
+
+    $(".cart").addEventListener("click", () => (window.location.href = "/cart"));
+    $(".myPage").addEventListener("click", () => (window.location.href = "/myPage"));
+  }
 }
 
 function loginAsUser() {
-  $(".user-list").innerHTML = `<li class="myPage">마이페이지 |</li>
+  $(".user-list").innerHTML = `<li class="myPage">마이페이지</li>
+<span class="separator">/</span>
 <li class="logout">로그아웃</li>
 <div class="cart">
-<span class="cart-count">0</span>
-<img src="../img/shopping-bag.png" alt="cart-img">
+  <span class="cart-count">0</span>
+  <img src="../img/shopping-bag.png" alt="cart-img">
 </div>`;
-
-  $(".myPage").addEventListener("click", () => (window.location.href = "/myPage"));
 }
 
 function loginAsAdmin() {
-  $(".user-list").innerHTML = `<li class="myPage"> 마이페이지 |</li>
-<li class="admin"> 관리자페이지 |</li>
-<li class="logout"> 로그아웃</li>
+  $(".user-list").innerHTML = `<li class="myPage">마이페이지</li>
+<span class="separator">/</span>
+<li class="admin">관리자페이지</li>
+<span class="separator">/</span>
+<li class="logout">로그아웃</li>
 <div class="cart">
-<span class="cart-count">0</span>
-<img src="../img/shopping-bag.png" alt="cart-img">
+  <span class="cart-count">0</span>
+  <img src="../img/shopping-bag.png" alt="cart-img">
 </div>`;
 
   $(".admin").addEventListener("click", () => (window.location.href = "/admin"));
-  $(".myPage").addEventListener("click", () => (window.location.href = "/myPage"));
 }
 
 function handleLogout() {
@@ -124,4 +123,41 @@ function updateCartCnt() {
   $(".cart-count").innerHTML = cartLength.length;
 }
 
-export { getHeader, redirectPage, updateCartCnt };
+function appendSearchModal() {
+  const searchModalHTML = `
+<div class="modal">
+  <div class="search-container">
+    <input class="search-input" placeholder="검색어를 입력하세요." />
+    <img class="search-image" src="../img/search-icon.png" alt="검색" />
+  </div>
+  <button class="modal-close-button">X</button>
+</div>
+`;
+  const bodyContainer = document.querySelector("body");
+  bodyContainer.insertAdjacentHTML("beforebegin", searchModalHTML);
+
+  $(".modal-close-button").addEventListener("click", () => $(".modal").remove());
+  $(".search-image").addEventListener("click", handleSearch);
+  $(".search-input").addEventListener("keydown", (e) => {
+    if (e.keyCode == 13) {
+      if (e.target.value == "") {
+        alert("검색어를 입력해주세요!");
+        window.location.assign();
+      }
+      window.location.href = `/search/?keyword=${e.target.value}`;
+    }
+  });
+}
+
+function handleSearch(e) {
+  e.preventDefault();
+  const input = $(".search-input");
+  const query = input.value;
+  if (query == "") {
+    alert("검색어를 입력해주세요!");
+    window.location.assign();
+  }
+  window.location.href = `/search/?keyword=${query}`;
+}
+
+export { getHeader, redirectPage };
