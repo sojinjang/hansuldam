@@ -1,14 +1,15 @@
-import { get, patch } from "../api.js";
+import * as api from "../api.js";
 import { ApiUrl } from "../constants/ApiUrl.js";
 import { findAddress } from "../utils/findAddress.js";
 import { deleteCookie } from "../utils/cookie.js";
 import { Keys } from "../constants/Keys.js";
 import { resetCart } from "../utils/localStorage.js";
+import { isNum } from "../utils/validator.js";
 
 const $ = (selector) => document.querySelector(selector);
 
 try {
-  await get(ApiUrl.USER_INFORMATION);
+  await api.get(ApiUrl.USER_INFORMATION);
 } catch (err) {
   window.location.href = "/";
   alert(err.message);
@@ -27,23 +28,20 @@ async function changePhoneNumber(e) {
   const phoneNumber = {
     phoneNumber: $(".changePhoneNumber").value,
   };
-  const regExp = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})[0-9]{3,4}[0-9]{4}$/;
-  // 새로운 전화번호를 입력했을 때
-  if (
-    $(".changePhoneNumber").value == "" ||
-    $(".changePhoneNumber").value.match(regExp) == null
-  ) {
-    alert("휴대폰 번호를 다시 확인해주세요 📱");
-    return;
-  }
 
-  if ($(".changePhoneNumber").value == $("#user-phoneNumber-number").innerHTML) {
+  if ($(".changePhoneNumber").value == "") {
+    alert("휴대폰 번호를 입력해주세요 📱");
+    return;
+  } else if (!isNum(phoneNumber)) {
+    alert("숫자만 입력 가능합니다 🔢");
+    return;
+  } else if ($(".changePhoneNumber").value == $("#user-phoneNumber-number").innerHTML) {
     alert("휴대폰 번호를 다르게 입력해주세요 📱");
     return;
   }
 
   try {
-    await patch(ApiUrl.USER_INFORMATION, "", phoneNumber);
+    await api.patch(ApiUrl.USER_INFORMATION, "", phoneNumber);
     alert("휴대폰 번호가 변경되었습니다 🎉");
     $("#user-phoneNumber-number").innerHTML = $(".changePhoneNumber").value;
     $("#change-phoneNumber-container").style.display = "none";
@@ -95,7 +93,7 @@ async function changeAddress(e) {
   }
 
   try {
-    await patch(ApiUrl.USER_INFORMATION, "", address);
+    await api.patch(ApiUrl.USER_INFORMATION, "", address);
     alert("주소가 성공적으로 변경되었습니다 🎉");
     $("#user-postalCode").innerHTML = $(".changePostalCode").value;
     $("#user-address1").innerHTML = $(".changeAddress1").value;
@@ -125,10 +123,10 @@ function openPasswordPage(e) {
 async function changePassword(e) {
   e.preventDefault();
 
-  const userData = await get(ApiUrl.USER_INFORMATION);
+  const userData = await api.get(ApiUrl.USER_INFORMATION);
 
   if ($(".changePassword").value == "" || $(".changePasswordCheck").value == "") {
-    alert("비밀번호 입력칸을 확인해주세요 📛");
+    alert("비밀번호를 입력해주세요 📛");
     return;
   }
   if ($(".changePassword").value !== $(".changePasswordCheck").value) {
@@ -142,7 +140,7 @@ async function changePassword(e) {
   };
 
   try {
-    await patch(ApiUrl.USER_INFORMATION, "", newPassword);
+    await api.patch(ApiUrl.USER_INFORMATION, "", newPassword);
     alert("비밀번호가 변경되었습니다 🎉");
     $("#change-password-container").style.display = "none";
     $("#password-btn-container").style.display = "none";
