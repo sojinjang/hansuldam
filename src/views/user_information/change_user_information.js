@@ -33,18 +33,18 @@ async function changePhoneNumber(e) {
     $(".changePhoneNumber").value == "" ||
     $(".changePhoneNumber").value.match(regExp) == null
   ) {
-    alert("전화번호를 정확히 입력해주세요.");
+    alert("휴대폰 번호를 다시 확인해주세요 📱");
     return;
   }
 
   if ($(".changePhoneNumber").value == $("#user-phoneNumber-number").innerHTML) {
-    alert("전화번호를 다르게 입력해주세요.");
+    alert("휴대폰 번호를 다르게 입력해주세요 📱");
     return;
   }
 
   try {
     await patch(ApiUrl.USER_INFORMATION, "", phoneNumber);
-    alert("전화번호가 변경되었습니다 🎉");
+    alert("휴대폰 번호가 변경되었습니다 🎉");
     $("#user-phoneNumber-number").innerHTML = $(".changePhoneNumber").value;
     $("#change-phoneNumber-container").style.display = "none";
     $("#phoneNumber-btn-container").style.display = "none";
@@ -86,19 +86,11 @@ async function changeAddress(e) {
   };
 
   if (
-    $(".changePostalCode").value == $("#user-postalCode").innerHTML &&
-    $(".changeAddress1").value == $("#user-address1").innerHTML &&
-    $(".changeAddress2").value == $("#user-address2").innerHTML
-  ) {
-    alert("주소를 다시 확인해주세요");
-    return;
-  }
-  if (
     $(".changePostalCode").value == "" ||
     $(".changeAddress1").value == "" ||
     $(".changeAddress2").value == ""
   ) {
-    alert("주소를 입력해주세요");
+    alert("주소를 기입해주세요 🏠");
     return;
   }
 
@@ -136,11 +128,11 @@ async function changePassword(e) {
   const userData = await get(ApiUrl.USER_INFORMATION);
 
   if ($(".changePassword").value == "" || $(".changePasswordCheck").value == "") {
-    alert("비밀번호 입력칸을 확인해주세요.");
+    alert("비밀번호 입력칸을 확인해주세요 📛");
     return;
   }
   if ($(".changePassword").value !== $(".changePasswordCheck").value) {
-    alert("새로운 비밀번호가 일치하지 않습니다.");
+    alert("새로 입력한 비밀번호가 일치하지 않습니다 ❌");
     return;
   }
 
@@ -151,7 +143,7 @@ async function changePassword(e) {
 
   try {
     await patch(ApiUrl.USER_INFORMATION, "", newPassword);
-    console.log("비밀번호가 변경되었습니다 🎉");
+    alert("비밀번호가 변경되었습니다 🎉");
     $("#change-password-container").style.display = "none";
     $("#password-btn-container").style.display = "none";
     $(".pwChangeBtn").style.display = "block";
