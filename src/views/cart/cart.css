@@ -1,5 +1,4 @@
 @import url("https://fonts.googleapis.com/css2?family=Secular+One&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap");
 @import url("../main_style.css");
 
@@ -60,7 +59,7 @@
   padding: var(--font-base);
   border-radius: 10px;
   border: 1px solid rgb(224, 224, 224);
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: var( --brown-300);
 }
 
 .shoppingbag-list .delete-wrapper {
@@ -242,7 +241,7 @@
   border-radius: 10px;
   border: 0.5px solid rgb(224, 224, 224);
   margin-bottom: 60px;
-  background-color: rgba(255, 255, 255, 0.555);
+  background-color: var( --brown-300);
 }
 
 .container-caculate-price .bill .content {
