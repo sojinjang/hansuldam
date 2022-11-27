@@ -112,7 +112,7 @@ footer {
 .change-info .address-input-container {
   display: flex;
   flex-direction: column;
-  margin-right: 5px;
+  margin: 2px 5px 0 0;
 }
 
 .change-info input {
