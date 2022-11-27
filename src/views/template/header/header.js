@@ -136,13 +136,14 @@ function appendSearchModal() {
   const bodyContainer = document.querySelector("body");
   bodyContainer.insertAdjacentHTML('beforebegin', searchModalHTML);
 
-  $('.modal-close-button').addEventListener('click', () => ($('.modal').remove()));
-  $(".search-image").addEventListener("click", handleSearch);
-  $(".search-input").addEventListener('keydown', (e) => {
-    if(e.keyCode ==13){
-      window.location.href = `/search/?keyword=${e.target.value}`;
-    }
-  });
+  (function handleSearchFadeIn() {
+    setTimeout(() => {
+      modal.style.opacity = 1;
+      searchInputWrapper.style.borderBottom = "1.5px solid var(--black-400)";
+      searchInputWrapper.style.opacity = 1;
+      searchIcon.style.transform = "translateX(0px)";
+    }, 50);
+  })();
 }
 
 function handleSearch(e) {
