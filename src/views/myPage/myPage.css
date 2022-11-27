@@ -4,10 +4,14 @@ body {
 }
 
 .body-container {
+  padding: 20px 68.6px;
+}
+
+.body-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 50px;
 }
 
 .body-container .body-section-container {
@@ -49,23 +53,23 @@ body {
 .body-section-container button {
   font-size: 20px;
   text-align: center;
-  color: black;
-  border: 0;
-  margin: 10px 0;
+  color: white;
+  margin: 20px 0;
 }
 
 .body-section-container a {
   font-size: 20px;
   text-align: center;
-  color: black;
-  margin: 10px 0;
+  color: white;
+  margin: 20px 0;
 }
 
 .password-container {
   display: none;
   flex-direction: column;
   justify-content: center;
-  width: 400px;
+  margin-left: 22.5%;
+  width: 500px;
 }
 
 .password-container span {
@@ -76,22 +80,18 @@ body {
 }
 
 .password-container input {
-  height: 35px;
+  height: 50px;
+  font-size: 1.125rem;
   padding-left: 10px;
-  margin-bottom: 15px;
-}
-
-.password-container button {
-  height: 35px;
-  text-align: center;
-  background-color: black;
-  color: white;
+  margin-bottom: 10px;
+  border: none;
+  border-bottom: 1px solid grey;
 }
 
 .body-container .none-user-page-container {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 40px;
 }
 
 .none-user-page-container .none-user-page-input {
@@ -105,11 +105,12 @@ body {
 
 .none-user-page-input span {
   text-align: center;
-  font-size: 30px;
+  font-size: 1.85rem;
   margin-bottom: 20px;
 }
 
 .none-user-page-input p {
+  font-size: 1.125rem;
   text-align: center;
   color: gray;
   margin-bottom: 50px;
@@ -117,19 +118,16 @@ body {
 
 .none-user-page-input input {
   height: 50px;
-  font-size: 17px;
+  font-size: 1.125rem;
   padding-left: 10px;
   margin-bottom: 10px;
+  border: none;
+  border-bottom: 1px solid grey;
 }
 
 .none-user-page-input button {
-  height: 50px;
-  text-align: center;
-  justify-content: center;
-  box-sizing: border-box;
-  background-color: black;
-  color: white;
-  margin-bottom: 10px;
+  margin: 15px 0 10px 0;
+  font-size: 1.125rem;
 }
 
 .none-user-page-container .order-list-container {
@@ -137,7 +135,7 @@ body {
   flex-direction: column;
   border-radius: 15px;
   margin-bottom: 15px;
-  background-color: #cbb69786;
+  background-color: #cbb69749;
   padding: 15px 15px;
 }
 
@@ -344,6 +342,12 @@ body {
 
 .address-btn-container {
   margin-left: 100px;
+}
+
+.password-container button {
+  margin: 15px 0 10px 0;
+  font-size: 1.125rem;
+  text-align: center;
 }
 
 .change-btn {
