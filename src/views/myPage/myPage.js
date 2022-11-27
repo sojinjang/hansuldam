@@ -62,8 +62,8 @@ async function showOrderListPage() {
   createOrderDateContainer(orderData);
   productList.forEach(createProductListContainer);
   createShowDetailInformationButton();
-  createDeliveryInformationContainer(orderData);
-  createChangeDeliveryInformationContainer();
+  createChangeShippingDestinationContainer(orderData);
+  createChangeShippingDestinationContainer();
   createPaymentInformationContainer(orderData);
   createButtonContainer();
 
@@ -272,7 +272,7 @@ function createShowDetailInformationButton() {
   $(".order-list-container").append(page);
 }
 
-function createDeliveryInformationContainer(item) {
+function createChangeShippingDestinationContainer(item) {
   let page = undefined;
   page = document.createElement("div");
   page.setAttribute("class", "address-container");
@@ -330,7 +330,7 @@ function createPaymentInformationContainer(item) {
   $(".order-list-container").append(page);
 }
 
-function createChangeDeliveryInformationContainer() {
+function createChangeShippingDestinationContainer() {
   let page = undefined;
   page = document.createElement("div");
   page.setAttribute("class", "user-change-container");
