@@ -10,7 +10,7 @@ const selectId = (selector) => document.getElementById(selector);
 
 const loginTOKEN = getCookieValue(Keys.TOKEN_KEY);
 
-if (loginTOKEN !== undefined) {
+if (loginTOKEN !== undefined && loginTOKEN !== "") {
   createUserPageContainer();
   createPasswordInputContainer();
 
@@ -18,7 +18,7 @@ if (loginTOKEN !== undefined) {
   $(".password-check-btn").addEventListener("click", checkUserPassword);
 }
 
-if (loginTOKEN == undefined) {
+if (loginTOKEN == undefined || loginTOKEN == "") {
   let page = undefined;
   page = document.createElement("div");
   page.setAttribute("class", "none-user-page-container");
@@ -27,7 +27,7 @@ if (loginTOKEN == undefined) {
   <p>비회원일 경우, 주문시의 주문번호로 주문조회가 가능합니다.</p>
   <input type="text" class="order-user-name" placeholder="이름을 입력하세요"/>
   <input type="text" class="order-id" placeholder="주문번호를 입력하세요"/>
-  <button class="check-order-btn">주문 조회하기</button>
+  <button class="check-order-btn button-35-brown">주문 조회하기</button>
   <p>- 비회원 상품을 구매하신 경우에만 주문/배송 조회가 가능합니다.</p>
 </div>`;
   $(".body-container").append(page);
@@ -62,8 +62,8 @@ async function showOrderListPage() {
   createOrderDateContainer(orderData);
   productList.forEach(createProductListContainer);
   createShowDetailInformationButton();
-  createChangeShippingDestinationContainer(orderData);
-  createChangeShippingDestinationContainer();
+  createDeliveryInformationContainer(orderData);
+  createChangeDeliveryInformationContainer();
   createPaymentInformationContainer(orderData);
   createButtonContainer();
 
@@ -211,11 +211,11 @@ function createUserPageContainer() {
   page.innerHTML = `<div class="body-section-container">
     <div class="user-information-container">
       <span>내 정보</span>
-      <button class="user-profile-btn">계정 정보 확인</button>
+      <button class="user-profile-btn button-35-brown">계정 정보 확인</button>
     </div>
     <div class="user-order-information-container">
       <span>쇼핑 정보</span>
-      <a href="/order-list"> 주문내역 </a>
+      <a href="/order-list" class="button-35-brown"> 주문내역 </a>
     </div>
   </div>`;
   $(".body-container").append(page);
@@ -228,7 +228,7 @@ function createPasswordInputContainer() {
   page.innerHTML = `
   <span>비밀번호 확인이 필요합니다</span>
   <input class="password-input" type="password" placeholder="비밀번호"/>
-  <button class="password-check-btn">확인</button>
+  <button class="password-check-btn button-35-brown">확인</button>
   `;
   $(".body-container").append(page);
 }
@@ -253,7 +253,7 @@ function createProductListContainer(item) {
   page.setAttribute("class", "order-lists");
   page.setAttribute("onclick", `window.location.href='/product-detail/?id=${item._id}'`);
   page.innerHTML = `<div class="single-product-container">
-    <img src="../img/ricewine_icon.png" alt="" />
+    <img src=../img/ricewine_icon.png} alt="" />
     <div class="single-product-detail">
       <span class="single-product-name">${item.name}</span>
       <span class="single-product-price">${item.price.toLocaleString("ko-KR")}원</span>
@@ -272,7 +272,7 @@ function createShowDetailInformationButton() {
   $(".order-list-container").append(page);
 }
 
-function createChangeShippingDestinationContainer(item) {
+function createDeliveryInformationContainer(item) {
   let page = undefined;
   page = document.createElement("div");
   page.setAttribute("class", "address-container");
@@ -330,7 +330,7 @@ function createPaymentInformationContainer(item) {
   $(".order-list-container").append(page);
 }
 
-function createChangeShippingDestinationContainer() {
+function createChangeDeliveryInformationContainer() {
   let page = undefined;
   page = document.createElement("div");
   page.setAttribute("class", "user-change-container");
