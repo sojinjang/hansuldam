@@ -1,5 +1,19 @@
 @import url("https://fonts.googleapis.com/css2?family=Secular+One&display=swap");
 
+input {
+  border: 1px solid var(--black-100);
+  border-radius: 5px;
+  padding: 4px 4px 4px 4px;
+  margin: 2px 0 2px 0;
+  background-color: var(--white-100);
+}
+
+select {
+  border-radius: 5px;
+  padding: 4px 4px 4px 4px;
+  background-color: var(--white-100);
+}
+
 .order-status-wrapper {
   display: flex;
   -webkit-box-pack: center;
@@ -76,6 +90,11 @@
   flex-direction: row;
 }
 
+.order-product .product-name {
+  font-size: var(--font-lg);
+  font-weight: 550;
+}
+
 .thumbnail img {
   height: auto;
   width: 86px;
@@ -115,14 +134,16 @@
   width: 100px;
 }
 
-.address .user-address .find-address-button {
-  cursor: pointer;
-  width: 75px;
-  height: 30px;
-  text-align: center;
-  background-color: #fdc78c;
-  border-radius: 5px;
-  margin-bottom: 15px;
+.address .user-address .user-address1 {
+  width: 50%;
+}
+
+.address .user-address .user-address2 {
+  width: 50%;
+}
+
+.address-status #delivery-select {
+  width: 50%;
 }
 
 .address-status .status-input {
@@ -130,25 +151,19 @@
 }
 
 .payment-container {
-  margin-bottom: 15px;
   max-width: 1024px;
   margin: auto;
+  margin-bottom: var(--font-xl);
 }
 
-.payment-container span {
-  font-weight: bold;
-}
-
-.payment-container button {
-  cursor: pointer;
-  width: 100px;
-  height: 50px;
-  text-align: center;
-  background-color: #fdc78c;
-  border-radius: 5px;
+.payment-container .payment-section-wrapper {
+  border-radius: 10px;
+  background-color: var(--brown-300);
+  padding: var(--font-lg) var(--font-lg) var(--font-lg) var(--font-lg);
 }
 
 .payment-container .creditCard {
+  padding-top: var(--font-base);
   display: none;
 }
 
@@ -229,40 +244,6 @@
   font-family: "Secular One", sans-serif;
   display: flex;
   justify-content: space-evenly;
-}
-
-#rounded-button {
-  background-color: #fdc78c;
-  border: 2px solid #422800;
-  border-radius: 30px;
-  box-shadow: #422800 4px 4px 0 0;
-  color: #422800;
-  cursor: pointer;
-  display: inline-block;
-  font-weight: 500;
-  font-size: 18px;
-  padding: 0 18px;
-  line-height: 50px;
-  text-align: center;
-  text-decoration: none;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  transition: all 0.2s linear;
-}
-
-#rounded-button:hover {
-  background-color: #fff;
-}
-
-#rounded-button:active {
-  box-shadow: #422800 2px 2px 0 0;
-  transform: translate(2px, 2px);
-}
-
-@media (min-width: 768px) {
-  #rounded-button {
-    min-width: 120px;
-    padding: 0 25px;
-  }
+  max-width: 200px;
+  margin: auto;
 }
