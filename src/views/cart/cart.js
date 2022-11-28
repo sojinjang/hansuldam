@@ -19,6 +19,7 @@ const checkoutButton = document.querySelector(".checkout");
 const HIDDEN_CLASSNAME = "hidden";
 
 function showProduct(item) {
+  const imageUrl = ".." + decodeURIComponent(item.image).split("views")[1];
   let product = undefined;
   product = document.createElement("div");
   product.setAttribute("class", "product");
@@ -32,7 +33,7 @@ function showProduct(item) {
               </div>
               <div class="product-info-top">
                 <div class="thumbnail">
-                  <img class="product-img" src="../img/redmonkey.jpeg" />
+                  <img class="product-img" src="${imageUrl}" />
                 </div>
                 <div class="product-info">
                   <div class="product-brand">${item.brand}</div>
