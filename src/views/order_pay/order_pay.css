@@ -1,56 +1,42 @@
 @import url("https://fonts.googleapis.com/css2?family=Secular+One&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap");
-
-
-
-.body-container {
-    background-color: wheat;
-}
 
 .order-status-wrapper {
-    display: flex;
-    -webkit-box-pack: center;
-    justify-content: center;
-    padding: 70px 0px 78px;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  padding: 5rem 0px 5rem;
 }
 
 .order-status-wrapper .order-status-bar {
-    display: flex;
+  display: flex;
+  justify-content: center;
 }
 
 .order-status-wrapper .order-status-bar .order-status-highlighted {
-    display: flex;
-    font-family: "Secular One", sans-serif;
-    color: rgb(91, 58, 28);
-    font-size: 25px;
-    -webkit-box-align: center;
-    align-items: center;
-    font-weight: 500;
-    line-height: 20px;
-    justify-content: space-evenly;
+  display: flex;
+  font-family: "Secular One", sans-serif;
+  color: var(rgb(91, 58, 28));
+  font-size: var(--font-xl);
+  padding-left: var(--font-base);
+  -webkit-box-align: center;
+  align-items: center;
+  font-weight: 500;
+  line-height: var(--font-xl);
+  justify-content: space-evenly;
 }
 
 .order-status-wrapper .order-status-bar .order-status {
-    font-family: "Secular One", sans-serif;
-    font-size: 25px;
-    color: rgba(0, 0, 0, 0.3);
-    -webkit-box-align: center;
-    align-items: center;
-    font-weight: 500;
-    line-height: 20px;
-    justify-content: space-evenly;
+  font-family: "Secular One", sans-serif;
+  font-size: var(--font-xl);
+  padding-left: var(--font-base);
+  color: var(--black-100);
+  -webkit-box-align: center;
+  align-items: center;
+  font-weight: 500;
+  line-height: var(--font-xl);
+  justify-content: space-evenly;
 }
 
-.order-status-wrapper .order-status-bar .order-arrow {
-    margin: 0 15px 0 15px;
-    opacity: 0.3;
-    font-size: 25px;
-    -webkit-box-align: center;
-    align-items: center;
-    line-height: 20px;
-    justify-content: space-evenly;
-}
 
 .container-order-list {
     display: grid;
