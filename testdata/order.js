@@ -19,7 +19,7 @@ async function order() {
     });
     for (const [userId, value] of Object.entries(userIdObj)) {
       const toUpdate = { orders: value };
-      const t = await userModel.update({ userId, updateObj: toUpdate });
+      const t = await userModel.update({ _id: userId }, toUpdate);
     }
   } catch (error) {
     console.log(error);
