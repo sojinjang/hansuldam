@@ -37,12 +37,20 @@
   justify-content: space-evenly;
 }
 
+.order-info-container {
+  border-radius: 10px;
+  border: 1px solid rgb(224, 224, 224);
+  background-color: var(--brown-300);
+  max-width: 1024px;
+  margin: auto;
+}
+
 .order-head-container {
   width: 100%;
   display: inline-flex;
   -webkit-box-pack: center;
   justify-content: center;
-  padding: 70px 0px 78px;
+  padding: 40px 0 40px 0;
 }
 
 .order-head-container .order-liquor-icon {
@@ -70,19 +78,21 @@
 }
 
 .order-head-container .order-greeting-info .order-greeting {
-  font-size: 22px;
+  font-size: var(--font-lg);
 }
 
 .order-details {
-  padding-bottom: 120px;
+  padding-bottom: 70px;
 }
 
 .order-details .order-table {
-  margin-left: auto;
-  margin-right: auto;
+  margin: auto;
   border-collapse: collapse;
-  border-spacing: 0;
-  width: 500px;
+  border-radius: 5px;
+  min-width: 370px;
+  border-style: hidden;
+  box-shadow: 0 0 0 1px var(--black-100);
+  background-color: var(--white-100);
 }
 
 .order-details .order-table tr td {
@@ -91,7 +101,7 @@
   border-width: 1px;
   font-size: 15px;
   overflow: hidden;
-  padding: 10px 10px;
+  padding: 15px 30px 15px 30px;
   word-break: normal;
 }
 
@@ -112,7 +122,6 @@
   border-color: inherit;
   text-align: center;
   vertical-align: center;
-  background-color: wheat;
   font-weight: bold;
 }
 
