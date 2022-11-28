@@ -237,7 +237,7 @@ select {
   margin-left: auto;
   font-size: 22px;
   font-weight: bold;
-  color: rgb(186, 101, 21);
+  color: var(--orange-300);;
 }
 
 .button-wrapper {
