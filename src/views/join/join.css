@@ -1,15 +1,3 @@
-@font-face {
-  font-family: "GangwonEdu_OTFBoldA";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff")
-    format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
-
-* {
-  font-family: "GangwonEdu_OTFBoldA";
-}
-
 body {
   overflow-x: hidden;
   margin: 0;
@@ -24,42 +12,41 @@ body {
   margin-bottom: 40px;
 }
 
-.main-section-container .main-join-form {
+.main-section-container .body-join-form {
   display: flex;
   box-sizing: border-box;
   flex-direction: column;
   justify-content: center;
-  width: 500px;
-  height: 500px;
+  width: 400px;
 }
 
-.main-join-form section {
-  margin: 20px 0;
+.body-join-form section {
+  margin: 5px 0;
 }
 
-.main-join-form .join-form-hello p {
-  margin: 20px 0;
-  font-size: 30px;
+.body-join-form .join-form-hello p {
+  margin-bottom: 30px;
+  font-size: var(--font-xxxl);
   text-align: center;
 }
 
-.main-join-form input {
+.body-join-form input {
   height: 50px;
-  font-size: 1.125rem;
-  padding-left: 10px;
-  border: none;
-  border-radius: 0;
-  border-bottom: 1px solid grey;
+  font-size: var(--font-base);
+  border: 1px solid var(--black-100);
+  border-radius: 5px;
+  background-color: var(--white-100);
+  padding: 4px 4px 4px 4px;
 }
 
 #emailInput {
   margin-bottom: 3px;
 }
 
-.main-join-form .join-form-button {
+.body-join-form .join-form-button {
   margin: 30px 0;
   font-size: 1.125rem;
-  height: 50px;
+  height: 40px;
   align-items: center;
   background-color: var(--brown-500);
   border-radius: 12px;
@@ -99,12 +86,12 @@ body {
   display: inline-flex;
   height: 30px;
   font-family: Inter, sans-serif;
-  font-size: 1rem;
+  font-size: var(--font-sm);
   font-weight: 550;
   justify-content: center;
   line-height: 1;
-  margin-left: 71%;
   outline: none;
+  margin-left: 68%;
   padding: 1rem 1.1rem;
   text-align: center;
   text-decoration: none;
