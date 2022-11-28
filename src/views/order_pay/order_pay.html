@@ -34,7 +34,7 @@
             </div>
             <section class="container-order-list">
                 <div class="order-section">
-                    <div class="section-title">주문 상품</div>
+                    <div class="section-title">주문상품 정보</div>
                     <div class="add-product"></div>
                 </div>
             </section>
@@ -53,7 +53,7 @@
                     <span>배송지</span>
                     <div class="address">
                         <div class="user-address">
-                            <button class="find-address-button" type="submit">우편번호 검색</button>
+                            <div><button class="find-address-button simple-button" type="submit">우편번호 검색</button></div>
                             <input class="user-postal-code" type="text" placeholder="우편번호" readonly></input>
                             <input class="user-address1" type="text" placeholder="주소" readonly></input>
                             <input class="user-address2" type="text" placeholder="상세주소" autocomplete="on"></input>
@@ -79,9 +79,9 @@
             </div>
 
             <div class="payment-container">
-                <span>결제 수단</span>
-                <div>
-                    <button class="creditCardBtn">신용 카드</button>
+                <div class="section-title">결제방법</div>
+                <div class="payment-section-wrapper">
+                    <button class="creditCardBtn simple-button">신용카드</button>
                     <div class="creditCard">
                             <select class="card-company" id="card-select">
                                 <option value="0" id="default">카드사를 선택해주세요.</option>
@@ -105,8 +105,6 @@
                             type="text"
                             minlength="4"
                             maxlength="4"
-                            width="100px"
-                            height="22px"
                             required
                         />
                         <input
@@ -114,8 +112,6 @@
                             type="text"
                             minlength="4"
                             maxlength="4"
-                            width="100px"
-                            height="22px"
                             required
                         />
                         <input 
@@ -123,8 +119,6 @@
                             type="text"
                             minlength="4" 
                             maxlength="4"
-                            width="100px"
-                            height="22px"
                             required
                         />
                         <input 
@@ -132,8 +126,6 @@
                             type="text"
                             minlength="4"
                             maxlength="4"
-                            width="100px"
-                            height="22px"
                             required
                         />
                     </div>
@@ -157,8 +149,7 @@
                 <div class="button-wrapper">
                     <button
                     role="button"
-                    id="rounded-button"
-                    class="pay-button"
+                    class="pay-button button-35-brown"
                     >
                     결제 하기
                     </button>
