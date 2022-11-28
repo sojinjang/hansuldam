@@ -14,12 +14,13 @@ const isAdult = getCookieValue(Keys.IS_ADULT_KEY);
 const isCartOrder = getSavedItems(Keys.IS_CART_ORDER);
 
 function showProduct(item) {
+  const imageUrl = ".." + decodeURIComponent(item.image).split("views")[1];
   let product = undefined;
   product = document.createElement("div");
   product.setAttribute("class", "order-product");
   product.setAttribute("id", item._id);
   product.innerHTML = `<div class="thumbnail">
-    <img class="product-img" src="../img/redmonkey.jpeg" />
+    <img class="product-img" src="${imageUrl}" />
     <div>
         <p class="product-brand">${item.brand}</p>
         <p class="product-name">${item.name}</p>
@@ -86,10 +87,10 @@ async function getUserInfo() {
   }
 }
 
-async function insertFoundAddress(){
-  const {foundZoneCode, foundAddress} = await findAddress();
-  $(".user-postal-code").value = foundZoneCode
-  $(".user-address1").value = foundAddress
+async function insertFoundAddress() {
+  const { foundZoneCode, foundAddress } = await findAddress();
+  $(".user-postal-code").value = foundZoneCode;
+  $(".user-address1").value = foundAddress;
 }
 
 function writeUserInfo(userInfoObj) {
