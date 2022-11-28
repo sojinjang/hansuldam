@@ -446,3 +446,39 @@ brown*/
 .button-35-brown:hover {
   box-shadow: var(--brown-500) 0 0 0 1.5px, transparent 0 0 0 0;
 }
+
+/* simple-button 
+white */
+
+.simple-button {
+  height: 30px;
+  background-color: #ffffff;
+  border: 0;
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+  color: #111827;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 0.5rem;
+  padding: 0.75rem 1rem;
+  text-align: start;
+  text-decoration: none #d1d5db solid;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.simple-button:hover {
+  background-color: rgb(249, 250, 251);
+}
+
+.simple-button:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.simple-button:focus-visible {
+  box-shadow: none;
+}
