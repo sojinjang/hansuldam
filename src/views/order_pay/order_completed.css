@@ -126,12 +126,12 @@
 }
 
 .order-table .table-content-button a {
-  font-weight: bold;
-  color: rgb(229, 199, 115);
-  transition: all 0.1s linear;
+  color: var(--brown-700);
+  transition: all 0.4s linear;
 }
 
 .order-table .table-content-button a:hover {
-  color: rgb(91, 58, 28);
-  letter-spacing: 1px;
+  font-weight: bold;
+  color: var(--brown-600-hover);
+  letter-spacing: 0.6px;
 }
