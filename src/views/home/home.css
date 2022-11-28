@@ -19,6 +19,9 @@ body {
 
 .body-container {
   padding: 0 7vw 0 7vw;
+  /* background-color: #f5f3ee; */
+  /* background-color: #f6f3ee; */
+  background-color: #f7f3ee;
 }
 
 /* main */
@@ -31,6 +34,7 @@ body {
 .sool-list {
   display: inline-flex;
   justify-content: center;
+  margin-top: 30px;
 }
 
 .sool-list .sool-item {
@@ -59,7 +63,7 @@ body {
   display: flex;
   box-sizing: border-box;
   justify-content: space-between;
-  padding-top: 80px;
+  padding-top: 50px;
   padding-bottom: 10px;
 }
 
@@ -218,4 +222,52 @@ body {
 .products-container .products-image-list div img:hover {
   transform: scale(1.1);
   transition: all 0.5s linear;
+}
+/* mobile device*/
+@media (max-width: 768px) {
+  .sool-list {
+    margin-top: 15px;
+  }
+
+  .sool-list .sool-item {
+    width: 90px;
+    height: 90px;
+  }
+  
+  .sool-list .sool-item a {
+    width: 45px;
+    height: 45px;
+  }
+
+  .sool-list .sool-item span {
+    width: 65px;
+    height: 65px;
+    font-size: 17px;
+  }
+}
+@media (max-width: 600px) {
+  .sool-list {
+    margin-top: 15px;
+  }
+
+  .sool-list .sool-item {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .sool-list .sool-item a {
+    width: 40px;
+    height: 40px;
+  }
+
+  .sool-list .sool-item span {
+    width: 60px;
+    height: 60px;
+    font-size: 15px;
+  }
+}
+@media (max-width: 400px) {
+  .sool-list {
+    display: none;
+  }
 }
