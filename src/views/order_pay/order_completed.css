@@ -43,6 +43,7 @@
   background-color: var(--brown-300);
   max-width: 1024px;
   margin: auto;
+  margin-bottom: 80px;
 }
 
 .order-head-container {
@@ -125,12 +126,13 @@
   font-weight: bold;
 }
 
-.order-table .table-content-button a {
+.order-table .table-content-button {
   color: var(--brown-700);
+  cursor: pointer;
   transition: all 0.4s linear;
 }
 
-.order-table .table-content-button a:hover {
+.order-table .table-content-button:hover {
   font-weight: bold;
   color: var(--brown-600-hover);
   letter-spacing: 0.6px;
