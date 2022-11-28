@@ -1,5 +1,5 @@
 const setCookie = (key, value) => {
-  document.cookie = key + "=" + JSON.stringify(value) + "; max-age=3600; path=/;";
+  document.cookie = key + "=" + JSON.stringify(value) + "; max-age=10800; path=/;";
 };
 
 const getCookieValue = (key) => {
