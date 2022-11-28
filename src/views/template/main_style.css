@@ -58,14 +58,12 @@ a {
 }
 
 button{
-  all:unset;
+  all: unset;
 }
 
 /* body */
 
 .body-container {
-  display: flex;
-  flex-wrap: wrap;
 	padding: 0 7vw 0 7vw;
   margin-top: 50px;
 }
