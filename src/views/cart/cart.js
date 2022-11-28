@@ -27,8 +27,8 @@ function showProduct(item) {
   product.innerHTML = `<div class="checkbox-wrapper">
                 <input type="checkbox" checked="checked" name="individual-checker" id=${
                   item._id
-                } class=individual-checker /><label
-                  for="checker"
+                } class="individual-checker" /><label
+                  for="${item._id}"
                 ></label>
               </div>
               <div class="product-info-top">
