@@ -47,6 +47,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .image-warpper {
   margin-right: 50px;
+  margin-left: 30px;
 }
 
 /* content__container */
@@ -57,7 +58,7 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .content__main-info {
-  margin-bottom: 50%;
+  margin-bottom: 35%;
 }
 
 .content__name,
@@ -154,6 +155,46 @@ input[type="number"]::-webkit-inner-spin-button {
   margin: 0 !important;
 }
 
+.button-container #order-button {
+  align-items: center;
+  background-color: #5b78a5;
+  border: 1px solid #3d5e8f;
+  border-radius: 8px;
+  box-sizing: border-box;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  display: flex;
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  height: 48px;
+  justify-content: center;
+  line-height: 24px;
+  width: 130px;
+  text-align: center;
+  margin-top: 15px;
+  position: relative;
+}
+
+.button-container #cart-button {
+  align-items: center;
+  background-color: #fdfdfd;
+  border: 1px solid #00000057;
+  border-radius: 8px;
+  box-sizing: border-box;
+  color: rgb(0, 0, 0);
+  cursor: pointer;
+  display: flex;
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  height: 48px;
+  justify-content: center;
+  line-height: 24px;
+  width: 130px;
+  text-align: center;
+  position: relative;
+  bottom: -10px;
+}
+
 .cart-message {
   opacity: 0;
   transition: 0.5s all ease;
@@ -161,4 +202,78 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .fade-message {
   opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .content__name,
+  .content__price {
+    font-size: 1.7rem;
+  }
+  .content__category,
+  .content__desc {
+    font-size: 1.0rem;
+  }
+  .content__detail-info p span:first-child {
+    font-size: 1.0rem;
+  }
+  
+  .content__detail-info p span:last-child {
+    font-size: 0.8rem;
+  }
+
+  .total-price-container {
+    margin-left: 15px;
+  }
+
+  .button-container #order-button {
+    font-size: 14px;
+    height: 40px;
+    line-height: 18px;
+    width: 110px;
+    margin-top: 15px;
+  }
+  
+  .button-container #cart-button {
+    font-size: 14px;
+    height: 40px;
+    line-height: 20px;
+    width: 110px;
+  }
+}
+
+@media (max-width: 640px) {
+  .content__name,
+  .content__price {
+    font-size: 1.5rem;
+  }
+  .content__category,
+  .content__desc {
+    font-size: 0.9rem;
+  }
+  .content__detail-info p span:first-child {
+    font-size: 0.9rem;
+  }
+  
+  .content__detail-info p span:last-child {
+    font-size: 0.7rem;
+  }
+
+  .total-price-container {
+    margin-left: 10px;
+  }
+
+  .button-container #order-button {
+    font-size: 12px;
+    height: 36px;
+    line-height: 18px;
+    width: 105px;
+    margin-top: 10px;
+  }
+  
+  .button-container #cart-button {
+    font-size: 12px;
+    height: 36px;
+    line-height: 18px;
+    width: 105px;
+  }
 }

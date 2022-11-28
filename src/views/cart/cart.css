@@ -1,58 +1,44 @@
 @import url("https://fonts.googleapis.com/css2?family=Secular+One&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap");
-
+@import url("../main_style.css");
 
 .hidden {
-  display: none !important;  /* opacity: 0; 
-  visibility: 0 */
-}
-
-.body-container {
-  background-color: wheat;
+  display: none !important;
 }
 
 .order-status-wrapper {
   display: flex;
   -webkit-box-pack: center;
   justify-content: center;
-  padding: 70px 0px 78px;
+  padding: 5rem 0px 5rem;
 }
 
 .order-status-wrapper .order-status-bar {
   display: flex;
+  justify-content: center;
 }
 
 .order-status-wrapper .order-status-bar .order-status-highlighted {
   display: flex;
   font-family: "Secular One", sans-serif;
-  color: rgb(91, 58, 28);
-  font-size: 25px;
+  color: var(rgb(91, 58, 28));
+  font-size: var(--font-xl);
+  padding-left: var(--font-base);
   -webkit-box-align: center;
   align-items: center;
   font-weight: 500;
-  line-height: 20px;
+  line-height: var(--font-xl);
   justify-content: space-evenly;
 }
 
 .order-status-wrapper .order-status-bar .order-status {
   font-family: "Secular One", sans-serif;
-  font-size: 25px;
-  color: rgba(0, 0, 0, 0.3);
+  font-size: var(--font-xl);
+  padding-left: var(--font-base);
+  color: var(--black-100);
   -webkit-box-align: center;
   align-items: center;
   font-weight: 500;
-  line-height: 20px;
-  justify-content: space-evenly;
-}
-
-.order-status-wrapper .order-status-bar .order-arrow {
-  margin: 0 15px 0 15px;
-  opacity: 0.3;
-  font-size: 25px;
-  -webkit-box-align: center;
-  align-items: center;
-  line-height: 20px;
+  line-height: var(--font-xl);
   justify-content: space-evenly;
 }
 
@@ -68,49 +54,34 @@
 }
 
 .shoppingbag-list {
-  margin-bottom: 15px;
-  padding: 20px;
+  margin-bottom: var(--font-lg);
+  padding: var(--font-base);
   border-radius: 10px;
   border: 1px solid rgb(224, 224, 224);
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: var(--brown-300);
 }
 
 .shoppingbag-list .delete-wrapper {
   display: flex;
+  vertical-align: center;
 }
 
 .shoppingbag-list .delete-wrapper .all-checker {
   margin-right: auto;
-  margin-left: 18px;
 }
 
-.shoppingbag-list .delete-wrapper .selected-item-delete-button {
-  line-height: 30px;
-  min-width: 54px;
-  height: 40px;
-  padding: 0 16px;
-  margin-left: auto;
-  background-color: #f8f9fa;
-  border: 1px solid #f8f9fa;
-  border-radius: 4px;  
-  font-family: "Do Hyeon", sans-serif;
-  font-size: 18px;
-  color: #3c4043;
-  text-align: center;
+input[type="checkbox"] {
+  appearance: checkbox !important;
   cursor: pointer;
-  touch-action: manipulation;
-  transition: all 0.2s linear;
 }
 
-.select-delete-button:hover {
-  border-color: #dadce0;
-  box-shadow: rgba(0, 0, 0, 0.1) 0 2px 2px;
-  color: #202124;
+.all-checker {
+  width: var(--font-base);
+  margin-left: var(--font-base);
 }
 
-.select-delete-button:focus {
-  border-color: #4285f4;
-  outline: none;
+.delete-button-wrapper {
+  margin-left: auto;
 }
 
 .shoppingbag-list .product {
@@ -119,7 +90,7 @@
   grid-template-columns: 32px 1fr;
   text-align: left;
   margin: 10px 0 10px 0;
-  padding: 20px;
+  padding: var(--font-lg);
   border: 1px solid rgb(224, 224, 224);
   border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.5);
@@ -146,22 +117,19 @@
 }
 
 .shoppingbag-list .product .product-info-top .product-info {
-  font-family: "IBM Plex Sans KR", sans-serif;
   -webkit-box-flex: 1;
   flex-grow: 1;
   word-break: keep-all;
   font-size: 15px;
-  color: rgb(62, 62, 62);
 }
 
-.shoppingbag-list .product .product-info-top .product-brand {
-  color: rgb(78, 78, 78);
+.product-info > a {
+  color: var(--black-300);
 }
 
 .shoppingbag-list .product .product-info-top .product-name {
   font-size: 20px;
   font-weight: bold;
-  color: rgb(62, 62, 62);
 }
 
 .shoppingbag-list .product .product-info-top .product-remove-button {
@@ -213,6 +181,7 @@
   border: 1px solid rgb(224, 224, 224);
   font-size: 11.43px;
   border-radius: 10%;
+  cursor: pointer;
 }
 
 .decrease button,
@@ -243,9 +212,8 @@
 }
 
 .price {
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 19px;
-  font-weight: bold;
+  font-size: var(--font-lg);
+  font-weight: 550;
 }
 
 .container-caculate-price .bill {
@@ -254,11 +222,10 @@
   border-radius: 10px;
   border: 0.5px solid rgb(224, 224, 224);
   margin-bottom: 60px;
-  background-color: rgba(255, 255, 255, 0.555);
+  background-color: var(--brown-300);
 }
 
 .container-caculate-price .bill .content {
-  font-family: "IBM Plex Sans KR", sans-serif;
   display: flex;
   flex-direction: column;
   margin: 15px;
@@ -285,7 +252,6 @@
 }
 
 .container-caculate-price .bill .bill-footer {
-  font-family: "IBM Plex Sans KR", sans-serif;
   display: flex;
   flex-direction: column;
   margin: 15px;
@@ -295,47 +261,15 @@
   margin-left: auto;
   font-size: 22px;
   font-weight: bold;
-  color: rgb(186, 101, 21);
+  color: var(--orange-300);
 }
 
 .button-wrapper {
-  font-family: "Secular One", sans-serif;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
+  align-items: center;
 }
 
-#rounded-button {
-  background-color: #fdc78c;
-  border: 2px solid #422800;
-  border-radius: 30px;
-  box-shadow: #422800 4px 4px 0 0;
-  color: #422800;
-  cursor: pointer;
-  display: inline-block;
-  font-weight: 500;
-  font-size: 18px;
-  padding: 0 18px;
-  line-height: 50px;
-  text-align: center;
-  text-decoration: none;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  transition: all 0.2s linear;
-}
-
-#rounded-button:hover {
-  background-color: #fff;
-}
-
-#rounded-button:active {
-  box-shadow: #422800 2px 2px 0 0;
-  transform: translate(2px, 2px);
-}
-
-@media (min-width: 768px) {
-  #rounded-button {
-    min-width: 120px;
-    padding: 0 25px;
-  }
+.checkout-wrapper {
+  margin-right: 18px;
 }

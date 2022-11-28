@@ -174,64 +174,6 @@
 }
 
 /* button */
-.review-write-button {
-  align-items: center;
-  background-color: #cbb6978d;
-  border: 1px solid #cbb6978d;
-  border-radius: 8px;
-  box-sizing: border-box;
-  color: #111;
-  cursor: pointer;
-  display: flex;
-  font-family: Inter, sans-serif;
-  font-size: 16px;
-  height: 48px;
-  justify-content: center;
-  line-height: 24px;
-  max-width: 100%;
-  padding: 0 25px;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-}
-
-.review-write-button:after {
-  background-color: #cbb69759;
-  border-radius: 8px;
-  content: "";
-  display: block;
-  height: 48px;
-  left: 0;
-  width: 100%;
-  position: absolute;
-  top: -2px;
-  transform: translate(8px, 8px);
-  transition: transform 0.2s ease-out;
-  z-index: -1;
-}
-
-.review-write-button:hover:after {
-  transform: translate(0, 0);
-}
-
-.review-write-button:active {
-  background-color: #cbb69759;
-  outline: 0;
-}
-
-.review-write-button:hover {
-  outline: 0;
-}
-
-@media (min-width: 768px) {
-  .review-write-button {
-    padding: 0 40px;
-  }
-}
-
 .review-submit-button {
   appearance: none;
   background-color: #ffffff;

@@ -3,6 +3,7 @@
   --brown-200: #ffe8c8;
   --brown-300: #cbb69749;
   --brown-400: #cbb69786;
+  --brown-450: #cbb697ba;
   --brown-500: #cbb697;
   --brown-600-hover: #9a8669;
   --brown-700: rgb(91, 58, 28);
@@ -39,10 +40,35 @@
   --font-xxxxxl: 2rem;
 }
 
+/* font */
+
 html {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial,
     sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  scroll-behavior: smooth;
 }
+
+/* reset */
+
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+button{
+  all: unset;
+}
+
+/* body */
+
+.body-container {
+	padding: 0 7vw 0 7vw;
+  margin-top: 50px;
+}
+
 
 /* button */
 
@@ -53,8 +79,8 @@ white-brown */
 
 .button-56-brown {
   align-items: center;
-  background-color: var(--brown-400);
-  border: 2px solid var(--brown-400);
+  background-color: var(--brown-450);
+  border: 2px solid var(--brown-300);
   border-radius: 8px;
   box-sizing: border-box;
   color: #111;
@@ -430,4 +456,40 @@ brown*/
 
 .button-35-brown:hover {
   box-shadow: var(--brown-500) 0 0 0 1.5px, transparent 0 0 0 0;
+}
+
+/* simple-button 
+white */
+
+.simple-button {
+  height: 30px;
+  background-color: #ffffff;
+  border: 0;
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+  color: #111827;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 0.5rem;
+  padding: 0.75rem 1rem;
+  text-align: start;
+  text-decoration: none #d1d5db solid;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.simple-button:hover {
+  background-color: rgb(249, 250, 251);
+}
+
+.simple-button:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.simple-button:focus-visible {
+  box-shadow: none;
 }
