@@ -69,11 +69,13 @@ async function redirectPage() {
   $(".myPage").addEventListener("click", () => (window.location.href = "/myPage"));
   $(".cart").addEventListener("click", () => (window.location.href = "/cart"));
   $("#eventProducts").addEventListener("click", () => (window.location.href = "/event-page"));
-
+  
   if (getCookieValue(Keys.TOKEN_KEY)) {
     const user = await get(ApiUrl.USER_INFORMATION);
-
+    
     user["role"] === "admin" ? loginAsAdmin() : loginAsUser();
+    $(".cart").addEventListener("click", () => (window.location.href = "/cart"));
+    $(".myPage").addEventListener("click", () => (window.location.href = "/myPage"));
     handleLogout();
   }
 }
