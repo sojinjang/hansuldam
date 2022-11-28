@@ -121,17 +121,15 @@ input[type="checkbox"] {
   flex-grow: 1;
   word-break: keep-all;
   font-size: 15px;
-  color: rgb(62, 62, 62);
 }
 
-.shoppingbag-list .product .product-info-top .product-brand {
-  color: rgb(78, 78, 78);
+.product-info > a {
+  color: var(--black-300);
 }
 
 .shoppingbag-list .product .product-info-top .product-name {
   font-size: 20px;
   font-weight: bold;
-  color: rgb(62, 62, 62);
 }
 
 .shoppingbag-list .product .product-info-top .product-remove-button {

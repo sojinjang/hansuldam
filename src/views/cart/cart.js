@@ -33,12 +33,16 @@ function showProduct(item) {
               </div>
               <div class="product-info-top">
                 <div class="thumbnail">
-                  <img class="product-img" src="${imageUrl}" />
+                  <a href="/product-detail/?id=${item._id}">
+                    <img class="product-img" src="${imageUrl}" />
+                  </a>
                 </div>
                 <div class="product-info">
-                  <div class="product-brand">${item.brand}</div>
-                  <div class="product-name">${item.name}</div>
-                  <div class="product-volume">${item.volume}ml</div>
+                  <a href="/product-detail/?id=${item._id}">
+                    <div class="product-brand">${item.brand}</div>
+                    <div class="product-name">${item.name}</div>
+                    <div class="product-volume">${item.volume}ml</div>
+                  </a>
                 </div>
                 <button type="button" class="product-remove-button">
                   <img
