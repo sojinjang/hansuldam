@@ -25,11 +25,11 @@ body {
   display: flex;
   flex-direction: column;
   margin-right: 50px;
-  width: 250px;
+  width: 200px;
 }
 
 .user-information-container span {
-  font-size: 25px;
+  font-size: 22px;
   text-align: center;
   border-bottom: 1px solid black;
   padding-bottom: 15px;
@@ -39,11 +39,11 @@ body {
 .body-section-container .user-order-information-container {
   display: flex;
   flex-direction: column;
-  width: 250px;
+  width: 200px;
 }
 
 .user-order-information-container span {
-  font-size: 25px;
+  font-size: 22px;
   text-align: center;
   border-bottom: 1px solid black;
   padding-bottom: 15px;
