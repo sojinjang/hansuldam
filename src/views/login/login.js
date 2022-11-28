@@ -5,7 +5,7 @@ import { getCartInfoFromDB } from "../utils/cart.js";
 import { Keys } from "../constants/Keys.js";
 
 const loginBtn = document.querySelector("#submitButton");
-const buttonSection = document.querySelector(".login-form-text");
+const buttonSection = document.querySelector(".login-form-button");
 
 async function showNaverLoginButton() {
   try {
@@ -17,7 +17,7 @@ async function showNaverLoginButton() {
       "<a href='" +
       naverApiUrl +
       "'><img height='40' src='http://static.nid.naver.com/oauth/small_g_in.PNG'/></a>";
-    buttonSection.append(naverWrapper);
+    buttonSection.after(naverWrapper);
   } catch (err) {
     alert(err.message);
   }

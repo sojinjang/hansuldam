@@ -19,9 +19,8 @@
     <main class="body-container">
       <div class="body-section-container">
         <form class="body-login-form" id="loginForm">
-          <p class="login-form-hello">안녕하세요 한술담입니다</p>
+          <p class="login-form-hello">LOGIN</p>
           <section class="login-form-input">
-            <label class="input-email-label" for="emailInput">이메일</label>
             <div class="input-control">
               <input
                 class="input"
@@ -34,7 +33,6 @@
           </section>
 
           <section class="login-form-input">
-            <label class="login-form-input-password-label" for="passwordInput">비밀번호</label>
             <div class="input-control">
               <input
                 class="input"
@@ -46,17 +44,17 @@
             </div>
           </section>
 
-          <button class="login-form-button button-35-brown" id="submitButton">
-            로그인하기
-          </button>
+          <section class="login-button-container">
+            <button class="login-form-button button-35-brown" id="submitButton">
+              로그인하기
+            </button>
+          </section>
+
+          <a href="/find-password" class="find-button">비밀번호 찾기</a>
 
           <section class="login-form-text">
-            <div>
-              <a href="/join" class="join-button button-35-white">회원가입</a>
-            </div>
-            <div>
-              <a href="/find-password" class="find-button button-35-white">비밀번호 찾기</a>
-            </div>
+            <a href="/join" class="join-button">회원가입</a>
+            <a href="/myPage" class="non-user-button">비회원 주문조회</a>
           </section>
         </form>
       </div>
