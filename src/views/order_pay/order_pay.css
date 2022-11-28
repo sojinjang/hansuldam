@@ -85,6 +85,10 @@ select {
   border-bottom: 1px solid darkgray;
 }
 
+.order-product a {
+  color: var(--black-400);
+}
+
 .order-product .thumbnail {
   display: flex;
   flex-direction: row;
@@ -237,7 +241,7 @@ select {
   margin-left: auto;
   font-size: 22px;
   font-weight: bold;
-  color: var(--orange-300);;
+  color: var(--orange-300);
 }
 
 .button-wrapper {

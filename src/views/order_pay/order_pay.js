@@ -20,11 +20,15 @@ function showProduct(item) {
   product.setAttribute("class", "order-product");
   product.setAttribute("id", item._id);
   product.innerHTML = `<div class="thumbnail">
-    <img class="product-img" src="${imageUrl}" />
+    <a href="/product-detail/?id=${item._id}">
+      <img class="product-img" src="${imageUrl}" />
+    </a>
     <div>
+      <a href="/product-detail/?id=${item._id}">
         <p class="product-brand">${item.brand}</p>
         <p class="product-name">${item.name}</p>
         <p class="product-volume">${item.volume}ml</p>
+      </a>
     </div>
     
 </div>
