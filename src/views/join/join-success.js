@@ -2,6 +2,7 @@ import { isNum, isIdNum, isAdult } from "../utils/validator.js";
 import { findAddress } from "../utils/findAddress.js";
 import * as api from "../api.js";
 
+const adult_check_form = document.querySelector(".body-join-check");
 const main_form = document.querySelector(".body-join-form");
 
 const nameForValidation = document.querySelector("#nameForValidation");
@@ -34,13 +35,12 @@ function examineIdNumber(e) {
     return;
   }
   if (!isIdNum(idNumValue)) {
-    alert(
-      "주민번호 형식에 맞지 않는 입력값입니다.\n######-####### 형식으로 입력해주세요. 🤡"
-    );
+    alert("주민번호 형식에 맞지 않는 입력값입니다.\n######-####### 형식으로 입력해주세요. 🤡");
     return;
   }
   if (isAdult(idNumValue)) {
     alert("성인 인증에 성공했습니다 🪪");
+    adult_check_form.style.display = "none";
     main_form.style.display = "flex";
     return;
   } else {
@@ -68,10 +68,10 @@ function checkAddress(postalCode, addressLocation, detailedAddress) {
   return true;
 }
 
-async function insertFoundAddress(){
-  const {foundZoneCode, foundAddress} = await findAddress();
-  addressPostalCode.value = foundZoneCode
-  addressLocation.value = foundAddress
+async function insertFoundAddress() {
+  const { foundZoneCode, foundAddress } = await findAddress();
+  addressPostalCode.value = foundZoneCode;
+  addressLocation.value = foundAddress;
 }
 
 function checkPhoneNumber(phoneNumber) {
