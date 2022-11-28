@@ -42,7 +42,22 @@
 html {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial,
     sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  scroll-behavior: smooth;
 }
+
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+button{
+  all:unset;
+}
+
+
 
 /* button */
 
