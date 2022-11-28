@@ -2,7 +2,7 @@ import * as api from "../api.js";
 import { getCookieValue } from "../utils/cookie.js";
 import { Keys } from "../constants/Keys.js";
 import { ApiUrl } from "../constants/ApiUrl.js";
-import { isName } from "../utils/validator.js";
+import { isName, isNum } from "../utils/validator.js";
 import { findAddress } from "../utils/findAddress.js";
 
 const $ = (selector) => document.querySelector(selector);
@@ -10,7 +10,7 @@ const selectId = (selector) => document.getElementById(selector);
 
 const loginTOKEN = getCookieValue(Keys.TOKEN_KEY);
 
-if (loginTOKEN !== undefined) {
+if (loginTOKEN !== undefined && loginTOKEN !== "") {
   createUserPageContainer();
   createPasswordInputContainer();
 
@@ -18,7 +18,7 @@ if (loginTOKEN !== undefined) {
   $(".password-check-btn").addEventListener("click", checkUserPassword);
 }
 
-if (loginTOKEN == undefined) {
+if (loginTOKEN == undefined || loginTOKEN == "") {
   let page = undefined;
   page = document.createElement("div");
   page.setAttribute("class", "none-user-page-container");
@@ -27,7 +27,7 @@ if (loginTOKEN == undefined) {
   <p>비회원일 경우, 주문시의 주문번호로 주문조회가 가능합니다.</p>
   <input type="text" class="order-user-name" placeholder="이름을 입력하세요"/>
   <input type="text" class="order-id" placeholder="주문번호를 입력하세요"/>
-  <button class="check-order-btn">주문 조회하기</button>
+  <button class="check-order-btn button-35-brown">주문 조회하기</button>
   <p>- 비회원 상품을 구매하신 경우에만 주문/배송 조회가 가능합니다.</p>
 </div>`;
   $(".body-container").append(page);
@@ -39,18 +39,18 @@ async function showOrderListPage() {
   const orderID = $(".order-id").value;
 
   if (!isName($(".order-user-name").value)) {
-    alert("이름을 입력해주세요");
+    alert("이름을 입력해주세요 📛");
     return;
   }
   if ($(".order-id").value == "") {
-    alert("주문번호를 입력해주세요");
+    alert("주문번호를 입력해주세요 📛");
     return;
   }
 
   try {
     await api.get(ApiUrl.ORDERS, orderID);
   } catch {
-    alert("일치하는 주문번호가 없습니다.");
+    alert("일치하는 주문번호가 없습니다 😔");
   }
 
   const orderData = await api.get(ApiUrl.ORDERS, orderID);
@@ -71,16 +71,23 @@ async function showOrderListPage() {
   getTotalPrice(orderData);
 
   $(".find-address-btn").addEventListener("click", insertFoundAddress);
-  $(".change-btn").addEventListener("click", clickChangeButton);
-  $(".input-btn").addEventListener("click", setNewInformation);
-  $(".cancel-btn").addEventListener("click", cancelOrder);
+  $(".info-change-btn").addEventListener("click", clickChangeButton);
+  $(".change-btn").addEventListener("click", setNewInformation);
+  $(".cancel-btn").addEventListener("click", cancelChangeInformation);
+  $(".cancel-order-btn").addEventListener("click", cancelOrder);
   $(".detail-info-btn").addEventListener("click", showDetailInformationPage);
 
   function showDetailInformationPage() {
-    $(".address-container").style.display = "flex";
-    $(".payment-information-container").style.display = "flex";
-    if (orderData.status == "상품준비중") {
-      $(".button-container").style.display = "flex";
+    if (($(".address-container").style.display = "none")) {
+      $(".address-container").style.display = "flex";
+      $(".payment-information-container").style.display = "flex";
+      if (orderData.status == "상품준비중") {
+        $(".button-container").style.display = "flex";
+      }
+    } else if (($(".address-container").style.display = "flex")) {
+      $(".address-container").style.display = "none";
+      $(".payment-information-container").style.display = "none";
+      $(".button-container").style.display = "none";
     }
   }
 
@@ -89,20 +96,24 @@ async function showOrderListPage() {
   }
 
   async function setNewInformation() {
-    if ($(".name-input").value.length < 2) {
-      alert("이름을 다시 확인해주세요");
+    if (!isName($(".name-input").value)) {
+      alert("이름을 다시 확인해주세요 📛");
       return;
     }
     if ($(".phoneNumber-input").value.length < 11) {
-      alert("전화번호를 다시 확인해주세요");
+      alert("휴대폰 번호를 다시 확인해주세요 📱");
+      return;
+    } else if (!isNum($(".phoneNumber-input").value)) {
+      alert("숫자만 입력 가능합니다 🔢");
       return;
     }
+
     if (
       $(".postalCode-input").value == "" ||
       $(".address1-input").value == "" ||
       $(".address2-input").value == ""
     ) {
-      alert("주소를 다시 확인해주세요");
+      alert("주소를 기입해주세요 🏠");
       return;
     }
 
@@ -118,7 +129,7 @@ async function showOrderListPage() {
 
     try {
       await api.patch(ApiUrl.ORDERS, orderID, changeInfo);
-      alert("정보가 성공적으로 수정되었습니다🎉");
+      alert("정보가 성공적으로 수정되었습니다 🎉");
       $(".user-name").innerHTML = $(".name-input").value;
       $(".user-phoneNumber").innerHTML = $(".phoneNumber-input").value;
       $(".user-postalCode").innerHTML = $(".postalCode-input").value;
@@ -130,11 +141,17 @@ async function showOrderListPage() {
     }
   }
 
+  function cancelChangeInformation() {
+    $(".user-change-container").style.display = "none";
+  }
+
   async function cancelOrder() {
     try {
-      await api.delete("/api/orders", orderID);
-      alert("주문이 취소되었습니다🎉");
-      location.reload();
+      if (confirm("정말 취소하시겠습니까?")) {
+        await api.delete("/api/orders", orderID);
+        alert("주문이 취소되었습니다 😔");
+        location.reload();
+      }
     } catch (e) {
       alert(e.message);
     }
@@ -194,11 +211,11 @@ function createUserPageContainer() {
   page.innerHTML = `<div class="body-section-container">
     <div class="user-information-container">
       <span>내 정보</span>
-      <button class="user-profile-btn">계정 정보 확인</button>
+      <button class="user-profile-btn button-35-brown">계정 정보 확인</button>
     </div>
     <div class="user-order-information-container">
       <span>쇼핑 정보</span>
-      <a href="/order-list"> 주문내역 </a>
+      <a href="/order-list" class="button-35-brown"> 주문내역 </a>
     </div>
   </div>`;
   $(".body-container").append(page);
@@ -211,7 +228,7 @@ function createPasswordInputContainer() {
   page.innerHTML = `
   <span>비밀번호 확인이 필요합니다</span>
   <input class="password-input" type="password" placeholder="비밀번호"/>
-  <button class="password-check-btn">확인</button>
+  <button class="password-check-btn button-35-brown">확인</button>
   `;
   $(".body-container").append(page);
 }
@@ -222,8 +239,8 @@ function createOrderDateContainer(item) {
   page.setAttribute("class", "order-list-container");
   page.innerHTML = `<div class="order-status">
   <div class="order-date">
-    <span class="orderDate">${item.createdAt.substr(0, 10)}</span>
-    <span class="order-id">주문번호: ${item._id}</span>
+    <span class="orderDate">주문날짜 <strong>${item.createdAt.substr(0, 10)}</strong></span>
+    <span class="order-id">주문번호 <strong>${item._id}</strong></span>
   </div>
   <span id="order-status">${item.status}</span>
 </div>`;
@@ -234,12 +251,13 @@ function createProductListContainer(item) {
   let page = undefined;
   page = document.createElement("section");
   page.setAttribute("class", "order-lists");
+  page.setAttribute("onclick", `window.location.href='/product-detail/?id=${item._id}'`);
   page.innerHTML = `<div class="single-product-container">
-    <img src="../img/ricewine_icon.png" alt="" />
+    <img src=../img/ricewine_icon.png} alt="" />
     <div class="single-product-detail">
-      <span>${item.name}</span>
-      <span>${item.price.toLocaleString("ko-KR")}원</span>
-      <span>${item.quantity}개</span>
+      <span class="single-product-name">${item.name}</span>
+      <span class="single-product-price">${item.price.toLocaleString("ko-KR")}원</span>
+      <span class="single-product-quantity">${item.quantity}개</span>
     </div>
   </div>`;
   $(".order-list-container").append(page);
@@ -323,18 +341,18 @@ function createChangeDeliveryInformationContainer() {
     <input
       type="text"
       class="name-input"
-      required
       placeholder="이름"
       autocomplete="on"
+      required
     />
   </div>
   <div class="phoneNumber-input-container">
     <span>전화번호</span>
     <input
       class="phoneNumber-input"
-      required
       placeholder="-을 빼고 입력해주세요"
       autocomplete="on"
+      required
     />
   </div>
   <div class="address-input-container">
@@ -343,28 +361,31 @@ function createChangeDeliveryInformationContainer() {
       <input
         type="text"
         class="postalCode-input"
-        required
         placeholder="우편번호"
         autocomplete="on"
+        required
       />
       <input
         type="text"
         class="address1-input"
-        required
-        placeholder="oo시 ㅇㅇ구 ㅇㅇ동"
+        placeholder="주소"
         autocomplete="on"
+        required
       />
       <input
         type="text"
         class="address2-input"
-        required
-        placeholder="나머지 주소 입력"
+        placeholder="상세주소"
         autocomplete="on"
+        required
       />
     </div>
-    <button class="find-address-btn">찾기</button>
+    <button class="find-address-btn button-38">찾기</button>
   </div>
-  <button class="input-btn">수정</button>
+  <div class="address-btn-container">
+    <button class="change-btn button-38">변경</button>
+    <button class="cancel-btn button-38">취소</button>
+  </div>
 </div>`;
   $(".order-list-container").append(page);
 }
@@ -373,7 +394,7 @@ function createButtonContainer() {
   let page = undefined;
   page = document.createElement("div");
   page.setAttribute("class", "button-container");
-  page.innerHTML = `<button class="change-btn">정보 수정하기</button>
-  <button class="cancel-btn">주문 취소하기</button>`;
+  page.innerHTML = `<button class="info-change-btn button-38">정보 수정하기</button>
+  <button class="cancel-order-btn button-38">주문 취소하기</button>`;
   $(".order-list-container").append(page);
 }
