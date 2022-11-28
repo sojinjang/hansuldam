@@ -181,6 +181,7 @@ input[type="checkbox"] {
   border: 1px solid rgb(224, 224, 224);
   font-size: 11.43px;
   border-radius: 10%;
+  cursor: pointer;
 }
 
 .decrease button,
