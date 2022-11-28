@@ -3,6 +3,7 @@
   --brown-200: #ffe8c8;
   --brown-300: #cbb69749;
   --brown-400: #cbb69786;
+  --brown-450: #cbb697ba;
   --brown-500: #cbb697;
   --brown-600-hover: #9a8669;
   --brown-700: rgb(91, 58, 28);
@@ -78,8 +79,8 @@ white-brown */
 
 .button-56-brown {
   align-items: center;
-  background-color: var(--brown-400);
-  border: 2px solid var(--brown-400);
+  background-color: var(--brown-450);
+  border: 2px solid var(--brown-300);
   border-radius: 8px;
   box-sizing: border-box;
   color: #111;
