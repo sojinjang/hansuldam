@@ -4,13 +4,10 @@ body {
 }
 
 .body-container {
-  padding: 20px 68.6px;
-}
-
-.body-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   margin-top: 50px;
 }
 
@@ -68,8 +65,7 @@ body {
   display: none;
   flex-direction: column;
   justify-content: center;
-  margin-left: 22.5%;
-  width: 500px;
+  width: 400px;
 }
 
 .password-container span {
