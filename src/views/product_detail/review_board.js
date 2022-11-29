@@ -68,7 +68,7 @@ function createReviewContent(reviewElements, review, imgDirectory) {
   );
 }
 
-function createModificationDeletionButton(reviewElements, isWriter, review) {
+function createReviewChangeSection(reviewElements, isWriter, review) {
   if (isWriter)
     return (
       reviewElements +
@@ -101,7 +101,7 @@ function showReview(review) {
                 <div class="single-review-title-content">${reviewTitle}</div>
   `;
   reviewElements = createReviewContent(reviewElements, review, imgDirectory);
-  reviewElements = createModificationDeletionButton(reviewElements, isWriter, review);
+  reviewElements = createReviewChangeSection(reviewElements, isWriter, review);
   reviewContainer.innerHTML = reviewElements;
   reviewListContainer.prepend(reviewContainer);
 }
