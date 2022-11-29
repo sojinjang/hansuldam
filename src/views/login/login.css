@@ -18,7 +18,9 @@
   box-sizing: border-box;
   flex-direction: column;
   justify-content: center;
-  width: 500px;
+  padding: 50px 120px;
+  background-color: var(--brown-300);
+  border-radius: 10px;
 }
 
 .body-login-form p {
