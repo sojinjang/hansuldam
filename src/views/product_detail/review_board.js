@@ -77,7 +77,7 @@ function createModificationDeletionButton(reviewElements, isWriter, reviewId) {
               </div>
             </div>    
             <div style="display:none" class="review-modification-container">
-              <textarea class="review-rewrite-input" placeholder="최소 10자 이상 작성해주세요."></textarea>
+              <textarea class="review-rewrite-input" placeholder="최소 7자 이상 작성해주세요."></textarea>
               <div class="writer-button-container">
                 <div id="${reviewId}" class="complete-modification writer-button">수정완료</div>
                 <div class="cancel-modification writer-button">취소</div>
