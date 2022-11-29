@@ -80,13 +80,45 @@
 
 .single-review-detail-container .review-content-detail {
   margin: 10px;
-  white-space: pre;
   cursor: pointer;
+  white-space: pre-line;
+  word-break: break-all;
 }
 
 .single-review-detail-container .review-img {
   margin: 10px;
   height: 350px;
+}
+
+.review-modification-container {
+  flex-direction: column;
+  margin-top: var(--font-xl);
+  border-bottom: 1px solid;
+}
+
+.review-modification-container .review-rewrite-input {
+  width: 80%;
+  height: 70px;
+  border: 1px solid var(--black-100);
+  border-radius: 5px;
+  background-color: var(--white-100);
+  padding: 4px 4px 4px 4px;
+}
+
+.writer-button-container {
+  margin-left: auto;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.writer-button-container .writer-button {
+  margin-right: var(--font-xs);
+  cursor: pointer;
+  transition: all 0.4s linear;
+}
+
+.writer-button-container .writer-button:hover {
+  font-weight: 600;
 }
 
 /* modal */

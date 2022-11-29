@@ -103,7 +103,7 @@ async function uploadImage(commentId) {
 
 async function submitReview() {
   const comment = document.querySelector(".review-input").value;
-  if (!isValidComment(comment)) return alert("최소 10자 이상 작성해주세요. ✍️");
+  if (!isValidComment(comment)) return alert("최소 7자 이상 작성해주세요. ✍️");
   const commentObj = makeCommentObj(comment);
   try {
     const response = await api.post(ApiUrl.AUTH_COMMENTS, commentObj);

@@ -1,6 +1,9 @@
 import * as api from "../api.js";
-import { ApiUrl } from "../constants/ApiUrl.js";
+import { getCookieValue } from "../utils/cookie.js";
 import { changeToKoreanTime } from "../utils/useful_functions.js";
+import { isValidComment } from "../utils/validator.js";
+import { ApiUrl } from "../constants/ApiUrl.js";
+import { Keys } from "../constants/Keys.js";
 
 const emptyReview = document.querySelector(".empty-review");
 const reviewListContainer = document.querySelector(".review-list-container");
@@ -9,6 +12,7 @@ const queryString = new Proxy(new URLSearchParams(window.location.search), {
   get: (params, prop) => params.get(prop),
 });
 const productId = queryString.id;
+const userId = getCookieValue(Keys.USER_ID_KEY);
 
 async function getReviewList() {
   try {
@@ -32,17 +36,11 @@ function refineTitleAndDirectory(review) {
   return { reviewTitle, imgDirectory };
 }
 
-function showReview(review) {
-  const { reviewTitle, imgDirectory } = refineTitleAndDirectory(review);
-  const reviewContainer = document.createElement("div");
-  reviewContainer.setAttribute("class", "single-review-container");
-  reviewContainer.setAttribute("id", review._id);
-  let reviewElements = `
-              <div style='display:flex' class="single-review-title-container">
-                <div class="single-review-title-content">${reviewTitle}</div>
-  `;
-  if (imgDirectory) {
-    reviewElements += `
+function createReviewContent(reviewElements, review, imgDirectory) {
+  if (imgDirectory)
+    return (
+      reviewElements +
+      `
                 <div class="image-icon"><img src="../img/image-icon.png"></div>
                 <div class="single-review-title-username">${review.userId.fullName}</div>
             </div>
@@ -53,23 +51,59 @@ function showReview(review) {
               </div>
               <div class="review-content-detail">${review.content}</div>
               <div ><img class="review-img" src=${imgDirectory}></div>
-            </div>
-    `;
-  } else {
-    reviewElements += `
+              `
+    );
+  return (
+    reviewElements +
+    `
                 <div class="single-review-title-username">${review.userId.fullName}</div>
             </div>
-            <div style='display:none' class="single-review-detail-container">
+            <div style="display:none" class="single-review-detail-container">
               <div class="review-info">
                 <div class="review-date">${changeToKoreanTime(review.createdAt)}</div>
                 <div class="review-username">${review.userId.fullName}</div>
               </div>
               <div class="review-content-detail">${review.content}</div>
+    `
+  );
+}
+
+function createReviewChangeSection(reviewElements, isWriter, review) {
+  if (isWriter)
+    return (
+      reviewElements +
+      `       <div class="writer-button-container">
+                <div class="review-modification writer-button">수정</div>
+                <div id="${review._id}" class="review-deletion writer-button">삭제</div>
+              </div>
+            </div>    
+            <div style="display:none" class="review-modification-container">
+              <textarea class="review-rewrite-input" placeholder="최소 7자 이상 작성해주세요.">${review.content}</textarea>
+              <div class="writer-button-container">
+                <div id="${review._id}" class="complete-modification writer-button">수정완료</div>
+                <div class="cancel-modification writer-button">취소</div>
+              </div>
             </div>
-    `;
-  }
+          </div>
+    `
+    );
+  return reviewElements + `<div>`;
+}
+
+function showReview(review) {
+  const isWriter = userId === review.userId._id;
+  const { reviewTitle, imgDirectory } = refineTitleAndDirectory(review);
+  const reviewContainer = document.createElement("div");
+  reviewContainer.setAttribute("class", "single-review-container");
+  reviewContainer.setAttribute("id", review._id);
+  let reviewElements = `
+              <div style='display:flex' class="single-review-title-container">
+                <div class="single-review-title-content">${reviewTitle}</div>
+  `;
+  reviewElements = createReviewContent(reviewElements, review, imgDirectory);
+  reviewElements = createReviewChangeSection(reviewElements, isWriter, review);
   reviewContainer.innerHTML = reviewElements;
-  reviewListContainer.append(reviewContainer);
+  reviewListContainer.prepend(reviewContainer);
 }
 
 async function createReviewList() {
@@ -84,6 +118,8 @@ async function createReviewList() {
 function showReviewDetail(e) {
   const titleSection = e.target.parentElement;
   const detailSection = e.target.parentElement.nextElementSibling;
+  const modifyReviewSection = e.target.parentElement.nextElementSibling.nextElementSibling;
+  if (modifyReviewSection && modifyReviewSection.style.display === "flex") return;
   titleSection.style.display = "none";
   detailSection.style.display = "flex";
 }
@@ -95,6 +131,47 @@ function hideReviewDetail(e) {
   titleSection.style.display = "flex";
 }
 
+function showModifyReviewWindow(e) {
+  const detailSection = e.target.parentElement.parentElement;
+  const titleSection = e.target.parentElement.parentElement.previousElementSibling;
+  const modifyReviewSection = e.target.parentElement.parentElement.nextElementSibling;
+  detailSection.style.display = "none";
+  titleSection.style.display = "flex";
+  modifyReviewSection.style.display = "flex";
+}
+
+function hideModifyReviewWindow(e) {
+  const modifyReviewSection = e.target.parentElement.parentElement;
+  const titleSection =
+    e.target.parentElement.parentElement.previousElementSibling.previousElementSibling;
+  const detailSection = e.target.parentElement.parentElement.previousElementSibling;
+  modifyReviewSection.style.display = "none";
+  titleSection.style.display = "none";
+  detailSection.style.display = "flex";
+}
+
+async function deleteReview(e) {
+  try {
+    if (confirm("리뷰를 정말 삭제하시겠습니까? 😥")) {
+      await api.delete(ApiUrl.AUTH_COMMENTS, e.target.id);
+      location.reload();
+    }
+  } catch (err) {
+    alert(err.message);
+  }
+}
+
+async function modifyReviewComment(e) {
+  const comment = document.querySelector(".review-rewrite-input").value;
+  if (!isValidComment(comment)) return alert("최소 7자 이상 작성해주세요. ✍️");
+  try {
+    await api.patch(ApiUrl.AUTH_COMMENTS, e.target.id, { content: comment });
+    location.reload();
+  } catch (err) {
+    alert(err.message);
+  }
+}
+
 async function renderReviewData() {
   await createReviewList();
 
@@ -102,12 +179,28 @@ async function renderReviewData() {
     ".single-review-title-content"
   );
   const singleReviewContentDetailArr = document.querySelectorAll(".review-content-detail");
+  const reviewModificationButtonArr = document.querySelectorAll(".review-modification");
+  const reviewDeletionButtonArr = document.querySelectorAll(".review-deletion");
+  const modificationCancelButtonArr = document.querySelectorAll(".cancel-modification");
+  const modificationCompleteButtonArr = document.querySelectorAll(".complete-modification");
 
   singleReviewTitleContentArr.forEach((titleElem) => {
     titleElem.addEventListener("click", showReviewDetail);
   });
   singleReviewContentDetailArr.forEach((detailElem) => {
     detailElem.addEventListener("click", hideReviewDetail);
+  });
+  reviewModificationButtonArr.forEach((modificationButton) => {
+    modificationButton.addEventListener("click", showModifyReviewWindow);
+  });
+  reviewDeletionButtonArr.forEach((deletionButton) => {
+    deletionButton.addEventListener("click", deleteReview);
+  });
+  modificationCancelButtonArr.forEach((cancelButton) => {
+    cancelButton.addEventListener("click", hideModifyReviewWindow);
+  });
+  modificationCompleteButtonArr.forEach((modificationCompleteButton) => {
+    modificationCompleteButton.addEventListener("click", modifyReviewComment);
   });
 }
 
