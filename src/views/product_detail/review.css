@@ -98,6 +98,10 @@
 .review-modification-container .review-rewrite-input {
   width: 80%;
   height: 70px;
+  border: 1px solid var(--black-100);
+  border-radius: 5px;
+  background-color: var(--white-100);
+  padding: 4px 4px 4px 4px;
 }
 
 .writer-button-container {
