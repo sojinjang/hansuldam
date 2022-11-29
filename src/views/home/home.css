@@ -137,6 +137,7 @@
 .more {
   font-size: 1rem;
   color: gray;
+  margin-right: 15px;
 }
 
 .slider-container {
@@ -228,6 +229,7 @@
 
   .more {
     font-size: 0.875rem;
+    margin-right: 10px;
   }
 
   .container-slider-header .slider-header-title .main-title {
@@ -272,6 +274,7 @@
   }
   .more {
     font-size: 0.75rem;
+    margin-right: 5px;
   }
   .container-slider-header .slider-header-title .main-title {
     font-size: 16px;
@@ -298,5 +301,6 @@
   }
   .more {
     font-size: 0.7rem;
+    margin-right: 0px;
   }
 }

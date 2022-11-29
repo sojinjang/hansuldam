@@ -134,6 +134,58 @@ white-brown */
     padding: 0 40px;
   }
 }
+@media (max-width: 768px) {
+  .button-56-brown {
+    font-size: 16px;
+    height: 44px;
+    line-height: 22px;
+    padding: 0 35px;
+    margin-top: 3px;
+  }
+  
+  .button-56-brown:after {
+    height: 44px;
+  }
+}
+@media (max-width: 700px) {
+  .button-56-brown {
+    font-size: 14px;
+    height: 40px;
+    line-height: 20px;
+    padding: 0 30px;
+    margin-top: 5px;
+  }
+  
+  .button-56-brown:after {
+    height: 40px;
+  }
+}
+@media (max-width: 620px) {
+  .button-56-brown {
+    font-size: 14px;
+    height: 36px;
+    line-height: 18px;
+    padding: 0 23px;
+    margin-top: 10px;
+  }
+  
+  .button-56-brown:after {
+    height: 36px;
+  }
+}
+@media (max-width: 414px) {
+  .button-56-brown {
+    font-size: 12px;
+    height: 30px;
+    line-height: 14px;
+    padding: 0 18px;
+    margin-top: 13px;
+  }
+  
+  .button-56-brown:after {
+    height: 30px;
+  }
+}
 
 .button-56-white-gray {
   align-items: center;
