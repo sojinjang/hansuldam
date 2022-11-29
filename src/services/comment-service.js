@@ -30,7 +30,7 @@ class CommentService {
     const filterObj = { _id: commentId };
     const { userId } = await this.commentModel.findByObj(filterObj);
 
-    if (curUserId !== userId.toString()) {
+    if (curUserId !== userId._id.toString()) {
       throw new Unauthorized("userID mismatch", 4502);
     }
     const updatedComment = await this.commentModel.update(filterObj, updateObj);
@@ -40,10 +40,21 @@ class CommentService {
 
   async userDeleteComment(curUserId, commentId) {
     const filterObj = { _id: commentId };
-    const { userId } = await this.commentModel.findByObj(filterObj);
+    const { userId, image } = await this.commentModel.findByObj(filterObj);
 
-    if (curUserId !== userId.toString()) {
+    if (curUserId !== userId._id.toString()) {
       throw new Unauthorized("userID mismatch", 4502);
+    }
+
+    if (image) {
+      if (fs.existsSync(image)) {
+        // 파일이 존재한다면 true 그렇지 않은 경우 false 반환
+        try {
+          fs.unlinkSync(image);
+        } catch (error) {
+          throw new BadRequest("Fail Delete Image", 4007);
+        }
+      }
     }
 
     const { deletedCount } = await this.commentModel.deleteById(commentId);
