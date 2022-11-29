@@ -1,15 +1,15 @@
 const sampleComment = [
   {
-    content: "와 이거 꿀맛입니다요",
+    content: "와 이거 꿀맛입니다요.",
   },
   {
-    content: "옴마마맘마 한병더",
+    content: "옴마마맘마 한병더...",
   },
   {
     content: "오늘 도착했는데 다 마시고 재주문이요",
   },
   {
-    content: "재주문이요!",
+    content: "재주문이요! 재주문이요!",
   },
   {
     content: "이거 종류별로 재입고 되나요?",
@@ -42,7 +42,7 @@ const sampleComment = [
     content: "선물용으로 딱이네요!",
   },
   {
-    content: "많이 파세요~",
+    content: "좋네요. 많이 파세요~",
   },
   {
     content: "아 진짜, 세잔 먹고 출근 못했습니다. 책임지세요",
@@ -51,16 +51,16 @@ const sampleComment = [
     content: "이거 사줘 할머니",
   },
   {
-    content: "이거 사줘 아들",
+    content: "이거 사줘 아들랑구",
   },
   {
-    content: "갑니다",
+    content: "갑니다, 어디로 갈까요?",
   },
   {
     content: "안녕히 계세요. 이거 마시고 다른 세계로 떠납니다.",
   },
   {
-    content: "숙취 없어요~",
+    content: "숙취 없어요~ 진짜로옹",
   },
   {
     content: "에엥? 달달하네요?",
