@@ -12,7 +12,7 @@ async function fetchProducts(index) {
 const paginationHtml = `<nav class="pagination-container" role="navigation" aria-label="pagination">
 <ul class="pagination-list">
   <li>
-    <a class="pagination-link is-current" aria-label="1" aria-current="page">1</a>
+    <a class="pagination-link button-35-brown button-35-white" aria-label="1" aria-current="page">1</a>
   </li>
 </ul>
 </nav>`;
@@ -32,7 +32,7 @@ async function refineData() {
   (function generatePagenationButton() {
     for (let i = 2; i <= totalPage; i++) {
       const pageButton = document.createElement("li");
-      pageButton.innerHTML = `<a class="pagination-link" aria-label="${i}" aria-current="page">${i}</a>`;
+      pageButton.innerHTML = `<a class="pagination-link button-35-white" aria-label="${i}" aria-current="page">${i}</a>`;
       $(".pagination-list").append(pageButton);
     }
   })();
@@ -94,10 +94,10 @@ async function showProducts() {
         const currentPage = e.target.getAttribute("aria-label");
 
         pageButton.forEach((button) => {
-          button.classList.remove("is-current");
+          button.classList.remove("button-35-brown");
           window.scrollTo(0, 0);
         });
-        e.target.classList.add("is-current");
+        e.target.classList.add("button-35-brown");
 
         currentPageData = productsArr[currentPage - 1];
 
