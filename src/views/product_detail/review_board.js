@@ -67,13 +67,13 @@ function createReviewContent(reviewElements, review, imgDirectory) {
   );
 }
 
-function createModificationDeletionButton(reviewElements, isWriter) {
+function createModificationDeletionButton(reviewElements, isWriter, reviewId) {
   if (isWriter)
     return (
       reviewElements +
       `       <div class="writer-button-container">
-                <div class="review-modification">수정</div>
-                <div class="review-deletion">삭제</div>
+                <div id="${reviewId}" class="review-modification">수정</div>
+                <div id="${reviewId}" class="review-deletion">삭제</div>
               </div>
             </div>    
     `
@@ -92,8 +92,7 @@ function showReview(review) {
                 <div class="single-review-title-content">${reviewTitle}</div>
   `;
   reviewElements = createReviewContent(reviewElements, review, imgDirectory);
-  reviewElements = createModificationDeletionButton(reviewElements, isWriter);
-
+  reviewElements = createModificationDeletionButton(reviewElements, isWriter, review._id);
   reviewContainer.innerHTML = reviewElements;
   reviewListContainer.append(reviewContainer);
 }
@@ -121,6 +120,19 @@ function hideReviewDetail(e) {
   titleSection.style.display = "flex";
 }
 
+function showModifyReviewWindow(e) {}
+
+async function deleteReview(e) {
+  try {
+    if (confirm("정말 삭제하시겠습니까?")) {
+      await api.delete(ApiUrl.AUTH_COMMENTS, e.target.id);
+      location.reload();
+    }
+  } catch (err) {
+    alert(err.message);
+  }
+}
+
 async function renderReviewData() {
   await createReviewList();
 
@@ -128,12 +140,20 @@ async function renderReviewData() {
     ".single-review-title-content"
   );
   const singleReviewContentDetailArr = document.querySelectorAll(".review-content-detail");
+  const reviewModificationButtonArr = document.querySelectorAll(".review-modification");
+  const reviewDeletionButtonArr = document.querySelectorAll(".review-deletion");
 
   singleReviewTitleContentArr.forEach((titleElem) => {
     titleElem.addEventListener("click", showReviewDetail);
   });
   singleReviewContentDetailArr.forEach((detailElem) => {
     detailElem.addEventListener("click", hideReviewDetail);
+  });
+  reviewModificationButtonArr.forEach((modificationButton) => {
+    modificationButton.addEventListener("click", showModifyReviewWindow);
+  });
+  reviewDeletionButtonArr.forEach((deletionButton) => {
+    deletionButton.addEventListener("click", deleteReview);
   });
 }
 
