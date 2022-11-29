@@ -81,12 +81,37 @@
   margin: 10px;
   cursor: pointer;
   white-space: pre-line;
-  word-break:break-all;
+  word-break: break-all;
 }
 
 .single-review-detail-container .review-img {
   margin: 10px;
   height: 350px;
+}
+
+.single-review-detail-container .writer-button-container {
+  margin-left: auto;
+  display: flex;
+}
+
+.writer-button-container .review-modification {
+  margin-right: var(--font-xs);
+  cursor: pointer;
+  transition: all 0.4s linear;
+}
+
+.writer-button-container .review-modification:hover {
+  font-weight: 600;
+}
+
+.writer-button-container .review-deletion {
+  margin-right: var(--font-xs);
+  cursor: pointer;
+  transition: all 0.4s linear;
+}
+
+.writer-button-container .review-deletion:hover {
+  font-weight: 600;
 }
 
 /* modal */
