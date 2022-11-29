@@ -3,6 +3,7 @@ import { changeToKoreanWon } from "../utils/useful_functions.js";
 import { Keys } from "../constants/Keys.js";
 import { getSavedItems, saveItems } from "../utils/localStorage.js";
 import { ApiUrl } from "../constants/ApiUrl.js";
+import { updateCartCount } from "../template/header/header.js";
 
 const $ = (selector) => document.querySelector(selector);
 
@@ -117,6 +118,8 @@ async function orderAndCart() {
 
       saveItems(Keys.CART_KEY, cartItems);
     }
+
+    updateCartCount();
 
     (function applyCartMessage() {
       const cartMessage = document.querySelector(".cart-message");
