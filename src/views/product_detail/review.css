@@ -89,6 +89,12 @@
   height: 350px;
 }
 
+.review-modification-container {
+  flex-direction: column;
+  margin-top: var(--font-xl);
+  border-bottom: 1px solid;
+}
+
 .review-modification-container .review-rewrite-input {
   width: 80%;
   height: 70px;
