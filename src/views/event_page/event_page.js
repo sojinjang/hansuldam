@@ -18,7 +18,7 @@ async function initFunc() {
 
       $(".events-container").style.marginBottom = "30px";
 
-      const productContainer = document.querySelectorAll(".product-container");
+      const productContainer = document.querySelectorAll(".product-container-wrapper");
       productContainer.forEach((container) => container.remove());
 
       const eventId = e.currentTarget.getAttribute("id");
