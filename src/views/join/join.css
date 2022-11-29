@@ -23,13 +23,22 @@ body {
 }
 
 .body-join-form section {
+  display: flex;
+  flex-direction: column;
   margin: 5px 0;
 }
 
 .body-join-form .join-form-hello p {
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   font-size: var(--font-xxxl);
   text-align: center;
+}
+
+.join-form-hello span {
+  font-size: 1rem;
+  text-align: center;
+  color: grey;
+  margin-bottom: 20px;
 }
 
 .body-join-form input {
