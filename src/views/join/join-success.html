@@ -1,170 +1,161 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>성인인증 완료창 - 한술담 🍶</title>
-        <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
-        />
-        <script
-            defer
-            src="https://kit.fontawesome.com/9daa42bcef.js"
-            crossorigin="anonymous"
-        ></script>
-        <script
-            src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
-        ></script>
-        <link rel="stylesheet" href="join-success.css" />
-        <link rel="stylesheet" href="../template/footer/footer.css" />
-        <link rel="stylesheet" href="../template/header/header.css" />
-        
-    </head>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>성인인증 완료창 - 한술담 🍶</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
+    <script
+      defer
+      src="https://kit.fontawesome.com/9daa42bcef.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <link rel="stylesheet" href="join-success.css" />
+    <link rel="stylesheet" href="../template/main_style.css" />
+    <link rel="stylesheet" href="../template/footer/footer.css" />
+    <link rel="stylesheet" href="../template/header/header.css" />
+  </head>
 
-    <body>
-        <header>
-            <div class="header-container">
-                <section class="navigation-menu">
-                    <div class="company-logo-wrapper">
-                    <img class="company-logo" src="../img/logo.png">
-                    </div>
-                </section>
-        
-                <section class="user-menu">
-                    <div class="user-img">
-                    <a href=""><img></a>
-                    </div>
-                </section>
+  <body>
+    <main class="body-container">
+      <div class="body-section-container">
+        <form class="body-join-check">
+          <label for=""
+            >📢 주류 통신판매에 관한 명령위임고시에 따라 성인인증이 필요합니다.</label
+          >
+          <div>
+            <input
+              class="input"
+              id="nameForValidation"
+              type="text"
+              name="username"
+              minlength="2"
+              maxlength="20"
+              required
+              placeholder="이름"
+              autocomplete="on"
+            />
+            <input
+              class="input"
+              id="idNum"
+              type="text"
+              required
+              placeholder="주민등록번호: ******-*******"
+              autocomplete="on"
+            />
+          </div>
+          <input type="submit" value="인증하기" class="adultCheckButton" />
+        </form>
+        <form class="body-join-form" onsubmit="return false;">
+          <section class="join-form-hello">
+            <p>추가 정보를 입력해주세요</p>
+          </section>
+          <section class="join-form-input">
+            <label for="name">이름</label>
+            <div>
+              <input
+                class="input"
+                id="name"
+                type="text"
+                required
+                placeholder="이름을 입력하세요"
+                autocomplete="on"
+              />
             </div>
-        </header>
-
-        <main class="body-container">
-            <div class="body-section-container">
-                <form class="body-join-check">
-                    <label for="">📢 주류 통신판매에 관한 명령위임고시에 따라 성인인증이 필요합니다.</label>
-                    <div>
-                        <input
-                            class="input"
-                            id="nameForValidation"
-                            type="text"
-                            name ="username"
-                            minlength="2" 
-                            maxlength="20"
-                            required
-                            placeholder="이름"
-                            autocomplete="on">
-                        <input
-                            class="input"
-                            id="idNum"
-                            type="text"
-                            required
-                            placeholder="주민등록번호: ******-*******"
-                            autocomplete="on">
-                    </div>
-                    <input type="submit" value="인증하기" class="adultCheckButton">
-                </form>
-                <form class="body-join-form" onsubmit="return false;">
-                    <section class="join-form-hello">
-                        <p>추가 정보를 입력해주세요.</p>
-                    </section>
-                    <section class="join-form-input">
-                        <label for="name">이름</label>
-                        <div>
-                            <input 
-                                class="input"
-                                id="name"
-                                type="text"
-                                required
-                                placeholder="나의 이름은?"
-                                autocomplete="on">
-                        </div>
-                    </section>
-                    <section class="join-form-input">
-                        <label for="emailInput">이메일</label>
-                        <div>
-                            <input 
-                                class="input"
-                                id="email"
-                                type="text"
-                                required
-                                placeholder="email@thanks.com"
-                                autocomplete="on">
-                        </div>
-                    </section>
-                    <section class="join-form-input">
-                        <label for="passwordInput">비밀번호</label>
-                        <div>
-                            <input 
-                                class="input"
-                                id="passwordInput"
-                                type="password"
-                                required
-                                placeholder="********"
-                                minlength="4"
-                                autocomplete="on">
-                        </div>
-                    </section>
-                    <section class="join-form-input">
-                        <label for="passwordInput">비밀번호 확인</label>
-                        <div>
-                            <input 
-                                class="input"
-                                id="passwordCheck"
-                                type="password"
-                                required
-                                placeholder="********"
-                                autocomplete="on">
-                        </div>
-                    </section>
-                    <section class="join-form-input">
-                        <label for="addressInput">주소</label>
-                        <div>
-                        <button class="find-address-button" type="submit">
-                            주소 찾기
-                        </button>
-                            <input 
-                                class="input"
-                                id="addressPostalCode"
-                                type="text"
-                                required
-                                placeholder="우편번호"
-                                readonly>
-                            <input 
-                                class="input"
-                                id="addressLocation"
-                                type="text"
-                                required
-                                placeholder="주소"
-                                readonly>
-                            <input 
-                                class="input"
-                                id="addressDetail"
-                                type="text"
-                                required
-                                placeholder="상세주소"
-                                autocomplete="on">
-                        </div>
-                    </section>
-                    <section class="join-form-input">
-                        <label for="phoneNumberInput">휴대폰 번호</label>
-                        <div>
-                            <input 
-                                class="input"
-                                id="phoneNumber"
-                                type="tel"
-                                required
-                                placeholder="01xxxxxxxxx"
-                                autocomplete="on">
-                        </div>
-                    </section>
-                    <button class="join-form-button" type="submit">
-                        가입 완료하기
-                    </button>
-                </form>
+          </section>
+          <section class="join-form-input">
+            <label for="emailInput">이메일</label>
+            <div>
+              <input
+                class="input"
+                id="email"
+                type="text"
+                required
+                placeholder="이메일을 입력하세요"
+                autocomplete="on"
+              />
             </div>
-        </main>
-        <script src="join-success.js" type="module"></script>
-        <script src="../template/getHeaderFooter.js" type="module" defer></script>
-    </body>
+          </section>
+          <section class="join-form-input">
+            <label for="passwordInput">비밀번호</label>
+            <div>
+              <input
+                class="input"
+                id="passwordInput"
+                type="password"
+                required
+                placeholder="********"
+                minlength="4"
+                autocomplete="on"
+              />
+            </div>
+          </section>
+          <section class="join-form-input">
+            <label for="passwordInput">비밀번호 확인</label>
+            <div>
+              <input
+                class="input"
+                id="passwordCheck"
+                type="password"
+                required
+                placeholder="********"
+                autocomplete="on"
+              />
+            </div>
+          </section>
+          <section class="join-form-input">
+            <label for="addressInput">주소</label>
+            <div>
+              <div class="postalcode-wrapper">
+                <input
+                  class="input"
+                  id="addressPostalCode"
+                  type="text"
+                  required
+                  placeholder="우편번호"
+                  readonly
+                />
+                <button class="find-address-button simple-button" type="submit">
+                  주소 찾기
+                </button>
+              </div>
+              <input
+                class="input"
+                id="addressLocation"
+                type="text"
+                required
+                placeholder="주소"
+                readonly
+              />
+              <input
+                class="input"
+                id="addressDetail"
+                type="text"
+                required
+                placeholder="상세주소"
+                autocomplete="on"
+              />
+            </div>
+          </section>
+          <section class="join-form-input">
+            <label for="phoneNumberInput">휴대폰 번호</label>
+            <div>
+              <input
+                class="input"
+                id="phoneNumber"
+                type="tel"
+                required
+                placeholder="01xxxxxxxxx"
+                autocomplete="on"
+              />
+            </div>
+          </section>
+          <button class="join-form-button button-35-brown" type="submit">회원가입</button>
+        </form>
+      </div>
+    </main>
+    <script src="join-success.js" type="module"></script>
+    <script src="../template/getHeaderFooter.js" type="module" defer></script>
+  </body>
 </html>

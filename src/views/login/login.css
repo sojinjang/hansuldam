@@ -18,7 +18,9 @@
   box-sizing: border-box;
   flex-direction: column;
   justify-content: center;
-  width: 500px;
+  padding: 50px 120px;
+  background-color: var(--brown-300);
+  border-radius: 10px;
 }
 
 .body-login-form p {
@@ -40,6 +42,16 @@
   background-color: var(--white-100);
   padding: 4px 4px 4px 40px;
   margin: 3px 0;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px var(--white-100) inset;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 #emailInput {
