@@ -68,19 +68,19 @@ function createReviewContent(reviewElements, review, imgDirectory) {
   );
 }
 
-function createModificationDeletionButton(reviewElements, isWriter, reviewId) {
+function createModificationDeletionButton(reviewElements, isWriter, review) {
   if (isWriter)
     return (
       reviewElements +
       `       <div class="writer-button-container">
                 <div class="review-modification writer-button">수정</div>
-                <div id="${reviewId}" class="review-deletion writer-button">삭제</div>
+                <div id="${review._id}" class="review-deletion writer-button">삭제</div>
               </div>
             </div>    
             <div style="display:none" class="review-modification-container">
-              <textarea class="review-rewrite-input" placeholder="최소 7자 이상 작성해주세요."></textarea>
+              <textarea class="review-rewrite-input" placeholder="최소 7자 이상 작성해주세요.">${review.content}</textarea>
               <div class="writer-button-container">
-                <div id="${reviewId}" class="complete-modification writer-button">수정완료</div>
+                <div id="${review._id}" class="complete-modification writer-button">수정완료</div>
                 <div class="cancel-modification writer-button">취소</div>
               </div>
             </div>
@@ -101,7 +101,7 @@ function showReview(review) {
                 <div class="single-review-title-content">${reviewTitle}</div>
   `;
   reviewElements = createReviewContent(reviewElements, review, imgDirectory);
-  reviewElements = createModificationDeletionButton(reviewElements, isWriter, review._id);
+  reviewElements = createModificationDeletionButton(reviewElements, isWriter, review);
   reviewContainer.innerHTML = reviewElements;
   reviewListContainer.prepend(reviewContainer);
 }
