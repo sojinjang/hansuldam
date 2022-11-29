@@ -23,8 +23,8 @@ const productModalHTML = `<div class="modal">
         <input id="sales" class="input product-input" type="number" placeholder="판매량" />
         <input id="alcoholDegree" class="input product-input" type="number" placeholder="도수" />
         <div class="button-container">
-          <button class="button add-product-button">완료</button>
-          <button class="button close-modal-button">닫기</button>
+          <button class="button-35-brown button add-product-button">완료</button>
+          <button class="button-35-white button close-modal-button">닫기</button>
         </div>
       </div>
     </div>
@@ -101,6 +101,7 @@ function addProduct() {
     $(".add-product-modal").remove();
   }
   $(".admin-menu").insertAdjacentHTML("afterend", productModalHTML);
+  $('.modal').style.opacity = 1;
 
   $(".add-product-button").addEventListener("click", async () => {
     const productInput = [...document.querySelectorAll(".product-input")];
@@ -155,8 +156,8 @@ function uploadImageModal(uploadedProduct) {
       </span>
     </span>
     <div class="button-container">
-      <button class="button upload-image-button">업로드</button>
-      <button class="button close-modal-button">닫기</button>
+      <button class="button-35-brown button upload-image-button">업로드</button>
+      <button class="button-35-white button close-modal-button">닫기</button>
     </div>
   </label>
 </div>`;
@@ -294,6 +295,7 @@ function modifyProduct(currentData) {
 
   $(".admin-menu").insertAdjacentHTML("afterend", productModalHTML);
   const productsInput = [...document.querySelectorAll(".product-input")];
+  $('.modal').style.opacity = 1;
 
   productsInput.forEach((input) => {
     const fieldId = input.getAttribute("id");
