@@ -8,7 +8,6 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 50px;
 }
 
 .body-container .body-section-container {
@@ -88,6 +87,7 @@ body {
   display: flex;
   justify-content: center;
   margin-top: 40px;
+  width: 100%;
 }
 
 .none-user-page-container .none-user-page-input {
@@ -97,6 +97,8 @@ body {
   box-sizing: border-box;
   justify-content: space-around;
   padding: 10px 10px;
+  background-color: var(--brown-300);
+  border-radius: 10px;
 }
 
 .none-user-page-input span {
@@ -114,15 +116,16 @@ body {
 
 .none-user-page-input input {
   height: 50px;
-  font-size: 1.125rem;
-  padding-left: 10px;
-  margin-bottom: 10px;
-  border: none;
-  border-bottom: 1px solid grey;
+  font-size: var(--font-base);
+  border: 1px solid var(--black-100);
+  border-radius: 5px;
+  background-color: var(--white-100);
+  padding: 4px 4px 4px 4px;
+  margin: 3px 0;
 }
 
 .none-user-page-input button {
-  margin: 15px 0 10px 0;
+  margin: 20px 0 10px 0;
   font-size: 1.125rem;
 }
 
@@ -130,6 +133,7 @@ body {
   display: flex;
   flex-direction: column;
   max-width: 1024px;
+  width: 100%;
   border-radius: 15px;
   margin-bottom: 15px;
   background-color: #cbb69749;
@@ -156,8 +160,9 @@ body {
 }
 
 #order-status {
-  font-size: 1.5rem;
-  margin-bottom: 5px;
+  font-size: 1.25rem;
+  margin: 0 0 5px 3px;
+  font-weight: 500;
 }
 
 .order-list-container .single-product-container {
