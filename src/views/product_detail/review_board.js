@@ -151,7 +151,7 @@ function hideModifyReviewWindow(e) {
 
 async function deleteReview(e) {
   try {
-    if (confirm("정말 삭제하시겠습니까?")) {
+    if (confirm("리뷰를 정말 삭제하시겠습니까? 😥")) {
       await api.delete(ApiUrl.AUTH_COMMENTS, e.target.id);
       location.reload();
     }
