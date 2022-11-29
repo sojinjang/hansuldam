@@ -17,7 +17,9 @@ body {
   box-sizing: border-box;
   flex-direction: column;
   justify-content: center;
-  width: 400px;
+  padding: 50px 120px;
+  background-color: var(--brown-300);
+  border-radius: 10px;
 }
 
 .body-join-form section {
@@ -31,6 +33,7 @@ body {
 }
 
 .body-join-form input {
+  width: 400px;
   height: 50px;
   font-size: var(--font-base);
   border: 1px solid var(--black-100);
@@ -39,12 +42,22 @@ body {
   padding: 4px 4px 4px 4px;
 }
 
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px var(--white-100) inset;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
+}
+
 #emailInput {
   margin-bottom: 3px;
 }
 
 .body-join-form .join-form-button {
-  margin: 30px 0;
+  margin-top: 30px;
   font-size: 1.125rem;
   height: 40px;
   align-items: center;
