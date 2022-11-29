@@ -1,7 +1,8 @@
 import * as api from "../api.js";
 import { getCookieValue } from "../utils/cookie.js";
-import { ApiUrl } from "../constants/ApiUrl.js";
 import { changeToKoreanTime } from "../utils/useful_functions.js";
+import { isValidComment } from "../utils/validator.js";
+import { ApiUrl } from "../constants/ApiUrl.js";
 import { Keys } from "../constants/Keys.js";
 
 const emptyReview = document.querySelector(".empty-review");
@@ -162,6 +163,7 @@ async function deleteReview(e) {
 
 async function modifyReviewComment(e) {
   const comment = document.querySelector(".review-rewrite-input").value;
+  if (!isValidComment(comment)) return alert("최소 7자 이상 작성해주세요. ✍️");
   try {
     await api.patch(ApiUrl.AUTH_COMMENTS, e.target.id, { content: comment });
     location.reload();
