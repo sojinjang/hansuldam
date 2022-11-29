@@ -44,6 +44,16 @@
   margin: 3px 0;
 }
 
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px var(--white-100) inset;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
+}
+
 #emailInput {
   background-image: url(../img/login.png);
   background-size: 20px;
