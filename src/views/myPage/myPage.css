@@ -25,11 +25,11 @@ body {
   display: flex;
   flex-direction: column;
   margin-right: 50px;
-  width: 250px;
+  width: 200px;
 }
 
 .user-information-container span {
-  font-size: 25px;
+  font-size: 22px;
   text-align: center;
   border-bottom: 1px solid black;
   padding-bottom: 15px;
@@ -39,11 +39,11 @@ body {
 .body-section-container .user-order-information-container {
   display: flex;
   flex-direction: column;
-  width: 250px;
+  width: 200px;
 }
 
 .user-order-information-container span {
-  font-size: 25px;
+  font-size: 22px;
   text-align: center;
   border-bottom: 1px solid black;
   padding-bottom: 15px;
@@ -133,10 +133,11 @@ body {
 .none-user-page-container .order-list-container {
   display: flex;
   flex-direction: column;
+  max-width: 1024px;
   border-radius: 15px;
   margin-bottom: 15px;
   background-color: #cbb69749;
-  padding: 15px 15px;
+  padding: 18px;
 }
 
 .order-list-container .order-date {
@@ -159,7 +160,7 @@ body {
 }
 
 #order-status {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   margin-bottom: 5px;
 }
 
@@ -168,14 +169,16 @@ body {
   flex-direction: row;
   border-radius: 15px;
   background-color: rgba(255, 255, 255, 0.5);
-  padding: 10px 10px;
+  padding: 18px;
   margin-bottom: 10px;
   cursor: pointer;
 }
 
 .single-product-container img {
-  width: 100px;
-  height: 100px;
+  height: auto;
+  width: 86px;
+  min-width: 23px;
+  border-radius: 10px;
   margin-right: 20px;
 }
 
@@ -210,7 +213,7 @@ body {
   box-sizing: border-box;
   margin: 10px 0;
   border-radius: 15px;
-  padding: 15px 15px;
+  padding: 18px;
   background-color: rgba(255, 255, 255, 0.5);
 }
 
@@ -224,7 +227,7 @@ body {
 .address-container .address-info-text {
   color: rgb(91, 90, 90);
   width: 100px;
-  font-size: 1.125rem;
+  font-size: 1rem;
 }
 
 .address-container .address-info-wrapper {
@@ -234,7 +237,7 @@ body {
 }
 
 .address-info-wrapper span {
-  font-size: 1.125rem;
+  font-size: 1rem;
 }
 
 .address-info-wrapper div {
@@ -248,7 +251,7 @@ body {
   box-sizing: border-box;
   margin-bottom: 10px;
   border-radius: 15px;
-  padding: 15px 15px;
+  padding: 18px;
   background-color: rgba(255, 255, 255, 0.5);
 }
 
@@ -265,7 +268,7 @@ body {
 }
 
 .payment-wrapper span {
-  font-size: 1.125rem;
+  font-size: 1rem;
   margin: 5px 0;
 }
 
@@ -316,12 +319,12 @@ body {
 }
 
 .change-wrapper input {
-  border-style: none;
-  border-radius: 0;
-  border-style: none;
-  height: 25px;
-  font-size: 1rem;
-  padding-left: 5px;
+  font-size: var(--font-base);
+  border: 1px solid var(--black-100);
+  border-radius: 5px;
+  background-color: var(--white-100);
+  padding: 4px 4px 4px 4px;
+  margin: 3px 0;
 }
 
 .address-input-container {
