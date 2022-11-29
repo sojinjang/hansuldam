@@ -10,6 +10,7 @@
   align-items: center;
   margin-top: 40px;
   margin-bottom: 40px;
+  width: 400px;
 }
 
 .body-section-container .body-login-form {
@@ -64,7 +65,6 @@
 .body-login-form .login-form-button {
   padding: 0;
   height: 40px;
-  text-align: center;
   margin-bottom: 10px;
 }
 
@@ -128,13 +128,27 @@
 }
 
 .naver-button {
-  height: 30px;
-  border-radius: 15px;
+  height: 40px;
   display: inline-block;
   text-align: center;
   justify-content: center;
+  background: #03c75a;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+.naver-button a {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 400px;
+  color: white;
+  font-weight: 550;
 }
 
 .naver-button img {
-  height: 30px;
+  width: 40px;
+  height: 40px;
 }
