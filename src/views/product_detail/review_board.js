@@ -117,6 +117,8 @@ async function createReviewList() {
 function showReviewDetail(e) {
   const titleSection = e.target.parentElement;
   const detailSection = e.target.parentElement.nextElementSibling;
+  const modifyReviewSection = e.target.parentElement.nextElementSibling.nextElementSibling;
+  if (modifyReviewSection.style.display === "flex") return;
   titleSection.style.display = "none";
   detailSection.style.display = "flex";
 }
@@ -128,7 +130,24 @@ function hideReviewDetail(e) {
   titleSection.style.display = "flex";
 }
 
-function showModifyReviewWindow(e) {}
+function showModifyReviewWindow(e) {
+  const detailSection = e.target.parentElement.parentElement;
+  const titleSection = e.target.parentElement.parentElement.previousElementSibling;
+  const modifyReviewSection = e.target.parentElement.parentElement.nextElementSibling;
+  detailSection.style.display = "none";
+  titleSection.style.display = "flex";
+  modifyReviewSection.style.display = "flex";
+}
+
+function hideModifyReviewWindow(e) {
+  const modifyReviewSection = e.target.parentElement.parentElement;
+  const titleSection =
+    e.target.parentElement.parentElement.previousElementSibling.previousElementSibling;
+  const detailSection = e.target.parentElement.parentElement.previousElementSibling;
+  modifyReviewSection.style.display = "none";
+  titleSection.style.display = "none";
+  detailSection.style.display = "flex";
+}
 
 async function deleteReview(e) {
   try {
@@ -150,6 +169,7 @@ async function renderReviewData() {
   const singleReviewContentDetailArr = document.querySelectorAll(".review-content-detail");
   const reviewModificationButtonArr = document.querySelectorAll(".review-modification");
   const reviewDeletionButtonArr = document.querySelectorAll(".review-deletion");
+  const modificationCancelButtonArr = document.querySelectorAll(".cancel-modification");
 
   singleReviewTitleContentArr.forEach((titleElem) => {
     titleElem.addEventListener("click", showReviewDetail);
@@ -162,6 +182,9 @@ async function renderReviewData() {
   });
   reviewDeletionButtonArr.forEach((deletionButton) => {
     deletionButton.addEventListener("click", deleteReview);
+  });
+  modificationCancelButtonArr.forEach((cancelButton) => {
+    cancelButton.addEventListener("click", hideModifyReviewWindow);
   });
 }
 
