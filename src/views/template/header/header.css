@@ -176,10 +176,8 @@ input:focus {
 }
 
 .clicked-label {
-  color: var(--brown-600-hover);
   border-bottom: solid 3px var(--brown-1300);
   background-color: transparent;
-  margin-bottom: 0;
 }
 
 /* search modal */
