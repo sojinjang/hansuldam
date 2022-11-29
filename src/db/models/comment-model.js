@@ -40,8 +40,13 @@ export class CommentModel {
     const result = await Comment.deleteMany({ _id: productId });
     return result;
   }
-}
 
+  async setTestdata(arr) {
+    await Comment.deleteMany({});
+    const comments = await Comment.insertMany(arr);
+    return comments;
+  }
+}
 const commentModel = new CommentModel();
 
 export { commentModel };

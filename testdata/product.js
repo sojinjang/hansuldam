@@ -1,14 +1,8 @@
 const { productModel, categoryModel } = require("../src/db");
-const { categoryService } = require("../src/services");
 const { sampleProductDatas } = require("./sample-product");
+const { getRandomInt } = require("./get-random-int");
 const path = require("path");
 const fs = require("fs");
-
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min) + min);
-}
 
 async function product() {
   try {

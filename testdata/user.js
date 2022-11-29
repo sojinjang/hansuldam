@@ -27,6 +27,66 @@ async function user() {
       },
       role: "admin",
     },
+    {
+      email: "han@elice.com",
+      fullName: "한소희",
+      password: await bcrypt.hash("11111111", 10),
+      phoneNumber: "01012341234",
+      address: {
+        postalCode: "53354",
+        address1: "전라북도 전주시 어딘가",
+        address2: "여기",
+      },
+      role: "admin",
+    },
+    {
+      email: "DJmaster@elice.com",
+      fullName: "DJ Kim",
+      password: await bcrypt.hash("11111111", 10),
+      phoneNumber: "01012341234",
+      address: {
+        postalCode: "53354",
+        address1: "경기도 어딥니까",
+        address2: "저기",
+      },
+      role: "admin",
+    },
+    {
+      email: "jian@elice.com",
+      fullName: "지안",
+      password: await bcrypt.hash("11111111", 10),
+      phoneNumber: "01012341234",
+      address: {
+        postalCode: "53354",
+        address1: "서울특별시 었던거 같은동",
+        address2: "구구",
+      },
+      role: "admin",
+    },
+    {
+      email: "jw@elice.com",
+      fullName: "이재우우웅",
+      password: await bcrypt.hash("11111111", 10),
+      phoneNumber: "01012341234",
+      address: {
+        postalCode: "53354",
+        address1: "부산 댄스 신동",
+        address2: "1004호",
+      },
+      role: "admin",
+    },
+    {
+      email: "sojin@elice.com",
+      fullName: "장팀장",
+      password: await bcrypt.hash("11111111", 10),
+      phoneNumber: "01012341234",
+      address: {
+        postalCode: "53354",
+        address1: "부산 크럼프",
+        address2: "1짱",
+      },
+      role: "admin",
+    },
   ];
   try {
     await userModel.setTestdata(userDatas);

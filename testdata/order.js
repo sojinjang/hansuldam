@@ -1,6 +1,7 @@
 const { orderModel } = require("../src/db");
 const { productModel } = require("../src/db");
 const { userModel } = require("../src/db");
+const { getRandomInt } = require("./get-random-int");
 
 async function order() {
   let orderDatas = await noAuthOrder();
@@ -73,23 +74,16 @@ async function noAuthOrder() {
 
 async function authOrder() {
   const users = await userModel.findAll();
-  const orderDatas = [
-    {
-      status: "상품준비중",
-      totalPrice: 0,
-      productsInOrder: [],
-    },
-    {
-      status: "상품준비중",
-      totalPrice: 0,
-      productsInOrder: [],
-    },
-  ];
+  const orderData = {
+    status: "상품준비중",
+    totalPrice: 0,
+    productsInOrder: [],
+  };
 
-  let authOrderdatas = orderDatas.map((cur, idx) => {
-    const { _id, fullName, phoneNumber, address } = users[idx];
-    cur = { ...cur, userId: _id.toString(), fullName, phoneNumber, address };
-    return cur;
+  let authOrderdatas = users.map((user) => {
+    const { _id, fullName, phoneNumber, address } = user;
+    const order = { userId: _id.toString(), fullName, phoneNumber, address, ...orderData };
+    return order;
   });
 
   const products = await productModel.findAll();
@@ -108,12 +102,6 @@ async function authOrder() {
   );
 
   return authOrderdatas;
-}
-
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min)) + min; //최댓값은 제외, 최솟값은 포함
 }
 
 module.exports = { order };
