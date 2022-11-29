@@ -16,7 +16,9 @@ async function showNaverLoginButton() {
     naverWrapper.innerHTML =
       "<a href='" +
       naverApiUrl +
-      "'><img height='40' src='http://static.nid.naver.com/oauth/small_g_in.PNG'/></a>";
+      "'>" +
+      `<img src=../img/naver_btnG_아이콘사각.png />` +
+      "네이버 로그인</a>";
     buttonSection.after(naverWrapper);
   } catch (err) {
     alert(err.message);
