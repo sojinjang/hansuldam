@@ -118,7 +118,7 @@ function showReviewDetail(e) {
   const titleSection = e.target.parentElement;
   const detailSection = e.target.parentElement.nextElementSibling;
   const modifyReviewSection = e.target.parentElement.nextElementSibling.nextElementSibling;
-  if (modifyReviewSection.style.display === "flex") return;
+  if (modifyReviewSection && modifyReviewSection.style.display === "flex") return;
   titleSection.style.display = "none";
   detailSection.style.display = "flex";
 }
