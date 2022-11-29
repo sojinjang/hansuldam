@@ -91,12 +91,11 @@ body {
 }
 
 .none-user-page-container .none-user-page-input {
-  width: 500px;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
   justify-content: space-around;
-  padding: 10px 10px;
+  padding: 50px 120px;
   background-color: var(--brown-300);
   border-radius: 10px;
 }
@@ -108,13 +107,13 @@ body {
 }
 
 .none-user-page-input p {
-  font-size: 1.125rem;
+  font-size: 1rem;
   text-align: center;
   color: gray;
-  margin-bottom: 50px;
 }
 
 .none-user-page-input input {
+  width: 400px;
   height: 50px;
   font-size: var(--font-base);
   border: 1px solid var(--black-100);
@@ -125,6 +124,8 @@ body {
 }
 
 .none-user-page-input button {
+  width: 400px;
+  height: 40px;
   margin: 20px 0 10px 0;
   font-size: 1.125rem;
 }
