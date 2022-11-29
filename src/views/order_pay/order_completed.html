@@ -5,12 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>주문완료 - 한술담 🍶</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+      @import url("https://fonts.googleapis.com/css2?family=Jua&display=swap");
     </style>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
-    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
     <script
       defer
       src="https://kit.fontawesome.com/9daa42bcef.js"
@@ -19,6 +16,7 @@
     <script src="../template/getHeaderFooter.js" type="module" defer></script>
     <script src="order_completed.js" type="module"></script>
     <link rel="stylesheet" href="order_completed.css" />
+    <link rel="stylesheet" href="../template/main_style.css" />
     <link rel="stylesheet" href="../template/footer/footer.css" />
     <link rel="stylesheet" href="../template/header/header.css" />
   </head>
@@ -36,43 +34,49 @@
       </div>
       <div class="order-info-container">
         <div class="order-head-container">
-          <div class="order-liquor-icon"><img src="../img/ricewine_icon.png"></div>
+          <div class="order-liquor-icon"><img src="../img/ricewine_icon.png" /></div>
           <div class="order-greeting-info">
-              <ul>
-                  <li class="order-greeting">결제가 완료되었습니다. 🎉</li>
-                  <li class="order-info num">주문번호</li>
-                  <li class="order-info date">주문일자</li>
-              </ul>
+            <ul>
+              <li class="order-greeting">결제가 완료되었습니다. 🎉</li>
+              <li class="order-info num">주문번호</li>
+              <li class="order-info date">주문일자</li>
+            </ul>
           </div>
-        </div>       
+        </div>
         <div class="order-details">
           <table class="order-table">
             <tbody>
-                <tr>
-                  <td class="table-content-title">배송지</td>
-                  <td class="table-content"><p class="name"></p><p class="phoneNumber"></p><p class="address"></p></td>
-                </tr>
-                <tr>
-                  <td class="table-content-title">배송방법</td>
-                  <td class="table-content"><p>택배</p></td>
-                </tr>
-                <tr>
-                  <td class="table-content-title">결제정보</td>
-                  <td class="table-content"><p class="cardType"></p><p class="cardNumber"></p></td>
-                </tr>
-                <tr>
-                  <td class="table-content-title">결제금액</td>
-                  <td class="table-content-bold"><p class="totalPrice"></p></td>
-                </tr>
-                <tr>
-                  <td class="table-content-button" onClick="location.href='/'">Home</td>
-                  <td class="table-content-button" onClick="location.href='/MyPage'">My Page</td>
-                </tr>
+              <tr>
+                <td class="table-content-title">배송지</td>
+                <td class="table-content">
+                  <p class="name"></p>
+                  <p class="phoneNumber"></p>
+                  <p class="address"></p>
+                </td>
+              </tr>
+              <tr>
+                <td class="table-content-title">배송방법</td>
+                <td class="table-content"><p>택배</p></td>
+              </tr>
+              <tr>
+                <td class="table-content-title">결제정보</td>
+                <td class="table-content">
+                  <p class="cardType"></p>
+                  <p class="cardNumber"></p>
+                </td>
+              </tr>
+              <tr>
+                <td class="table-content-title">결제금액</td>
+                <td class="table-content-bold"><p class="totalPrice"></p></td>
+              </tr>
+              <tr>
+                <td class="table-content-button" onClick="location.href='/'">Home</td>
+                <td class="table-content-button" onClick="location.href='/MyPage'">My Page</td>
+              </tr>
             </tbody>
           </table>
         </div>
       </div>
-
     </section>
   </body>
 </html>
