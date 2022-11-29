@@ -1,53 +1,88 @@
-:root {
-  --hover-background-color: #f5f5f5;
-}
-
-/* reset */
-* {
-  margin: 0;
-  padding: 0;
-}
-li {
-  list-style: none;
-}
-a {
-  text-decoration: none;
-}
-button {
-  all: unset;
-}
-
-/* main */
-
+/* body */
 .body-container {
   display: flex;
-  justify-content: center;
+  flex-direction: row;
   flex-wrap: wrap;
-	padding: 0 7vw 0 7vw;
-  margin-top: 50px;
+  justify-content: center;
+  margin-top: 80px !important;
+  padding: 0 10vw 0 10vw !important;
+  transition: all 0.05s ease-in;
+}
+
+@media screen and (min-width: 1700px) {
+  .body-container {
+    padding: 0 15vw 0 15vw !important;
+  }
+}
+
+@media screen and (min-width: 1300px) and (max-width: 1700px) {
+  .body-container {
+    padding: 0 9vw 0 9vw !important;
+  }
+}
+
+@media screen and (min-width: 1150px) and (max-width: 1300px) {
+  .body-container {
+    padding: 0 5vw 0 5vw !important;
+  }
+}
+
+@media screen and (min-width: 885px) and (max-width: 1150px) {
+  .body-container {
+    padding: 0 1vw 0 1vw !important;
+  }
+
+  .product-container-wrapper {
+    width: 25.5% !important;
+  }
+
+  .product-content-container .content-title-wrapper {
+    font-size: var(--font-xl);
+  }
+
+  .product-content-container .content-price {
+    font-size: var(--font-base);
+  }
+}
+
+@media screen and (min-width: 680px) and (max-width: 885px) {
+  .product-container-wrapper {
+    width: 39.5% !important;
+  }
+
+  .body-container {
+    padding: 0 0vw 0 0vw !important;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  .product-container-wrapper {
+    width: 50.5% !important;
+  }
+
+  .body-container {
+    padding: 0 0vw 0 0vw !important;
+  }
 }
 
 /* product */
+.product-container-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 21.5%;
+}
 
 .product-container {
   display: flex;
-  border-radius: 2%;
   flex-direction: column;
-  background-color: whitesmoke;
-  margin: 20px 20px 20px 20px;
-  width: 28%;
-  min-width: 290px;
-  max-width: 350px;
+  margin: 0px 5px 65px 10px;
+  max-width: 390px;
   user-select: none;
-}
-
-.product-div-container {
-  padding: 23px;
 }
 
 .product-container:hover {
   cursor: pointer;
-  background-color: aliceblue;
 }
 
 .product-content-container {
@@ -56,45 +91,64 @@ button {
   width: 100%;
 }
 
-.product-container .product-image-wrapper {
-  margin: 0 auto;
-  width: 170px;
+.product-div-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.product-container .product-image-wrapper img {
-  object-fit: scale-down;
-  padding-bottom: 20px;
-  width: 300px;
-  height: 250px;
+.product-div-container .product-image-wrapper {
+  display: flex;
+  justify-content: center;
+  max-height: 450px;
+}
+
+.product-div-container .product-image-wrapper img {
+  object-fit: cover;
+  margin-bottom: 20px;
+  border-radius: 2%;
+  aspect-ratio: 4 / 5.5;
+  max-height: 380px;
+  min-height: 290px;
+  min-width: 180px;
+  transition: all 0.15s ease;
+}
+
+.product-div-container .product-image-wrapper img:hover, .product-content-container:hover{
+  opacity: 0.75;
+}
+
+/* product-content-container */
+.product-content-container {
+  transition: all 0.15s ease;
+}
+
+.content-title-wrapper {
+  color: #363636;
+  font-size: var(--font-xxl);
+  font-weight: 600;
+  line-height: 1.125;
+  margin-bottom: 8px;
 }
 
 .content-container {
-  width: 100%;
-}
-
-.content-left-container {
-  width: 150px;
-}
-
-.content-left-container, .content-right-container {
   display: flex;
   flex-direction: column;
+  font-weight: 400;
+  width: 100%;
+  font-size: var(--font-base);
 }
 
-.product-content-container .content-title-wrapper {
-  color: #363636;
-  font-size: 2rem;
+.content-container .content-price {
   font-weight: 600;
-  line-height: 1.125;
-  margin-bottom: 20px;
 }
 
-.content-left-container .content-brandName {
+.content-container .content-brandName {
   display: flex;
   flex-direction: row;
 }
 
-.content-left-container .content-brandName p {
+.content-container .content-brandName p {
   margin-right: 10px;
 }
 
@@ -102,6 +156,8 @@ button {
   display: none;
 }
 
+/* pagination */
 .pagination-container .pagination-list {
-  justify-content: center; 
+  gap: 1rem;
+  justify-content: center;
 }

@@ -4,14 +4,10 @@ body {
 }
 
 .body-container {
-  padding: 20px 68.6px;
-}
-
-.body-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-top: 50px;
+  align-items: center;
 }
 
 .body-container .body-section-container {
@@ -25,11 +21,11 @@ body {
   display: flex;
   flex-direction: column;
   margin-right: 50px;
-  width: 250px;
+  width: 200px;
 }
 
 .user-information-container span {
-  font-size: 25px;
+  font-size: 22px;
   text-align: center;
   border-bottom: 1px solid black;
   padding-bottom: 15px;
@@ -39,11 +35,11 @@ body {
 .body-section-container .user-order-information-container {
   display: flex;
   flex-direction: column;
-  width: 250px;
+  width: 200px;
 }
 
 .user-order-information-container span {
-  font-size: 25px;
+  font-size: 22px;
   text-align: center;
   border-bottom: 1px solid black;
   padding-bottom: 15px;
@@ -68,8 +64,7 @@ body {
   display: none;
   flex-direction: column;
   justify-content: center;
-  margin-left: 22.5%;
-  width: 500px;
+  width: 400px;
 }
 
 .password-container span {
@@ -92,15 +87,17 @@ body {
   display: flex;
   justify-content: center;
   margin-top: 40px;
+  width: 100%;
 }
 
 .none-user-page-container .none-user-page-input {
-  width: 500px;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
   justify-content: space-around;
-  padding: 10px 10px;
+  padding: 50px 120px;
+  background-color: var(--brown-300);
+  border-radius: 10px;
 }
 
 .none-user-page-input span {
@@ -110,33 +107,38 @@ body {
 }
 
 .none-user-page-input p {
-  font-size: 1.125rem;
+  font-size: 1rem;
   text-align: center;
   color: gray;
-  margin-bottom: 50px;
 }
 
 .none-user-page-input input {
+  width: 400px;
   height: 50px;
-  font-size: 1.125rem;
-  padding-left: 10px;
-  margin-bottom: 10px;
-  border: none;
-  border-bottom: 1px solid grey;
+  font-size: var(--font-base);
+  border: 1px solid var(--black-100);
+  border-radius: 5px;
+  background-color: var(--white-100);
+  padding: 4px 4px 4px 4px;
+  margin: 3px 0;
 }
 
 .none-user-page-input button {
-  margin: 15px 0 10px 0;
+  width: 400px;
+  height: 40px;
+  margin: 20px 0 10px 0;
   font-size: 1.125rem;
 }
 
 .none-user-page-container .order-list-container {
   display: flex;
   flex-direction: column;
+  max-width: 1024px;
+  width: 100%;
   border-radius: 15px;
   margin-bottom: 15px;
   background-color: #cbb69749;
-  padding: 15px 15px;
+  padding: 18px;
 }
 
 .order-list-container .order-date {
@@ -160,7 +162,8 @@ body {
 
 #order-status {
   font-size: 1.25rem;
-  margin-bottom: 5px;
+  margin: 0 0 5px 3px;
+  font-weight: 500;
 }
 
 .order-list-container .single-product-container {
@@ -168,14 +171,16 @@ body {
   flex-direction: row;
   border-radius: 15px;
   background-color: rgba(255, 255, 255, 0.5);
-  padding: 10px 10px;
+  padding: 18px;
   margin-bottom: 10px;
   cursor: pointer;
 }
 
 .single-product-container img {
-  width: 100px;
-  height: 100px;
+  height: auto;
+  width: 86px;
+  min-width: 23px;
+  border-radius: 10px;
   margin-right: 20px;
 }
 
@@ -210,7 +215,7 @@ body {
   box-sizing: border-box;
   margin: 10px 0;
   border-radius: 15px;
-  padding: 15px 15px;
+  padding: 18px;
   background-color: rgba(255, 255, 255, 0.5);
 }
 
@@ -224,7 +229,7 @@ body {
 .address-container .address-info-text {
   color: rgb(91, 90, 90);
   width: 100px;
-  font-size: 1.125rem;
+  font-size: 1rem;
 }
 
 .address-container .address-info-wrapper {
@@ -234,7 +239,7 @@ body {
 }
 
 .address-info-wrapper span {
-  font-size: 1.125rem;
+  font-size: 1rem;
 }
 
 .address-info-wrapper div {
@@ -248,7 +253,7 @@ body {
   box-sizing: border-box;
   margin-bottom: 10px;
   border-radius: 15px;
-  padding: 15px 15px;
+  padding: 18px;
   background-color: rgba(255, 255, 255, 0.5);
 }
 
@@ -265,7 +270,7 @@ body {
 }
 
 .payment-wrapper span {
-  font-size: 1.125rem;
+  font-size: 1rem;
   margin: 5px 0;
 }
 
@@ -316,12 +321,12 @@ body {
 }
 
 .change-wrapper input {
-  border-style: none;
-  border-radius: 0;
-  border-style: none;
-  height: 25px;
-  font-size: 1rem;
-  padding-left: 5px;
+  font-size: var(--font-base);
+  border: 1px solid var(--black-100);
+  border-radius: 5px;
+  background-color: var(--white-100);
+  padding: 4px 4px 4px 4px;
+  margin: 3px 0;
 }
 
 .address-input-container {

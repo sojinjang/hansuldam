@@ -6,6 +6,7 @@ import {
   adjustQuantityFromLocalDB,
 } from "../utils/cart.js";
 import { Keys } from "../constants/Keys.js";
+import { updateCartCount } from "../template/header/header.js";
 
 const shoppingbagList = document.querySelector(".shoppingbag-list");
 
@@ -107,6 +108,8 @@ function deleteProductFromCart(e) {
   productDiv.remove();
   saveItems(Keys.CART_KEY, savedProducts);
   if (isEmptyCart(savedProducts)) hideCheckout();
+
+  updateCartCount();
 }
 
 function getCheckedItems() {
@@ -131,6 +134,8 @@ function deleteCheckedProducts() {
     saveItems(Keys.CART_KEY, savedProducts);
     if (isEmptyCart(savedProducts)) hideCheckout();
   });
+
+  updateCartCount();
 }
 
 function decreaseProductQuantity(e) {

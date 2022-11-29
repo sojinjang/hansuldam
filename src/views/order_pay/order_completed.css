@@ -129,6 +129,7 @@
 .order-table .table-content-button {
   color: var(--brown-700);
   cursor: pointer;
+  background-color: var(--brown-400);
   transition: all 0.4s linear;
 }
 
