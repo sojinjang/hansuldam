@@ -32,7 +32,7 @@ class UserService {
     const userId = user._id;
     // 2개 프로퍼티를 jwt 토큰에 담음
     const token = jwt.sign({ userId, role: user.role }, secretKey, {
-      expiresIn: "1h",
+      expiresIn: "3h",
     });
 
     return { token, userId };
@@ -94,7 +94,7 @@ class UserService {
     const userId = user._id;
     // 2개 프로퍼티를 jwt 토큰에 담음
     const token = jwt.sign({ userId, role: user.role }, secretKey, {
-      expiresIn: "1h",
+      expiresIn: "3h",
     });
 
     return { token, userId };

@@ -6,6 +6,7 @@ import {
   adjustQuantityFromLocalDB,
 } from "../utils/cart.js";
 import { Keys } from "../constants/Keys.js";
+import { updateCartCount } from "../template/header/header.js";
 
 const shoppingbagList = document.querySelector(".shoppingbag-list");
 
@@ -19,6 +20,7 @@ const checkoutButton = document.querySelector(".checkout");
 const HIDDEN_CLASSNAME = "hidden";
 
 function showProduct(item) {
+  const imageUrl = ".." + decodeURIComponent(item.image).split("views")[1];
   let product = undefined;
   product = document.createElement("div");
   product.setAttribute("class", "product");
@@ -26,18 +28,22 @@ function showProduct(item) {
   product.innerHTML = `<div class="checkbox-wrapper">
                 <input type="checkbox" checked="checked" name="individual-checker" id=${
                   item._id
-                } class=individual-checker /><label
-                  for="checker"
+                } class="individual-checker" /><label
+                  for="${item._id}"
                 ></label>
               </div>
               <div class="product-info-top">
                 <div class="thumbnail">
-                  <img class="product-img" src="../img/redmonkey.jpeg" />
+                  <a href="/product-detail/?id=${item._id}">
+                    <img class="product-img" src="${imageUrl}" />
+                  </a>
                 </div>
                 <div class="product-info">
-                  <div class="product-brand">${item.brand}</div>
-                  <div class="product-name">${item.name}</div>
-                  <div class="product-volume">${item.volume}ml</div>
+                  <a href="/product-detail/?id=${item._id}">
+                    <div class="product-brand">${item.brand}</div>
+                    <div class="product-name">${item.name}</div>
+                    <div class="product-volume">${item.volume}ml</div>
+                  </a>
                 </div>
                 <button type="button" class="product-remove-button">
                   <img
@@ -102,6 +108,8 @@ function deleteProductFromCart(e) {
   productDiv.remove();
   saveItems(Keys.CART_KEY, savedProducts);
   if (isEmptyCart(savedProducts)) hideCheckout();
+
+  updateCartCount();
 }
 
 function getCheckedItems() {
@@ -126,6 +134,8 @@ function deleteCheckedProducts() {
     saveItems(Keys.CART_KEY, savedProducts);
     if (isEmptyCart(savedProducts)) hideCheckout();
   });
+
+  updateCartCount();
 }
 
 function decreaseProductQuantity(e) {

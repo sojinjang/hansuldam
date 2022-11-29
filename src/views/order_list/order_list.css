@@ -5,10 +5,11 @@
 .body-container .order-container {
   display: flex;
   flex-direction: column;
+  max-width: 1024px;
   border-radius: 15px;
   margin-bottom: 15px;
   background-color: #cbb69749;
-  padding: 15px 15px;
+  padding: 18px;
 }
 
 .body-container button {
@@ -18,7 +19,8 @@
 
 .body-container .order-list-text {
   margin: 15px 0;
-  font-size: 30px;
+  padding-left: 5px;
+  font-size: 25px;
 }
 
 .order-container .order-date {
@@ -54,7 +56,7 @@
   border-radius: 15px;
   display: flex;
   flex-direction: row;
-  padding: 10px 10px;
+  padding: 18px;
   margin-bottom: 10px;
   cursor: pointer;
 }
@@ -79,7 +81,7 @@
   box-sizing: border-box;
   margin: 10px 0;
   border-radius: 15px;
-  padding: 10px 10px;
+  padding: 18px;
   background-color: rgba(255, 255, 255, 0.5);
 }
 
@@ -101,7 +103,7 @@
   box-sizing: border-box;
   margin-bottom: 10px;
   border-radius: 15px;
-  padding: 10px 10px;
+  padding: 18px;
   background-color: rgba(255, 255, 255, 0.5);
 }
 
@@ -118,7 +120,7 @@
 }
 
 .payment-information-container .payment-wrapper span {
-  font-size: 1.125rem;
+  font-size: 1rem;
   margin: 5px 0;
 }
 
@@ -165,11 +167,13 @@
 }
 
 .user-change-container input {
-  border-style: none;
-  border-radius: 0;
   height: 25px;
-  font-size: 1rem;
-  padding-left: 5px;
+  font-size: var(--font-base);
+  border: 1px solid var(--black-100);
+  border-radius: 5px;
+  background-color: var(--white-100);
+  padding: 4px 4px 4px 4px;
+  margin: 3px 0;
 }
 
 .button-container {
@@ -180,12 +184,14 @@
 }
 
 .button-container button {
-  font-size: 1.125rem;
+  font-size: 1rem;
 }
 
 .single-product-container img {
-  width: 100px;
-  height: 100px;
+  height: auto;
+  width: 86px;
+  min-width: 23px;
+  border-radius: 10px;
   margin-right: 20px;
 }
 
@@ -204,7 +210,7 @@
 }
 
 .address-container div span {
-  font-size: 1.125rem;
+  font-size: 1rem;
 }
 
 .address-container .address-info-wrapper {
@@ -244,7 +250,6 @@
   display: flex;
   flex-direction: column;
   margin-right: 5px;
-  margin-top: 2px;
 }
 
 .address-input-container div input {
@@ -275,7 +280,7 @@ body button {
   border-radius: 0.5rem;
   box-sizing: border-box;
   color: #111827;
-  font-size: 17px;
+  font-size: 1rem;
   font-weight: 400;
   line-height: 0.5rem;
   padding: 0.75rem 1rem;
