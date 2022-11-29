@@ -143,10 +143,10 @@ input:focus {
 
 .header-menu-wrapper .menu-list a:hover {
   background-color: transparent;
+  color: var(--brown-600-hover);
 }
 
 .header-menu-wrapper .menu-list .menu-label:hover {
-  color: var(--brown-600-hover);
   border-bottom: solid 3px var(--brown-1300);
   background-color: transparent;
   margin-bottom: 0;

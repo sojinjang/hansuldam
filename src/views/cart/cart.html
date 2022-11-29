@@ -4,10 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>장바구니 - 한술담 🍶</title>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
-    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
     <script
       defer
       src="https://kit.fontawesome.com/9daa42bcef.js"
@@ -21,11 +18,12 @@
     <main class="body-container">
       <div class="order-status-wrapper">
         <ol class="order-status-bar">
-          <li class="order-status-highlighted">01 SHOPPNIG BAG</li>
-          <li class="order-arrow">➡</li>
-          <li class="order-status">02 ORDER</li>
-          <li class="order-arrow">➡</li>
-          <li class="order-status">03 ORDER CONFIRMED</li>
+          <li class="order-status-highlighted">01</li>
+          <li class="order-status-highlighted">SHOPPNIG BAG</li>
+          <li class="order-status">02</li>
+          <li class="order-status">ORDER</li>
+          <li class="order-status">03</li>
+          <li class="order-status">ORDER CONFIRMED</li>
         </ol>
       </div>
       <section class="container-shoppingbag">
@@ -34,14 +32,15 @@
             <div class="delete-wrapper">
               <input
                 type="checkbox"
-                name="all-checker"
+                id="all-checker"
                 class="all-checker"
                 checked="checked"
-              /><label for="checker1"></label>
-              <button role="button" class="selected-item-delete-button">
-                선택 상품 삭제
-              </button>
-              <div class="delete-button"></div>
+              /><label for="all-checker"></label>
+              <div class="delete-button-wrapper">
+                <button role="button" class="selected-item-delete-button button-35-white">
+                  선택 상품 삭제
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -60,20 +59,18 @@
             </div>
           </div>
           <div class="button-wrapper">
-            <button
-              role="button"
-              id="rounded-button"
-              class="checkout hidden"
-            >
-              CHECKOUT
-            </button>
-            <button
-              role="button"
-              onclick="window.location.href= '/'"
-              id="rounded-button"
-            >
-              CONTINUE SHOPPING
-            </button>
+            <div class="checkout-wrapper">
+              <button role="button" class="button-35-brown checkout hidden">CHECKOUT</button>
+            </div>
+            <div class="home-wrapper">
+              <button
+                role="button"
+                class="button-35-white continue"
+                onclick="window.location.href= '/'"
+              >
+                CONTINUE SHOPPING
+              </button>
+            </div>
           </div>
         </div>
       </section>

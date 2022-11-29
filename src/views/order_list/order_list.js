@@ -190,12 +190,13 @@ function createOrderStatus(item) {
 }
 
 function createProductListContainer(item) {
+  const imageUrl = ".." + decodeURIComponent(item.image).split("views")[1];
   let product = undefined;
   product = document.createElement("div");
   product.setAttribute("class", "single-product-container");
   product.setAttribute("id", `${item._id}-single-product-container`);
   product.setAttribute("onclick", `window.location.href='/product-detail/?id=${item._id}'`);
-  product.innerHTML = `<img src="../img/ricewine_icon.png" alt="" />
+  product.innerHTML = `<img src="${imageUrl}" alt="" />
   <div class="single-product-detail">
     <span class="single-product-name">${item.name}</span>
     <span class="single-product-price">${item.price.toLocaleString("ko-KR")}원</span>

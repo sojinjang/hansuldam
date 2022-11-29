@@ -1,8 +1,3 @@
-html {
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial,
-    sans-serif, Apple Color Emoji, Segoe UI Emoji;
-}
-
 body {
   overflow-x: hidden;
   margin: 0;
@@ -14,7 +9,7 @@ body {
 }
 
 .body-section-container .title {
-  font-size: 2rem;
+  font-size: var(--font-xxxl);
   font-weight: bold;
   padding: 20px 0;
   border-bottom: 2px solid;
@@ -47,15 +42,15 @@ body {
 }
 
 #info-wrapper p {
-  font-size: 1.25rem;
+  font-size: var(--font-lg);
   font-weight: bold;
   width: 100px;
   margin-right: 50px;
 }
 
 #info-wrapper span {
-  width: 210px;
-  font-size: 1.25rem;
+  width: 260px;
+  font-size: var(--font-base);
 }
 
 .adChangeBtn,
@@ -83,7 +78,10 @@ body {
 .address-container .user-address {
   display: flex;
   flex-direction: column;
-  margin: 0;
+}
+
+.user-address span {
+  margin-bottom: 3px;
 }
 
 .address-container #change-address-container {
@@ -159,9 +157,11 @@ body {
 }
 
 input {
-  border: 1px solid gray;
-  font-size: 1rem;
-  padding: 3px 5px;
+  font-size: var(--font-base);
+  border: 1px solid var(--black-100);
+  border-radius: 5px;
+  background-color: var(--white-100);
+  padding: 4px 4px 4px 4px;
 }
 
 .delete-user-information-btn {
