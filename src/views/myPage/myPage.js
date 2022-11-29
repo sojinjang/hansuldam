@@ -57,7 +57,7 @@ async function showOrderListPage() {
   const productList = await api.get(ApiUrl.ORDERS, `${orderID}/products`);
 
   $(".none-user-page-input").style.display = "none";
-  $(".none-user-page-container").style.display = "block";
+  $(".none-user-page-container").style.display = "flex";
 
   createOrderDateContainer(orderData);
   productList.forEach(createProductListContainer);
@@ -79,12 +79,14 @@ async function showOrderListPage() {
 
   function showDetailInformationPage() {
     if (($(".address-container").style.display = "none")) {
+      console.log("안된다");
       $(".address-container").style.display = "flex";
       $(".payment-information-container").style.display = "flex";
       if (orderData.status == "상품준비중") {
         $(".button-container").style.display = "flex";
       }
     } else if (($(".address-container").style.display = "flex")) {
+      console.log("된다");
       $(".address-container").style.display = "none";
       $(".payment-information-container").style.display = "none";
       $(".button-container").style.display = "none";
@@ -248,12 +250,13 @@ function createOrderDateContainer(item) {
 }
 
 function createProductListContainer(item) {
+  const imageUrl = ".." + decodeURIComponent(item.image).split("views")[1];
   let page = undefined;
   page = document.createElement("section");
   page.setAttribute("class", "order-lists");
   page.setAttribute("onclick", `window.location.href='/product-detail/?id=${item._id}'`);
   page.innerHTML = `<div class="single-product-container">
-    <img src=../img/ricewine_icon.png} alt="" />
+    <img src="${imageUrl}" alt="" />
     <div class="single-product-detail">
       <span class="single-product-name">${item.name}</span>
       <span class="single-product-price">${item.price.toLocaleString("ko-KR")}원</span>
