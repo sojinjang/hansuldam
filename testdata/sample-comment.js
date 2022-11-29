@@ -29,6 +29,45 @@ const sampleComment = [
   {
     content: "이거 들고 해운대가면 진짜 인기남",
   },
+  {
+    content: "우와와와와와와왕",
+  },
+  {
+    content: "오늘은 이거다!!",
+  },
+  {
+    content: "진짜 딱 3병만 더!",
+  },
+  {
+    content: "선물용으로 딱이네요!",
+  },
+  {
+    content: "많이 파세요~",
+  },
+  {
+    content: "아 진짜, 세잔 먹고 출근 못했습니다. 책임지세요",
+  },
+  {
+    content: "이거 사줘 할머니",
+  },
+  {
+    content: "이거 사줘 아들",
+  },
+  {
+    content: "갑니다",
+  },
+  {
+    content: "안녕히 계세요. 이거 마시고 다른 세계로 떠납니다.",
+  },
+  {
+    content: "숙취 없어요~",
+  },
+  {
+    content: "에엥? 달달하네요?",
+  },
+  {
+    content: "다 팔리기 전에, 쟁여둡니다.",
+  },
 ];
 
 module.exports = { sampleComment };
