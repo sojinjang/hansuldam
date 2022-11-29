@@ -72,14 +72,14 @@ function createModificationDeletionButton(reviewElements, isWriter, reviewId) {
     return (
       reviewElements +
       `       <div class="writer-button-container">
-                <div id="${reviewId}" class="review-modification writer-button">수정</div>
+                <div class="review-modification writer-button">수정</div>
                 <div id="${reviewId}" class="review-deletion writer-button">삭제</div>
               </div>
             </div>    
             <div style="display:none" class="review-modification-container">
               <textarea class="review-rewrite-input" placeholder="최소 10자 이상 작성해주세요."></textarea>
               <div class="writer-button-container">
-                <div class="complete-modification writer-button">수정완료</div>
+                <div id="${reviewId}" class="complete-modification writer-button">수정완료</div>
                 <div class="cancel-modification writer-button">취소</div>
               </div>
             </div>
@@ -160,6 +160,16 @@ async function deleteReview(e) {
   }
 }
 
+async function modifyReviewComment(e) {
+  const comment = document.querySelector(".review-rewrite-input").value;
+  try {
+    await api.patch(ApiUrl.AUTH_COMMENTS, e.target.id, { content: comment });
+    location.reload();
+  } catch (err) {
+    alert(err.message);
+  }
+}
+
 async function renderReviewData() {
   await createReviewList();
 
@@ -170,6 +180,7 @@ async function renderReviewData() {
   const reviewModificationButtonArr = document.querySelectorAll(".review-modification");
   const reviewDeletionButtonArr = document.querySelectorAll(".review-deletion");
   const modificationCancelButtonArr = document.querySelectorAll(".cancel-modification");
+  const modificationCompleteButtonArr = document.querySelectorAll(".complete-modification");
 
   singleReviewTitleContentArr.forEach((titleElem) => {
     titleElem.addEventListener("click", showReviewDetail);
@@ -185,6 +196,9 @@ async function renderReviewData() {
   });
   modificationCancelButtonArr.forEach((cancelButton) => {
     cancelButton.addEventListener("click", hideModifyReviewWindow);
+  });
+  modificationCompleteButtonArr.forEach((modificationCompleteButton) => {
+    modificationCompleteButton.addEventListener("click", modifyReviewComment);
   });
 }
 
