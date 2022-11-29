@@ -46,8 +46,8 @@ async function user() {
       phoneNumber: "01012341234",
       address: {
         postalCode: "53354",
-        address1: "경기도 어딥니까",
-        address2: "저기",
+        address1: "경기도 어딥니까 태권동",
+        address2: "발차기",
       },
       role: "admin",
     },
@@ -58,8 +58,8 @@ async function user() {
       phoneNumber: "01012341234",
       address: {
         postalCode: "53354",
-        address1: "서울특별시 었던거 같은동",
-        address2: "구구",
+        address1: "서울특별시 잭콕 그정돈 1샷",
+        address2: "숙취",
       },
       role: "admin",
     },
