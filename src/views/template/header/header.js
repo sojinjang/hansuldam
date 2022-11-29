@@ -58,7 +58,7 @@ async function redirectPage() {
   menuLabels.forEach((label) => {
     label.addEventListener("click", (e) => {
       const labelId = e.currentTarget.getAttribute("id");
-      window.location.href = `/products?label=${labelId}`;
+      window.location.href = `/products?label=${labelId}&page=1`;
     });
   });
 
