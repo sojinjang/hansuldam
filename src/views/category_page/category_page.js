@@ -4,7 +4,7 @@ import { ApiUrl } from "../constants/ApiUrl.js";
 const $ = (selector) => document.querySelector(selector);
 
 async function fetchProducts(index) {
-  const data = await get(`${ApiUrl.PRODUCTS_OVERALL_INFORMATION}${index}&perpage=9`);
+  const data = await get(`${ApiUrl.PRODUCTS_OVERALL_INFORMATION}${index}&perpage=12`);
 
   return data;
 }
@@ -69,8 +69,8 @@ async function showProducts() {
 
   let productsArr = [];
 
-  for (let i = 0; i < productsTotalData.length; i += 9) {
-    productsArr.push(productsTotalData.slice(i, i + 9));
+  for (let i = 0; i < productsTotalData.length; i += 12) {
+    productsArr.push(productsTotalData.slice(i, i + 12));
   }
 
   let currentPageData = productsArr[0];
