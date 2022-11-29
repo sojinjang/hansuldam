@@ -4,7 +4,7 @@ import { ApiUrl } from "../constants/ApiUrl.js";
 const $ = (selector) => document.querySelector(selector);
 
 async function fetchProducts(index) {
-  const data = await get(`${ApiUrl.PRODUCTS_OVERALL_INFORMATION}${index}&perpage=9`);
+  const data = await get(`${ApiUrl.PRODUCTS_OVERALL_INFORMATION}${index}&perpage=12`);
 
   return data;
 }
@@ -12,7 +12,7 @@ async function fetchProducts(index) {
 const paginationHtml = `<nav class="pagination-container" role="navigation" aria-label="pagination">
 <ul class="pagination-list">
   <li>
-    <a class="pagination-link is-current" aria-label="1" aria-current="page">1</a>
+    <a class="pagination-link button-35-brown button-35-white" aria-label="1" aria-current="page">1</a>
   </li>
 </ul>
 </nav>`;
@@ -32,7 +32,7 @@ async function refineData() {
   (function generatePagenationButton() {
     for (let i = 2; i <= totalPage; i++) {
       const pageButton = document.createElement("li");
-      pageButton.innerHTML = `<a class="pagination-link" aria-label="${i}" aria-current="page">${i}</a>`;
+      pageButton.innerHTML = `<a class="pagination-link button-35-white" aria-label="${i}" aria-current="page">${i}</a>`;
       $(".pagination-list").append(pageButton);
     }
   })();
@@ -69,8 +69,8 @@ async function showProducts() {
 
   let productsArr = [];
 
-  for (let i = 0; i < productsTotalData.length; i += 9) {
-    productsArr.push(productsTotalData.slice(i, i + 9));
+  for (let i = 0; i < productsTotalData.length; i += 12) {
+    productsArr.push(productsTotalData.slice(i, i + 12));
   }
 
   let currentPageData = productsArr[0];
@@ -94,10 +94,10 @@ async function showProducts() {
         const currentPage = e.target.getAttribute("aria-label");
 
         pageButton.forEach((button) => {
-          button.classList.remove("is-current");
+          button.classList.remove("button-35-brown");
           window.scrollTo(0, 0);
         });
-        e.target.classList.add("is-current");
+        e.target.classList.add("button-35-brown");
 
         currentPageData = productsArr[currentPage - 1];
 

@@ -22,7 +22,7 @@ async function initFunc() {
       productContainer.forEach((container) => container.remove());
 
       const eventId = e.currentTarget.getAttribute("id");
-      const eventProducts = await get(`${ApiUrl.CATEGORY}/${eventId}/products`);
+      const eventProducts = await get(`${ApiUrl.CATEGORY}/${eventId}/products?perpage=20`);
       eventProducts["productList"].forEach((product) => renderData(product));
 
       e.target.classList.add("is-clicked");
