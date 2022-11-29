@@ -25,33 +25,15 @@
   display: flex;
   flex-wrap: wrap;
   gap: 1em;
+  height: 80px;
 }
 
-.menubox-container a {
-  display: flex;
-  font-family: "Do Hyeon", sans-serif;
-  font-size: 25px;
-  color: rgb(62, 62, 62);
-  transition: all 0.1s linear;
-  background-color: rgba(191, 178, 106, 0.6);
-  border-radius: 7%;
-  min-height: 200px;
-  flex-basis: 150px;
-  flex-grow: 1;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.menubox-container a:hover {
-  color: rgb(170, 160, 150);
-  letter-spacing: 1px; 
-  box-shadow: 1px 1px 20px #ddd;
-
+.button-35-brown {
+  transition: none;
 }
 
 .title-container {
-  background-color: rgba(191, 178, 106, 0.6);
+  background-color: var(--brown-300);
   border-bottom: 1px solid black;
 }
 
@@ -60,6 +42,7 @@
 }
 
 .title-container div, .items-container div{
+  margin: auto 0 auto 0;
   text-align: center;
 }
 
@@ -90,7 +73,7 @@
 .add-category-modal {
   position: absolute;
   width: 300px;
-  top: 580px;
+  top: 450px;
 }
 
 .add-category-modal button {
@@ -110,8 +93,8 @@
 }
 
 .modify-category-modal button{
-  width: 15px;
-  height: 24px;
+  width: 52px;
+  height: 40px;
 }
 
 /* add product modal */
@@ -154,6 +137,11 @@
 .right-modal, .left-modal {
   display: flex;
   flex-direction: column;
+}
+
+
+.orders-container > button, .products-container > button, .categories-container > button {
+  top: -25px;
 }
 
 .orders-container .none {

@@ -57,8 +57,8 @@ async function openProductMenu() {
   $(".product-menu").classList.add("isClicked");
 
   const productContainerHTML = `<section class="products-container">
-  <button class="button add-button">추가</button>
-  <button class="button close-button">닫기</button>
+  <button class="button-35-brown button add-button">추가</button>
+  <button class="button-35-white button close-button">닫기</button>
   <div class="columns title-container">
   <div class="column is-2 row-name">이름/브랜드</div>
   <div class="column is-2 row-price">가격/재고</div>
@@ -212,8 +212,8 @@ async function renderProduct(product) {
 <div class="column is-2 row-volumn">${volume}ml</div>
 <div class="column is-2 row-category">${category}</div>
 <div class="column is-2 row-type">${alcoholType}</div>
-<div class="column is-1"><button id="btn-${_id}" class="button column detail-button">상세</button></div>
-<div class="column is-1"><button id="${_id}" class="button column delete-button">삭제</button></div>
+<div class="column is-1"><button id="btn-${_id}" class="button-35-white button column detail-button">상세</button></div>
+<div class="column is-1"><button id="${_id}" class="button-35-white button column delete-button">삭제</button></div>
 `;
 
   $(".products-container").append(productSection);
@@ -238,7 +238,7 @@ async function renderProductDetail(productsTotalData) {
       <div class="column is-2">${changeToKoreanTime(manufacturedDate)}</div>
       <div class="column is-1">${alcoholDegree}도</div>
       <div class="column is-1">
-      <button class="button column modify-button">수정</button>
+      <button class="button-35-white button column modify-button">수정</button>
       </div>
       </div>`;
 
