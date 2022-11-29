@@ -503,6 +503,20 @@ const sampleProductDatas = [
     alcoholDegree: 35,
     manufacturedDate: "2022-07-14",
   },
+  {
+    name: "황금 보리",
+    price: 14000,
+    category: "선물하기 좋은술",
+    image: null,
+    stock: 12,
+    brand: "황금보리 유한회사",
+    description: "술에 진심인 장팀장이 인증하는 찐 맛탱 증류주",
+    volume: 375,
+    sales: 33,
+    alcoholType: "증류주",
+    alcoholDegree: 25,
+    manufacturedDate: "2022-07-14",
+  },
 ];
 
 module.exports = { sampleProductDatas };
