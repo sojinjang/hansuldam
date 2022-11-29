@@ -16,7 +16,6 @@ async function comment() {
 
     const fixedComments = await fixComment();
     comments = comments.concat(fixedComments);
-    console.log(comments);
     await commentModel.setTestdata(comments);
   } catch (error) {
     console.log(error);
