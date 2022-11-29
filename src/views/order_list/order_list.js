@@ -13,7 +13,7 @@ orderId.forEach((id) => {
     const orderList = await get(ApiUrl.ORDERS, id);
     const productList = await get(ApiUrl.ORDERS, `${id}/products`);
 
-    createSingleOrderContainer(orderList).append(createOrderStatus(orderList));
+    createSingleOrderContainer(orderList).prepend(createOrderStatus(orderList));
     productList.forEach((product) => {
       selectId(`${orderList._id}-order-container`).append(createProductListContainer(product));
     });
