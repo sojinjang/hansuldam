@@ -102,7 +102,7 @@ function showReview(review) {
   reviewElements = createReviewContent(reviewElements, review, imgDirectory);
   reviewElements = createModificationDeletionButton(reviewElements, isWriter, review._id);
   reviewContainer.innerHTML = reviewElements;
-  reviewListContainer.append(reviewContainer);
+  reviewListContainer.prepend(reviewContainer);
 }
 
 async function createReviewList() {
