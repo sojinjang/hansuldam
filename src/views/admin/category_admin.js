@@ -31,11 +31,11 @@ async function openCategoryMenu() {
   $(".category-menu").classList.add("isClicked");
 
   const productContainerHTML = `<section class="categories-container">
-  <button class="button add-button">추가</button>
-  <button class="button close-button">닫기</button>
+  <button class="button-35-brown button add-button">추가</button>
+  <button class="button-35-white button close-button">닫기</button>
 <div class="columns title-container">
   <div class="column is-2 row-name">카테고리명</div>
-  <div class="column is-2 row-products">항목</div>
+  <div class="column is-10 row-products">항목</div>
 </div>
 </section>`;
 
@@ -62,9 +62,9 @@ function addCategory() {
   $(".close-button").classList.add("none");
 
   const categoryModalHtml = `<label class="add-category-modal">
-  <input class="input is-rounded category-input" type="text" name="name" placeholder="추가 할 카테고리 이름을 입력하세용" />
-  <button class="button add-category-button">추가</button>
-  <button class="button close-modal-button">닫기</button>
+  <input class="input is-rounded category-input" type="text" name="name" placeholder="추가 할 카테고리 이름을 입력하세요." />
+  <button class="button-35-brown button add-category-button">추가</button>
+  <button class="button-35-white button close-modal-button">닫기</button>
 </label>`;
   $(".admin-menu").insertAdjacentHTML("afterend", categoryModalHtml);
 
@@ -112,9 +112,9 @@ async function renderCategory(category, productsTotalData) {
   categorySection.setAttribute("class", "columns items-container");
   categorySection.setAttribute("id", _id);
   categorySection.innerHTML = `<div class="column is-2 row-name">${name}</div>
-<div class="column is-8 row-products">${[...productsArr]}</div>
-<div class="column is-1"><button id="${_id}" class="button column modify-button">수정</button></div>
-<div class="column is-1"><button id="${_id}" class="button column delete-button">삭제</button></div>
+<div class="column is-8 row-products">${productsArr.join(' | ')}</div>
+<div class="column is-1"><button id="${_id}" class="button-35-white button column modify-button">수정</button></div>
+<div class="column is-1"><button id="${_id}" class="button-35-white button column delete-button">삭제</button></div>
 `;
 
   $(".categories-container").append(categorySection);
@@ -155,8 +155,8 @@ function modifyCategory() {
 
       const categoryModifyModalHtml = `<label class="modify-category-modal">
   <input class="input is-rounded modify-category-input" type="text" name="name" placeholder="카테고리 이름을 입력하세요." />
-  <button class="button modify-category-button">수정</button>
-  <button class="button close-modify-button">닫기</button>  
+  <button class="button-35-white button modify-category-button">수정</button>
+  <button class="button-35-white button close-modify-button">닫기</button>  
 </label>`;
       await e.currentTarget.parentNode.parentNode.insertAdjacentHTML(
         "beforebegin",

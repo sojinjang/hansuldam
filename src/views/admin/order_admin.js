@@ -32,7 +32,7 @@ async function openOrderMenu() {
   $(".order-menu").classList.add("isClicked");
 
   const orderContainerHTML = `<section class="orders-container">
-  <button class="button close-button">닫기</button>
+  <button class="button-35-white button close-button">닫기</button>
 <div class="columns title-container">
   <div class="column is-2">이름</div>
   <div class="column is-2">주소</div>
@@ -82,8 +82,8 @@ async function renderOrder(order) {
 <div class="column is-2">${createdAt}</div>
 <div class="column is-2">${phoneNumber}</div>
 <div class="column is-2">
-  <div class="select">
-    <select id="${_id}" class="status-selector">
+  <div>
+    <select id="${_id}" class="button-35-white status-selector">
       <option
         value="상품준비중" 
         ${status === "상품준비중" ? "selected" : ""}>
@@ -102,8 +102,8 @@ async function renderOrder(order) {
     </select>
   </div>
 </div>
-<div class="column is-1"><button id="${_id}" class="button column detail-button">상세</button></div>
-<div class="column is-1"><button id="${_id}" class="button column delete-button">삭제</button></div>
+<div class="column is-1"><button id="${_id}" class="button-35-white button column detail-button">상세</button></div>
+<div class="column is-1"><button id="${_id}" class="button-35-white button column delete-button">삭제</button></div>
 `;
 
   $(".orders-container").append(orderSection);
