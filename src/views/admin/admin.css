@@ -41,11 +41,11 @@
   font-weight: 700;
 }
 
-.title-container div, .items-container div{
+.title-container div,
+.items-container div {
   margin: auto 0 auto 0;
   text-align: center;
 }
-
 
 .items-container {
   margin-bottom: 10px;
@@ -67,7 +67,6 @@
 
 .modal-content {
   margin: 150px auto 0px auto;
-
 }
 
 .add-category-modal {
@@ -79,7 +78,7 @@
 .add-category-modal button {
   width: 15px;
   height: 24px;
-  left: 190px
+  left: 190px;
 }
 
 .modify-category-input {
@@ -90,11 +89,6 @@
   width: 100%;
   z-index: 10;
   position: relative;
-}
-
-.modify-category-modal button{
-  width: 52px;
-  height: 40px;
 }
 
 /* add product modal */
@@ -111,7 +105,9 @@
   border-radius: 6px;
 }
 
-.add-product-modal input, .modify-product-modal input, #upload-image-div {
+.add-product-modal input,
+.modify-product-modal input,
+#upload-image-div {
   width: 250px;
 }
 
@@ -129,18 +125,20 @@
   margin-top: 8px;
 }
 
-.add-product-modal button{
+.add-product-modal button {
   width: 15px;
   height: 24px;
 }
 
-.right-modal, .left-modal {
+.right-modal,
+.left-modal {
   display: flex;
   flex-direction: column;
 }
 
-
-.orders-container > button, .products-container > button, .categories-container > button {
+.orders-container > button,
+.products-container > button,
+.categories-container > button {
   top: -25px;
 }
 
