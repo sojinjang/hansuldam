@@ -67,10 +67,6 @@ async function refineData() {
 async function showProducts() {
   const productsTotalData = await refineData();
 
-  function filterProducts() {
-    // productsTotalData를 가져와 filtering을 해준 값을 리턴하여 변수에 할당해주시면 됩니다!
-  }
-
   let productsArr = [];
 
   for (let i = 0; i < productsTotalData.length; i += 9) {
@@ -84,34 +80,36 @@ async function showProducts() {
     });
   })();
 
-  const paginationButton = document.querySelectorAll(".pagination-link");
+  (function handlePaginationButton() {
+    const paginationButton = document.querySelectorAll(".pagination-link");
 
-  paginationButton.forEach((button) => {
-    button.addEventListener("click", async (e) => {
-      if (document.querySelectorAll(".product-container")) {
-        const productContainers = document.querySelectorAll(".product-container");
-        productContainers.forEach((container) => container.remove());
-      }
+    paginationButton.forEach((button) => {
+      button.addEventListener("click", (e) => {
+        if (document.querySelectorAll(".product-container")) {
+          const productContainers = document.querySelectorAll(".product-container");
+          productContainers.forEach((container) => container.remove());
+        }
 
-      const pageButton = document.querySelectorAll(".pagination-link");
-      const currentPage = e.target.getAttribute("aria-label");
+        const pageButton = document.querySelectorAll(".pagination-link");
+        const currentPage = e.target.getAttribute("aria-label");
 
-      pageButton.forEach((button) => {
-        button.classList.remove("is-current");
-        window.scrollTo(0, 0);
-      });
-      e.target.classList.add("is-current");
-
-      currentPageData = productsArr[currentPage - 1];
-
-      if (!currentPageData) {
-        alert("데이터가 없습니다!");
-      } else
-        currentPageData.forEach(async (product) => {
-          renderData(product);
+        pageButton.forEach((button) => {
+          button.classList.remove("is-current");
+          window.scrollTo(0, 0);
         });
+        e.target.classList.add("is-current");
+
+        currentPageData = productsArr[currentPage - 1];
+
+        if (!currentPageData) {
+          alert("데이터가 없습니다!");
+        } else
+          currentPageData.forEach((product) => {
+            renderData(product);
+          });
+      });
     });
-  });
+  })();
 
   (function addClickedClass() {
     const params = new URLSearchParams(window.location.search);
@@ -135,7 +133,7 @@ async function showProducts() {
 
 await showProducts();
 
-async function goToDetailPage() {
+function goToDetailPage() {
   const productContainer = document.querySelectorAll(".product-container");
   productContainer.forEach((container) => {
     container.addEventListener("click", (e) => {
@@ -147,26 +145,23 @@ async function goToDetailPage() {
 
 async function renderData(product) {
   const { _id, name, brand, price, volume, alcoholDegree, image } = product;
-  const imageUrl = '../' + decodeURIComponent(image).split("views")[1];
+  const imageUrl = "../" + decodeURIComponent(image).split("views")[1];
 
   let productSection = document.createElement("section");
 
-  productSection.setAttribute("class", "product-container");
-  productSection.setAttribute("id", _id);
-  productSection.innerHTML = `<div class="product-div-container">
-  <div class="product-image-wrapper">
-    <img src="${imageUrl}" alt="Product Image" />
-  </div>
-  <div class="product-content-container">
-    <div class="content-title-wrapper">
-      <p class="content-name">${name}</p>
+  productSection.setAttribute("class", "product-container-wrapper");
+  productSection.innerHTML = `<div class="product-container" id=${_id}>
+  <div class="product-div-container">
+    <div class="product-image-wrapper">
+      <img src="${imageUrl}" alt="Product Image" />
     </div>
-    <div class="content-container">
-      <div class="content-left-container">
+    <div class="product-content-container">
+      <div class="content-title-wrapper">
+        <p class="content-name">${name}</p>
+      </div>
+      <div class="content-container">
         <p class="content-price">${Number(price).toLocaleString("ko-KR")}원</p>
         <p class="content-brand">${brand}</p>
-      </div>
-      <div class="content-right-container">
         <p class="content-alcoholDegree">${alcoholDegree}도</p>
         <p class="content-volume">${volume}ml</p>
       </div>
@@ -176,5 +171,5 @@ async function renderData(product) {
 
   const bodyContainer = document.querySelector(".body-container");
   bodyContainer.append(productSection);
-  await goToDetailPage();
+  goToDetailPage();
 }
