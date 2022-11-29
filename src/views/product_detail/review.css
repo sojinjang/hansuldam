@@ -89,28 +89,24 @@
   height: 350px;
 }
 
-.single-review-detail-container .writer-button-container {
+.review-modification-container .review-rewrite-input {
+  width: 80%;
+  height: 70px;
+}
+
+.writer-button-container {
   margin-left: auto;
   display: flex;
+  justify-content: flex-end;
 }
 
-.writer-button-container .review-modification {
+.writer-button-container .writer-button {
   margin-right: var(--font-xs);
   cursor: pointer;
   transition: all 0.4s linear;
 }
 
-.writer-button-container .review-modification:hover {
-  font-weight: 600;
-}
-
-.writer-button-container .review-deletion {
-  margin-right: var(--font-xs);
-  cursor: pointer;
-  transition: all 0.4s linear;
-}
-
-.writer-button-container .review-deletion:hover {
+.writer-button-container .writer-button:hover {
   font-weight: 600;
 }
 

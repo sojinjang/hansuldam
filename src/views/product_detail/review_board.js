@@ -57,7 +57,7 @@ function createReviewContent(reviewElements, review, imgDirectory) {
     `
                 <div class="single-review-title-username">${review.userId.fullName}</div>
             </div>
-            <div style='display:none' class="single-review-detail-container">
+            <div style="display:none" class="single-review-detail-container">
               <div class="review-info">
                 <div class="review-date">${changeToKoreanTime(review.createdAt)}</div>
                 <div class="review-username">${review.userId.fullName}</div>
@@ -72,10 +72,18 @@ function createModificationDeletionButton(reviewElements, isWriter, reviewId) {
     return (
       reviewElements +
       `       <div class="writer-button-container">
-                <div id="${reviewId}" class="review-modification">수정</div>
-                <div id="${reviewId}" class="review-deletion">삭제</div>
+                <div id="${reviewId}" class="review-modification writer-button">수정</div>
+                <div id="${reviewId}" class="review-deletion writer-button">삭제</div>
               </div>
             </div>    
+            <div style="display:none" class="review-modification-container">
+              <textarea class="review-rewrite-input" placeholder="최소 10자 이상 작성해주세요."></textarea>
+              <div class="writer-button-container">
+                <div class="complete-modification writer-button">수정완료</div>
+                <div class="cancel-modification writer-button">취소</div>
+              </div>
+            </div>
+          </div>
     `
     );
   return reviewElements + `<div>`;
