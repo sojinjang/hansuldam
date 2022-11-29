@@ -52,19 +52,11 @@ body {
 }
 
 .sool-list .sool-item span {
-  width: 60px;
+  width: 80px;
   height: 60px;
   font-weight: bold;
   color: darkgray;
   text-align: center;
-}
-
-.container-slider-header {
-  display: flex;
-  box-sizing: border-box;
-  justify-content: space-between;
-  padding-top: 50px;
-  padding-bottom: 10px;
 }
 
 /* carousel */
@@ -85,6 +77,7 @@ body {
 }
 
 .carousel-container .carousel-slide > img{
+  object-fit: cover;
   user-select: none;
 }
 
@@ -128,6 +121,15 @@ body {
   height: 45px;
 }
 
+.container-slider-header {
+  display: flex;
+  box-sizing: border-box;
+  justify-content: space-between;
+  padding-top: 50px;
+  padding-bottom: 10px;
+  padding-right: 30px;
+}
+
 .container-slider-header .slider-header-title {
   display: flex;
   flex-direction: column;
@@ -156,6 +158,11 @@ body {
   cursor: pointer;
   font-weight: bold;
   font-size: 20px;
+}
+
+.more {
+  font-size: 1rem;
+  color: gray;
 }
 
 .slider-container {
@@ -240,11 +247,35 @@ body {
   }
 
   .sool-list .sool-item span {
-    width: 65px;
+    width: 80px;
     height: 65px;
     font-size: 17px;
   }
+
+  .more {
+    font-size: 0.875rem;
+  }
+
+  .container-slider-header .slider-header-title .main-title {
+    font-size: 20px;
+    font-weight: 800px;
+    color: darkgray;
+  }
+  
+  .container-slider-header .slider-header-title .sub-title {
+    font-size: 24px;
+  }
+  
+  .products-container .products-image-list span {
+    font-size: 16px;
+  }
+  
+  .products-container .products-image-list div {
+    width: 180px;
+    height: 225px;
+  }
 }
+
 @media (max-width: 600px) {
   .sool-list {
     margin-top: 15px;
@@ -265,9 +296,33 @@ body {
     height: 60px;
     font-size: 15px;
   }
+  .more {
+    font-size: 0.75rem;
+  }
+  .container-slider-header .slider-header-title .main-title {
+    font-size: 16px;
+    font-weight: 700px;
+    color: darkgray;
+  }
+  
+  .container-slider-header .slider-header-title .sub-title {
+    font-size: 20px;
+  }
+  
+  .products-container .products-image-list span {
+    font-size: 14px;
+  }
+  
+  .products-container .products-image-list div {
+    width: 160px;
+    height: 200px;
+  }
 }
 @media (max-width: 400px) {
   .sool-list {
     display: none;
+  }
+  .more {
+    font-size: 0.7rem;
   }
 }

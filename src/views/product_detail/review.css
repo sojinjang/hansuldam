@@ -15,6 +15,7 @@
   font-size: 25px;
   font-weight: 600;
   vertical-align: middle;
+  padding: 0px 20px;
 }
 
 .review-list-container {
@@ -174,6 +175,9 @@
 }
 
 /* button */
+.review-write-button {
+  margin-right: 10px;
+}
 .review-submit-button {
   appearance: none;
   background-color: #ffffff;
@@ -238,4 +242,95 @@
 .review-submit-button span {
   z-index: 1;
   position: relative;
+}
+
+@media (max-width: 768px) {
+  .review-title {
+    font-size: 21px;
+    font-weight: 700;
+    padding: 0px 15px;
+  }
+  .review-write-button {
+    font-size: 14px;
+    height: 34px;
+    line-height: 22px;
+    max-width: 100%;
+    padding: 0 20px;
+    margin-right: 0px;
+  }
+  .review-write-button:after {
+    height: 34px;
+  }
+  .review-container {
+    margin-top: 30px;
+  }
+  .single-review-detail-container .review-info {
+    margin: 5px;
+  }
+  .single-review-container {
+    margin-top: 0px;
+    padding: 5px;
+  }
+  .single-review-title-container .single-review-title-content {
+    font-size: 0.875rem;
+  }
+  .single-review-title-container .single-review-title-username {
+    font-size: 14px;
+  }
+  .single-review-detail-container .review-info .review-date {
+    font-weight: 400;
+    font-size: 0.875rem;
+  }
+  .single-review-detail-container .review-username {
+    font-size: 0.875rem;
+  }
+  .single-review-detail-container .review-content-detail {
+    margin: 5px;
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .review-title {
+    font-size: 16px;
+    font-weight: 500;
+    padding: 0px 10px;
+  }
+  .review-write-button {
+    font-size: 12px;
+    height: 28px;
+    line-height: 18px;
+    max-width: 100%;
+    padding: 0 10px;
+  }
+  .review-write-button:after {
+    height: 28px;
+  }
+  .review-container {
+    margin-top: 0px;
+  }
+  .single-review-detail-container .review-info {
+    margin: 0px;
+  }
+  .single-review-container {
+    margin-top: 0px;
+    padding: 5px;
+  }
+  .single-review-title-container .single-review-title-content {
+    font-size: 0.75em;
+  }
+  .single-review-title-container .single-review-title-username {
+    font-size: 12px;
+  }
+  .single-review-detail-container .review-info .review-date {
+    font-weight: 200;
+    font-size: 0.75rem;
+  }
+  .single-review-detail-container .review-username {
+    font-size: 0.75rem;
+  }
+  .single-review-detail-container .review-content-detail {
+    font-size: 0.75rem;
+    margin: 5px;
+  }
 }
