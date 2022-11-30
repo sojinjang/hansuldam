@@ -171,7 +171,7 @@ function handleSearchWithClick(e) {
   const inputValue = input.value.trim();
   inputValue === ""
     ? alert("검색어를 입력해주세요.")
-    : (window.location.href = `/search/?keyword=${inputValue}`);
+    : (window.location.href = `/search/?keyword=${inputValue}&page=1`);
 }
 
 function handleSearchWithEnter(e) {
@@ -180,7 +180,7 @@ function handleSearchWithEnter(e) {
   if (e.keyCode === 13) {
     inputValue === ""
       ? alert("검색어를 입력해주세요.")
-      : (window.location.href = `/search/?keyword=${inputValue}`);
+      : (window.location.href = `/search/?keyword=${inputValue}&page=1`);
   }
 }
 
