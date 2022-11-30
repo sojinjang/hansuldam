@@ -50,7 +50,7 @@ async function fixComment() {
     },
   ];
 
-  const user = await userModel.findByEmail("sojin@elice.com");
+  const user = await userModel.findByEmail("sojin@google.com");
 
   const fixedComments = await Promise.all(
     comments.map(async ({ productName, ...rest }) => {

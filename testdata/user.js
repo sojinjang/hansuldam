@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 async function user() {
   const userDatas = [
     {
-      email: "richman@elice.com",
+      email: "richman@google.com",
       fullName: "임고객",
       password: await bcrypt.hash("00000000", 10),
       phoneNumber: "01012341234",
@@ -16,7 +16,7 @@ async function user() {
       role: "basic-user",
     },
     {
-      email: "admin@elice.com",
+      email: "admin@google.com",
       fullName: "노숙취",
       password: await bcrypt.hash("11111111", 10),
       phoneNumber: "01012341234",
@@ -28,7 +28,7 @@ async function user() {
       role: "admin",
     },
     {
-      email: "han@elice.com",
+      email: "han@google.com",
       fullName: "한소희",
       password: await bcrypt.hash("11111111", 10),
       phoneNumber: "01012341234",
@@ -40,7 +40,7 @@ async function user() {
       role: "admin",
     },
     {
-      email: "DJmaster@elice.com",
+      email: "DJmaster@google.com",
       fullName: "DJ Kim",
       password: await bcrypt.hash("11111111", 10),
       phoneNumber: "01012341234",
@@ -52,7 +52,7 @@ async function user() {
       role: "admin",
     },
     {
-      email: "jian@elice.com",
+      email: "jian@google.com",
       fullName: "지안",
       password: await bcrypt.hash("11111111", 10),
       phoneNumber: "01012341234",
@@ -64,7 +64,7 @@ async function user() {
       role: "admin",
     },
     {
-      email: "jw@elice.com",
+      email: "jw@google.com",
       fullName: "이재우우웅",
       password: await bcrypt.hash("11111111", 10),
       phoneNumber: "01012341234",
@@ -76,7 +76,7 @@ async function user() {
       role: "admin",
     },
     {
-      email: "sojin@elice.com",
+      email: "sojin@google.com",
       fullName: "장팀장",
       password: await bcrypt.hash("11111111", 10),
       phoneNumber: "01012341234",
