@@ -53,10 +53,16 @@ orderId.forEach((id) => {
     );
 
     function showDetailInformationPage() {
-      selectId(`${orderList._id}-address-container`).style.display = "flex";
-      selectId(`${orderList._id}-payment-information-container`).style.display = "flex";
-      if (orderList.status == "상품준비중") {
-        selectId(`${orderList._id}-button-container`).style.display = "flex";
+      if (selectId(`${orderList._id}-address-container`).style.display == "none") {
+        selectId(`${orderList._id}-address-container`).style.display = "flex";
+        selectId(`${orderList._id}-payment-information-container`).style.display = "flex";
+        if (orderList.status == "상품준비중") {
+          selectId(`${orderList._id}-button-container`).style.display = "flex";
+        }
+      } else {
+        selectId(`${orderList._id}-address-container`).style.display = "none";
+        selectId(`${orderList._id}-payment-information-container`).style.display = "none";
+        selectId(`${orderList._id}-button-container`).style.display = "none";
       }
     }
 
@@ -72,7 +78,7 @@ orderId.forEach((id) => {
 
     async function setNewInformation() {
       if (!isName(selectId(`${orderList._id}-input-name`).value)) {
-        alert("이름을 다시 확인해주세요 📛");
+        alert("이름 입력값을 확인해주세요 🪪");
         return;
       }
       if (selectId(`${orderList._id}-input-phoneNumber`).value.length < 11) {
@@ -219,6 +225,7 @@ function createShippingDestinationContainer(item) {
   page = document.createElement("div");
   page.setAttribute("class", "address-container");
   page.setAttribute("id", `${item._id}-address-container`);
+  page.setAttribute("style", "display: none");
   page.innerHTML = `<div class="address-text">배송지 정보</div>
 <div class="address-info-wrapper">
   <span class="address-info-text">수령인</span>

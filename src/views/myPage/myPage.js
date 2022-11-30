@@ -39,7 +39,7 @@ async function showOrderListPage() {
   const orderID = $(".order-id").value;
 
   if (!isName($(".order-user-name").value)) {
-    alert("이름을 입력해주세요 📛");
+    alert("이름 입력값을 확인해주세요 🪪");
     return;
   }
   if ($(".order-id").value == "") {
@@ -78,15 +78,13 @@ async function showOrderListPage() {
   $(".detail-info-btn").addEventListener("click", showDetailInformationPage);
 
   function showDetailInformationPage() {
-    if (($(".address-container").style.display = "none")) {
-      console.log("안된다");
+    if ($(".address-container").style.display == "none") {
       $(".address-container").style.display = "flex";
       $(".payment-information-container").style.display = "flex";
       if (orderData.status == "상품준비중") {
         $(".button-container").style.display = "flex";
       }
-    } else if (($(".address-container").style.display = "flex")) {
-      console.log("된다");
+    } else {
       $(".address-container").style.display = "none";
       $(".payment-information-container").style.display = "none";
       $(".button-container").style.display = "none";
@@ -279,6 +277,7 @@ function createDeliveryInformationContainer(item) {
   let page = undefined;
   page = document.createElement("div");
   page.setAttribute("class", "address-container");
+  page.setAttribute("style", "display: none");
   page.innerHTML = `<div class="address-text">배송지 정보</div>
   <div class="address-info-wrapper">
     <span class="address-info-text">수령인</span>
