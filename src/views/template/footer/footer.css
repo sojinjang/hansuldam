@@ -3,6 +3,16 @@
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap");
 @import url("../main_style.css");
 
+@media screen and (max-width: 680px) {
+  .footer-container {
+    padding: 12px 3vw 40px 3vw;
+  }
+
+  .footer-container .footer-policy .policy-item .footer-item-text {
+    margin-right: 10px !important;
+  }
+}
+
 /* footer */
 .footer-container {
   display: flex;

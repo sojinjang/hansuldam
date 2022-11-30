@@ -1,4 +1,15 @@
 /* main */
+
+@media screen and (max-width: 680px) {
+  .event-slider-container {
+    margin: 0 !important;
+  }
+
+  .body-container {
+    margin-top: 0 !important;
+  }
+}
+
 .section-container {
   display: flex;
   box-sizing: border-box;
