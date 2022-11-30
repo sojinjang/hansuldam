@@ -210,6 +210,10 @@ body {
   cursor: pointer;
 }
 
+.detail-info-button-container .detail-info-btn:hover {
+  color: var(--brown-500);
+}
+
 .address-container {
   display: none;
   flex-direction: column;
