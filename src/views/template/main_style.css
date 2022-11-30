@@ -40,6 +40,35 @@
   --font-xxxxxl: 2rem;
 }
 
+@media (max-width: 768px) {
+  :root {
+  --font-xs: 0.65rem;
+  --font-sm: 0.75rem;
+  --font-base: 0.875rem;
+  --font-lg: 1rem;
+  --font-xl: 1.125rem;
+  --font-xxl: 1.25rem;
+  --font-xxxl: 1.5rem;
+  --font-xxxxl: 1.7rem;
+  --font-xxxxxl: 1.85rem;
+  }
+}
+
+@media (max-width: 414px) {
+  :root {
+  --font-xs: 0.5rem;
+  --font-sm: 0.65rem;
+  --font-base: 0.75rem;
+  --font-lg: 0.875rem;
+  --font-xl: 1rem;
+  --font-xxl: 1.125rem;
+  --font-xxxl: 1.25rem;
+  --font-xxxxl: 1.75rem;
+  --font-xxxxxl: 1.7rem;
+  }
+}
+
+
 /* font */
 
 html {
@@ -425,13 +454,13 @@ brown*/
   display: inline-flex;
   flex: 1 1 auto;
   font-family: Inter, sans-serif;
-  font-size: 1rem;
+  font-size: var(--font-base);
   font-weight: 550;
   justify-content: center;
   line-height: 1;
   margin: 0;
   outline: none;
-  padding: 1rem 1.1rem;
+  padding: var(--font-base) var(--font-base);
   text-align: center;
   text-decoration: none;
   white-space: nowrap;
@@ -458,13 +487,13 @@ brown*/
   display: inline-flex;
   flex: 1 1 auto;
   font-family: Inter, sans-serif;
-  font-size: 1rem;
+  font-size: var(--font-base);
   font-weight: 550;
   justify-content: center;
   line-height: 1;
   margin: 0;
   outline: none;
-  padding: 1rem 1.1rem;
+  padding: var(--font-base) var(--font-base);
   text-align: center;
   text-decoration: none;
   white-space: nowrap;
@@ -490,13 +519,13 @@ brown*/
   display: inline-flex;
   flex: 1 1 auto;
   font-family: Inter, sans-serif;
-  font-size: 1rem;
+  font-size: var(--font-base);
   font-weight: 550;
   justify-content: center;
   line-height: 1;
   margin: 0;
   outline: none;
-  padding: 1rem 1.1rem;
+  padding: var(--font-base) var(--font-base);
   text-align: center;
   text-decoration: none;
   white-space: nowrap;
@@ -521,7 +550,7 @@ white */
   border-radius: 0.5rem;
   box-sizing: border-box;
   color: #111827;
-  font-size: 1rem;
+  font-size: var(--font-base);
   font-weight: 400;
   line-height: 0.5rem;
   padding: 0.75rem 1rem;
