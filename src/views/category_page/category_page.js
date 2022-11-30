@@ -3,21 +3,15 @@ import { ApiUrl } from "../constants/ApiUrl.js";
 
 const $ = (selector) => document.querySelector(selector);
 
+const params = new URLSearchParams(window.location.search);
+const currentPage = params.get("page");
+const currentlabel = params.get("label");
+
 async function fetchProducts(index) {
   const data = await get(`${ApiUrl.PRODUCTS_OVERALL_INFORMATION}${index}&perpage=12`);
 
   return data;
 }
-
-const paginationHtml = `<nav class="pagination-container" role="navigation" aria-label="pagination">
-<ul class="pagination-list">
-  <li>
-    <a class="pagination-link button-35-brown button-35-white" aria-label="1" aria-current="page">1</a>
-  </li>
-</ul>
-</nav>`;
-
-$(".footer-container").insertAdjacentHTML("beforebegin", paginationHtml);
 
 async function refineData() {
   const { products, totalPage } = await fetchProducts(1);
@@ -30,20 +24,36 @@ async function refineData() {
   }
 
   (function generatePagenationButton() {
-    for (let i = 2; i <= totalPage; i++) {
+    const paginationHtml = `<nav class="pagination-container" role="navigation" aria-label="pagination">
+<ul class="pagination-list"></ul>
+</nav>`;
+
+    $(".footer-container").insertAdjacentHTML("beforebegin", paginationHtml);
+
+    for (let i = 1; i <= totalPage; i++) {
       const pageButton = document.createElement("li");
       pageButton.innerHTML = `<a class="pagination-link button-35-white" aria-label="${i}" aria-current="page">${i}</a>`;
       $(".pagination-list").append(pageButton);
     }
+
+    const paginationButton = document.querySelectorAll(".pagination-link");
+
+    paginationButton.forEach((button) => {
+      const currentButton = button.getAttribute("aria-label");
+
+      if (currentButton === currentPage) {
+        button.classList.add("button-35-brown");
+      }
+    });
   })();
 
-  const params = new URLSearchParams(window.location.search);
-  const label = params.get("label");
+  let refinedData = [];
 
-  switch (label) {
+  switch (currentlabel) {
     case "totalProducts":
       document.title = "모든 상품 - 한술담 🍶";
-      return productsTotalData;
+      refinedData = productsTotalData;
+      break;
 
     case "newProducts":
       document.title = "신상품 - 한술담 🍶";
@@ -52,7 +62,8 @@ async function refineData() {
         if (a.updatedAt > b.updatedAt) return -1;
       });
       $(".pagination-list").remove();
-      return sortNew.slice(0, 9);
+      refinedData = sortNew.slice(0, 12);
+      break;
 
     case "bestProducts":
       document.title = "최고의 상품 - 한술담 🍶";
@@ -60,21 +71,26 @@ async function refineData() {
         if (a.sales < b.sales) return 1;
         if (a.sales > b.sales) return -1;
       });
-      return sortBestSelling;
+      refinedData = sortBestSelling;
+      break;
   }
+
+  let slicedProductsTotalData = [];
+
+  for (let i = 0; i < refinedData.length; i += 12) {
+    slicedProductsTotalData.push(refinedData.slice(i, i + 12));
+  }
+
+  return slicedProductsTotalData;
 }
 
 async function showProducts() {
-  const productsTotalData = await refineData();
+  const slicedProductsTotalData = await refineData();
 
-  let productsArr = [];
+  let currentPageData = slicedProductsTotalData[0];
 
-  for (let i = 0; i < productsTotalData.length; i += 12) {
-    productsArr.push(productsTotalData.slice(i, i + 12));
-  }
-
-  let currentPageData = productsArr[0];
-  (function showProductsPageOne() {
+  (function showProductsInPage() {
+    currentPageData = slicedProductsTotalData[currentPage - 1];
     currentPageData.forEach((product) => {
       renderData(product);
     });
@@ -83,39 +99,15 @@ async function showProducts() {
   (function handlePaginationButton() {
     const paginationButton = document.querySelectorAll(".pagination-link");
 
-    paginationButton.forEach((button) => {
-      button.addEventListener("click", (e) => {
-        if (document.querySelectorAll(".product-container")) {
-          const productContainers = document.querySelectorAll(".product-container");
-          productContainers.forEach((container) => container.remove());
-        }
-
-        const pageButton = document.querySelectorAll(".pagination-link");
-        const currentPage = e.target.getAttribute("aria-label");
-
-        pageButton.forEach((button) => {
-          button.classList.remove("button-35-brown");
-          window.scrollTo(0, 0);
-        });
-        e.target.classList.add("button-35-brown");
-
-        currentPageData = productsArr[currentPage - 1];
-
-        if (!currentPageData) {
-          alert("데이터가 없습니다!");
-        } else
-          currentPageData.forEach((product) => {
-            renderData(product);
-          });
+    paginationButton.forEach((button, i) => {
+      button.addEventListener("click", () => {
+        window.location.assign(`/products?label=${currentlabel}&page=${i + 1}`);
       });
     });
   })();
 
   (function addClickedClass() {
-    const params = new URLSearchParams(window.location.search);
-    const label = params.get("label");
-
-    switch (label) {
+    switch (currentlabel) {
       case "totalProducts":
         $("#totalProducts").setAttribute("class", "menu-label clicked-label");
         break;
@@ -133,16 +125,6 @@ async function showProducts() {
 
 await showProducts();
 
-function goToDetailPage() {
-  const productContainer = document.querySelectorAll(".product-container");
-  productContainer.forEach((container) => {
-    container.addEventListener("click", (e) => {
-      const productId = e.currentTarget.getAttribute("id");
-      window.location.href = `/product-detail?id=${productId}`;
-    });
-  });
-}
-
 async function renderData(product) {
   const { _id, name, brand, price, volume, alcoholDegree, image } = product;
   const imageUrl = "../" + decodeURIComponent(image).split("views")[1];
@@ -153,7 +135,7 @@ async function renderData(product) {
   productSection.innerHTML = `<div class="product-container" id=${_id}>
   <div class="product-div-container">
     <div class="product-image-wrapper">
-      <img src="${imageUrl}" alt="Product Image" />
+      <img src="${imageUrl}" alt="이런! 상품 이미지가 없네요." />
     </div>
     <div class="product-content-container">
       <div class="content-title-wrapper">
@@ -172,4 +154,14 @@ async function renderData(product) {
   const bodyContainer = document.querySelector(".body-container");
   bodyContainer.append(productSection);
   goToDetailPage();
+}
+
+function goToDetailPage() {
+  const productContainer = document.querySelectorAll(".product-container");
+  productContainer.forEach((container) => {
+    container.addEventListener("click", (e) => {
+      const productId = e.currentTarget.getAttribute("id");
+      window.location.href = `/product-detail?id=${productId}`;
+    });
+  });
 }

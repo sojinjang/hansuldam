@@ -41,7 +41,7 @@ function isCardNum(cardNumInput) {
 }
 
 function isValidComment(reviewInput) {
-  return reviewInput.length >= 10;
+  return reviewInput.length >= 7;
 }
 
 export {

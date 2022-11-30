@@ -102,6 +102,13 @@ function checkAllProducts(e) {
   checkboxList.forEach((checkbox) => (checkbox.checked = e.target.checked));
 }
 
+function handleAllChecker() {
+  const checkboxList = document.querySelectorAll(".individual-checker");
+  const checkedCnt = [...checkboxList].filter((checkbox) => checkbox.checked === true).length;
+  if (checkboxList.length === checkedCnt) return (allChecker.checked = true);
+  return (allChecker.checked = false);
+}
+
 function deleteProductFromCart(e) {
   const productDiv = e.target.parentElement.parentElement.parentElement;
   let savedProducts = removeProductFromLocalDB(productDiv.id);
@@ -235,6 +242,7 @@ plusButtons.forEach((plusButton) => {
 
 checkboxes.forEach((checkbox) => {
   checkbox.addEventListener("click", calculateTotalPrice);
+  checkbox.addEventListener("click", handleAllChecker);
 });
 
 checkoutButton.addEventListener("click", moveToPaymentPage);
