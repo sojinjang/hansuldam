@@ -38,6 +38,7 @@ async function noAuthOrder() {
       },
       status: "상품준비중",
       totalPrice: 0,
+      payment: { method: "신용카드", detail: "농협", number: "1234123412341234" },
       productsInOrder: [],
     },
     {
@@ -49,6 +50,7 @@ async function noAuthOrder() {
       },
       status: "상품준비중",
       totalPrice: 0,
+      payment: { method: "신용카드", detail: "신한", number: "1234123412341234" },
       productsInOrder: [],
     },
   ];
@@ -78,6 +80,7 @@ async function authOrder() {
     status: "상품준비중",
     totalPrice: 0,
     productsInOrder: [],
+    payment: { method: "신용카드", detail: "KB 국민", number: "1234123412341234" },
   };
 
   let authOrderdatas = users.map((user) => {

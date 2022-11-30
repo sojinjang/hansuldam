@@ -49,7 +49,7 @@ const OrderSchema = new Schema(
           _id: false,
         }
       ),
-      required: false,
+      required: true,
     },
     totalPrice: {
       type: Number,
