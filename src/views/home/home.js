@@ -23,6 +23,15 @@ function clickCarouselDot(e) {
   });
 }
 
+const alcoholType = document.querySelectorAll(".sool-item");
+
+alcoholType.forEach((alcoholType) => {
+  alcoholType.addEventListener("click", (e) => {
+    const alcoholTypeId = e.currentTarget.getAttribute("id");
+    window.location.href = `/filter?alcoholType=${alcoholTypeId}&page=1`;
+  });
+});
+
 async function fetchCategory() {
   const categoryData = await get(ApiUrl.CATEGORY);
   const categoryId = categoryData[0]["_id"];
