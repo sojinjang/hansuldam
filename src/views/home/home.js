@@ -1,5 +1,6 @@
 import { get } from "../api.js";
 import { ApiUrl } from "../constants/ApiUrl.js";
+import { changeToKoreanWon } from "../utils/useful_functions.js"
 
 const $ = (selector) => document.querySelector(selector);
 
@@ -27,9 +28,9 @@ function clickCarouselDot(e) {
   });
 }
 
-const alcoholType = document.querySelectorAll(".sool-item");
+const alcoholTypeButton = document.querySelectorAll(".sool-item");
 
-alcoholType.forEach((alcoholType) => {
+alcoholTypeButton.forEach((alcoholType) => {
   alcoholType.addEventListener("click", (e) => {
     const alcoholTypeId = e.currentTarget.getAttribute("id");
     window.location.href = `/filter?alcoholType=${alcoholTypeId}&page=1`;
@@ -50,7 +51,7 @@ async function renderData() {
   const eventProducts = productsInCategory["productList"];
 
   eventProducts.forEach((product) => {
-    const { _id, name, image } = product;
+    const { _id, name, image, price } = product;
     const imageUrl = "../" + decodeURIComponent(image).split("views")[1];
 
     let productContainer = document.createElement("div");
@@ -61,8 +62,8 @@ async function renderData() {
 			src="${imageUrl}"
 		/>
 	</div>
-<span>${name}</span>`;
-
+<span>${name}</span>
+<span>${changeToKoreanWon(price)}<span class="won">원</span></span>`;
     const eventsContainer = document.querySelector(".products-container");
     eventsContainer.append(productContainer);
   });
