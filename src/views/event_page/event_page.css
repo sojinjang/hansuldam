@@ -54,6 +54,10 @@
   .body-container {
     padding: 0 0vw 0 0vw !important;
   }
+
+  .events-container {
+    flex-wrap: wrap;
+  }
 }
 
 @media screen and (max-width: 680px) {
@@ -63,6 +67,10 @@
 
   .body-container {
     padding: 0 0vw 0 0vw !important;
+  }
+
+  .events-container {
+    flex-wrap: wrap;
   }
 }
 
@@ -193,4 +201,5 @@
 
 .separator {
   margin: 0 10px 0 10px;
+  opacity: 0.4;
 }
