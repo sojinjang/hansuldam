@@ -3,17 +3,21 @@ import { ApiUrl } from "../constants/ApiUrl.js";
 
 const $ = (selector) => document.querySelector(selector);
 
-const carouselDot = document.querySelectorAll(".carousel-dot");
+const carouselImages = document.querySelectorAll(".carousel-img");
+const carouselDots = document.querySelectorAll(".carousel-dot");
 
-carouselDot.forEach((dot) => {
+carouselImages.forEach((image) => {
+  image.addEventListener("click", () => (window.location.href = "/event-page/"));
+});
+
+carouselDots.forEach((dot) => {
   dot.addEventListener("click", clickCarouselDot);
 });
 
 function clickCarouselDot(e) {
-  const carouselDot = document.querySelectorAll(".carousel-dot");
   const slide = document.querySelector(".carousel-slide");
 
-  carouselDot.forEach((dot, i) => {
+  carouselDots.forEach((dot, i) => {
     dot.classList.remove("dot-clicked");
 
     if (dot === e.target) {
@@ -100,5 +104,4 @@ function goToDetailPage() {
   });
 }
 
-// addEventsInDots();
 clickSliderButton();
