@@ -54,6 +54,12 @@ input:-webkit-autofill:active {
   transition: background-color 5000s ease-in-out 0s;
 }
 
+input:active,
+:focus {
+  box-shadow: none !important;
+  border: 1px solid var(--black-100) !important;
+}
+
 #emailInput {
   background-image: url(../img/login.png);
   background-size: 20px;
@@ -118,7 +124,8 @@ input:-webkit-autofill:active {
 }
 
 .login-form-text a:hover {
-  box-shadow: var(--black-400) 0 0 0 1.5px, transparent 0 0 0 0;
+  box-shadow: var(--brown-500) 0 0 0 1.5px, transparent 0 0 0 0;
+  color: var(--brown-500);
 }
 
 .join-button {

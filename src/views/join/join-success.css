@@ -67,6 +67,12 @@ input:-webkit-autofill:active {
   transition: background-color 5000s ease-in-out 0s;
 }
 
+input:active,
+:focus {
+  box-shadow: none !important;
+  border: 1px solid var(--black-100) !important;
+}
+
 .body-section-container .body-join-check .adultCheckButton {
   height: 40px;
   margin-top: 20px;

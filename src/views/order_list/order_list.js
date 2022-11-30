@@ -351,7 +351,7 @@ function createChangeInformationButtonContainer(item) {
   page = document.createElement("div");
   page.setAttribute("class", "button-container");
   page.setAttribute("id", `${item._id}-button-container`);
-  page.innerHTML = `<button class="info-change button-38" id="${item._id}-info-change">정보 수정하기</button>
-  <button class="cancel-order button-38" id="${item._id}-cancel-order">주문 취소</button>`;
+  page.innerHTML = `<button class="info-change" id="${item._id}-info-change">정보 수정하기</button>
+  <button class="cancel-order" id="${item._id}-cancel-order">주문 취소</button>`;
   return page;
 }
