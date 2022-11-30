@@ -6,7 +6,7 @@ const path = require("path");
 async function comment() {
   try {
     // 앞 상품 5개
-    const products = await productModel.findAll(0, 6);
+    const products = await productModel.findFiltered(0, 6, { sales: -1 }, {});
     const users = await userModel.findAll();
     let comments = sampleComment.map((ment) => {
       ment["productId"] = products[getRandomInt(0, 6)]._id;
