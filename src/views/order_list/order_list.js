@@ -8,142 +8,158 @@ const selectId = (selector) => document.getElementById(selector);
 const userData = await get(ApiUrl.USER_INFORMATION);
 const orderId = userData.orders;
 
-orderId.forEach((id) => {
-  async function setOrderListContainer() {
-    const orderList = await get(ApiUrl.ORDERS, id);
-    const productList = await get(ApiUrl.ORDERS, `${id}/products`);
+async function setOrderListContainer(orderId) {
+  for await (const id of orderId) {
+    try {
+      const orderList = await get(ApiUrl.ORDERS, id);
+      const productList = await get(ApiUrl.ORDERS, `${id}/products`);
 
-    createSingleOrderContainer(orderList).prepend(createOrderStatus(orderList));
-    productList.forEach((product) => {
-      selectId(`${orderList._id}-order-container`).append(createProductListContainer(product));
-    });
-    selectId(`${orderList._id}-order-container`).append(
-      createShowDetailInformationButton(orderList)
-    );
-    selectId(`${orderList._id}-order-container`).append(
-      createShippingDestinationContainer(orderList)
-    );
-    selectId(`${orderList._id}-order-container`).append(
-      createChangeShippingDestinationContainer(orderList)
-    );
-    selectId(`${orderList._id}-order-container`).append(
-      createPaymentInformationContainer(orderList)
-    );
-    selectId(`${orderList._id}-order-container`).append(
-      createChangeInformationButtonContainer(orderList)
-    );
+      createSingleOrderContainer(orderList).prepend(createOrderStatus(orderList));
+      productList.forEach((product) => {
+        selectId(`${orderList._id}-order-container`).append(
+          createProductListContainer(product)
+        );
+      });
+      selectId(`${orderList._id}-order-container`).append(
+        createShowDetailInformationButton(orderList)
+      );
+      selectId(`${orderList._id}-order-container`).append(
+        createShippingDestinationContainer(orderList)
+      );
+      selectId(`${orderList._id}-order-container`).append(
+        createChangeShippingDestinationContainer(orderList)
+      );
+      selectId(`${orderList._id}-order-container`).append(
+        createPaymentInformationContainer(orderList)
+      );
+      selectId(`${orderList._id}-order-container`).append(
+        createChangeInformationButtonContainer(orderList)
+      );
 
-    getDeliveryFee(orderList);
-    getTotalPrice(orderList);
+      getDeliveryFee(orderList);
+      getTotalPrice(orderList);
 
-    selectId(`${orderList._id}-detail-info-btn`).addEventListener(
-      "click",
-      showDetailInformationPage
-    );
-    selectId(`${orderList._id}-info-change`).addEventListener(
-      "click",
-      showDeliveryInformationChangePage
-    );
-    selectId(`${orderList._id}-cancel-order`).addEventListener("click", cancelOrder);
-    selectId(`${orderList._id}-change-btn`).addEventListener("click", setNewInformation);
-    selectId(`${orderList._id}-cancel-btn`).addEventListener("click", cancelChangeInformation);
-    selectId(`${orderList._id}-find-address-btn`).addEventListener(
-      "click",
-      insertFoundAddress
-    );
+      selectId(`${orderList._id}-detail-info-btn`).addEventListener(
+        "click",
+        showDetailInformationPage
+      );
+      selectId(`${orderList._id}-info-change`).addEventListener(
+        "click",
+        showDeliveryInformationChangePage
+      );
+      selectId(`${orderList._id}-cancel-order`).addEventListener("click", cancelOrder);
+      selectId(`${orderList._id}-change-btn`).addEventListener("click", setNewInformation);
+      selectId(`${orderList._id}-cancel-btn`).addEventListener(
+        "click",
+        cancelChangeInformation
+      );
+      selectId(`${orderList._id}-find-address-btn`).addEventListener(
+        "click",
+        insertFoundAddress
+      );
 
-    function showDetailInformationPage() {
-      selectId(`${orderList._id}-address-container`).style.display = "flex";
-      selectId(`${orderList._id}-payment-information-container`).style.display = "flex";
-      if (orderList.status == "상품준비중") {
-        selectId(`${orderList._id}-button-container`).style.display = "flex";
-      }
-    }
-
-    function showDeliveryInformationChangePage() {
-      selectId(`${orderList._id}-user-change-container`).style.display = "flex";
-    }
-
-    async function insertFoundAddress() {
-      const { foundZoneCode, foundAddress } = await findAddress();
-      selectId(`${orderList._id}-input-postalCode`).value = foundZoneCode;
-      selectId(`${orderList._id}-input-address1`).value = foundAddress;
-    }
-
-    async function setNewInformation() {
-      if (!isName(selectId(`${orderList._id}-input-name`).value)) {
-        alert("이름을 다시 확인해주세요 📛");
-        return;
-      }
-      if (selectId(`${orderList._id}-input-phoneNumber`).value.length < 11) {
-        alert("휴대폰 번호를 다시 확인해주세요 📱");
-        return;
-      } else if (!isNum($(".phoneNumber-input").value)) {
-        alert("숫자만 입력 가능합니다 🔢");
-        return;
-      }
-      if (
-        selectId(`${orderList._id}-input-postalCode`).value == "" ||
-        selectId(`${orderList._id}-input-address1`).value == "" ||
-        selectId(`${orderList._id}-input-address2`).value == ""
-      ) {
-        alert("주소를 기입해주세요 🏠");
-        return;
-      }
-
-      const changeInfo = {
-        fullName: selectId(`${orderList._id}-input-name`).value,
-        phoneNumber: selectId(`${orderList._id}-input-phoneNumber`).value,
-        address: {
-          postalCode: selectId(`${orderList._id}-input-postalCode`).value,
-          address1: selectId(`${orderList._id}-input-address1`).value,
-          address2: selectId(`${orderList._id}-input-address2`).value,
-        },
-      };
-
-      try {
-        await patch("/api/orders", id, changeInfo);
-        alert("정보가 수정되었습니다 🎉");
-        selectId(`${orderList._id}-user-name`).innerHTML = selectId(
-          `${orderList._id}-input-name`
-        ).value;
-        selectId(`${orderList._id}-user-phoneNumber`).innerHTML = selectId(
-          `${orderList._id}-input-phoneNumber`
-        ).value;
-        selectId(`${orderList._id}-user-postalCode`).innerHTML = selectId(
-          `${orderList._id}-input-postalCode`
-        ).value;
-        selectId(`${orderList._id}-user-address1`).innerHTML = selectId(
-          `${orderList._id}-input-address1`
-        ).value;
-        selectId(`${orderList._id}-user-address2`).innerHTML = selectId(
-          `${orderList._id}-input-address2`
-        ).value;
-
-        selectId(`${orderList._id}-user-change-container`).style.display = "none";
-      } catch (e) {
-        alert(e.message);
-      }
-    }
-
-    function cancelChangeInformation() {
-      selectId(`${orderList._id}-user-change-container`).style.display = "none";
-    }
-
-    async function cancelOrder() {
-      try {
-        if (confirm("주문을 취소하시겠습니까?")) {
-          await del("/api/orders", id, productList);
-          alert("주문취소가 성공적으로 처리되었습니다 😔");
-          location.reload();
+      function showDetailInformationPage() {
+        if (selectId(`${orderList._id}-address-container`).style.display == "none") {
+          selectId(`${orderList._id}-address-container`).style.display = "flex";
+          selectId(`${orderList._id}-payment-information-container`).style.display = "flex";
+          if (orderList.status == "상품준비중") {
+            selectId(`${orderList._id}-button-container`).style.display = "flex";
+          }
+        } else {
+          selectId(`${orderList._id}-address-container`).style.display = "none";
+          selectId(`${orderList._id}-payment-information-container`).style.display = "none";
+          selectId(`${orderList._id}-button-container`).style.display = "none";
         }
-      } catch (e) {
-        alert(e.message);
       }
+
+      function showDeliveryInformationChangePage() {
+        selectId(`${orderList._id}-user-change-container`).style.display = "flex";
+      }
+
+      async function insertFoundAddress() {
+        const { foundZoneCode, foundAddress } = await findAddress();
+        selectId(`${orderList._id}-input-postalCode`).value = foundZoneCode;
+        selectId(`${orderList._id}-input-address1`).value = foundAddress;
+      }
+
+      async function setNewInformation() {
+        if (!isName(selectId(`${orderList._id}-input-name`).value)) {
+          alert("이름 입력값을 확인해주세요 🪪");
+          return;
+        }
+        if (selectId(`${orderList._id}-input-phoneNumber`).value.length < 11) {
+          alert("휴대폰 번호를 다시 확인해주세요 📱");
+          return;
+        } else if (!isNum($(".phoneNumber-input").value)) {
+          alert("숫자만 입력 가능합니다 🔢");
+          return;
+        }
+        if (
+          selectId(`${orderList._id}-input-postalCode`).value == "" ||
+          selectId(`${orderList._id}-input-address1`).value == "" ||
+          selectId(`${orderList._id}-input-address2`).value == ""
+        ) {
+          alert("주소를 기입해주세요 🏠");
+          return;
+        }
+
+        const changeInfo = {
+          fullName: selectId(`${orderList._id}-input-name`).value,
+          phoneNumber: selectId(`${orderList._id}-input-phoneNumber`).value,
+          address: {
+            postalCode: selectId(`${orderList._id}-input-postalCode`).value,
+            address1: selectId(`${orderList._id}-input-address1`).value,
+            address2: selectId(`${orderList._id}-input-address2`).value,
+          },
+        };
+
+        try {
+          await patch("/api/orders", id, changeInfo);
+          alert("정보가 수정되었습니다 🎉");
+          selectId(`${orderList._id}-user-name`).innerHTML = selectId(
+            `${orderList._id}-input-name`
+          ).value;
+          selectId(`${orderList._id}-user-phoneNumber`).innerHTML = selectId(
+            `${orderList._id}-input-phoneNumber`
+          ).value;
+          selectId(`${orderList._id}-user-postalCode`).innerHTML = selectId(
+            `${orderList._id}-input-postalCode`
+          ).value;
+          selectId(`${orderList._id}-user-address1`).innerHTML = selectId(
+            `${orderList._id}-input-address1`
+          ).value;
+          selectId(`${orderList._id}-user-address2`).innerHTML = selectId(
+            `${orderList._id}-input-address2`
+          ).value;
+
+          selectId(`${orderList._id}-user-change-container`).style.display = "none";
+        } catch (e) {
+          alert(e.message);
+        }
+      }
+
+      function cancelChangeInformation() {
+        selectId(`${orderList._id}-user-change-container`).style.display = "none";
+      }
+
+      async function cancelOrder() {
+        try {
+          if (confirm("주문을 취소하시겠습니까?")) {
+            await del("/api/orders", id, productList);
+            alert("주문취소가 성공적으로 처리되었습니다 😔");
+            location.reload();
+          }
+        } catch (e) {
+          alert(e.message);
+        }
+      }
+    } catch (e) {
+      console.log(e.message);
     }
   }
-  setOrderListContainer();
-});
+}
+
+setOrderListContainer(orderId);
 
 function getDeliveryFee(item) {
   const deliveryFee = item.totalPrice < 50000 ? (item.totalPrice > 0 ? 3000 : 0) : 0;
@@ -219,6 +235,7 @@ function createShippingDestinationContainer(item) {
   page = document.createElement("div");
   page.setAttribute("class", "address-container");
   page.setAttribute("id", `${item._id}-address-container`);
+  page.setAttribute("style", "display: none");
   page.innerHTML = `<div class="address-text">배송지 정보</div>
 <div class="address-info-wrapper">
   <span class="address-info-text">수령인</span>
