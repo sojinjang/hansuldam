@@ -97,6 +97,18 @@ button {
   margin-top: 50px;
 }
 
+@media (max-width: 768px) {
+  .body-container {
+    margin-top: 25px;
+  }
+}
+
+@media (max-width: 414px) {
+  .body-container {
+    margin-top: 5px;
+  }
+}
+
 /* button */
 
 /* 56 */
