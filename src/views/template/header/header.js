@@ -10,10 +10,10 @@ const $ = (selector) => document.querySelector(selector);
 function getHeader() {
   return `
 <header> 
+  <div class="header-top-container">
+    <img class="company-logo" src="../img/logo.jpeg" alt="company-logo">
+  </div>
   <div class="header-container">
-      <div class="company-logo-wrapper">
-        <img class="company-logo" src="../img/logo.png" alt="company-logo">
-      </div>
     <section class="user-menu">
       <ul class="user-list">
         <li class="myPage">비회원 주문 조회</li>
@@ -183,5 +183,82 @@ function handleSearchWithEnter(e) {
       : (window.location.href = `/search/?keyword=${inputValue}&page=1`);
   }
 }
+
+async function handleHambergurMenu() {
+  const hambergurHTML = `
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <section class="user-menu">
+      <ul class="user-list">
+        <li class="myPage">비회원 주문 조회</li>
+        <li class="login">로그인</li>
+        <li class="join">회원가입</li>
+        <div class="cart">
+          <span class="cart-count">0</span>
+          <img src="../img/shopping-bag.png" alt="cart-img">
+        </div>
+      </ul>
+    </section>
+  </div>
+</nav>
+`;
+
+  $(".user-menu").remove();
+  $(".header-container").innerHTML = hambergurHTML;
+
+  $(".navbar-burger").addEventListener("click", () => {
+    $(".navbar-menu").classList.toggle("is-active");
+    $(".navbar-burger").classList.toggle("is-active");
+  });
+
+  redirectPage();
+}
+
+function handleUserMenu() {
+  const usemenuHTML = `
+<section class="user-menu">
+  <ul class="user-list">
+    <li class="myPage">비회원 주문 조회</li>
+    <span class="separator">/</span>
+    <li class="login">로그인</li>
+    <span class="separator">/</span>
+    <li class="join">회원가입</li>
+    <div class="cart">
+      <span class="cart-count">0</span>
+      <img src="../img/shopping-bag.png" alt="cart-img">
+    </div>
+  </ul>
+</section>
+`;
+
+  $(".navbar").remove();
+  $(".header-container").innerHTML = usemenuHTML;
+  redirectPage();
+}
+
+window.addEventListener("resize", () => {
+  let windowWidth = window.innerWidth;
+
+  if (windowWidth < 875 && $(".user-menu")) {
+    handleHambergurMenu();
+  }
+
+  if (windowWidth >= 875 && $(".navbar")) {
+    handleUserMenu();
+  }
+});
+
+window.onload = () => {
+  if (window.innerWidth < 875 && $(".user-menu")) {
+    handleHambergurMenu();
+  }
+};
 
 export { getHeader, redirectPage, updateCartCount };
