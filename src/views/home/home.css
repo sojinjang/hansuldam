@@ -36,6 +36,7 @@
 /* carousel */
 .carousel-container{
   width: 90%;
+  max-width: 950px;
   margin: 10px auto;
   overflow: hidden;
   position: relative;
@@ -51,22 +52,17 @@
 }
 
 .carousel-container .carousel-slide > img{
+  cursor: pointer;
   object-fit: cover;
   user-select: none;
-}
-
-.carousel-container .carousel-slide > img:first-child {
-  border-radius: 10px 0 0 10px;
-}
-
-.carousel-container .carousel-slide > img:last-child {
-  border-radius: 0 10px 10px 0;
+  border-radius: 6px;
 }
 
 .carousel-container .carousel-dots-container {
   position: absolute;  
   display: block;
-  width: 76vw;
+  margin: 0 auto 0 auto;
+  width: 100%;
   bottom: 10%;
   z-index: 88;
 }
@@ -90,44 +86,43 @@
 }
 
 /* slider */
-.slider-header-image {
-  width: 45px;
-  height: 45px;
+.event-slider-container {
+  margin: 0 6vw;
 }
 
-.container-slider-header {
+.slider-container-header {
   display: flex;
   box-sizing: border-box;
   justify-content: space-between;
-  padding-top: 50px;
-  padding-bottom: 10px;
-  padding-right: 30px;
+  margin-top: 80px;
+  margin-bottom: 10px;
+  margin-right: 45px;
 }
 
-.container-slider-header .slider-header-title {
+.slider-container-header .slider-header-title {
   display: flex;
   flex-direction: column;
 }
 
-.container-slider-header .slider-header-title .main-title {
+.slider-container-header .slider-header-title .main-title {
   font-size: 22px;
   font-weight: 900px;
   color: darkgray;
 }
 
-.container-slider-header .slider-header-title .sub-title {
+.slider-container-header .slider-header-title .sub-title {
   font-size: 27px;
   font-weight: bold;
   color: orange;
 }
 
-.container-slider-header .slider-header-title-button {
+.slider-container-header .slider-header-title-button {
   display: flex;
   flex-direction: row;
   align-content: flex-end;
 }
 
-.container-slider-header .slider-header-title-button a {
+.slider-container-header .slider-header-title-button a {
   color: dodgerblue;
   cursor: pointer;
   font-weight: bold;
@@ -140,7 +135,7 @@
   margin-right: 15px;
 }
 
-.slider-container {
+.slider-container-contents {
   display: flex;
   box-sizing: border-box;
   flex-direction: row;
@@ -148,14 +143,14 @@
 
 }
 
-.slider-container .slider-button-wrapper {
+.slider-container-contents .slider-button-wrapper {
   display: flex;
   flex-direction: row;
   align-items: center;
   padding: 5px 5px;
 }
 
-.slider-container .slider-button-wrapper > button > img {
+.slider-container-contents .slider-button-wrapper > button > img {
   width: 50px;
   height: 50px;
   filter: opacity(0.3);
@@ -163,7 +158,7 @@
   border-radius: 10px;
 }
 
-.slider-container .slider-button-wrapper > button > img:hover {
+.slider-container-contents .slider-button-wrapper > button > img:hover {
   background-color: rgb(243, 243, 243);
   filter: opacity(0.5);
 }
@@ -192,6 +187,11 @@
   font-size: 20px;
 }
 
+.products-container .products-image-list span:hover {
+  opacity: 0.75;
+  transition: all 0.15s ease;
+}
+
 .products-container .products-image-list div {
   width: 200px;
   height: 250px;
@@ -202,8 +202,8 @@
 }
 
 .products-container .products-image-list div img:hover {
-  transform: scale(1.1);
-  transition: all 0.5s linear;
+  opacity: 0.75;
+  transition: all 0.15s ease;
 }
 /* mobile device*/
 @media (max-width: 768px) {
@@ -232,13 +232,13 @@
     margin-right: 10px;
   }
 
-  .container-slider-header .slider-header-title .main-title {
+  .slider-container-header .slider-header-title .main-title {
     font-size: 20px;
     font-weight: 800px;
     color: darkgray;
   }
   
-  .container-slider-header .slider-header-title .sub-title {
+  .slider-container-header .slider-header-title .sub-title {
     font-size: 24px;
   }
   
@@ -276,13 +276,13 @@
     font-size: 0.75rem;
     margin-right: 5px;
   }
-  .container-slider-header .slider-header-title .main-title {
+  .slider-container-header .slider-header-title .main-title {
     font-size: 16px;
     font-weight: 700px;
     color: darkgray;
   }
   
-  .container-slider-header .slider-header-title .sub-title {
+  .slider-container-header .slider-header-title .sub-title {
     font-size: 20px;
   }
   
