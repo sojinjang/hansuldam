@@ -391,7 +391,8 @@ brown*/
 }
 
 .button-35-white:hover {
-  box-shadow: var(--black-400) 0 0 0 1.5px, transparent 0 0 0 0;
+  box-shadow: var(--brown-500) 0 0 0 1.5px, transparent 0 0 0 0;
+  color: var(--brown-500)
 }
 
 .button-35-black {
