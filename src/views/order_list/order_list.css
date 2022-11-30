@@ -78,7 +78,7 @@
   color: var(--brown-500);
 }
 
-.order-container .address-container {
+.address-container {
   display: none;
   flex-direction: column;
   box-sizing: border-box;
