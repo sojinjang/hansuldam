@@ -278,9 +278,9 @@
 
 @media (max-width: 768px) {
   .review-title {
-    font-size: 21px;
+    font-size: 19px;
     font-weight: 700;
-    padding: 0px 15px;
+    padding-top: 15px;
   }
   .review-write-button {
     font-size: 14px;
@@ -322,11 +322,11 @@
   }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 414px) {
   .review-title {
     font-size: 16px;
-    font-weight: 500;
-    padding: 0px 10px;
+    font-weight: 600;
+    padding-top: 20px;
   }
   .review-write-button {
     font-size: 12px;

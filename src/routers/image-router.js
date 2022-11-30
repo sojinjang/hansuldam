@@ -7,7 +7,7 @@ import { productService, commentService } from "../services";
 
 const imageRouter = Router();
 
-// 이미지 저장후 상품에 이미지 경로 추가
+// 이미지 저장후 상품 및 댓글에 이미지 경로 추가
 imageRouter.post("/:id", upload.single("uploadImg"), async (req, res, next) => {
   try {
     if (!req.file) {
@@ -32,27 +32,6 @@ imageRouter.post("/:id", upload.single("uploadImg"), async (req, res, next) => {
     }
 
     res.status(201).json(success);
-  } catch (error) {
-    next(error);
-  }
-});
-
-// 이미지 저장후 댓글에 이미지 경로 추가
-imageRouter.post("comments/:commentId", upload.single("uploadImg"), async (req, res, next) => {
-  try {
-    if (!req.file) {
-      throw new BadRequest("Fail Upload Image", 4006);
-    }
-    const { commentId } = req.params;
-    if (!commentId) {
-      throw new BadRequest("Undefined params", 4005);
-    }
-    // 이미지 경로
-    const image = req.file.path;
-
-    const comment = await commentService.updateCommentImage(commentId, image);
-
-    res.status(201).json(comment);
   } catch (error) {
     next(error);
   }
