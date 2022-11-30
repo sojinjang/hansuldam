@@ -1,52 +1,54 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>성인인증 완료창 - 한술담 🍶</title>
-        <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
-        />
-        <script
-            defer
-            src="https://kit.fontawesome.com/9daa42bcef.js"
-            crossorigin="anonymous"
-        ></script>
-        <link rel="stylesheet" href="adult_certification.css" />
-        <link rel="stylesheet" href="../template/footer/footer.css" />
-        <link rel="stylesheet" href="../template/header/header.css" />
-    </head>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>성인인증 완료창 - 한술담 🍶</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
+    <script
+      defer
+      src="https://kit.fontawesome.com/9daa42bcef.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="adult_certification.css" />
+    <link rel="stylesheet" href="../template/main_style.css" />
+    <link rel="stylesheet" href="../template/footer/footer.css" />
+    <link rel="stylesheet" href="../template/header/header.css" />
+  </head>
 
-    <body>
-        <main class="body-container">
-            <div class="body-section-container">
-                <form class="body-join-check">
-                    <label for="">📢 주류 통신판매에 관한 명령위임고시에 따라 성인인증이 필요합니다.</label>
-                    <div>
-                        <input
-                            class="input"
-                            id="nameForValidation"
-                            type="text"
-                            name ="username"
-                            minlength="2" 
-                            maxlength="10"
-                            required
-                            placeholder="이름"
-                            autocomplete="on">
-                        <input
-                            class="input"
-                            id="idNum"
-                            type="text"
-                            required
-                            placeholder="주민등록번호: ******-*******"
-                            autocomplete="on">
-                    </div>
-                    <input type="submit" value="인증하기" class="adultCheckButton">
-                </form>
-            </div>
-        </main>
-        <script src="adult_certification.js" type="module"></script>
-        <script src="../template/getHeaderFooter.js" type="module" defer></script>
-    </body>
+  <body>
+    <main class="body-container">
+      <div class="body-section-container">
+        <form class="body-join-check">
+          <label for=""
+            >📢 주류 통신판매에 관한 명령위임고시에 따라 성인인증이 필요합니다.</label
+          >
+          <div>
+            <input
+              class="input"
+              id="nameForValidation"
+              type="text"
+              name="username"
+              minlength="2"
+              maxlength="10"
+              required
+              placeholder="이름"
+              autocomplete="on"
+            />
+            <input
+              class="input"
+              id="idNum"
+              type="text"
+              required
+              placeholder="주민등록번호: ******-*******"
+              autocomplete="on"
+            />
+          </div>
+          <input type="submit" value="인증하기" class="adultCheckButton" />
+        </form>
+      </div>
+    </main>
+    <script src="adult_certification.js" type="module"></script>
+    <script src="../template/getHeaderFooter.js" type="module" defer></script>
+  </body>
 </html>
