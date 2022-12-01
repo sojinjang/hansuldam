@@ -21,6 +21,7 @@
   padding: 50px 120px;
   background-color: var(--brown-300);
   border-radius: 10px;
+  min-width: 300px;
 }
 
 .body-join-check {
@@ -31,6 +32,7 @@
   padding: 50px 120px;
   background-color: var(--brown-300);
   border-radius: 10px;
+  min-width: 300px;
 }
 
 .body-join-check label {
@@ -44,10 +46,12 @@
   justify-content: center;
   align-items: center;
   margin: 10px 0;
+  min-width: 300px;
 }
 
 .body-join-check input {
   width: 400px;
+  min-width: 300px;
   height: 40px;
   font-size: var(--font-base);
   border: 1px solid var(--black-100);
@@ -67,6 +71,12 @@ input:-webkit-autofill:active {
   transition: background-color 5000s ease-in-out 0s;
 }
 
+input:active,
+:focus {
+  box-shadow: none !important;
+  border: 1px solid var(--black-100) !important;
+}
+
 .body-section-container .body-join-check .adultCheckButton {
   height: 40px;
   margin-top: 20px;
@@ -79,7 +89,7 @@ input:-webkit-autofill:active {
   cursor: pointer;
   display: inline-flex;
   font-family: Inter, sans-serif;
-  font-size: 1rem;
+  font-size: var(--font-base);
   font-weight: 550;
   justify-content: center;
   line-height: 1;
@@ -142,4 +152,27 @@ input:-webkit-autofill:active {
 .body-join-form .join-form-button {
   margin: 20px 0 20px 0;
   height: 40px;
+}
+
+@media (max-width: 680px) {
+  .body-join-form {
+    padding: 5vh !important;
+  }
+}
+
+@media (max-width: 680px) {
+  .body-join-check {
+    padding: 5vh !important;
+  }
+}
+
+@media (max-width: 680px) {
+  .body-join-check {
+    padding: 5vh !important;
+  }
+
+  .body-join-check div,
+  .body-join-check input {
+    width: 300px;
+  }
 }

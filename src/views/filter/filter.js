@@ -2,14 +2,43 @@ import { get } from "../api.js";
 import { ApiUrl } from "../constants/ApiUrl.js";
 
 const $ = (selector) => document.querySelector(selector);
+
 const params = new URLSearchParams(window.location.search);
-const keyword = params.get("keyword");
+const AlcoholType = params.get("alcoholType");
 const currentPage = params.get("page");
 
+let currentAlcoholType ="";
 async function fetchProducts(index) {
+  switch (AlcoholType) {
+    case "takju":
+      currentAlcoholType = "탁주";
+      break;
+
+    case "yakju":
+      currentAlcoholType = "약주";
+      break;
+
+    case "furit-drinks":
+      currentAlcoholType = "과실주";
+      break;
+
+    case "distilled-drinks":
+      currentAlcoholType = "증류주";
+      break;
+
+    case "liquor":
+      currentAlcoholType = "리큐르";
+      break;
+
+    case "bundle-drinks":
+      currentAlcoholType = "기타주류";
+      break;
+  }
+
   const data = await get(
-    `${ApiUrl.PRODUCTS_SEARCH}${keyword}&sortKey=sales&sort=1&page=${index}&perpage=12`
+    `${ApiUrl.PRODUCTS_FILTER}alcoholType&str=${currentAlcoholType}&min=&max=&page=${index}&perpage=12&sort=`
   );
+
   return data;
 }
 
@@ -25,22 +54,22 @@ async function refineData() {
 
   (function generatePagenationButton() {
     const paginationHtml = `<nav class="pagination-container" role="navigation" aria-label="pagination">
-  <ul class="pagination-list"></ul>
-  </nav>`;
-  
+    <ul class="pagination-list"></ul>
+    </nav>`;
+
     $(".footer-container").insertAdjacentHTML("beforebegin", paginationHtml);
-  
+
     for (let i = 1; i <= totalPage; i++) {
       const pageButton = document.createElement("li");
       pageButton.innerHTML = `<a class="pagination-link button-35-white" aria-label="${i}" aria-current="page">${i}</a>`;
       $(".pagination-list").append(pageButton);
     }
-  
+
     const paginationButton = document.querySelectorAll(".pagination-link");
-  
+
     paginationButton.forEach((button) => {
       const currentButton = button.getAttribute("aria-label");
-  
+
       if (currentButton === currentPage) {
         button.classList.add("button-35-brown");
       }
@@ -60,9 +89,7 @@ async function showProducts() {
   const productsArr = await refineData();
 
   let currentPageData = productsArr[0];
-  if (!currentPageData) {
-    $(".search-result-messege").innerText = `검색 결과가 존재하지 않습니다.`;
-  }
+
   (function showProductsInPage() {
     currentPageData = productsArr[currentPage - 1];
     currentPageData.forEach((product) => {
@@ -75,7 +102,7 @@ async function showProducts() {
 
     paginationButton.forEach((button, i) => {
       button.addEventListener("click", () => {
-        window.location.assign(`/search?keyword=${keyword}&page=${i + 1}`);
+        window.location.assign(`/filter?alcoholType=${AlcoholType}&page=${i + 1}`);
       });
     });
   })();
@@ -91,23 +118,23 @@ async function renderData(product) {
 
   productSection.setAttribute("class", "product-container-wrapper");
   productSection.innerHTML = `<div class="product-container" id=${_id}>
-  <div class="product-div-container">
-    <div class="product-image-wrapper">
-      <img src="${imageUrl}" alt="이런! 상품 이미지가 없네요." />
-    </div>
-    <div class="product-content-container">
-      <div class="content-title-wrapper">
-        <p class="content-name">${name}</p>
+    <div class="product-div-container">
+      <div class="product-image-wrapper">
+        <img src="${imageUrl}" alt="이런! 상품 이미지가 없네요." />
       </div>
-      <div class="content-container">
-        <p class="content-price">${Number(price).toLocaleString("ko-KR")}원</p>
-        <p class="content-brand">${brand}</p>
-        <p class="content-alcoholDegree">${alcoholDegree}도</p>
-        <p class="content-volume">${volume}ml</p>
+      <div class="product-content-container">
+        <div class="content-title-wrapper">
+          <p class="content-name">${name}</p>
+        </div>
+        <div class="content-container">
+          <p class="content-price">${Number(price).toLocaleString("ko-KR")}원</p>
+          <p class="content-brand">${brand}</p>
+          <p class="content-alcoholDegree">${alcoholDegree}도</p>
+          <p class="content-volume">${volume}ml</p>
+        </div>
       </div>
     </div>
-  </div>
-</div>`;
+  </div>`;
 
   const bodyContainer = document.querySelector(".body-container");
   bodyContainer.append(productSection);

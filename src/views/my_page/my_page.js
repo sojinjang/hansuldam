@@ -24,11 +24,10 @@ if (loginTOKEN == undefined || loginTOKEN == "") {
   page.setAttribute("class", "none-user-page-container");
   page.innerHTML = `<div class="none-user-page-input">
   <span>비회원 주문조회</span>
-  <p>비회원일 경우, 주문시의 주문번호로 주문조회가 가능합니다.</p>
+  <p>비회원일 경우, 주문번호로 주문조회가 가능합니다.</p>
   <input type="text" class="order-user-name" placeholder="이름을 입력하세요"/>
   <input type="text" class="order-id" placeholder="주문번호를 입력하세요"/>
   <button class="check-order-btn button-35-brown">주문 조회하기</button>
-  <p>- 비회원 상품을 구매하신 경우에만 주문/배송 조회가 가능합니다.</p>
 </div>`;
   $(".body-container").append(page);
 
@@ -39,7 +38,7 @@ async function showOrderListPage() {
   const orderID = $(".order-id").value;
 
   if (!isName($(".order-user-name").value)) {
-    alert("이름을 입력해주세요 📛");
+    alert("이름 입력값을 확인해주세요 🪪");
     return;
   }
   if ($(".order-id").value == "") {
@@ -78,15 +77,13 @@ async function showOrderListPage() {
   $(".detail-info-btn").addEventListener("click", showDetailInformationPage);
 
   function showDetailInformationPage() {
-    if (($(".address-container").style.display = "none")) {
-      console.log("안된다");
+    if ($(".address-container").style.display == "none") {
       $(".address-container").style.display = "flex";
       $(".payment-information-container").style.display = "flex";
       if (orderData.status == "상품준비중") {
         $(".button-container").style.display = "flex";
       }
-    } else if (($(".address-container").style.display = "flex")) {
-      console.log("된다");
+    } else {
       $(".address-container").style.display = "none";
       $(".payment-information-container").style.display = "none";
       $(".button-container").style.display = "none";
@@ -279,6 +276,7 @@ function createDeliveryInformationContainer(item) {
   let page = undefined;
   page = document.createElement("div");
   page.setAttribute("class", "address-container");
+  page.setAttribute("style", "display: none");
   page.innerHTML = `<div class="address-text">배송지 정보</div>
   <div class="address-info-wrapper">
     <span class="address-info-text">수령인</span>
@@ -397,7 +395,7 @@ function createButtonContainer() {
   let page = undefined;
   page = document.createElement("div");
   page.setAttribute("class", "button-container");
-  page.innerHTML = `<button class="info-change-btn button-38">정보 수정하기</button>
-  <button class="cancel-order-btn button-38">주문 취소하기</button>`;
+  page.innerHTML = `<button class="info-change-btn">정보 수정하기</button>
+  <button class="cancel-order-btn">주문 취소하기</button>`;
   $(".order-list-container").append(page);
 }

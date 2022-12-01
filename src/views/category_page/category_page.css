@@ -161,3 +161,8 @@
   gap: 1rem;
   justify-content: center;
 }
+
+/* header */
+.header-menu-wrapper .menu-list li {
+  margin-bottom: 0px !important;
+} 

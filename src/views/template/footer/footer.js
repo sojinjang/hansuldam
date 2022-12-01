@@ -10,7 +10,7 @@ function getFooter() {
   <ul class="footer-info">
     <li class="info-item">
       <span class="info-item-text footer-item-text">
-        <b id="secretId">[상호명]</b> | 대표 노숙취 | 개인정보보호책임자 노숙취 | 사업자등록번호 231-07-81350
+        <b id="secretId">한술담</b> | 대표 노숙취 | 개인정보보호책임자 노숙취 | 사업자등록번호 231-07-81350
       </span>
     </li>
     <li>
@@ -20,7 +20,7 @@ function getFooter() {
     </li>
     <li>
       <span class="footer-item-text">
-        [상호명]는 통신판매중개자로서 통신판매 당사자가 아니며, 판매자가 등록한 상품정보 및 거래에 대해 [상호명]는 책임을 지지 않습니다.
+        한술담은 통신판매중개자로서 통신판매 당사자가 아니며, 판매자가 등록한 상품정보 및 거래에 대해 한술담은 책임을 지지 않습니다.
       </span>
     </li>
   </ul>
