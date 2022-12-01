@@ -10,7 +10,7 @@
   align-items: center;
   margin-top: 40px;
   margin-bottom: 40px;
-  width: 400px;
+  width: 100%;
 }
 
 .body-section-container .body-login-form {
@@ -21,6 +21,7 @@
   padding: 50px 120px;
   background-color: var(--brown-300);
   border-radius: 10px;
+  min-width: 300px;
 }
 
 .body-login-form p {
@@ -30,7 +31,7 @@
 }
 
 .body-login-form label {
-  font-size: 1rem;
+  font-size: var(--font-base);
   margin-bottom: 5px;
 }
 
@@ -107,12 +108,12 @@ input:active,
   display: inline-flex;
   flex: 1 1 auto;
   font-family: Inter, sans-serif;
-  font-size: 1rem;
+  font-size: var(--font-base);
   font-weight: 550;
   justify-content: center;
   line-height: 1;
   outline: none;
-  padding: 1rem 1.1rem;
+  padding: var(--font-base) 1.1rem;
   text-align: center;
   text-decoration: none;
   white-space: nowrap;
@@ -165,9 +166,20 @@ input:active,
   width: 400px;
   color: white;
   font-weight: 550;
+  font-size: var(--font-base);
 }
 
 .naver-button img {
   width: 40px;
   height: 40px;
+}
+
+@media (max-width: 680px) {
+  .body-login-form {
+    padding: 5vh !important;
+  }
+
+  .naver-button {
+    display: flex;
+  }
 }
