@@ -21,11 +21,11 @@ function getHeader() {
         <li class="login">로그인</li>
         <span class="separator">/</span>
         <li class="join">회원가입</li>
-        <div class="cart">
-          <span class="cart-count">0</span>
-          <img src="../img/shopping-bag.png" alt="cart-img">
-        </div>
       </ul>
+      <div class="cart">
+        <span class="cart-count">0</span>
+        <img src="../img/shopping-bag.png" alt="cart-img">
+      </div>
     </section>
   </div>
   <div class="header-menu-wrapper">
@@ -63,7 +63,7 @@ async function redirectPage() {
   });
 
   $(".company-logo").addEventListener("click", () => (window.location.href = "/"));
-  $(".search-button").addEventListener("click", () => appendSearchModal());
+  $(".search-button").addEventListener("click", appendSearchModal);
   $(".join").addEventListener("click", () => (window.location.href = "/join"));
   $(".login").addEventListener("click", () => (window.location.href = "/login"));
   $(".myPage").addEventListener("click", () => (window.location.href = "/myPage"));
@@ -85,11 +85,7 @@ async function redirectPage() {
 function loginAsUser() {
   $(".user-list").innerHTML = `<li class="myPage">마이페이지</li>
 <span class="separator">/</span>
-<li class="logout">로그아웃</li>
-<div class="cart">
-  <span class="cart-count">0</span>
-  <img src="../img/shopping-bag.png" alt="cart-img">
-</div>`;
+<li class="logout">로그아웃</li>`;
 }
 
 function loginAsAdmin() {
@@ -97,11 +93,7 @@ function loginAsAdmin() {
 <span class="separator">/</span>
 <li class="admin">관리자페이지</li>
 <span class="separator">/</span>
-<li class="logout">로그아웃</li>
-<div class="cart">
-  <span class="cart-count">0</span>
-  <img src="../img/shopping-bag.png" alt="cart-img">
-</div>`;
+<li class="logout">로그아웃</li>`;
 
   $(".admin").addEventListener("click", () => (window.location.href = "/admin"));
 }
@@ -210,8 +202,8 @@ async function handleHambergurMenu() {
 </nav>
 `;
 
-  $(".user-menu").remove();
-  $(".header-container").innerHTML = hambergurHTML;
+  $(".user-list").remove();
+  $(".user-menu").innerHTML = hambergurHTML;
 
   $(".navbar-burger").addEventListener("click", () => {
     $(".navbar-menu").classList.toggle("is-active");
@@ -230,11 +222,11 @@ function handleUserMenu() {
     <li class="login">로그인</li>
     <span class="separator">/</span>
     <li class="join">회원가입</li>
-    <div class="cart">
-      <span class="cart-count">0</span>
-      <img src="../img/shopping-bag.png" alt="cart-img">
-    </div>
   </ul>
+  <div class="cart">
+    <span class="cart-count">0</span>
+    <img src="../img/shopping-bag.png" alt="cart-img">
+  </div>
 </section>
 `;
 
