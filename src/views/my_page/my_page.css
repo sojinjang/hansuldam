@@ -441,7 +441,27 @@ body {
 }
 
 @media (max-width: 768px) {
-  .none-user-page-container {
-    margin: 5vh !important;
+  .none-user-page-input {
+    padding: 10vh !important;
+  }
+}
+
+@media (max-width: 680px) {
+  .none-user-page-input {
+    padding: 5vh !important;
+  }
+
+  .none-user-page-input input {
+    width: 300px;
+  }
+
+  .none-user-page-input button {
+    width: 300px;
+  }
+}
+
+@media (max-width: 680px) {
+  .none-user-page-input {
+    padding: 3vh !important;
   }
 }
