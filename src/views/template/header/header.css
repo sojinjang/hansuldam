@@ -33,7 +33,7 @@ input:focus {
   }
 
   .header-container .cart {
-    margin: 4px 4px 0 0 !important;
+    margin: 8px 4px 0 0 !important;
   }
 
   .navbar-menu {
@@ -120,7 +120,8 @@ input:focus {
 }
 
 .user-menu .user-list .separator {
-  margin: 0 4px 0 4px;
+  margin: 0 6px 0 6px;
+  opacity: 0.4;
 }
 
 .user-menu .user-list li {
@@ -141,10 +142,10 @@ input:focus {
 .header-container .cart {
   position: relative;
   cursor: pointer;
-  width: 40px;
+  width: 32px;
   height: 50px;
   vertical-align: middle;
-  margin: 15px 11px 11px 11px;
+  margin: 25px 11px 11px 7px;
 }
 
 .cart-count {
@@ -170,7 +171,7 @@ input:focus {
   right: 10px;
   display: flex;
   flex-direction: column;
-  background-color: var(--white-100);
+  background-color: rgba(255, 255, 255, 0.93);
 }
 
 /* header bottom */
