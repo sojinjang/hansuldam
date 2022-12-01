@@ -23,7 +23,7 @@
 
 ## :runner: 로컬 실행 방법
 
-1. 레포지토리를 클론하고자 하는 디렉토리에서 아래 명령어를 수행
+1. 레포지토리 클론
 
    ```bash
    git clone "https://github.com/sojinjang/hansuldam"
@@ -39,7 +39,7 @@
 
   ```bash
   MONGODB_URL="<개인 로컬 혹은 Atlas 서버 URL>"
-  PORT=5000
+  PORT="<포트번호>"
   JWT_SECERT_KEY="<랜덤 문자열>"
 
   GMAIL_ID= "hansuldam@gmail.com"
