@@ -76,7 +76,7 @@ body {
 
 .password-container input {
   height: 50px;
-  font-size: 1.125rem;
+  font-size: var(--font-lg);
   padding-left: 10px;
   margin-bottom: 10px;
   border: none;
@@ -149,7 +149,7 @@ body {
 }
 
 .order-date span {
-  font-size: 1rem;
+  font-size: var(--font-base);
 }
 
 .order-date .orderDate {
@@ -163,7 +163,7 @@ body {
 }
 
 #order-status {
-  font-size: 1.25rem;
+  font-size: var(--font-xl);
   margin: 0 0 5px 3px;
   font-weight: 500;
 }
@@ -463,5 +463,32 @@ body {
 @media (max-width: 680px) {
   .none-user-page-input {
     padding: 3vh !important;
+  }
+}
+
+@media (max-width: 470px) {
+  .body-section-container {
+    width: 300px;
+    margin-top: 30px;
+  }
+}
+
+@media (max-width: 390px) {
+  .body-section-container {
+    width: 300px;
+    margin-top: 30px;
+  }
+
+  .order-list-container .order-date {
+    flex-wrap: wrap;
+  }
+
+  .address-container .address-info-text,
+  .payment-wrapper .payment-info-text {
+    width: 60px;
+  }
+
+  .change-wrapper span {
+    width: 60px;
   }
 }
