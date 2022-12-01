@@ -1,4 +1,20 @@
 /* main */
+
+@media screen and (max-width: 680px) {
+  .event-slider-container {
+    margin: 0 !important;
+  }
+
+  .body-container {
+    margin-top: 0 !important;
+  }
+
+  .carousel-container{
+    width: 100% !important;
+    margin-top: 20px !important;  
+}
+}
+
 .section-container {
   display: flex;
   box-sizing: border-box;
