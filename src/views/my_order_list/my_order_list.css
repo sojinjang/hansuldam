@@ -356,4 +356,9 @@ body button {
   .order-date .order-id {
     padding-left: 0;
   }
+
+  .address-container .address-info-text,
+  .payment-wrapper .payment-info-text {
+    width: 60px;
+  }
 }
