@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-top: 100px;
+  margin-top: 50px;
 }
 
 .review-title-container {
@@ -294,7 +294,7 @@
     height: 34px;
   }
   .review-container {
-    margin-top: 30px;
+    margin-top: 0px;
   }
   .single-review-detail-container .review-info {
     margin: 5px;
@@ -305,6 +305,7 @@
   }
   .single-review-title-container .single-review-title-content {
     font-size: 0.875rem;
+    max-width: 230px;
   }
   .single-review-title-container .single-review-title-username {
     font-size: 14px;

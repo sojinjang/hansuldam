@@ -1,46 +1,45 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>한술담 🍶</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
-    <script
-      defer
-      src="https://kit.fontawesome.com/9daa42bcef.js"
-      crossorigin="anonymous"
-    ></script>
-    <link rel="stylesheet" href="home.css" />
-    <link rel="stylesheet" href="../template/footer/footer.css" />
-    <link rel="stylesheet" href="../template/header/header.css" />
-  </head>
-  <body>
-    <main class="body-container">
-      <div class="section-container">
-        <div class="carousel-container">
-          <div class="carousel-dots-container">
-            <ul>
-              <li class="carousel-dot dot-clicked">
-                <div></div>
-              </li>
-              <li class="carousel-dot">
-                <div></div>
-              </li>
-              <li class="carousel-dot">
-                <div></div>
-              </li>
-            </ul>
-          </div>
-          <div class="carousel-slide-wrapper">
-            <div class="carousel-slide">
-              <img class="carousel-img" src="../img/carousel1.jpeg" alt="캐러셀 이미지" />
-              <img class="carousel-img" src="../img/carousel2.jpeg" alt="캐러셀 이미지" />
-              <img class="carousel-img" src="../img/carousel3.jpeg" alt="캐러셀 이미지" />
-            </div>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>한술담 🍶</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
+  <script defer src="https://kit.fontawesome.com/9daa42bcef.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="home.css" />
+  <link rel="stylesheet" href="../template/footer/footer.css" />
+  <link rel="stylesheet" href="../template/header/header.css" />
+</head>
+
+<body>
+  <main class="body-container">
+    <div class="section-container">
+      <div class="carousel-container">
+        <div class="carousel-dots-container">
+          <ul>
+            <li class="carousel-dot dot-clicked">
+              <div></div>
+            </li>
+            <li class="carousel-dot">
+              <div></div>
+            </li>
+            <li class="carousel-dot">
+              <div></div>
+            </li>
+          </ul>
+        </div>
+        <div class="carousel-slide-wrapper">
+          <div class="carousel-slide">
+            <img class="carousel-img" src="../img/carousel1.jpeg" alt="캐러셀 이미지" />
+            <img class="carousel-img" src="../img/carousel2.jpeg" alt="캐러셀 이미지" />
+            <img class="carousel-img" src="../img/carousel3.jpeg" alt="캐러셀 이미지" />
           </div>
         </div>
-        <div class="sool-list">
-          <div class="sool-item" id="takju" >
+      </div>
+      <div class="sool-list">
+        <div class="first-sool-item">
+          <div class="sool-item" id="takju">
             <a><img src="../img/icon_takju.png" alt="alcohol type" /></a>
             <span>탁주</span>
           </div>
@@ -52,6 +51,8 @@
             <a><img src="../img/icon_fruit_wine.png" alt="alcohol type" /></a>
             <span>과실주</span>
           </div>
+        </div>
+        <div class="second-sool-item">
           <div class="sool-item" id="distilled-drinks">
             <a><img src="../img/icon_distilled_drinks.png" alt="alcohol type" /></a>
             <span>증류주</span>
@@ -65,32 +66,34 @@
             <span>기타주류</span>
           </div>
         </div>
-        <section class="event-slider-container">
-          <div class="slider-container-header">
-            <div class="slider-header-title">
-              <div class="main-title">금주의 PICK 🍶</div>
-              <a class="sub-title" href="/event-page">선물하기 좋은 술</a>
-            </div>
-          </div>
-          <div class="slider-container-contents">
-            <div class="slider-button-wrapper">
-              <button class="slider-left-button">
-                <img src="../img/left-arrow.png" />
-              </button>
-            </div>
-            <div class="products-container-wrapper">
-              <div class="products-container"></div>
-            </div>
-            <div class="slider-button-wrapper">
-              <button class="slider-right-button">
-                <img src="../img/right-arrow.png" />
-              </button>
-            </div>
-          </div>
-        </section>
       </div>
-    </main>
-    <script type="module" src="home.js"></script>
-    <script type="module" src="../template/getHeaderFooter.js"></script>
-  </body>
+      <section class="event-slider-container">
+        <div class="slider-container-header">
+          <div class="slider-header-title">
+            <div class="main-title">금주의 PICK 🍶</div>
+            <a class="sub-title" href="/event-page">선물하기 좋은 술</a>
+          </div>
+        </div>
+        <div class="slider-container-contents">
+          <div class="slider-button-wrapper">
+            <button class="slider-left-button">
+              <img src="../img/left-arrow.png" />
+            </button>
+          </div>
+          <div class="products-container-wrapper">
+            <div class="products-container"></div>
+          </div>
+          <div class="slider-button-wrapper">
+            <button class="slider-right-button">
+              <img src="../img/right-arrow.png" />
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+  <script type="module" src="home.js"></script>
+  <script type="module" src="../template/getHeaderFooter.js"></script>
+</body>
+
 </html>
