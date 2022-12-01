@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-top: 50px;
+  margin-top: 100px;
 }
 
 .review-title-container {
@@ -340,7 +340,7 @@
     height: 28px;
   }
   .review-container {
-    margin-top: 0px;
+    margin-top: 20px;
   }
   .single-review-detail-container .review-info {
     margin: 0px;
