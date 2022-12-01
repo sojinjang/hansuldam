@@ -203,7 +203,9 @@
 
 .products-container .products-image-list span {
   cursor: pointer;
-  font-size: var(--font-xl);
+  font-size: var(--font-lg);
+  font-weight: 500;
+  color:rgb(141, 141, 141)
 }
 
 .products-container .products-image-list span:hover {
@@ -213,6 +215,7 @@
 
 .products-container .products-image-list span .won {
   font-size: var(--font-base);
+  font-weight: 400;
 }
 
 .products-container .products-image-list div {
@@ -264,6 +267,15 @@
   .products-container .products-image-list div {
     width: 180px;
     height: 225px;
+  }
+
+  .products-container .products-image-list span {
+    cursor: pointer;
+    font-size: var(--font-base);
+  }
+
+  .products-container .products-image-list span .won {
+    font-size: var(--font-sm);
   }
 }
 
@@ -341,6 +353,15 @@
 
   .slider-container-header .slider-header-title .sub-title {
     font-size: var(--font-xl);
+  }
+
+  .products-container .products-image-list span {
+    cursor: pointer;
+    font-size: var(--font-sm);
+  }
+
+  .products-container .products-image-list span .won {
+    font-size: var(--font-xs);
   }
   
 }
