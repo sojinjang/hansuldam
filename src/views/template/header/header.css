@@ -10,13 +10,40 @@ input {
 input:focus {
   outline: none;
 }
+@media screen and (max-width: 875px) {
+  .user-menu .separator {
+    display: none;
+  }
+
+  .user-menu {
+    justify-content: flex-end !important;
+    align-items: end !important;
+    min-width: 115px !important;
+  }
+
+  .user-list {
+    flex-direction: column;
+    align-items: flex-end !important;
+    margin-top: 10px !important;
+  }
+
+  .user-list li {
+    font-size: var(--font-base) !important;
+    margin: 3px 6px 10px 0;
+  }
+
+  .header-container .cart {
+    margin: 8px 4px 0 0 !important;
+  }
+
+  .navbar-menu {
+    padding: 0 !important;
+  }
+}
 
 @media screen and (max-width: 680px) {
   .menu-label {
     font-size: var(--font-base) !important;
-  }
-  .menu-label a {
-    padding: 0.25em 0.5em !important;
   }
 
   .header-top-container {
@@ -34,28 +61,6 @@ input:focus {
 
   .search-button img {
     top: 122px !important;
-  }
-}
-
-@media screen and (max-width: 875px) {
-  .user-menu .separator {
-    display: none;
-  }
-
-  .user-menu {
-    justify-content: flex-end !important;
-    align-items: end !important;
-    min-width: 130px !important;
-  }
-
-  .user-list {
-    flex-direction: column;
-    align-items: flex-end !important;
-  }
-
-  .user-list li {
-    font-size: var(--font-base) !important;
-    margin: 20px 10px 0 0;
   }
 }
 
@@ -115,7 +120,8 @@ input:focus {
 }
 
 .user-menu .user-list .separator {
-  margin: 0 4px 0 4px;
+  margin: 0 6px 0 6px;
+  opacity: 0.4;
 }
 
 .user-menu .user-list li {
@@ -133,13 +139,13 @@ input:focus {
   color: var(--brown-600-hover);
 }
 
-.user-menu .user-list .cart {
+.header-container .cart {
   position: relative;
   cursor: pointer;
-  width: 40px;
+  width: 32px;
   height: 50px;
   vertical-align: middle;
-  margin: 15px 11px 11px 11px;
+  margin: 25px 11px 11px 7px;
 }
 
 .cart-count {
@@ -159,9 +165,13 @@ input:focus {
   background-color: transparent;
 }
 
-.navbar-menu.is-active  {
+.navbar-menu.is-active {
+  position: absolute;
+  top: 45px;
+  right: 10px;
   display: flex;
   flex-direction: column;
+  background-color: rgba(255, 255, 255, 0.93);
 }
 
 /* header bottom */

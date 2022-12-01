@@ -93,8 +93,7 @@ button {
 /* body */
 
 .body-container {
-  padding: 0 7vw 0 7vw;
-  margin-top: 50px;
+	padding: 0 7vw 0 7vw;
 }
 
 @media (max-width: 768px) {
