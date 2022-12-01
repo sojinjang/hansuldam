@@ -169,7 +169,7 @@ async function checkUserPassword(e) {
 
   try {
     await api.post(ApiUrl.LOGIN, userInfo);
-    window.location = "/user-information";
+    window.location = "/my-information";
   } catch (e) {
     alert(e.message);
   }
@@ -214,7 +214,7 @@ function createUserPageContainer() {
     </div>
     <div class="user-order-information-container">
       <span>쇼핑 정보</span>
-      <a href="/order-list" class="button-35-brown"> 주문내역 </a>
+      <a href="/my-order-list" class="button-35-brown"> 주문내역 </a>
     </div>
   </div>`;
   $(".body-container").append(page);
