@@ -186,6 +186,10 @@ function handleSearchWithEnter(e) {
 
 async function handleHambergurMenu() {
   const hambergurHTML = `
+<div class="cart">
+  <span class="cart-count">0</span>
+  <img src="../img/shopping-bag.png" alt="cart-img">
+</div>
 <nav class="navbar" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
@@ -200,10 +204,6 @@ async function handleHambergurMenu() {
         <li class="myPage">비회원 주문 조회</li>
         <li class="login">로그인</li>
         <li class="join">회원가입</li>
-        <div class="cart">
-          <span class="cart-count">0</span>
-          <img src="../img/shopping-bag.png" alt="cart-img">
-        </div>
       </ul>
     </section>
   </div>
