@@ -14,7 +14,7 @@ async function setOrderListContainer(orderId) {
       const orderList = await get(ApiUrl.ORDERS, id);
       const productList = await get(ApiUrl.ORDERS, `${id}/products`);
 
-      createSingleOrderContainer(orderList).prepend(createOrderStatus(orderList));
+      createSingleOrderContainer(orderList).append(createOrderStatus(orderList));
       productList.forEach((product) => {
         selectId(`${orderList._id}-order-container`).append(
           createProductListContainer(product)
@@ -183,7 +183,7 @@ function createSingleOrderContainer(item = "") {
   page = document.createElement("div");
   page.setAttribute("class", "order-container");
   page.setAttribute("id", `${item._id}-order-container`);
-  $(".body-container").append(page);
+  $(".body-container").prepend(page);
   return page;
 }
 
