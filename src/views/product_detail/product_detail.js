@@ -65,17 +65,15 @@ async function renderData() {
           <span class="total-price-text">총 상품 금액</span>
           <span class="amount-total-price">${changeToKoreanWon(price)}</span>
         </div>
-      </div>
-    <div class="button-container">
-      <button class="button is-info ml-2" id="order-button">
-        바로 주문하기
-			</button>
-			<button class="button" id="cart-button">장바구니 담기</button>
-			<p class="cart-message">
-				장바구니에 담았습니다!
-			</p>
-		</div>
-	</div>
+        <div class="button-container">
+        <button class="button is-info ml-2" id="order-button">
+          바로 주문하기
+        </button>
+        <button class="button" id="cart-button">장바구니 담기</button>
+	      </div>
+      <p class="cart-message">
+        장바구니에 담았습니다!
+      </p>
 </div>`;
 
   $(".body-container").prepend(productSection);
