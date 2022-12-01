@@ -88,6 +88,7 @@ body {
   justify-content: center;
   margin-top: 40px;
   width: 100%;
+  min-width: 300px;
 }
 
 .none-user-page-container .none-user-page-input {
@@ -102,12 +103,12 @@ body {
 
 .none-user-page-input span {
   text-align: center;
-  font-size: 1.85rem;
+  font-size: var(--font-xxxxl);
   margin-bottom: 20px;
 }
 
 .none-user-page-input p {
-  font-size: 1rem;
+  font-size: var(--font-base);
   text-align: center;
   color: gray;
   margin-bottom: 10px;
@@ -128,7 +129,7 @@ body {
   width: 400px;
   height: 40px;
   margin: 20px 0 10px 0;
-  font-size: 1.125rem;
+  font-size: var(--font-lg);
 }
 
 .none-user-page-container .order-list-container {
@@ -191,12 +192,12 @@ body {
 }
 
 .single-product-detail span {
-  font-size: 1rem;
+  font-size: var(--font-base);
 }
 
 .single-product-detail .single-product-name {
   font-weight: bold;
-  font-size: 1.25rem;
+  font-size: var(--font-xl);
 }
 
 .detail-info-button-container {
@@ -205,7 +206,7 @@ body {
 }
 
 .detail-info-button-container .detail-info-btn {
-  font-size: 1.125rem;
+  font-size: var(--font-lg);
   border-style: none;
   cursor: pointer;
 }
@@ -225,7 +226,7 @@ body {
 }
 
 .address-container .address-text {
-  font-size: 1.25rem;
+  font-size: var(--font-xl);
   padding-bottom: 5px;
   margin-bottom: 10px;
   font-weight: 600;
@@ -234,7 +235,7 @@ body {
 .address-container .address-info-text {
   color: rgb(91, 90, 90);
   width: 100px;
-  font-size: 1rem;
+  font-size: var(--font-base);
 }
 
 .address-container .address-info-wrapper {
@@ -244,7 +245,7 @@ body {
 }
 
 .address-info-wrapper span {
-  font-size: 1rem;
+  font-size: var(--font-base);
 }
 
 .address-info-wrapper div {
@@ -263,7 +264,7 @@ body {
 }
 
 .payment-information-container .payment-text {
-  font-size: 1.25rem;
+  font-size: var(--font-xl);
   padding-bottom: 5px;
   margin-bottom: 10px;
   font-weight: 600;
@@ -275,7 +276,7 @@ body {
 }
 
 .payment-wrapper span {
-  font-size: 1rem;
+  font-size: var(--font-base);
   margin: 5px 0;
 }
 
@@ -308,12 +309,12 @@ body {
   cursor: pointer;
   display: inline-flex;
   font-family: Inter, sans-serif;
-  font-size: 1rem;
+  font-size: var(--font-base);
   font-weight: 550;
   justify-content: center;
   line-height: 1;
   outline: none;
-  padding: 1rem 1.1rem;
+  padding: var(--font-base) 1.1rem;
   text-align: center;
   text-decoration: none;
   white-space: nowrap;
@@ -361,7 +362,7 @@ body {
 .change-wrapper span {
   width: 100px;
   margin: 0;
-  font-size: 1.125rem;
+  font-size: var(--font-lg);
 }
 
 .change-wrapper input {
@@ -395,7 +396,7 @@ body {
 
 .password-container button {
   margin: 15px 0 10px 0;
-  font-size: 1.125rem;
+  font-size: var(--font-lg);
   text-align: center;
 }
 
@@ -416,7 +417,7 @@ body {
   font-size: 17px;
   font-weight: 400;
   line-height: 0.5rem;
-  padding: 0.75rem 1rem;
+  padding: var(--font-xs) var(--font-base);
   text-align: start;
   text-decoration: none #d1d5db solid;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
@@ -437,4 +438,10 @@ body {
 
 .button-38:focus-visible {
   box-shadow: none;
+}
+
+@media (max-width: 768px) {
+  .none-user-page-container {
+    margin: 5vh !important;
+  }
 }

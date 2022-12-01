@@ -20,6 +20,7 @@ body {
   padding: 50px 120px;
   background-color: var(--brown-300);
   border-radius: 10px;
+  min-width: 300px;
 }
 
 .body-join-form section {
@@ -35,7 +36,7 @@ body {
 }
 
 .join-form-hello span {
-  font-size: 1rem;
+  font-size: var(--font-base);
   text-align: center;
   color: grey;
   margin-bottom: 10px;
@@ -73,7 +74,7 @@ input:active,
 
 .body-join-form .join-form-button {
   margin-top: 30px;
-  font-size: 1.125rem;
+  font-size: var(--font-lg);
   height: 40px;
   align-items: center;
   background-color: var(--brown-500);
@@ -88,7 +89,7 @@ input:active,
   justify-content: center;
   line-height: 1;
   outline: none;
-  padding: 1rem 1.1rem;
+  padding: var(--font-base) 1.1rem;
   text-align: center;
   text-decoration: none;
   white-space: nowrap;
@@ -123,7 +124,7 @@ input:active,
   margin-left: 68%;
   margin-top: 3px;
   outline: none;
-  padding: 1rem 1.1rem;
+  padding: var(--font-base) 1.1rem;
   text-align: center;
   text-decoration: none;
   white-space: nowrap;
@@ -137,4 +138,10 @@ input:active,
 .emailOverlap:hover {
   box-shadow: var(--brown-500) 0 0 0 1.5px, transparent 0 0 0 0;
   color: var(--brown-500);
+}
+
+@media (max-width: 680px) {
+  .body-join-form {
+    padding: 5vh !important;
+  }
 }

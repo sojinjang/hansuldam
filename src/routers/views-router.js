@@ -16,7 +16,7 @@ viewsRouter.use("/adult-certification", serveStatic("adult_certification"));
 viewsRouter.use("/order-list", serveStatic("order_list"));
 viewsRouter.use("/find-password", serveStatic("find_password"));
 viewsRouter.use("/user-information", serveStatic("user_information"));
-viewsRouter.use("/myPage", serveStatic("myPage"));
+viewsRouter.use("/my-page", serveStatic("my_page"));
 viewsRouter.use("/search", serveStatic("search"));
 viewsRouter.use("/filter", serveStatic("filter"));
 
