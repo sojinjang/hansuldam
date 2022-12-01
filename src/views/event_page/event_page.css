@@ -203,3 +203,8 @@
   margin: 0 10px 0 10px;
   opacity: 0.4;
 }
+
+/* header */
+.header-menu-wrapper .menu-list li {
+  margin-bottom: 0px !important;
+} 

@@ -204,13 +204,12 @@ input:focus {
   padding: 2px;
   font-size: var(--font-lg);
   font-weight: 500;
-  margin: 6px 5px 0px 0;
 }
 
 .header-menu-wrapper .menu-list li {
   color: var(--black-400);
   transition: all ease 0.2s;
-  margin-bottom: 3px;
+  margin: 6px 5px 3px 0px;
 }
 
 .header-menu-wrapper .menu-list a:hover {
@@ -221,7 +220,7 @@ input:focus {
 .header-menu-wrapper .menu-list .menu-label:hover {
   border-bottom: solid 3px var(--brown-1300);
   background-color: transparent;
-  margin-bottom: 0;
+  margin-bottom: 0px;
 }
 
 .company-logo {
