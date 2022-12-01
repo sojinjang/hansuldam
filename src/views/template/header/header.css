@@ -18,7 +18,7 @@ input:focus {
   .user-menu {
     justify-content: flex-end !important;
     align-items: end !important;
-    min-width: 115px !important;
+    min-width: 90px !important;
   }
 
   .user-list {
@@ -38,6 +38,14 @@ input:focus {
 
   .navbar-menu {
     padding: 0 !important;
+  }
+
+  .header-container .cart {
+    height: 44px !important;
+  }
+
+  .modal-close-button {
+    left: 90% !important;
   }
 }
 
@@ -60,7 +68,7 @@ input:focus {
   }
 
   .search-button img {
-    top: 122px !important;
+    top: 124.5px !important;
   }
 }
 
@@ -99,6 +107,7 @@ input:focus {
 }
 
 .user-menu {
+  z-index: 4;
   min-width: 200px;
   max-width: 450px;
   display: flex;
@@ -110,7 +119,7 @@ input:focus {
 
 .user-menu .user-list {
   margin: 0px;
-  padding: 0px;
+  padding: 0 0 0 15px;
   display: flex;
   -webkit-box-pack: end;
   justify-content: flex-end;
@@ -143,8 +152,7 @@ input:focus {
   position: relative;
   cursor: pointer;
   width: 32px;
-  height: 50px;
-  vertical-align: middle;
+  height: 47px;
   margin: 25px 11px 11px 7px;
 }
 
@@ -167,6 +175,7 @@ input:focus {
 
 .navbar-menu.is-active {
   position: absolute;
+  border-radius: 8px;
   top: 45px;
   right: 10px;
   display: flex;
@@ -199,14 +208,9 @@ input:focus {
 }
 
 .header-menu-wrapper .menu-list li {
-  padding: 0.5em 1.75em;
   color: var(--black-400);
   transition: all ease 0.2s;
   margin-bottom: 3px;
-}
-
-.header-menu-wrapper .menu-list a {
-  padding: 0.5em 1.75em;
 }
 
 .header-menu-wrapper .menu-list a:hover {
@@ -233,7 +237,6 @@ input:focus {
 
 .search-button {
   cursor: pointer;
-  padding: 0.5em 1.75em;
   border: none;
 }
 
@@ -265,16 +268,13 @@ input:focus {
   cursor: pointer;
   position: fixed;
   top: 5%;
-  left: 97%;
-  font-size: 18px;
+  left: 95%;
+  font-size: var(--font-xxxxxl);
 }
 
 .search-container {
-  position: fixed;
   display: flex;
-  justify-content: space-between;
-  top: 30%;
-  left: 39%;
+  margin: 30% auto;
   width: 360px;
   height: 35px;
 }
