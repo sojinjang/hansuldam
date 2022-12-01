@@ -118,10 +118,10 @@ body {
   border-radius: 0.5rem;
   box-sizing: border-box;
   color: #111827;
-  font-size: 1rem;
+  font-size: var(--font-base);
   font-weight: 400;
   line-height: 0.5rem;
-  padding: 0.75rem 1rem;
+  padding: var(--font-xs) var(--font-base);
   text-align: start;
   text-decoration: none #d1d5db solid;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
@@ -167,10 +167,62 @@ input {
 .delete-user-information-btn {
   border-bottom: 1px solid gray;
   border-radius: 0;
-  font-size: 1rem;
+  font-size: var(--font-base);
   color: gray;
   position: absolute;
   left: 85%;
   margin-top: 10px;
   cursor: pointer;
+}
+
+@media (max-width: 820px) {
+  #info-wrapper span {
+    width: 200px;
+  }
+
+  #info-wrapper p {
+    margin-right: 10px;
+  }
+
+  .btn-container {
+    display: none;
+  }
+
+  .btn-container {
+    left: 76%;
+  }
+}
+
+@media (max-width: 390px) {
+  #info-wrapper span {
+    width: 150px;
+  }
+
+  #info-wrapper p {
+    width: 70px;
+    margin-right: 10px;
+  }
+
+  .btn-container {
+    display: none;
+  }
+
+  .adChangeBtn,
+  .numChangeBtn,
+  .pwChangeBtn {
+    position: absolute;
+    left: 78%;
+  }
+
+  .delete-user-information-btn {
+    left: 78%;
+  }
+
+  .btn-container {
+    left: 70%;
+  }
+
+  #info-wrapper {
+    flex-wrap: wrap;
+  }
 }

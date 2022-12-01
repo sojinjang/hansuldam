@@ -75,7 +75,7 @@ input:active,
   cursor: pointer;
   display: inline-flex;
   font-family: Inter, sans-serif;
-  font-size: 1rem;
+  font-size: var(--font-base);
   font-weight: 550;
   justify-content: center;
   line-height: 1;
@@ -92,4 +92,25 @@ input:active,
 
 .body-section-container .body-join-check .adultCheckButton:hover {
   box-shadow: var(--brown-500) 0 0 0 1.5px, transparent 0 0 0 0;
+}
+
+@media (max-width: 680px) {
+  .body-join-form {
+    padding: 5vh !important;
+  }
+
+  .body-join-check {
+    padding: 5vh !important;
+  }
+
+  .body-join-check div,
+  .body-join-check input {
+    width: 300px;
+  }
+}
+
+@media (max-width: 390px) {
+  .body-join-check {
+    padding: 3vh !important;
+  }
 }

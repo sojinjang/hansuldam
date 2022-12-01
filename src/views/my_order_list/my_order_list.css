@@ -27,7 +27,7 @@
 }
 
 .order-date span {
-  font-size: 1rem;
+  font-size: var(--font-base);
 }
 
 .order-date .orderDate {
@@ -45,7 +45,7 @@
 }
 
 .order-container .order-status {
-  font-size: 1.25rem;
+  font-size: var(--font-xl);
   margin: 0 0 5px 3px;
   font-weight: 500;
 }
@@ -61,7 +61,7 @@
 }
 
 .single-product-container span {
-  font-size: 1rem;
+  font-size: var(--font-base);
 }
 
 .detail-info-button-container {
@@ -70,7 +70,7 @@
 }
 
 .detail-info-button-container .detail-info-btn {
-  font-size: 1.125rem;
+  font-size: var(--font-lg);
   border-style: none;
 }
 
@@ -89,7 +89,7 @@
 }
 
 .address-container .address-text {
-  font-size: 1.25rem;
+  font-size: var(--font-xl);
   padding-bottom: 5px;
   margin-bottom: 10px;
   font-weight: 600;
@@ -111,7 +111,7 @@
 }
 
 .payment-information-container .payment-text {
-  font-size: 1.25rem;
+  font-size: var(--font-xl);
   padding-bottom: 5px;
   margin-bottom: 10px;
   font-weight: 600;
@@ -123,7 +123,7 @@
 }
 
 .payment-information-container .payment-wrapper span {
-  font-size: 1rem;
+  font-size: var(--font-base);
   margin: 5px 0;
 }
 
@@ -144,7 +144,7 @@
 
 .pay-date {
   color: gray;
-  font-size: 1rem;
+  font-size: var(--font-base);
 }
 
 .user-change-container {
@@ -166,7 +166,7 @@
 .user-change-container div span {
   width: 100px;
   margin: 0;
-  font-size: 1.125rem;
+  font-size: var(--font-lg);
 }
 
 .user-change-container input {
@@ -196,12 +196,12 @@
   cursor: pointer;
   display: inline-flex;
   font-family: Inter, sans-serif;
-  font-size: 1rem;
+  font-size: var(--font-base);
   font-weight: 550;
   justify-content: center;
   line-height: 1;
   outline: none;
-  padding: 1rem 1.1rem;
+  padding: var(--font-base) 1.1rem;
   text-align: center;
   text-decoration: none;
   white-space: nowrap;
@@ -244,11 +244,11 @@
 
 .single-product-detail .single-product-name {
   font-weight: bold;
-  font-size: 1.25rem;
+  font-size: var(--font-xl);
 }
 
 .address-container div span {
-  font-size: 1rem;
+  font-size: var(--font-base);
 }
 
 .address-container .address-info-wrapper {
@@ -318,10 +318,10 @@ body button {
   border-radius: 0.5rem;
   box-sizing: border-box;
   color: #111827;
-  font-size: 1rem;
+  font-size: var(--font-base);
   font-weight: 400;
   line-height: 0.5rem;
-  padding: 0.75rem 1rem;
+  padding: var(--font-xs) var(--font-base);
   text-align: start;
   text-decoration: none #d1d5db solid;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
@@ -342,4 +342,23 @@ body button {
 
 .button-38:focus-visible {
   box-shadow: none;
+}
+
+@media (max-width: 390px) {
+  .user-change-container div span {
+    width: 60px;
+  }
+
+  .order-status div {
+    flex-wrap: wrap;
+  }
+
+  .order-date .order-id {
+    padding-left: 0;
+  }
+
+  .address-container .address-info-text,
+  .payment-wrapper .payment-info-text {
+    width: 60px;
+  }
 }

@@ -145,3 +145,15 @@ input:active,
     padding: 5vh !important;
   }
 }
+
+@media (max-width: 440px) {
+  .emailOverlap {
+    margin-left: 60%;
+  }
+}
+
+@media (max-width: 390px) {
+  .emailOverlap {
+    margin-left: 58%;
+  }
+}
