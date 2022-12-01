@@ -30,6 +30,7 @@
   display: flex;
   justify-content: center;
   margin-top: 20px;
+  font-size: var(--font-base);
 }
 
 .review-list-container .single-review-container {
