@@ -8,6 +8,11 @@
   .body-container {
     margin-top: 0 !important;
   }
+
+  .carousel-container{
+    width: 100% !important;
+    margin-top: 20px !important;  
+}
 }
 
 .section-container {
