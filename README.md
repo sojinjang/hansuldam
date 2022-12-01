@@ -29,7 +29,7 @@
    git clone "https://github.com/sojinjang/hansuldam"
    ```
 
-2. 클론한 디렉토리에서 backend 디렉토리로 들어가 아래 명령어를 통해 backend에서 필요한 module 설치
+2. 필요한 module 설치
 
    ```bash
    npm install
@@ -81,7 +81,7 @@
 | 재웅 [@wooooooongs](https://github.com/wooooooongs) | 홈, 관리자 페이지, 상품 카테고리 페이지, 상품 상세 페이지, 헤더, 푸터 | multer 기반 이미지 업로드, 반응형 웹 적용, 페이지네이션 적용 |
 | 지안 [@HelloJianii](https://github.com/HelloJianii) | 비밀번호 찾기 페이지, 주문내역 페이지, 마이페이지 | 반응형 웹 적용, 주문내역 페이지 기능개선(주문정보 보기, 주문취소, 우편번호 찾기 버튼), 비회원/회원 마이페이지 |
 | 동준 [@dejaikeem](https://github.com/dejaikeem) | BE: 페이지네이션, Nodemailer 비밀번호 찾기 기능, erd 구조도, 서비스 흐름도 | FE: 다음 주소 검색 API, 키워드 검색 페이지, 홈 화면 주종 별 필터 페이지, 반응형 웹적용 |
-| 상준 [@ahosang](https://github.com/ahosang) | API 설계 및 API 문서 작성, 오류코드 작성 및 문서화, 백엔드 3계층 구조 기반 설계 적용, 기본적인 데이터 모델 CRUD, 권한에 따른 서비스 인가 기능, JWT 토큰 방식 로그인, Auth 로그인 | 필터 및 검색기능, 리소스 개선 리팩토링, multer 기반 이미지 CRUD, AWS 배포 |
+| 상준 [@ahosang](https://github.com/ahosang) | RESTful API 설계, 기본적인 데이터 모델 CRUD, 권한에 따른 서비스 인가 기능, JWT 토큰 방식 로그인,에러코드 | 필터 및 검색기능, Auth 로그인, 리소스 개선 리팩토링, multer 기반 이미지 CRUD, AWS 배포 |
 
 ## 🗂 디렉토리 구조
 <img width="667" alt="image" src="https://user-images.githubusercontent.com/111125577/205074551-e8909ffa-8f19-40a5-8089-30943256093d.png">
