@@ -272,6 +272,10 @@
   .products-container .products-image-list span .won {
     font-size: var(--font-sm);
   }
+
+  .products-container .products-image-list div img {
+    min-height: 0;
+  }
 }
 
 @media (max-width: 600px) {
