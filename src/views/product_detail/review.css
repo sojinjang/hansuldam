@@ -14,8 +14,8 @@
   margin-right: auto;
   font-size: 25px;
   font-weight: 600;
-  vertical-align: center;
   padding: 0px 20px;
+  margin: auto auto auto 0;
 }
 
 .review-list-container {
@@ -290,7 +290,6 @@
   .review-title {
     font-size: 19px;
     font-weight: 700;
-    padding-top: 15px;
   }
   .review-container {
     margin-top: 0px;
