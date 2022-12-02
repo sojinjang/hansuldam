@@ -501,6 +501,10 @@ body {
   .change-wrapper span {
     width: 70px;
   }
+
+  .address-input-container div input {
+    width: 120px;
+  }
 }
 
 @media (max-width: 390px) {
