@@ -361,6 +361,10 @@ body button {
   .payment-wrapper .payment-info-text {
     width: 60px;
   }
+
+  .address-input-container div input {
+    width: 120px;
+  }
 }
 
 @media (max-width: 390px) {

@@ -381,7 +381,7 @@ function createChangeDeliveryInformationContainer() {
         required
       />
     </div>
-    <button class="find-address-btn button-38">찾기</button>
+    <button class="find-address-btn button-38">주소찾기</button>
   </div>
   <div class="address-btn-container">
     <button class="change-btn button-38">변경</button>
