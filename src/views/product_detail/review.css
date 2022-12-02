@@ -95,8 +95,8 @@
 
 .single-review-detail-container .review-img {
   margin: 10px;
-  max-width: 90%;
-  height: auto;
+  max-width: 85%;
+  max-height: 370px;
 }
 
 .review-modification-container {
