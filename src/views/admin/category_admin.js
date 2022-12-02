@@ -88,7 +88,7 @@ async function postCategory(inputValue) {
     name: inputValue,
   };
 
-  await post("/api/admin/category", inputValueObject);
+  await post("/api/category/admin", inputValueObject);
 }
 
 async function renderCategory(category, productsTotalData) {

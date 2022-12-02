@@ -419,7 +419,7 @@ body {
   border-radius: 0.5rem;
   box-sizing: border-box;
   color: #111827;
-  font-size: 17px;
+  font-size: var(--font-base);
   font-weight: 400;
   line-height: 0.5rem;
   padding: var(--font-xs) var(--font-base);
@@ -500,6 +500,15 @@ body {
 
   .change-wrapper span {
     width: 70px;
+  }
+
+  .address-input-container div input {
+    width: 120px;
+  }
+
+  .address-btn-container {
+    justify-content: center;
+    margin: 0 !important;
   }
 }
 

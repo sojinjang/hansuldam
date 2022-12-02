@@ -14,8 +14,8 @@
   margin-right: auto;
   font-size: 25px;
   font-weight: 600;
-  vertical-align: center;
   padding: 0px 20px;
+  margin: auto auto auto 0;
 }
 
 .review-list-container {
@@ -50,7 +50,14 @@
 
 .single-review-title-container .image-icon {
   margin-left: 5px;
+  margin-top: 4px;
   width: 18px;
+}
+
+@media (max-width: 450px) {
+  .single-review-title-container .image-icon {
+    margin-top: 0;
+  }
 }
 
 .single-review-title-container .single-review-title-username {
@@ -290,7 +297,6 @@
   .review-title {
     font-size: 19px;
     font-weight: 700;
-    padding-top: 15px;
   }
   .review-container {
     margin-top: 0px;

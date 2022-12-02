@@ -3,6 +3,9 @@ import { ApiUrl } from "../constants/ApiUrl.js";
 
 const $ = (selector) => document.querySelector(selector);
 
+const params = new URLSearchParams(window.location.search);
+const currentEvent = params.get("event");
+
 async function initFunc() {
   await showEventCategories();
 
@@ -11,25 +14,26 @@ async function initFunc() {
   $(".menu-event-label").classList.add("clicked-label");
 
   eventCategories.forEach((container) => {
-    container.addEventListener("click", async (e) => {
-      if ($(".is-clicked")) {
-        $(".is-clicked").classList.remove("is-clicked");
-      }
-
-      $(".events-container").style.marginBottom = "30px";
-
-      const productContainer = document.querySelectorAll(".product-container-wrapper");
-      productContainer.forEach((container) => container.remove());
-
-      const eventId = e.currentTarget.getAttribute("id");
-      const eventProducts = await get(`${ApiUrl.CATEGORY}/${eventId}/products?perpage=20`);
-      eventProducts["productList"].forEach((product) => renderData(product));
-
-      e.target.classList.add("is-clicked");
-
-      goToDetailPage();
+    container.addEventListener("click", async () => {
+      const currentEventName = container.getAttribute("id");
+      window.location.assign(`?event=${currentEventName}`);
     });
   });
+
+  eventCategories.forEach((container) => {
+    if (container.getAttribute("id") === currentEvent) {
+      container.classList.add("is-clicked");
+    }
+  });
+
+  (async function a() {
+    $(".events-container").style.marginBottom = "30px";
+
+    const eventProducts = await get(`${ApiUrl.CATEGORY}/${currentEvent}/products?perpage=20`);
+    eventProducts["productList"].forEach((product) => renderData(product));
+
+    goToDetailPage();
+  })();
 }
 
 async function showEventCategories() {
