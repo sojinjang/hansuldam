@@ -1,7 +1,7 @@
 ## 🍶 프로젝트 소개
 한국의 전통주를 판매하는 사이트 한술담입니다. [📎 서비스 링크 이동하기](http://ec2-43-201-84-245.ap-northeast-2.compute.amazonaws.com)
 
-[<img src="https://user-images.githubusercontent.com/111125577/205091531-1dd8426d-ba7b-4ca2-afeb-eed0bbcbc7fc.jpeg" height="150px"/>](http://ec2-43-201-84-245.ap-northeast-2.compute.amazonaws.com)
+[<img src="https://user-images.githubusercontent.com/111125577/205091531-1dd8426d-ba7b-4ca2-afeb-eed0bbcbc7fc.jpeg" height="120px"/>](http://ec2-43-201-84-245.ap-northeast-2.compute.amazonaws.com)
 <br/>
 <img src="https://user-images.githubusercontent.com/111125577/205299490-16e61094-93b0-4ffe-b7e4-918c7eb75be2.gif" width="430">
 <img src="https://user-images.githubusercontent.com/111125577/205297553-bc1f4766-bf4f-47ef-872e-06596c5bff38.gif" width="220">
