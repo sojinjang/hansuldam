@@ -158,15 +158,7 @@ input:active,
   .body-join-form {
     padding: 5vh !important;
   }
-}
 
-@media (max-width: 680px) {
-  .body-join-check {
-    padding: 5vh !important;
-  }
-}
-
-@media (max-width: 680px) {
   .body-join-check {
     padding: 5vh !important;
   }
@@ -174,5 +166,11 @@ input:active,
   .body-join-check div,
   .body-join-check input {
     width: 300px;
+  }
+}
+
+@media (max-width: 390px) {
+  .body-join-check {
+    padding: 3vh !important;
   }
 }

@@ -25,7 +25,7 @@ body {
 }
 
 .user-information-container span {
-  font-size: 22px;
+  font-size: var(--font-xxl);
   text-align: center;
   border-bottom: 1px solid black;
   padding-bottom: 15px;
@@ -39,7 +39,7 @@ body {
 }
 
 .user-order-information-container span {
-  font-size: 22px;
+  font-size: var(--font-xxl);
   text-align: center;
   border-bottom: 1px solid black;
   padding-bottom: 15px;
@@ -47,14 +47,14 @@ body {
 }
 
 .body-section-container button {
-  font-size: 20px;
+  font-size: var(--font-xl);
   text-align: center;
   color: white;
   margin: 20px 0;
 }
 
 .body-section-container a {
-  font-size: 20px;
+  font-size: var(--font-xl);
   text-align: center;
   color: white;
   margin: 20px 0;
@@ -64,23 +64,28 @@ body {
   display: none;
   flex-direction: column;
   justify-content: center;
-  width: 400px;
+  margin-top: 50px;
+  padding: 50px 120px;
+  background-color: var(--brown-300);
+  border-radius: 10px;
+  min-width: 300px;
 }
 
 .password-container span {
-  font-size: 25px;
-  font-weight: bold;
+  font-size: var(--font-xxxxl);
   text-align: center;
-  margin-bottom: 15px;
+  margin-bottom: 30px;
 }
 
 .password-container input {
+  width: 400px;
   height: 50px;
-  font-size: 1.125rem;
-  padding-left: 10px;
-  margin-bottom: 10px;
-  border: none;
-  border-bottom: 1px solid grey;
+  font-size: var(--font-base);
+  border: 1px solid var(--black-100);
+  border-radius: 5px;
+  background-color: var(--white-100);
+  padding: 4px 4px 4px 4px;
+  margin: 3px 0;
 }
 
 .body-container .none-user-page-container {
@@ -149,7 +154,7 @@ body {
 }
 
 .order-date span {
-  font-size: 1rem;
+  font-size: var(--font-base);
 }
 
 .order-date .orderDate {
@@ -163,7 +168,7 @@ body {
 }
 
 #order-status {
-  font-size: 1.25rem;
+  font-size: var(--font-xl);
   margin: 0 0 5px 3px;
   font-weight: 500;
 }
@@ -441,7 +446,87 @@ body {
 }
 
 @media (max-width: 768px) {
-  .none-user-page-container {
-    margin: 5vh !important;
+  .none-user-page-input {
+    padding: 10vh !important;
+  }
+}
+
+@media (max-width: 680px) {
+  .none-user-page-input {
+    padding: 5vh !important;
+  }
+
+  .none-user-page-input input {
+    width: 300px;
+  }
+
+  .none-user-page-input button {
+    width: 300px;
+  }
+
+  .password-container {
+    padding: 10vh !important;
+  }
+
+  .password-container input {
+    width: 300px;
+  }
+}
+
+@media (max-width: 680px) {
+  .none-user-page-input {
+    padding: 3vh !important;
+  }
+}
+
+@media (max-width: 470px) {
+  .body-section-container {
+    width: 300px;
+    margin-top: 30px;
+  }
+
+  .password-container {
+    padding: 3vh !important;
+  }
+
+  .password-container span {
+    font-size: var(--font-xxxl);
+  }
+
+  .address-container .address-info-text,
+  .payment-wrapper .payment-info-text {
+    width: 60px;
+  }
+
+  .change-wrapper span {
+    width: 70px;
+  }
+}
+
+@media (max-width: 390px) {
+  .body-section-container {
+    width: 300px;
+    margin-top: 30px;
+  }
+
+  .password-container {
+    padding: 3vh !important;
+  }
+
+  .password-container span {
+    font-size: var(--font-xxxl);
+  }
+
+  .order-list-container .order-date {
+    flex-wrap: wrap;
+  }
+
+  .address-container .address-info-text,
+  .payment-wrapper .payment-info-text {
+    width: 60px;
+  }
+
+  .change-wrapper span {
+    width: 60px;
   }
 }
