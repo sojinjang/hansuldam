@@ -237,14 +237,14 @@
   cursor: pointer;
   display: inline-block;
   font-family: Clarkson, Helvetica, sans-serif;
-  font-size: var(--font-lg);
+  font-size: var(--font-base);
   font-weight: 500;
   letter-spacing: 0;
   line-height: 1em;
   margin: 0;
   opacity: 1;
   outline: 0;
-  padding: var(--font-lg) var(--font-xl);
+  padding: var(--font-base) var(--font-base);
   position: relative;
   text-align: center;
   text-decoration: none;
