@@ -50,7 +50,14 @@
 
 .single-review-title-container .image-icon {
   margin-left: 5px;
+  margin-top: 4px;
   width: 18px;
+}
+
+@media (max-width: 450px) {
+  .single-review-title-container .image-icon {
+    margin-top: 0;
+  }
 }
 
 .single-review-title-container .single-review-title-username {
