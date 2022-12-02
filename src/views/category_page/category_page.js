@@ -71,7 +71,10 @@ async function refineData() {
         if (a.sales < b.sales) return 1;
         if (a.sales > b.sales) return -1;
       });
-      refinedData = sortBestSelling;
+      
+      refinedData = sortBestSelling.slice(0, 12);
+      $(".pagination-list").remove();
+      
       break;
   }
 
