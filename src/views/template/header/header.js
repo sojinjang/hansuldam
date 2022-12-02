@@ -66,7 +66,7 @@ async function redirectPage() {
   $(".search-button").addEventListener("click", appendSearchModal);
   $(".join").addEventListener("click", () => (window.location.href = "/join"));
   $(".login").addEventListener("click", () => (window.location.href = "/login"));
-  $(".myPage").addEventListener("click", () => (window.location.href = "/myPage"));
+  $(".myPage").addEventListener("click", () => (window.location.href = "/my-page"));
   $(".cart").addEventListener("click", () => (window.location.href = "/cart"));
   $("#eventProducts").addEventListener("click", () => (window.location.href = "/event-page"));
 
@@ -75,7 +75,7 @@ async function redirectPage() {
 
     user["role"] === "admin" ? loginAsAdmin() : loginAsUser();
     $(".cart").addEventListener("click", () => (window.location.href = "/cart"));
-    $(".myPage").addEventListener("click", () => (window.location.href = "/myPage"));
+    $(".myPage").addEventListener("click", () => (window.location.href = "/my-page"));
     handleLogout();
   }
 
