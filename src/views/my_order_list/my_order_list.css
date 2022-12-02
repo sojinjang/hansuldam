@@ -344,6 +344,25 @@ body button {
   box-shadow: none;
 }
 
+@media (max-width: 500px) {
+  .user-change-container div span {
+    width: 70px;
+  }
+
+  .order-status div {
+    flex-wrap: wrap;
+  }
+
+  .order-date .order-id {
+    padding-left: 0;
+  }
+
+  .address-container .address-info-text,
+  .payment-wrapper .payment-info-text {
+    width: 60px;
+  }
+}
+
 @media (max-width: 390px) {
   .user-change-container div span {
     width: 60px;
