@@ -7,8 +7,38 @@ const $ = (selector) => document.querySelector(selector);
 const carouselImages = document.querySelectorAll(".carousel-img");
 const carouselDots = document.querySelectorAll(".carousel-dot");
 
-carouselImages.forEach((image) => {
-  image.addEventListener("click", () => (window.location.href = "/event-page/"));
+carouselImages.forEach((image, i) => {
+  i === 0
+    ? image.addEventListener(
+        "click",
+        () => (window.location.href = "/product-detail/?id=63897c775cb2a93336a976f0")
+      )
+    : image.addEventListener("click", () => (window.location.href = "/event-page/"));
+});
+
+carouselImages.forEach((image, i) => {
+  switch (i) {
+    case 0:
+      image.addEventListener(
+        "click",
+        () => (window.location.href = "/product-detail/?id=63897c775cb2a93336a976f0")
+      );
+      break;
+
+    case 1:
+      image.addEventListener(
+        "click",
+        () => (window.location.href = "event-page/?event=63897c765cb2a93336a976db")
+      );
+      break;
+
+    case 2:
+      image.addEventListener(
+        "click",
+        () => (window.location.href = "event-page/?event=63897c765cb2a93336a976d9")
+      );
+      break;
+  }
 });
 
 carouselDots.forEach((dot) => {
@@ -26,7 +56,7 @@ function autoSlideCarousel() {
 
   (function handleCarouselDot() {
     const currentDotIndex = Math.abs(currentSlide / 100);
-    
+
     carouselDots.forEach((dot) => dot.classList.remove("dot-clicked"));
     carouselDots[currentDotIndex].classList.add("dot-clicked");
   })();
