@@ -28,8 +28,8 @@ async function user() {
       role: "admin",
     },
     {
-      email: "han@google.com",
-      fullName: "한소희",
+      email: "ahosang@google.com",
+      fullName: "아호상",
       password: await bcrypt.hash("11111111", 10),
       phoneNumber: "01012341234",
       address: {
