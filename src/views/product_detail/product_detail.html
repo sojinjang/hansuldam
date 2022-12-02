@@ -4,24 +4,65 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>상세페이지 - 한술담 🍶</title>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
-    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
     <script
       defer
       src="https://kit.fontawesome.com/9daa42bcef.js"
       crossorigin="anonymous"
     ></script>
     <link rel="stylesheet" href="product_detail.css" />
+    <link rel="stylesheet" href="review.css" />
     <link rel="stylesheet" href="../template/footer/footer.css" />
     <link rel="stylesheet" href="../template/header/header.css" />
   </head>
   <body>
-    <!-- todo: 스크롤 내리면 로고, 검색창 등 작아지게 만들기 -->
     <main class="body-container">
+      <section class="review-container">
+        <div class="review-title-container">
+          <div class="review-title">리뷰</div>
+          <div class="review-button-wrapper">
+            <button class="review-write-button button-35-brown" role="button">리뷰쓰기</button>
+          </div>
+        </div>
+        <div class="review-list-container">
+          <div class="empty-review">이 상품의 첫 리뷰를 작성해보세요.</div>
+        </div>
+        <div id="modal" class="modal-overlay">
+          <div class="modal-window">
+            <div class="modal-upper-section">
+              <div class="title">
+                <h2>리뷰 쓰기</h2>
+              </div>
+              <div class="close-area">X</div>
+            </div>
+            <div class="review-write-content">
+              <div class="file has-name">
+                <label class="file-label">
+                  <input class="file-input" type="file" accept="image/*" name="resume">
+                  <span class="file-cta">
+                    <span class="file-icon">
+                      <i class="fas fa-upload"></i>
+                    </span>
+                    <span class="file-label">
+                      Choose a file…
+                    </span>
+                  </span>
+                  <span class="file-name">
+                    No file uploaded
+                  </span>
+                </label>
+              </div>
+              <div class="content-title">상품은 어떠셨나요?</div>
+              <textarea class="review-input" placeholder="최소 7자 이상 작성해주세요."></textarea>
+              <button class="review-submit-button" role="button"><span class="text">등록하기</span></button>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
     <script type="module" src="../template/getHeaderFooter.js"></script>
     <script type="module" src="product_detail.js"></script>
+    <script type="module" src="review_board.js"></script>
+    <script type="module" src="review_form.js"></script>
   </body>
 </html>

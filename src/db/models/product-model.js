@@ -4,29 +4,50 @@ import { ProductSchema } from "../schemas/product-schema";
 const Product = model("products", ProductSchema);
 
 export class ProductModel {
+  async totalCount(filterObj) {
+    const totalCount = await Product.count(filterObj);
+    return totalCount;
+  }
+
   async create(productInfo) {
     const createdNewProduct = await Product.create(productInfo);
     return createdNewProduct;
   }
 
-  async findAll() {
-    const products = await Product.find();
+  async findAll(skip, limit) {
+    const products = await Product.find().skip(skip).limit(limit);
     return products;
   }
 
-  async update({ productId, update }) {
-    const filter = { _id: productId };
+  async findFiltered(skip, limit, sortObj, filterObj) {
+    const products = await Product.find(filterObj).sort(sortObj).skip(skip).limit(limit);
+    return products;
+  }
+
+  async findByObj(Obj) {
+    const product = await Product.findOne(Obj);
+    return product;
+  }
+
+  async findByIdArray(idArray) {
+    const products = await Product.find({ _id: { $in: idArray } }).sort({
+      _id: 1,
+    });
+    return products;
+  }
+
+  async update(filterObj, updateObj) {
     const option = { returnOriginal: false };
 
-    const updatedProduct = await Product.findOneAndUpdate(filter, update, option);
+    const updatedProduct = await Product.findOneAndUpdate(filterObj, updateObj, option);
     return updatedProduct;
   }
 
   async updateManyByIdArr(IdArray, toUpdateObj) {
-    const filter = { _id: { $in: IdArray } };
+    const filterObj = { _id: { $in: IdArray } };
     const option = { returnOriginal: false };
 
-    const updatedProduct = await Product.updateMany(filter, toUpdateObj, option);
+    const updatedProduct = await Product.updateMany(filterObj, toUpdateObj, option);
     return updatedProduct;
   }
 
@@ -34,21 +55,6 @@ export class ProductModel {
     const filter = { _id: productId };
     const deletedProduct = await Product.deleteOne(filter);
     return deletedProduct;
-  }
-
-  async findByName(name) {
-    const product = await Product.findOne({ name });
-    return product;
-  }
-
-  async findById(productId) {
-    const product = await Product.findOne({ _id: productId });
-    return product;
-  }
-
-  async findByIdArray(idArray) {
-    const products = await Product.find({ _id: { $in: idArray } });
-    return products;
   }
 }
 

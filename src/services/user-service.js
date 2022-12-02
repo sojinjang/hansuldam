@@ -5,7 +5,6 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 class UserService {
-  // 본 파일의 맨 아래에서, new UserService(userModel) 하면, 이 함수의 인자로 전달됨
   constructor(userModel) {
     this.userModel = userModel;
   }
@@ -22,6 +21,7 @@ class UserService {
       phoneNumber,
     };
 
+    // email이 있는지 확인
     let user = await this.userModel.findByEmail(email);
     if (!user) {
       user = await this.userModel.create(newUserInfo);
@@ -29,12 +29,13 @@ class UserService {
 
     const secretKey = process.env.JWT_SECRET_KEY;
 
+    const userId = user._id;
     // 2개 프로퍼티를 jwt 토큰에 담음
-    const token = jwt.sign({ userId: user._id, role: user.role }, secretKey, {
-      expiresIn: "1h",
+    const token = jwt.sign({ userId, role: user.role }, secretKey, {
+      expiresIn: "3h",
     });
 
-    return { token };
+    return { token, userId };
   }
 
   // 회원가입
@@ -72,15 +73,16 @@ class UserService {
     if (!user) {
       throw new NotFound("This Email Not in DB", 4102);
     }
+    //auth 회원인지 확인
+    if (user.auth) {
+      throw new BadRequest("This user is Auth user", 4702);
+    }
 
     // 비밀번호 일치 여부 확인
     const correctPasswordHash = user.password; // db에 저장되어 있는 암호화된 비밀번호
 
     // 매개변수의 순서 중요 (1번째는 프론트가 보내온 비밀번호, 2번쨰는 db에 있떤 암호화된 비밀번호)
-    const isPasswordCorrect = await bcrypt.compare(
-      password,
-      correctPasswordHash
-    );
+    const isPasswordCorrect = await bcrypt.compare(password, correctPasswordHash);
 
     if (!isPasswordCorrect) {
       throw new Unauthorized("Incorrect Password", 4103);
@@ -89,15 +91,16 @@ class UserService {
     // 로그인 성공 -> JWT 웹 토큰 생성
     const secretKey = process.env.JWT_SECRET_KEY;
 
+    const userId = user._id;
     // 2개 프로퍼티를 jwt 토큰에 담음
-    const token = jwt.sign({ userId: user._id, role: user.role }, secretKey, {
-      expiresIn: "1h",
+    const token = jwt.sign({ userId, role: user.role }, secretKey, {
+      expiresIn: "3h",
     });
 
-    return { token };
+    return { token, userId };
   }
 
-  // 사용자 목록을 받음.
+  // 사용자 목록을 받음(관리자)
   async getUsers() {
     const users = await this.userModel.findAll();
     return users;
@@ -110,14 +113,18 @@ class UserService {
   }
 
   // 이메일로 사용자 개인정보를 받음(이메일 체크)
-  async getUserOneByEmail(email) {
+  async emailCheck(email) {
     const user = await this.userModel.findByEmail(email);
-    return user;
+
+    const isDuplicatedEmail = user ? true : false;
+    const answer = { isDuplicatedEmail };
+
+    return answer;
   }
 
   // 사용자 삭제.
   async deleteUserOne(userId) {
-    const user = await this.userModel.delete(userId);
+    const user = await this.userModel.deleteById(userId);
     return user;
   }
 
@@ -138,10 +145,7 @@ class UserService {
 
     // 비밀번호 일치 여부 확인
     const correctPasswordHash = user.password;
-    const isPasswordCorrect = await bcrypt.compare(
-      currentPassword,
-      correctPasswordHash
-    );
+    const isPasswordCorrect = await bcrypt.compare(currentPassword, correctPasswordHash);
 
     if (!isPasswordCorrect) {
       throw new Unauthorized("Incorrect Password", 4103);
@@ -156,10 +160,7 @@ class UserService {
     }
 
     // 업데이트 진행
-    user = await this.userModel.update({
-      userId,
-      updateObj: toUpdate,
-    });
+    user = await this.userModel.update({ _id: userId }, toUpdate);
 
     return user;
   }
@@ -173,56 +174,9 @@ class UserService {
       throw new NotFound("UserId does not in DB", 4104);
     }
     // 업데이트 진행
-    user = await this.userModel.update({
-      userId,
-      updateObj: toUpdate,
-    });
+    user = await this.userModel.update({ _id: userId }, toUpdate);
 
     return user;
-  }
-
-  // 유저정보에 주문id 추가.
-  async addOrderIdInUser(userId, orderId) {
-    // 객체 destructuring
-
-    // 우선 해당 id의 유저가 db에 있는지 확인
-    let user = await this.userModel.findById(userId);
-
-    // db에서 찾지 못한 경우, 에러 메시지 반환
-    if (!user) {
-      throw new NotFound("UserId does not in DB", 4104);
-    }
-
-    const toUpdate = { $push: { orders: orderId } };
-    // 업데이트 진행
-    user = await this.userModel.update({
-      userId,
-      updateObj: toUpdate,
-    });
-
-    return user;
-  }
-
-  // 장바구니 update
-  async addCart(userInfo) {
-    // 객체 destructuring
-    const { userId, productsInCart } = userInfo;
-    // 이메일 중복 확인
-    const updateCart = await this.userModel.update({
-      userId,
-      updateObj: { productsInCart },
-    });
-
-    return updateCart;
-  }
-
-  // 장바구니 get
-  async getCart(userId) {
-    // 객체 destructuring
-    // 이메일 중복 확인
-    const { productsInCart } = await this.userModel.findById(userId);
-
-    return productsInCart;
   }
 
   //비밀번호 찾기 api
@@ -237,10 +191,7 @@ class UserService {
   async changePasswordAsRandom(userId, newHashedPassword) {
     const toUpdate = { password: newHashedPassword };
     // 우선 해당 id의 유저가 db에 있는지 확인
-    const user = await this.userModel.update({
-      userId,
-      updateObj: toUpdate,
-    });
+    const user = await this.userModel.update({ _id: userId }, toUpdate);
 
     return user;
   }

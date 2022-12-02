@@ -1,5 +1,12 @@
 import { getSavedItems, saveItems } from "../utils/localStorage.js";
-import { getCookieValue } from "../utils/cookie.js";
+import { getPureDigit } from "../utils/useful_functions.js";
+import {
+  isEmptyCart,
+  removeProductFromLocalDB,
+  adjustQuantityFromLocalDB,
+} from "../utils/cart.js";
+import { Keys } from "../constants/Keys.js";
+import { updateCartCount } from "../template/header/header.js";
 
 const shoppingbagList = document.querySelector(".shoppingbag-list");
 
@@ -10,30 +17,10 @@ const deliveryFee = document.querySelector(".delivery-fee");
 const totalPrice = document.querySelector(".total-payment-price");
 const checkoutButton = document.querySelector(".checkout");
 
-const PRODUCTS_KEY = "products";
 const HIDDEN_CLASSNAME = "hidden";
-const TOKEN = "token";
-
-function removeProductFromDB(productId) {
-  let savedProducts = getSavedItems(PRODUCTS_KEY);
-  savedProducts = savedProducts.filter(
-    (product) => String(product._id) !== String(productId)
-  );
-  return savedProducts;
-}
-
-function adjustQuantityFromDB(productId, quantity) {
-  const savedProducts = getSavedItems(PRODUCTS_KEY);
-  const index = savedProducts.findIndex((x) => x._id === productId);
-  savedProducts[index].quantity = parseInt(quantity);
-  saveItems(PRODUCTS_KEY, savedProducts);
-}
-
-function isEmptyCart(productsList) {
-  return productsList == null || productsList.length === 0;
-}
 
 function showProduct(item) {
+  const imageUrl = ".." + decodeURIComponent(item.image).split("views")[1];
   let product = undefined;
   product = document.createElement("div");
   product.setAttribute("class", "product");
@@ -41,18 +28,22 @@ function showProduct(item) {
   product.innerHTML = `<div class="checkbox-wrapper">
                 <input type="checkbox" checked="checked" name="individual-checker" id=${
                   item._id
-                } class=individual-checker /><label
-                  for="checker"
+                } class="individual-checker" /><label
+                  for="${item._id}"
                 ></label>
               </div>
               <div class="product-info-top">
                 <div class="thumbnail">
-                  <img class="product-img" src="../img/redmonkey.jpeg" />
+                  <a href="/product-detail/?id=${item._id}">
+                    <img class="product-img" src="${imageUrl}" />
+                  </a>
                 </div>
                 <div class="product-info">
-                  <div class="product-brand">${item.brand}</div>
-                  <div class="product-name">${item.name}</div>
-                  <div class="product-volume">${item.volume}ml</div>
+                  <a href="/product-detail/?id=${item._id}">
+                    <div class="product-brand">${item.brand}</div>
+                    <div class="product-name">${item.name}</div>
+                    <div class="product-volume">${item.volume}ml</div>
+                  </a>
                 </div>
                 <button type="button" class="product-remove-button">
                   <img
@@ -74,7 +65,7 @@ function showProduct(item) {
                       />
                     </button>
                   </div>
-                  <div class="amount">${parseInt(item.quantity)}</div>
+                  <div class="amount">${item.quantity}</div>
                   <div class="increase" id=${item._id}>
                     <button class="plus-button" type="button">
                       <img
@@ -97,7 +88,7 @@ function hideCheckout() {
 }
 
 function renderCartContents() {
-  const savedProducts = getSavedItems(PRODUCTS_KEY);
+  const savedProducts = getSavedItems(Keys.CART_KEY);
   if (!isEmptyCart(savedProducts)) {
     checkoutButton.classList.remove(HIDDEN_CLASSNAME);
     savedProducts.forEach(showProduct);
@@ -111,27 +102,47 @@ function checkAllProducts(e) {
   checkboxList.forEach((checkbox) => (checkbox.checked = e.target.checked));
 }
 
+function handleAllChecker() {
+  const checkboxList = document.querySelectorAll(".individual-checker");
+  const checkedCnt = [...checkboxList].filter((checkbox) => checkbox.checked === true).length;
+  if (checkboxList.length === checkedCnt) return (allChecker.checked = true);
+  return (allChecker.checked = false);
+}
+
 function deleteProductFromCart(e) {
   const productDiv = e.target.parentElement.parentElement.parentElement;
-  let savedProducts = removeProductFromDB(productDiv.id);
+  let savedProducts = removeProductFromLocalDB(productDiv.id);
   productDiv.remove();
-  saveItems(PRODUCTS_KEY, savedProducts);
+  saveItems(Keys.CART_KEY, savedProducts);
   if (isEmptyCart(savedProducts)) hideCheckout();
+
+  updateCartCount();
 }
 
 function getCheckedItems() {
   return document.querySelectorAll("input[name=individual-checker]:checked");
 }
 
+function getCheckedItemsId() {
+  const checkedBoxList = getCheckedItems();
+  const checkedItemsIdList = [];
+  checkedBoxList.forEach((item) => {
+    checkedItemsIdList.push(item.getAttribute("id"));
+  });
+  return checkedItemsIdList;
+}
+
 function deleteCheckedProducts() {
   const checkedItemList = getCheckedItems();
   checkedItemList.forEach((item) => {
     const productDiv = document.getElementById(item.id);
-    let savedProducts = removeProductFromDB(productDiv.id);
+    let savedProducts = removeProductFromLocalDB(productDiv.id);
     productDiv.remove();
-    saveItems(PRODUCTS_KEY, savedProducts);
+    saveItems(Keys.CART_KEY, savedProducts);
     if (isEmptyCart(savedProducts)) hideCheckout();
   });
+
+  updateCartCount();
 }
 
 function decreaseProductQuantity(e) {
@@ -140,7 +151,7 @@ function decreaseProductQuantity(e) {
   const price = decreaseDiv.parentElement.nextElementSibling;
   if (quantity.innerText > 1) {
     quantity.innerText -= 1;
-    adjustQuantityFromDB(decreaseDiv.id, quantity.innerText);
+    adjustQuantityFromLocalDB(decreaseDiv.id, quantity.innerText);
     setProductPrice(quantity.innerText, price);
   }
 }
@@ -150,7 +161,7 @@ function increaseProductQuantity(e) {
   const quantity = increaseDiv.previousElementSibling;
   const price = increaseDiv.parentElement.nextElementSibling;
   quantity.innerText = parseInt(quantity.innerText) + 1;
-  adjustQuantityFromDB(increaseDiv.id, quantity.innerText);
+  adjustQuantityFromLocalDB(increaseDiv.id, quantity.innerText);
   setProductPrice(quantity.innerText, price);
 }
 
@@ -160,18 +171,13 @@ function setProductPrice(quantity, price) {
   price.innerText = `${productPrice.toLocaleString("ko-KR")}원`;
 }
 
-function getPureDigit(numStr) {
-  const regex = /[^0-9]/g;
-  return String(numStr).replace(regex, "");
-}
-
 function getTotalProductPrice() {
   const checkedItemList = getCheckedItems();
-  let addedPrice = parseInt(0);
+  let addedPrice = 0;
   checkedItemList.forEach((item) => {
     const productDiv = document.getElementById(item.id);
     let productPrice = productDiv.querySelector(".price").innerText.slice(0, -1);
-    addedPrice += parseInt(getPureDigit(productPrice));
+    addedPrice += getPureDigit(productPrice);
   });
   totalProductPrice.innerText = `${addedPrice.toLocaleString("ko-KR")}원`;
   return addedPrice;
@@ -189,9 +195,20 @@ function calculateTotalPrice() {
   totalPrice.innerText = `${(totalProductPrice + deliveryFee).toLocaleString("ko-KR")}원`;
 }
 
+function getCheckedItemsInfo() {
+  const checkedItemsIdList = getCheckedItemsId();
+  const cartProducts = getSavedItems(Keys.CART_KEY);
+  const checkedItemsInfo = checkedItemsIdList.reduce((acc, cur) => {
+    return [...acc, cartProducts.find((cartItem) => cartItem._id === cur)];
+  }, []);
+  return checkedItemsInfo;
+}
+
 function moveToPaymentPage() {
-  if (getCookieValue(TOKEN)) window.location.href = "/order-pay-member";
-  else window.location.href = "/order-pay-nonmember";
+  const orderProducts = getCheckedItemsInfo();
+  saveItems(Keys.ORDER_KEY, orderProducts);
+  saveItems(Keys.IS_CART_ORDER, true);
+  window.location.href = "/order-pay";
 }
 
 renderCartContents();
@@ -225,6 +242,7 @@ plusButtons.forEach((plusButton) => {
 
 checkboxes.forEach((checkbox) => {
   checkbox.addEventListener("click", calculateTotalPrice);
+  checkbox.addEventListener("click", handleAllChecker);
 });
 
 checkoutButton.addEventListener("click", moveToPaymentPage);

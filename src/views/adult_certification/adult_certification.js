@@ -1,11 +1,10 @@
 import { isName, isIdNum, isAdult } from "../utils/validator.js";
 import { setCookie } from "../utils/cookie.js";
+import { Keys } from "../constants/Keys.js";
 
 const name = document.querySelector("#nameForValidation");
 const idNum = document.querySelector("#idNum");
 const adultcheckBtn = document.querySelector(".adultCheckButton");
-
-const IS_ADULT_KEY = "isAdult";
 
 function examineIdNumber() {
   const idNumValue = idNum.value.trim();
@@ -20,9 +19,9 @@ function examineIdNumber() {
     return;
   }
   if (isAdult(idNumValue)) {
-    setCookie(IS_ADULT_KEY, { [IS_ADULT_KEY]: true });
+    setCookie(Keys.IS_ADULT_KEY, true);
     alert("성인 인증에 성공했습니다 🪪");
-    window.location.href = "/order-pay-nonmember";
+    window.location.href = "/order-pay";
     return;
   } else {
     alert("미성년자는 구입 불가능합니다 ❌");

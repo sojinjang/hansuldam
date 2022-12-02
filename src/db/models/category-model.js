@@ -4,6 +4,11 @@ import { CategorySchema } from "../schemas/category-schema";
 const Category = model("categories", CategorySchema);
 
 export class CategoryModel {
+  async totalCount(filterObj) {
+    const totalCount = await Category.count(filterObj);
+    return totalCount;
+  }
+
   async create(categoryInfo) {
     const createdNewCategory = await Category.create(categoryInfo);
     return createdNewCategory;
@@ -13,11 +18,15 @@ export class CategoryModel {
     const categories = await Category.find();
     return categories;
   }
+  async findByObj(obj) {
+    const category = await Category.findOne(obj);
 
-  async update({ categoryId, update }) {
-    const filter = { _id: categoryId };
+    return category;
+  }
+
+  async update(filterObj, updateObj) {
     const option = { returnOriginal: false };
-    const updatedCategory = await Category.findOneAndUpdate(filter, update, option);
+    const updatedCategory = await Category.findOneAndUpdate(filterObj, updateObj, option);
     return updatedCategory;
   }
 
@@ -25,12 +34,6 @@ export class CategoryModel {
     const filter = { _id: categoryId };
     const deletedCategory = await Category.deleteOne(filter);
     return deletedCategory;
-  }
-
-  async findByObj(obj) {
-    const category = await Category.findOne(obj);
-
-    return category;
   }
 }
 

@@ -2,10 +2,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Jua&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap");
 
-:root {
-  --hover-background-color: #f5f5f5;
-}
-
 /* body */
 .body-container {
   overflow-x: hidden;
@@ -15,6 +11,10 @@
 }
 
 /* main */
+.none {
+  display: none;
+}
+
 .admin-menu {
   max-width: 800px;
   margin: 0 auto;
@@ -25,33 +25,15 @@
   display: flex;
   flex-wrap: wrap;
   gap: 1em;
+  height: 80px;
 }
 
-.menubox-container a {
-  display: flex;
-  font-family: "Do Hyeon", sans-serif;
-  font-size: 25px;
-  color: rgb(62, 62, 62);
-  transition: all 0.1s linear;
-  background-color: rgba(191, 178, 106, 0.6);
-  border-radius: 7%;
-  min-height: 200px;
-  flex-basis: 150px;
-  flex-grow: 1;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.menubox-container a:hover {
-  color: rgb(170, 160, 150);
-  letter-spacing: 1px; 
-  box-shadow: 1px 1px 20px #ddd;
-
+.button-35-brown {
+  transition: none;
 }
 
 .title-container {
-  background-color: rgba(191, 178, 106, 0.6);
+  background-color: var(--brown-300);
   border-bottom: 1px solid black;
 }
 
@@ -59,10 +41,11 @@
   font-weight: 700;
 }
 
-.title-container div, .items-container div{
+.title-container div,
+.items-container div {
+  margin: auto 0 auto 0;
   text-align: center;
 }
-
 
 .items-container {
   margin-bottom: 10px;
@@ -73,16 +56,29 @@
   background-color: #f5f5f5;
 }
 
+/* modal */
+.modal {
+  display: block;
+}
+
+.modal-background {
+  background-color: #36363690;
+}
+
+.modal-content {
+  margin: 150px auto 0px auto;
+}
+
 .add-category-modal {
   position: absolute;
   width: 300px;
-  top: 580px;
+  top: 450px;
 }
 
 .add-category-modal button {
   width: 15px;
   height: 24px;
-  left: 190px
+  left: 190px;
 }
 
 .modify-category-input {
@@ -95,20 +91,23 @@
   position: relative;
 }
 
-.modify-category-modal button{
-  width: 15px;
-  height: 24px;
-}
-
-.add-product-modal, .modify-product-modal {
+/* add product modal */
+.add-product-modal {
   display: flex;
-  width: 50%;
-  border: 0.5px solid grey;
-  padding: 10px;
+  flex-direction: row;
+  justify-content: center;
+  background-color: #fff;
+  padding: 50px;
   margin-bottom: 30px;
+
+  border: 0.5px solid grey;
+  border-bottom: 1px solid #dbdbdb;
+  border-radius: 6px;
 }
 
-.add-product-modal input, .modify-product-modal input, #upload-image-div {
+.add-product-modal input,
+.modify-product-modal input,
+#upload-image-div {
   width: 250px;
 }
 
@@ -120,24 +119,44 @@
   width: 250px;
 }
 
-.add-product-modalm button, .modify-product-modal button{
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.add-product-modal button {
   width: 15px;
   height: 24px;
 }
 
-.right-modal, .left-modal {
+.right-modal,
+.left-modal {
   display: flex;
   flex-direction: column;
+}
+
+.orders-container > button,
+.products-container > button,
+.categories-container > button {
+  top: -25px;
 }
 
 .orders-container .none {
   display: none;
 }
 
-.none {
-  display: none;
+.file-label {
+  justify-content: flex-end;
+  flex-direction: column;
+  margin-left: 15px;
 }
 
 .img-upload-btn {
   border: 1px rgb(211, 211, 211) solid;
+}
+
+.image {
+  margin: auto 0 auto 0;
+  width: 200px;
 }

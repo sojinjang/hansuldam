@@ -1,0 +1,228 @@
+body {
+  overflow-x: hidden;
+  margin: 0;
+}
+
+.body-section-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.body-section-container .title {
+  font-size: var(--font-xxxl);
+  font-weight: bold;
+  padding: 20px 0;
+  border-bottom: 2px solid;
+}
+
+.user-container section {
+  margin: 10px 10px;
+}
+
+.body-section-container .user-personal-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.user-personal-info .personal-info-title {
+  margin-bottom: 10px;
+}
+
+.user-personal-info .personal-info-contents {
+  display: flex;
+  flex-direction: column;
+}
+
+.personal-info-contents #info-wrapper {
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid lightgray;
+  padding: 20px 5px;
+}
+
+#info-wrapper p {
+  font-size: var(--font-lg);
+  font-weight: bold;
+  width: 100px;
+  margin-right: 50px;
+}
+
+#info-wrapper span {
+  width: 260px;
+  font-size: var(--font-base);
+}
+
+.adChangeBtn,
+.numChangeBtn,
+.pwChangeBtn {
+  position: absolute;
+  left: 85%;
+}
+
+.password-container .password-info {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.password-container .change-password-container {
+  flex-direction: column;
+}
+
+.password-container div button {
+  width: fit-content;
+}
+
+.address-container .user-address {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-address span {
+  margin-bottom: 3px;
+}
+
+.address-container #change-address-container {
+  flex-direction: row;
+}
+
+#change-address-container button {
+  height: 30px;
+}
+
+.address-container button {
+  width: fit-content;
+}
+
+.change-info {
+  display: none;
+  flex-direction: column;
+}
+
+.change-info .address-input-container {
+  display: flex;
+  flex-direction: column;
+  margin: 2px 5px 0 0;
+}
+
+.change-info input {
+  margin-bottom: 5px;
+}
+
+#buttons {
+  height: 30px;
+  background-color: #ffffff;
+  border: 0;
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+  color: #111827;
+  font-size: var(--font-base);
+  font-weight: 400;
+  line-height: 0.5rem;
+  padding: var(--font-xs) var(--font-base);
+  text-align: start;
+  text-decoration: none #d1d5db solid;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+#buttons:hover {
+  background-color: rgb(249, 250, 251);
+}
+
+#buttons:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+#buttons:focus-visible {
+  box-shadow: none;
+}
+
+.adConfrimBtn,
+.numConfirmBtn,
+.pwConfirmBtn {
+  margin-right: 5px;
+}
+
+.btn-container {
+  display: none;
+  position: absolute;
+  left: 80%;
+}
+
+input {
+  font-size: var(--font-base);
+  border: 1px solid var(--black-100);
+  border-radius: 5px;
+  background-color: var(--white-100);
+  padding: 4px 4px 4px 4px;
+}
+
+.delete-user-information-btn {
+  border-bottom: 1px solid gray;
+  border-radius: 0;
+  font-size: var(--font-base);
+  color: gray;
+  position: absolute;
+  left: 85%;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+@media (max-width: 820px) {
+  #info-wrapper span {
+    width: 200px;
+  }
+
+  #info-wrapper p {
+    margin-right: 10px;
+  }
+
+  .btn-container {
+    display: none;
+  }
+
+  .btn-container {
+    left: 76%;
+  }
+}
+
+@media (max-width: 390px) {
+  #info-wrapper span {
+    width: 150px;
+  }
+
+  #info-wrapper p {
+    width: 70px;
+    margin-right: 10px;
+  }
+
+  .btn-container {
+    display: none;
+  }
+
+  .adChangeBtn,
+  .numChangeBtn,
+  .pwChangeBtn {
+    position: absolute;
+    left: 78%;
+  }
+
+  .delete-user-information-btn {
+    left: 78%;
+  }
+
+  .btn-container {
+    left: 70%;
+  }
+
+  #info-wrapper {
+    flex-wrap: wrap;
+  }
+}

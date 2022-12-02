@@ -5,12 +5,13 @@ import {
   userRouter,
   categoryRouter,
   productRouter,
-  adminRouter,
+  imageRouter,
+  commentRouter,
   orderRouter,
-  authRouter,
+  cartRouter,
   naverRouter,
 } from "./routers";
-import { errorHandler, loginRequired, adminRequired } from "./middlewares";
+import { errorHandler } from "./middlewares";
 
 const app = express();
 
@@ -30,9 +31,10 @@ app.use(viewsRouter);
 app.use("/api/user", userRouter);
 app.use("/api/category", categoryRouter);
 app.use("/api/products", productRouter);
+app.use("/api/image", imageRouter);
 app.use("/api/orders", orderRouter);
-app.use("/api/auth", loginRequired, authRouter);
-app.use("/api/admin", loginRequired, adminRequired, adminRouter);
+app.use("/api/cart", cartRouter);
+app.use("/api/comments", commentRouter);
 app.use("/api/naver", naverRouter);
 
 // 에러 라우팅

@@ -1,6 +1,8 @@
 import { isNum, isIdNum, isAdult } from "../utils/validator.js";
+import { findAddress } from "../utils/findAddress.js";
 import * as api from "../api.js";
 
+const adult_check_form = document.querySelector(".body-join-check");
 const main_form = document.querySelector(".body-join-form");
 
 const nameForValidation = document.querySelector("#nameForValidation");
@@ -11,10 +13,12 @@ const email = document.querySelector("#email");
 const username = document.querySelector("#name");
 const password = document.querySelector("#passwordInput");
 const passwordCheck = document.querySelector("#passwordCheck");
-const address = document.querySelector("#addressLocation");
+const addressPostalCode = document.querySelector("#addressPostalCode");
+const addressLocation = document.querySelector("#addressLocation");
 const addressDetail = document.querySelector("#addressDetail");
 const phoneNumber = document.querySelector("#phoneNumber");
 const joinCompletedBtn = document.querySelector(".join-form-button");
+const findAddressBtn = document.querySelector(".find-address-button");
 
 // 내용 자동입력
 const recievedData = location.href.split("?")[1];
@@ -31,13 +35,12 @@ function examineIdNumber(e) {
     return;
   }
   if (!isIdNum(idNumValue)) {
-    alert(
-      "주민번호 형식에 맞지 않는 입력값입니다.\n######-####### 형식으로 입력해주세요. 🤡"
-    );
+    alert("주민번호 형식에 맞지 않는 입력값입니다.\n######-####### 형식으로 입력해주세요. 🤡");
     return;
   }
   if (isAdult(idNumValue)) {
     alert("성인 인증에 성공했습니다 🪪");
+    adult_check_form.style.display = "none";
     main_form.style.display = "flex";
     return;
   } else {
@@ -57,12 +60,18 @@ function checkPassword(password, passwordCheck) {
   return true;
 }
 
-function checkAddress(address, detailedAddress) {
-  if (address == "" || detailedAddress == "") {
+function checkAddress(postalCode, addressLocation, detailedAddress) {
+  if (postalCode == "" || addressLocation == "" || detailedAddress == "") {
     alert("주소를 기입해주세요 🏠");
     return false;
   }
   return true;
+}
+
+async function insertFoundAddress() {
+  const { foundZoneCode, foundAddress } = await findAddress();
+  addressPostalCode.value = foundZoneCode;
+  addressLocation.value = foundAddress;
 }
 
 function checkPhoneNumber(phoneNumber) {
@@ -92,7 +101,8 @@ function requestToCompleteJoin() {
   const inputPassword = password.value;
   const inputPasswordCheck = passwordCheck.value;
   const inputPhoneNumber = phoneNumber.value;
-  const inputAddress = address.value;
+  const inputAddress = addressLocation.value;
+  const inputPostalCode = addressPostalCode.value;
   const inputDetailedAddress = addressDetail.value;
   const userInputObj = {
     email: inputEmail,
@@ -100,6 +110,7 @@ function requestToCompleteJoin() {
     password: inputPassword,
     phoneNumber: inputPhoneNumber,
     address: {
+      postalCode: inputPostalCode,
       address1: inputAddress,
       address2: inputDetailedAddress,
     },
@@ -108,7 +119,7 @@ function requestToCompleteJoin() {
   if (
     checkPassword(inputPassword, inputPasswordCheck) &&
     checkPhoneNumber(inputPhoneNumber) &&
-    checkAddress(inputAddress, inputDetailedAddress)
+    checkAddress(inputPostalCode, inputAddress, inputDetailedAddress)
   ) {
     submitUserInfo(userInputObj);
   }
@@ -116,3 +127,4 @@ function requestToCompleteJoin() {
 
 adultcheckBtn.addEventListener("click", examineIdNumber);
 joinCompletedBtn.addEventListener("click", requestToCompleteJoin);
+findAddressBtn.addEventListener("click", insertFoundAddress);
