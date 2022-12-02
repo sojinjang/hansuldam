@@ -154,7 +154,7 @@ async function setOrderListContainer(orderId) {
         }
       }
     } catch (e) {
-      console.log(e.message);
+      alert(e.message);
     }
   }
 }
