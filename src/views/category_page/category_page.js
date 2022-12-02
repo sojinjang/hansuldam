@@ -58,8 +58,8 @@ async function refineData() {
     case "newProducts":
       document.title = "신상품 - 한술담 🍶";
       const sortNew = productsTotalData.sort((a, b) => {
-        if (a.updatedAt < b.updatedAt) return 1;
-        if (a.updatedAt > b.updatedAt) return -1;
+        if (a.createdAt < b.createdAt) return 1;
+        if (a.createdAt > b.createdAt) return -1;
       });
       $(".pagination-list").remove();
       refinedData = sortNew.slice(0, 12);
