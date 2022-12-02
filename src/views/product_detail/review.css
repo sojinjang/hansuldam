@@ -122,6 +122,7 @@
 
 .writer-button-container .writer-button {
   margin-right: var(--font-xs);
+  font-size: var(--font-base);
   cursor: pointer;
   transition: all 0.4s linear;
 }
