@@ -226,6 +226,11 @@
   margin-bottom: 10px;
 }
 
+.products-container .products-image-list div img {
+  min-height: 265px;
+  object-fit: cover;
+}
+
 .products-container .products-image-list div img:hover {
   opacity: 0.75;
   transition: all 0.15s ease;
@@ -266,6 +271,10 @@
 
   .products-container .products-image-list span .won {
     font-size: var(--font-sm);
+  }
+
+  .products-container .products-image-list div img {
+    min-height: 0;
   }
 }
 

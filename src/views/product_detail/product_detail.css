@@ -19,7 +19,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .product-container {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
 }
 
 /* image */
@@ -32,14 +32,14 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .image-warpper {
-  margin-right: 120px;
+  margin: 0 auto
 }
 
 /* content__container */
 .content__container {
   display: flex;
   flex-direction: column;
-  width: 45%;
+  width: 35%;
   height: 500px;
   font-weight: 600;
 }
