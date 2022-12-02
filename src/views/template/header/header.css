@@ -1,19 +1,81 @@
-@import url('../main_style.css');
+@import url("../main_style.css");
 
 /* reset */
 input {
-    -webkit-appearance: none;
-       -moz-appearance: none;
-            appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
-input:focus { 
-  outline: none; 
+input:focus {
+  outline: none;
+}
+@media screen and (max-width: 875px) {
+  .user-menu .separator {
+    display: none;
+  }
+
+  .user-menu {
+    justify-content: flex-end !important;
+    align-items: end !important;
+    min-width: 90px !important;
+  }
+
+  .user-list {
+    flex-direction: column;
+    align-items: flex-end !important;
+    margin-top: 10px !important;
+  }
+
+  .user-list li {
+    font-size: var(--font-base) !important;
+    margin: 3px 6px 10px 0;
+  }
+
+  .header-container .cart {
+    margin: 8px 4px 0 0 !important;
+  }
+
+  .navbar-menu {
+    padding: 0 !important;
+  }
+
+  .header-container .cart {
+    height: 44px !important;
+  }
+
+  .modal-close-button {
+    left: 90% !important;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  .menu-label {
+    font-size: var(--font-base) !important;
+  }
+
+  .header-top-container {
+    display: flex;
+  }
+
+  .company-logo {
+    height: 55px;
+  }
+
+  .search-wrapper,
+  .search-button {
+    padding: 0 !important;
+  }
+
+  .search-button img {
+    top: 124.5px !important;
+  }
 }
 
 /* 텍스트 드래그 방지 */
-.header-container, .header-menu-wrapper{
-  -ms-user-select: none; 
+.header-container,
+.header-menu-wrapper {
+  -ms-user-select: none;
   -moz-user-select: -moz-none;
   -khtml-user-select: none;
   -webkit-user-select: none;
@@ -23,10 +85,10 @@ input:focus {
 /* header top*/
 .header-container {
   display: flex;
-  justify-content: space-between;
-  margin: 0 7vw 20px 7vw;
-  padding-top: 30px;
-  width: 100%;
+  justify-content: flex-end;
+  position: absolute;
+  top: 30px;
+  right: 7vw;
   height: 44px;
 }
 
@@ -37,14 +99,15 @@ input:focus {
   align-items: center;
 }
 
-.company-logo-wrapper {
-  width: 106px;
+.header-top-container {
+  margin: 25px auto 0 auto;
+  width: 160px;
   height: 26px;
   vertical-align: middle;
 }
 
 .user-menu {
-  width: 45%;
+  z-index: 4;
   min-width: 200px;
   max-width: 450px;
   display: flex;
@@ -56,17 +119,18 @@ input:focus {
 
 .user-menu .user-list {
   margin: 0px;
-  padding: 0px;
+  padding: 0 0 0 15px;
   display: flex;
   -webkit-box-pack: end;
   justify-content: flex-end;
   -webkit-box-align: center;
   align-items: center;
-  transition: all ease 0.2s;
+  transition: all ease 0.4s;
 }
 
 .user-menu .user-list .separator {
-  margin: 0 4px 0 4px;
+  margin: 0 6px 0 6px;
+  opacity: 0.4;
 }
 
 .user-menu .user-list li {
@@ -84,13 +148,12 @@ input:focus {
   color: var(--brown-600-hover);
 }
 
-.user-menu .user-list .cart {
+.header-container .cart {
   position: relative;
   cursor: pointer;
-  width: 40px;
-  height: 50px;
-  vertical-align: middle;
-  margin: 15px 11px 11px 11px;
+  width: 32px;
+  height: 47px;
+  margin: 25px 11px 11px 7px;
 }
 
 .cart-count {
@@ -106,6 +169,20 @@ input:focus {
   top: 18px;
 }
 
+.navbar-burger:hover {
+  background-color: transparent;
+}
+
+.navbar-menu.is-active {
+  position: absolute;
+  border-radius: 8px;
+  top: 45px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(255, 255, 255, 0.93);
+}
+
 /* header bottom */
 
 .header-menu-wrapper {
@@ -117,7 +194,7 @@ input:focus {
   display: flex;
   justify-content: center;
   align-items: baseline;
-  margin-top: 45px;
+  margin-top: 60px;
   -webkit-box-pack: start;
   -webkit-box-align: baseline;
 }
@@ -127,18 +204,12 @@ input:focus {
   padding: 2px;
   font-size: var(--font-lg);
   font-weight: 500;
-  margin: 6px 5px 0px 0;
 }
 
 .header-menu-wrapper .menu-list li {
-  padding: 0.5em 1.75em;
   color: var(--black-400);
   transition: all ease 0.2s;
-  margin-bottom: 3px;
-}
-
-.header-menu-wrapper .menu-list a {
-  padding: 0.5em 1.75em;
+  margin: 6px 5px 3px 0px;
 }
 
 .header-menu-wrapper .menu-list a:hover {
@@ -149,7 +220,7 @@ input:focus {
 .header-menu-wrapper .menu-list .menu-label:hover {
   border-bottom: solid 3px var(--brown-1300);
   background-color: transparent;
-  margin-bottom: 0;
+  margin-bottom: 0px;
 }
 
 .company-logo {
@@ -158,20 +229,19 @@ input:focus {
 
 .menu-event-label {
   color: #7a7a7a;
-  font-size: .75em;
-  letter-spacing: .1em;
+  font-size: 0.75em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
 .search-button {
   cursor: pointer;
-  padding: 0.5em 1.75em;
   border: none;
 }
 
 .search-button img {
   position: absolute;
-  top: 107px;
+  top: 128px;
   width: var(--font-xl);
 }
 
@@ -186,8 +256,8 @@ input:focus {
   display: block;
   z-index: 10;
   position: fixed;
-  width: 100vw;
-  height: 100vw;
+  width: 100%;
+  height: 100%;
   background-color: white;
   opacity: 0;
   transition: all 0.1s ease;
@@ -197,16 +267,13 @@ input:focus {
   cursor: pointer;
   position: fixed;
   top: 5%;
-  left: 97%;
-  font-size: 18px;
+  left: 95%;
+  font-size: var(--font-xxxxxl);
 }
 
 .search-container {
-  position: fixed;
   display: flex;
-  justify-content: space-between;
-  top: 30%;
-  left: 39%;
+  margin: 350px auto;
   width: 360px;
   height: 35px;
 }

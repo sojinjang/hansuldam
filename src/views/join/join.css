@@ -20,6 +20,7 @@ body {
   padding: 50px 120px;
   background-color: var(--brown-300);
   border-radius: 10px;
+  min-width: 300px;
 }
 
 .body-join-form section {
@@ -29,16 +30,16 @@ body {
 }
 
 .body-join-form .join-form-hello p {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   font-size: var(--font-xxxl);
   text-align: center;
 }
 
 .join-form-hello span {
-  font-size: 1rem;
+  font-size: var(--font-base);
   text-align: center;
   color: grey;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .body-join-form input {
@@ -61,13 +62,19 @@ input:-webkit-autofill:active {
   transition: background-color 5000s ease-in-out 0s;
 }
 
+input:active,
+:focus {
+  box-shadow: none !important;
+  border: 1px solid var(--black-100) !important;
+}
+
 #emailInput {
   margin-bottom: 3px;
 }
 
 .body-join-form .join-form-button {
   margin-top: 30px;
-  font-size: 1.125rem;
+  font-size: var(--font-lg);
   height: 40px;
   align-items: center;
   background-color: var(--brown-500);
@@ -82,7 +89,7 @@ input:-webkit-autofill:active {
   justify-content: center;
   line-height: 1;
   outline: none;
-  padding: 1rem 1.1rem;
+  padding: var(--font-base) 1.1rem;
   text-align: center;
   text-decoration: none;
   white-space: nowrap;
@@ -98,6 +105,8 @@ input:-webkit-autofill:active {
 }
 
 .emailOverlap {
+  width: fit-content;
+  height: 30px;
   align-items: center;
   background-color: var(--white-200);
   border-radius: 12px;
@@ -106,15 +115,16 @@ input:-webkit-autofill:active {
   color: var(--black-400);
   cursor: pointer;
   display: inline-flex;
-  height: 30px;
+  flex: 1 1 auto;
   font-family: Inter, sans-serif;
   font-size: var(--font-sm);
   font-weight: 550;
   justify-content: center;
   line-height: 1;
-  outline: none;
   margin-left: 68%;
-  padding: 1rem 1.1rem;
+  margin-top: 3px;
+  outline: none;
+  padding: var(--font-base) 1.1rem;
   text-align: center;
   text-decoration: none;
   white-space: nowrap;
@@ -126,5 +136,24 @@ input:-webkit-autofill:active {
 }
 
 .emailOverlap:hover {
-  box-shadow: var(--black-400) 0 0 0 1.5px, transparent 0 0 0 0;
+  box-shadow: var(--brown-500) 0 0 0 1.5px, transparent 0 0 0 0;
+  color: var(--brown-500);
+}
+
+@media (max-width: 680px) {
+  .body-join-form {
+    padding: 5vh !important;
+  }
+}
+
+@media (max-width: 440px) {
+  .emailOverlap {
+    margin-left: 60%;
+  }
+}
+
+@media (max-width: 390px) {
+  .emailOverlap {
+    margin-left: 58%;
+  }
 }

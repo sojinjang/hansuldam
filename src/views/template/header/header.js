@@ -10,10 +10,10 @@ const $ = (selector) => document.querySelector(selector);
 function getHeader() {
   return `
 <header> 
+  <div class="header-top-container">
+    <img class="company-logo" src="../img/logo.jpeg" alt="company-logo">
+  </div>
   <div class="header-container">
-      <div class="company-logo-wrapper">
-        <img class="company-logo" src="../img/logo.png" alt="company-logo">
-      </div>
     <section class="user-menu">
       <ul class="user-list">
         <li class="myPage">비회원 주문 조회</li>
@@ -21,11 +21,11 @@ function getHeader() {
         <li class="login">로그인</li>
         <span class="separator">/</span>
         <li class="join">회원가입</li>
-        <div class="cart">
-          <span class="cart-count">0</span>
-          <img src="../img/shopping-bag.png" alt="cart-img">
-        </div>
       </ul>
+      <div class="cart">
+        <span class="cart-count">0</span>
+        <img src="../img/shopping-bag.png" alt="cart-img">
+      </div>
     </section>
   </div>
   <div class="header-menu-wrapper">
@@ -63,7 +63,7 @@ async function redirectPage() {
   });
 
   $(".company-logo").addEventListener("click", () => (window.location.href = "/"));
-  $(".search-button").addEventListener("click", () => appendSearchModal());
+  $(".search-button").addEventListener("click", appendSearchModal);
   $(".join").addEventListener("click", () => (window.location.href = "/join"));
   $(".login").addEventListener("click", () => (window.location.href = "/login"));
   $(".myPage").addEventListener("click", () => (window.location.href = "/myPage"));
@@ -85,11 +85,7 @@ async function redirectPage() {
 function loginAsUser() {
   $(".user-list").innerHTML = `<li class="myPage">마이페이지</li>
 <span class="separator">/</span>
-<li class="logout">로그아웃</li>
-<div class="cart">
-  <span class="cart-count">0</span>
-  <img src="../img/shopping-bag.png" alt="cart-img">
-</div>`;
+<li class="logout">로그아웃</li>`;
 }
 
 function loginAsAdmin() {
@@ -97,11 +93,7 @@ function loginAsAdmin() {
 <span class="separator">/</span>
 <li class="admin">관리자페이지</li>
 <span class="separator">/</span>
-<li class="logout">로그아웃</li>
-<div class="cart">
-  <span class="cart-count">0</span>
-  <img src="../img/shopping-bag.png" alt="cart-img">
-</div>`;
+<li class="logout">로그아웃</li>`;
 
   $(".admin").addEventListener("click", () => (window.location.href = "/admin"));
 }
@@ -171,7 +163,7 @@ function handleSearchWithClick(e) {
   const inputValue = input.value.trim();
   inputValue === ""
     ? alert("검색어를 입력해주세요.")
-    : (window.location.href = `/search/?keyword=${inputValue}`);
+    : (window.location.href = `/search/?keyword=${inputValue}&page=1`);
 }
 
 function handleSearchWithEnter(e) {
@@ -180,8 +172,85 @@ function handleSearchWithEnter(e) {
   if (e.keyCode === 13) {
     inputValue === ""
       ? alert("검색어를 입력해주세요.")
-      : (window.location.href = `/search/?keyword=${inputValue}`);
+      : (window.location.href = `/search/?keyword=${inputValue}&page=1`);
   }
 }
+
+async function handleHambergurMenu() {
+  const hambergurHTML = `
+<div class="cart">
+  <span class="cart-count">0</span>
+  <img src="../img/shopping-bag.png" alt="cart-img">
+</div>
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <section class="user-menu">
+      <ul class="user-list">
+        <li class="myPage">비회원 주문 조회</li>
+        <li class="login">로그인</li>
+        <li class="join">회원가입</li>
+      </ul>
+    </section>
+  </div>
+</nav>
+`;
+
+  $(".user-list").remove();
+  $(".user-menu").innerHTML = hambergurHTML;
+
+  $(".navbar-burger").addEventListener("click", () => {
+    $(".navbar-menu").classList.toggle("is-active");
+    $(".navbar-burger").classList.toggle("is-active");
+  });
+
+  redirectPage();
+}
+
+function handleUserMenu() {
+  const usemenuHTML = `
+<section class="user-menu">
+  <ul class="user-list">
+    <li class="myPage">비회원 주문 조회</li>
+    <span class="separator">/</span>
+    <li class="login">로그인</li>
+    <span class="separator">/</span>
+    <li class="join">회원가입</li>
+  </ul>
+  <div class="cart">
+    <span class="cart-count">0</span>
+    <img src="../img/shopping-bag.png" alt="cart-img">
+  </div>
+</section>
+`;
+
+  $(".navbar").remove();
+  $(".header-container").innerHTML = usemenuHTML;
+  redirectPage();
+}
+
+window.addEventListener("resize", () => {
+  let windowWidth = window.innerWidth;
+
+  if (windowWidth < 875 && $(".user-menu")) {
+    handleHambergurMenu();
+  }
+
+  if (windowWidth >= 875 && $(".navbar")) {
+    handleUserMenu();
+  }
+});
+
+window.onload = () => {
+  if (window.innerWidth < 875 && $(".user-menu")) {
+    handleHambergurMenu();
+  }
+};
 
 export { getHeader, redirectPage, updateCartCount };
