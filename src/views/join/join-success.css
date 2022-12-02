@@ -169,7 +169,13 @@ input:active,
   }
 }
 
-@media (max-width: 390px) {
+@media (max-width: 450px) {
+  #addressPostalCode {
+    width: 180px;
+  }
+}
+
+@media (max-width: 375px) {
   .body-join-check {
     padding: 3vh !important;
   }
