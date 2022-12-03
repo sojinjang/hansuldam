@@ -121,7 +121,7 @@ input:active,
   font-weight: 550;
   justify-content: center;
   line-height: 1;
-  margin-left: 68%;
+  margin-left: auto;
   margin-top: 3px;
   outline: none;
   padding: var(--font-base) 1.1rem;
@@ -143,17 +143,5 @@ input:active,
 @media (max-width: 680px) {
   .body-join-form {
     padding: 5vh !important;
-  }
-}
-
-@media (max-width: 440px) {
-  .emailOverlap {
-    margin-left: 60%;
-  }
-}
-
-@media (max-width: 390px) {
-  .emailOverlap {
-    margin-left: 58%;
   }
 }

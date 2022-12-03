@@ -492,6 +492,19 @@ body {
   .password-container span {
     font-size: var(--font-xxxl);
   }
+
+  .address-container .address-info-text,
+  .payment-wrapper .payment-info-text {
+    width: 60px;
+  }
+
+  .change-wrapper span {
+    width: 70px;
+  }
+
+  .address-input-container div input {
+    width: 120px;
+  }
 }
 
 @media (max-width: 390px) {
