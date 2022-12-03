@@ -1,4 +1,5 @@
 export const ApiUrl = Object.freeze({
+  USER: "/api/user",
   LOGIN: "/api/user/login",
   NAVER_LOGIN: "/api/naver/login",
   NAVER_OAUTH: "/api/naver",
@@ -18,6 +19,7 @@ export const ApiUrl = Object.freeze({
   ORDERS: "/api/orders",
   USER_ORDERS: "/api/orders/auth",
   ADMIN_ORDERS: "/api/orders/admin",
+  CART_BASE: "/api/cart",
   CART: "/api/cart/auth",
   COMMENTS: "/api/comments",
   AUTH_COMMENTS: "/api/comments/auth",
