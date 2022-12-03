@@ -3,7 +3,7 @@
 
 한국의 전통주를 판매하는 사이트 한술담입니다.
 <br/>
-[서비스 링크 이동하기](http://ec2-43-201-84-245.ap-northeast-2.compute.amazonaws.com:5000)
+[서비스 링크 이동하기](http://ec2-43-201-84-245.ap-northeast-2.compute.amazonaws.com)
 
 
 ## 🛠기술 스택
@@ -23,7 +23,7 @@
 
 ## :runner: 로컬 실행 방법
 
-1. 레포지토리를 클론하고자 하는 디렉토리에서 아래 명령어를 수행
+1. 레포지토리 클론
 
    ```bash
    git clone "https://github.com/sojinjang/hansuldam"
@@ -39,7 +39,7 @@
 
   ```bash
   MONGODB_URL="<개인 로컬 혹은 Atlas 서버 URL>"
-  PORT=5000
+  PORT="<포트번호>"
   JWT_SECERT_KEY="<랜덤 문자열>"
 
   GMAIL_ID= "hansuldam@gmail.com"
@@ -77,7 +77,7 @@
 
 | 담당자명(GitHub) | 1차 구현 및 개선 담당 | 2차 구현 및 개선 담당 |
 | --- | --- | --- |
-| 소진 [@sojinjang](https://github.com/sojinjang) | 로그인/네이버 로그인 기능, 회원가입 기능, 장바구니 페이지, 결제 및 주문완료 페이지 | 회원 장바구니 기능, 장바구니 기능 개선, 후기 게시판 기능, 반응형 웹 적용 |
+| 소진 [@sojinjang](https://github.com/sojinjang) | 로그인/네이버 로그인 기능, 회원가입 기능, 장바구니 페이지, 결제 및 주문완료 페이지 | 회원 장바구니 기능, 장바구니 기능 개선, 후기 게시판 기능(상품 구매자 판별, 이미지 및 리뷰 업로드 기능, 리뷰 작성자 해당 리뷰 수정/삭제 기능), 반응형 웹 적용 |
 | 재웅 [@wooooooongs](https://github.com/wooooooongs) | 홈, 관리자 페이지, 상품 카테고리 페이지, 상품 상세 페이지, 헤더, 푸터 | multer 기반 이미지 업로드, 반응형 웹 적용, 페이지네이션 적용 |
 | 지안 [@HelloJianii](https://github.com/HelloJianii) | 비밀번호 찾기 페이지, 주문내역 페이지, 마이페이지 | 반응형 웹 적용, 주문내역 페이지 기능개선(주문정보 보기, 주문취소, 우편번호 찾기 버튼), 비회원/회원 마이페이지 |
 | 동준 [@dejaikeem](https://github.com/dejaikeem) | BE: 페이지네이션, Nodemailer 비밀번호 찾기 기능, erd 구조도, 서비스 흐름도 | FE: 다음 주소 검색 API, 키워드 검색 페이지, 홈 화면 주종 별 필터 페이지, 반응형 웹적용 |

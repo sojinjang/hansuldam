@@ -64,13 +64,14 @@ select {
 .section-title {
   font-weight: bold;
   font-size: var(--font-xl);
+  margin-bottom: 4px;
 }
 
 .order-section .add-product {
   display: flex;
   flex-direction: column;
-  margin-bottom: 15px;
-  padding: 20px;
+  margin-bottom: var(--font-lg);
+  padding: var(--font-xl);
   border-radius: 10px;
   border: 1px solid rgb(224, 224, 224);
   background-color: var(--brown-300);
@@ -80,8 +81,8 @@ select {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding-bottom: 15px;
-  margin-bottom: 15px;
+  padding-bottom: var(--font-base);
+  margin-bottom: var(--font-base);
   border-bottom: 1px solid darkgray;
 }
 
@@ -94,9 +95,17 @@ select {
   flex-direction: row;
 }
 
+.order-product .product-brand {
+  font-size: var(--font-base);
+}
+
 .order-product .product-name {
   font-size: var(--font-lg);
   font-weight: 550;
+}
+
+.order-product .product-volume {
+  font-size: var(--font-base);
 }
 
 .thumbnail img {
@@ -111,8 +120,16 @@ select {
   display: flex;
   flex-direction: column;
   justify-content: end;
-  padding-right: 20px;
+  padding-right: var(--font-xs);
   align-items: flex-end;
+}
+
+.order-product .product-info .product-quantity {
+  font-size: var(--font-base);
+}
+
+.order-product .product-info .product-price {
+  font-size: var(--font-lg);
 }
 
 .address-container {
@@ -123,15 +140,20 @@ select {
 }
 
 .address-container .address-info-wrapper {
-  margin-bottom: 15px;
-  padding: 20px;
+  margin-bottom: var(--font-lg);
+  padding: var(--font-lg);
   border-radius: 10px;
   border: 1px solid rgb(224, 224, 224);
   background-color: var(--brown-300);
+  font-size: var(--font-lg);
 }
 
+ .name-title, .phonenumber-title, .address-title {
+  font-weight: 550;
+ }
+
 .address .user-address {
-  margin-bottom: 10px;
+  margin-bottom: var(--font-xs);
 }
 
 .address .user-address .user-postal-code {
@@ -139,15 +161,15 @@ select {
 }
 
 .address .user-address .user-address1 {
-  width: 50%;
+  max-width: 320px;
 }
 
 .address .user-address .user-address2 {
-  width: 50%;
+  max-width: 320px;
 }
 
 .address-status #delivery-select {
-  width: 50%;
+  max-width: 320px;
 }
 
 .address-status .status-input {
@@ -196,34 +218,33 @@ select {
 
 .container-caculate-price .bill {
   height: 100%;
-  padding: 20px;
+  padding: var(--font-base);
   border-radius: 10px;
   border: 0.5px solid rgb(224, 224, 224);
-  margin-bottom: 60px;
+  margin-bottom: 55px;
   background-color: var(--brown-300);
 }
 
 .container-caculate-price .bill .content {
-  font-family: "IBM Plex Sans KR", sans-serif;
   display: flex;
   flex-direction: column;
-  margin: 15px;
+  margin: var(--font-base);
 }
 
 .bill-title {
   margin-right: auto;
-  font-size: 17px;
+  font-size: var(--font-lg);
   font-weight: bold;
 }
 
 .container-caculate-price .bill .content .total-product-price {
   margin-left: auto;
-  font-size: 17px;
+  font-size: var(--font-lg);
 }
 
 .container-caculate-price .bill .content .delivery-fee {
   margin-left: auto;
-  font-size: 17px;
+  font-size: var(--font-lg);
 }
 
 .container-caculate-price .bill .border-bottom {
@@ -231,21 +252,19 @@ select {
 }
 
 .container-caculate-price .bill .bill-footer {
-  font-family: "IBM Plex Sans KR", sans-serif;
   display: flex;
   flex-direction: column;
-  margin: 15px;
+  margin: var(--font-sm);
 }
 
 .container-caculate-price .bill .bill-footer .total-payment-price {
   margin-left: auto;
-  font-size: 22px;
+  font-size: var(--font-xl);
   font-weight: bold;
   color: var(--orange-300);
 }
 
 .button-wrapper {
-  font-family: "Secular One", sans-serif;
   display: flex;
   justify-content: space-evenly;
   max-width: 200px;

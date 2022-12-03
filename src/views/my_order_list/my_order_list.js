@@ -154,7 +154,7 @@ async function setOrderListContainer(orderId) {
         }
       }
     } catch (e) {
-      console.log(e.message);
+      alert(e.message);
     }
   }
 }
@@ -346,7 +346,7 @@ function createChangeShippingDestinationContainer(item) {
         autocomplete="on"
       />
     </div>
-    <button class="button-38" id="${item._id}-find-address-btn">찾기</button>
+    <button class="button-38" id="${item._id}-find-address-btn">주소찾기</button>
   </div>
   <div class="address-btn-container" id="${item._id}-address-btn-container">
     <button class="change-btn button-38" id="${item._id}-change-btn">변경</button>

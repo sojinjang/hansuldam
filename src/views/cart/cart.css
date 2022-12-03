@@ -86,7 +86,7 @@ input[type="checkbox"] {
 .shoppingbag-list .product {
   display: grid;
   grid-template-rows: 1fr auto;
-  grid-template-columns: 32px 1fr;
+  grid-template-columns: var(--font-xxxl) 1fr;
   text-align: left;
   margin: 10px 0 10px 0;
   padding: var(--font-lg);
@@ -99,8 +99,8 @@ input[type="checkbox"] {
   display: grid;
   grid-template-rows: auto 1fr auto;
   grid-template-columns: auto 1fr auto;
-  column-gap: 15px;
-  margin-bottom: 12px;
+  column-gap: var(--font-base);
+  margin-bottom: var(--font-sm);
 }
 
 .shoppingbag-list .product .product-info-top .thumbnail {
@@ -119,7 +119,7 @@ input[type="checkbox"] {
   -webkit-box-flex: 1;
   flex-grow: 1;
   word-break: keep-all;
-  font-size: 15px;
+  font-size: var(--font-lg);
 }
 
 .product-info > a {
@@ -127,7 +127,7 @@ input[type="checkbox"] {
 }
 
 .shoppingbag-list .product .product-info-top .product-name {
-  font-size: 20px;
+  font-size: var(--font-xl);
   font-weight: bold;
 }
 
@@ -178,7 +178,7 @@ input[type="checkbox"] {
   -webkit-box-align: center;
   align-items: center;
   border: 1px solid rgb(224, 224, 224);
-  font-size: 11.43px;
+  font-size: var(--font-sm);
   border-radius: 10%;
   cursor: pointer;
 }
@@ -217,33 +217,33 @@ input[type="checkbox"] {
 
 .container-caculate-price .bill {
   height: 100%;
-  padding: 20px;
+  padding: var(--font-base);
   border-radius: 10px;
   border: 0.5px solid rgb(224, 224, 224);
-  margin-bottom: 60px;
+  margin-bottom: 55px;
   background-color: var(--brown-300);
 }
 
 .container-caculate-price .bill .content {
   display: flex;
   flex-direction: column;
-  margin: 15px;
+  margin: var(--font-base);
 }
 
 .bill-title {
   margin-right: auto;
-  font-size: 17px;
+  font-size: var(--font-lg);
   font-weight: bold;
 }
 
 .container-caculate-price .bill .content .total-product-price {
   margin-left: auto;
-  font-size: 17px;
+  font-size: var(--font-lg);
 }
 
 .container-caculate-price .bill .content .delivery-fee {
   margin-left: auto;
-  font-size: 17px;
+  font-size: var(--font-lg);
 }
 
 .container-caculate-price .bill .border-bottom {
@@ -253,12 +253,12 @@ input[type="checkbox"] {
 .container-caculate-price .bill .bill-footer {
   display: flex;
   flex-direction: column;
-  margin: 15px;
+  margin: var(--font-sm);
 }
 
 .container-caculate-price .bill .bill-footer .total-payment-price {
   margin-left: auto;
-  font-size: 22px;
+  font-size: var(--font-xl);
   font-weight: bold;
   color: var(--orange-300);
 }
@@ -270,5 +270,5 @@ input[type="checkbox"] {
 }
 
 .checkout-wrapper {
-  margin-right: 18px;
+  margin-right: var(--font-lg);
 }
