@@ -84,4 +84,40 @@
 | 상준 [@ahosang](https://github.com/ahosang) | RESTful API 설계, 기본적인 데이터 모델 CRUD, 권한에 따른 서비스 인가 기능, JWT 토큰 방식 로그인,에러코드 | 필터 및 검색기능, Auth 로그인, 리소스 개선 리팩토링, multer 기반 이미지 CRUD, AWS 배포 |
 
 ## 🗂 디렉토리 구조
-<img width="667" alt="image" src="https://user-images.githubusercontent.com/111125577/205074551-e8909ffa-8f19-40a5-8089-30943256093d.png">
+```
+📦src
+ ┣ 📂db
+ ┃ ┣ 📂models
+ ┃ ┣ 📂schemas
+ ┣ 📂middlewares
+ ┣ 📂routers
+ ┣ 📂services
+ ┣ 📂utils
+ ┣ 📂views
+ ┃ ┣ 📂admin
+ ┃ ┣ 📂adult_certification
+ ┃ ┣ 📂cart
+ ┃ ┣ 📂category_page
+ ┃ ┣ 📂constants
+ ┃ ┣ 📂event_page
+ ┃ ┣ 📂filter
+ ┃ ┣ 📂find_password
+ ┃ ┣ 📂home
+ ┃ ┣ 📂img
+ ┃ ┃ ┣ 📂comments
+ ┃ ┃ ┣ 📂products
+ ┃ ┣ 📂join
+ ┃ ┣ 📂login
+ ┃ ┣ 📂my_order_list
+ ┃ ┣ 📂my_page
+ ┃ ┣ 📂my_information
+ ┃ ┣ 📂order_pay
+ ┃ ┣ 📂product_detail
+ ┃ ┣ 📂search
+ ┃ ┣ 📂template
+ ┃ ┃ ┣ 📂footer
+ ┃ ┃ ┣ 📂header
+ ┃ ┣ 📂utils
+ ┃ ┗ 📜api.js
+ ┗ 📜app.js
+```
