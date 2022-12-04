@@ -76,6 +76,21 @@ async function renderData() {
 
   $(".body-container").prepend(productSection);
 
+  (async function moveToEvent() {
+    const fetchedCategory = await get(ApiUrl.CATEGORY);
+    let currentCategoryId;
+  
+    fetchedCategory.forEach((categoryInArray) => {
+      if (categoryInArray.name === category) {
+        currentCategoryId = categoryInArray._id;
+      }
+    })
+  
+    $(".content__category").addEventListener("click", () => {
+      window.location.assign(`../event-page/?event=${currentCategoryId}`);
+    });
+  })();
+
   return fetchedData;
 }
 

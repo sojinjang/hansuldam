@@ -12,6 +12,7 @@ import {
   naverRouter,
 } from "./routers";
 import { errorHandler } from "./middlewares";
+import { ApiUrl } from "./views/constants/ApiUrl.js";
 
 const app = express();
 
@@ -28,14 +29,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(viewsRouter);
 
 // api 라우팅
-app.use("/api/user", userRouter);
-app.use("/api/category", categoryRouter);
-app.use("/api/products", productRouter);
-app.use("/api/image", imageRouter);
-app.use("/api/orders", orderRouter);
-app.use("/api/cart", cartRouter);
-app.use("/api/comments", commentRouter);
-app.use("/api/naver", naverRouter);
+app.use(ApiUrl.USER, userRouter);
+app.use(ApiUrl.CATEGORY, categoryRouter);
+app.use(ApiUrl.PRODUCTS, productRouter);
+app.use(ApiUrl.IMAGE, imageRouter);
+app.use(ApiUrl.ORDERS, orderRouter);
+app.use(ApiUrl.CART_BASE, cartRouter);
+app.use(ApiUrl.COMMENTS, commentRouter);
+app.use(ApiUrl.NAVER_OAUTH, naverRouter);
 
 // 에러 라우팅
 app.use(errorHandler);

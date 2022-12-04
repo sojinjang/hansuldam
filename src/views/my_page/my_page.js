@@ -395,7 +395,7 @@ function createButtonContainer() {
   let page = undefined;
   page = document.createElement("div");
   page.setAttribute("class", "button-container");
-  page.innerHTML = `<button class="info-change-btn">정보 수정하기</button>
+  page.innerHTML = `<button class="info-change-btn">배송지 수정</button>
   <button class="cancel-order-btn">주문 취소하기</button>`;
   $(".order-list-container").append(page);
 }

@@ -3,13 +3,14 @@ import { setCookie } from "../utils/cookie.js";
 import { isValidEmail, isValidPassword } from "../utils/validator.js";
 import { getCartInfoFromDB } from "../utils/cart.js";
 import { Keys } from "../constants/Keys.js";
+import { ApiUrl } from "../constants/ApiUrl.js";
 
 const loginBtn = document.querySelector("#submitButton");
 const buttonSection = document.querySelector(".login-form-button");
 
 async function showNaverLoginButton() {
   try {
-    const res = await api.get("/api/naver/login");
+    const res = await api.get(ApiUrl.NAVER_LOGIN);
     const naverApiUrl = res["naverApiUrl"];
     const naverWrapper = document.createElement("div");
     naverWrapper.setAttribute("class", "naver-button");
@@ -37,7 +38,7 @@ async function logIn(e) {
   const loginInput = { email, password };
 
   try {
-    const response = await api.post("/api/user/login", loginInput);
+    const response = await api.post(ApiUrl.LOGIN, loginInput);
     setCookie(Keys.TOKEN_KEY, response.token);
     setCookie(Keys.USER_ID_KEY, response.userId);
     await getCartInfoFromDB();

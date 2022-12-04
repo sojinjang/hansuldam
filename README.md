@@ -1,10 +1,10 @@
 ## 🍶 프로젝트 소개
-<img src="https://user-images.githubusercontent.com/111125577/205091531-1dd8426d-ba7b-4ca2-afeb-eed0bbcbc7fc.jpeg" height="150"/>
+한국의 전통주를 판매하는 사이트 한술담입니다. [📎 서비스 링크 이동하기](http://ec2-43-201-84-245.ap-northeast-2.compute.amazonaws.com)
 
-한국의 전통주를 판매하는 사이트 한술담입니다.
+[<img src="https://user-images.githubusercontent.com/111125577/205091531-1dd8426d-ba7b-4ca2-afeb-eed0bbcbc7fc.jpeg" height="120px"/>](http://ec2-43-201-84-245.ap-northeast-2.compute.amazonaws.com)
 <br/>
-[서비스 링크 이동하기](http://ec2-43-201-84-245.ap-northeast-2.compute.amazonaws.com)
-
+<img src="https://user-images.githubusercontent.com/111125577/205299490-16e61094-93b0-4ffe-b7e4-918c7eb75be2.gif" width="430">
+<img src="https://user-images.githubusercontent.com/111125577/205297553-bc1f4766-bf4f-47ef-872e-06596c5bff38.gif" width="220">
 
 ## 🛠기술 스택
 
@@ -84,4 +84,40 @@
 | 상준 [@ahosang](https://github.com/ahosang) | RESTful API 설계, 기본적인 데이터 모델 CRUD, 권한에 따른 서비스 인가 기능, JWT 토큰 방식 로그인,에러코드 | 필터 및 검색기능, Auth 로그인, 리소스 개선 리팩토링, multer 기반 이미지 CRUD, AWS 배포 |
 
 ## 🗂 디렉토리 구조
-<img width="667" alt="image" src="https://user-images.githubusercontent.com/111125577/205074551-e8909ffa-8f19-40a5-8089-30943256093d.png">
+```
+📦src
+ ┣ 📂db
+ ┃ ┣ 📂models
+ ┃ ┣ 📂schemas
+ ┣ 📂middlewares
+ ┣ 📂routers
+ ┣ 📂services
+ ┣ 📂utils
+ ┣ 📂views
+ ┃ ┣ 📂admin
+ ┃ ┣ 📂adult_certification
+ ┃ ┣ 📂cart
+ ┃ ┣ 📂category_page
+ ┃ ┣ 📂constants
+ ┃ ┣ 📂event_page
+ ┃ ┣ 📂filter
+ ┃ ┣ 📂find_password
+ ┃ ┣ 📂home
+ ┃ ┣ 📂img
+ ┃ ┃ ┣ 📂comments
+ ┃ ┃ ┣ 📂products
+ ┃ ┣ 📂join
+ ┃ ┣ 📂login
+ ┃ ┣ 📂my_order_list
+ ┃ ┣ 📂my_page
+ ┃ ┣ 📂my_information
+ ┃ ┣ 📂order_pay
+ ┃ ┣ 📂product_detail
+ ┃ ┣ 📂search
+ ┃ ┣ 📂template
+ ┃ ┃ ┣ 📂footer
+ ┃ ┃ ┣ 📂header
+ ┃ ┣ 📂utils
+ ┃ ┗ 📜api.js
+ ┗ 📜app.js
+```

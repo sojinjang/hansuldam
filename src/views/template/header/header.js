@@ -76,7 +76,7 @@ async function redirectPage() {
     user["role"] === "admin" ? loginAsAdmin() : loginAsUser();
     $(".cart").addEventListener("click", () => (window.location.href = "/cart"));
     $(".myPage").addEventListener("click", () => (window.location.href = "/my-page"));
-    handleLogout();
+    $(".logout").addEventListener("click", handleLogout);
   }
 
   updateCartCount();
@@ -98,17 +98,13 @@ function loginAsAdmin() {
   $(".admin").addEventListener("click", () => (window.location.href = "/admin"));
 }
 
-function handleLogout() {
-  $(".logout").addEventListener("click", () => {
-    const cartItems = getSavedItems(Keys.CART_KEY);
-    updateCartInfoToDB(cartItems);
-    resetCart(Keys.CART_KEY);
-    deleteCookie(Keys.TOKEN_KEY);
-    deleteCookie(Keys.USER_ID_KEY);
-    setTimeout(() => {
-      window.location.href = "/";
-    }, 50);
-  });
+async function handleLogout() {
+  const cartItems = await getSavedItems(Keys.CART_KEY);
+  await updateCartInfoToDB(cartItems);
+  resetCart(Keys.CART_KEY);
+  deleteCookie(Keys.TOKEN_KEY);
+  deleteCookie(Keys.USER_ID_KEY);
+  window.location.href = "/";
 }
 
 function updateCartCount() {
