@@ -66,12 +66,18 @@
   }
 }
 
+@media screen and (max-width: 414px) {
+  .body-container {
+    padding: 0 0 0 0 !important;
+  }
+}
+
 /* product */
 .all-products-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin-top: 80px;
+  margin-top: 5%;
 }
 .product-container-wrapper {
   display: flex;
@@ -116,8 +122,8 @@
   border-radius: 2%;
   aspect-ratio: 4 / 5.5;
   max-height: 380px;
-  min-height: 290px;
-  min-width: 180px;
+  min-height: 260px;
+  min-width: 165px;
   transition: all 0.15s ease;
 }
 
