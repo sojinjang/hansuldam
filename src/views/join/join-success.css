@@ -1,173 +1,176 @@
-@font-face {
-    font-family: 'GangwonEdu_OTFBoldA';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-*{
-    font-family: 'GangwonEdu_OTFBoldA';
-}
-
-/* body */
-body {
-    overflow-x : hidden;
-    margin: 0;
-}
-
-    header, .body-container, footer {
-        padding: 0 7vw 0 7vw;
-    }
-
-  /* header */
-header {
-    padding-top: 30px;
-}
-
-.header-container {
-    width: 100%;
-    height: 44px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.navigation-menu {
-    width: 100%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-}
-
-.navigation-menu .company-logo{
-    width: 37px;
-    height: 26px;
-    vertical-align: middle;
-}
-
-.user-menu {
-    margin-left: 5px;
-    width: 100%;
-    min-width: 200px;
-    max-width: 300px;
-    display: flex;
-    -webkit-box-pack: start;
-    justify-content: flex-end;
-    -webkit-box-align: center;
-    align-items: center;
-}
-
-.user-menu .user-img {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    overflow: hidden;
-}
-
-.user-menu .user-img a img {
-    width: 45px;
-    height: 45px;
-}
-
-/* main */
-.body-container{
-    height: 100%;
+.body-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
 }
 
 .body-section-container {
-    display: flex;
-    box-sizing: border-box;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 40px;
-    margin-bottom: 40px;
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .body-section-container .body-join-form {
-    display: none;
-    box-sizing: border-box;
-    flex-direction: column;
-    justify-content: center;
-    width: 500px;
+  display: none;
+  box-sizing: border-box;
+  flex-direction: column;
+  justify-content: center;
+  padding: 50px 120px;
+  background-color: var(--brown-300);
+  border-radius: 10px;
+  min-width: 300px;
 }
 
-.body-section-container .body-join-check .checkBtn {
-    cursor: pointer;
+.body-join-check {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 120px;
+  background-color: var(--brown-300);
+  border-radius: 10px;
+  min-width: 300px;
+}
+
+.body-join-check label {
+  font-size: var(--font-lg);
+  margin-bottom: 20px;
+}
+
+.body-join-check div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0;
+  min-width: 300px;
+}
+
+.body-join-check input {
+  width: 400px;
+  min-width: 300px;
+  height: 40px;
+  font-size: var(--font-base);
+  border: 1px solid var(--black-100);
+  border-radius: 5px;
+  background-color: var(--white-100);
+  padding: 4px 4px 4px 4px;
+  margin: 3px 0;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px var(--white-100) inset;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+input:active,
+:focus {
+  box-shadow: none !important;
+  border: 1px solid var(--black-100) !important;
+}
+
+.body-section-container .body-join-check .adultCheckButton {
+  height: 40px;
+  margin-top: 20px;
+  align-items: center;
+  background-color: var(--brown-500);
+  border-radius: 12px;
+  box-shadow: transparent 0 0 0 3px, rgba(18, 18, 18, 0.1) 0 6px 20px;
+  box-sizing: border-box;
+  color: var(--white-200);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: Inter, sans-serif;
+  font-size: var(--font-base);
+  font-weight: 550;
+  justify-content: center;
+  line-height: 1;
+  outline: none;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  border: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  transition: all 0.3s linear;
+}
+
+.body-section-container .body-join-check .adultCheckButton:hover {
+  box-shadow: var(--brown-500) 0 0 0 1.5px, transparent 0 0 0 0;
 }
 
 .body-join-form .join-form-hello p {
-    margin: 20px 0;
-    font-size: 30px;
-    text-align: center;
+  margin: 20px 0;
+  font-size: var(--font-xxl);
+  text-align: center;
+}
+
+.body-join-form input {
+  height: 40px;
+  font-size: var(--font-base);
+  border: 1px solid var(--black-100);
+  border-radius: 5px;
+  background-color: var(--white-100);
+  padding: 4px 4px 4px 4px;
+  margin: 3px 0;
+}
+
+#nameForValidation {
+  margin-bottom: 5px;
 }
 
 .body-join-form .join-form-input {
-    margin: 10px 0;
-    margin-bottom: 10px;
+  margin: 10px 0;
+  margin-bottom: 10px;
 }
 
-.body-join-form .join-form-input .address-find {
-    display: flex;
-    flex-direction: row;
+.postalcode-wrapper {
+  display: flex;
+  flex-direction: row;
 }
 
-.join-form-input .address-find input {
-    width: 200px;
-    margin-right: 10px;
+#addressPostalCode {
+  width: 250px;
+  margin-right: 5px;
 }
 
 .find-address-button {
-    margin: 10px 0 10px 0;
-    height: 40px;
-    background-color: rgb(89, 24, 143);
-    border: none;
-    border-radius: 5%;
-    cursor: pointer;
-  }
+  margin: 7px 0 3px 0;
+  height: 40px;
+  font-size: var(--font-sm);
+}
 
 .body-join-form .join-form-button {
-    margin: 20px 0 20px 0;
-    height: 40px;
-    background-color: dodgerblue;
-    border: none;
-    border-radius: 5%;
-    cursor: pointer;
+  margin: 20px 0 20px 0;
+  height: 40px;
 }
 
-/* footer */
+@media (max-width: 680px) {
+  .body-join-form {
+    padding: 5vh !important;
+  }
 
-.footer-container {
-    display: flex;
-    box-sizing: border-box;
-    flex-direction: column;
-    border-top: 1px solid rgb(243, 243, 243);
-    margin-top: 50px;
+  .body-join-check {
+    padding: 5vh !important;
+  }
 
-    padding: 30px 0 70px 0;
+  .body-join-check div,
+  .body-join-check input {
+    width: 300px;
+  }
 }
 
-.footer-container .footer-policy {
-    display: flex;
-    margin-bottom: 11px;
-    box-sizing: border-box;
+@media (max-width: 390px) {
+  .body-join-check {
+    padding: 3vh !important;
+  }
 }
-
-.footer-container .footer-policy .policy__item {
-    display: flex;
-}
-
-.footer-container .footer-policy .policy__item .footer-item-text {
-    font-size: 17px;
-    margin-right: 40px;
-    text-decoration: none;
-    color: black;
-}
-
-.footer-info li .footer-item-text {
-    font-size: 8px;
-}
-
-.footer-info .info__item {
-    height: 14px;
-}
-

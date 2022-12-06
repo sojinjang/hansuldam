@@ -8,7 +8,7 @@ function isEmptyCart(productsList) {
 }
 
 function removeProductFromLocalDB(productId) {
-  let cartProducts = getSavedItems(Keys.v);
+  let cartProducts = getSavedItems(Keys.CART_KEY);
   cartProducts = cartProducts.filter((product) => String(product._id) !== String(productId));
   return cartProducts;
 }
@@ -16,7 +16,7 @@ function removeProductFromLocalDB(productId) {
 function adjustQuantityFromLocalDB(productId, quantity) {
   const savedProducts = getSavedItems(Keys.CART_KEY);
   const index = savedProducts.findIndex((x) => x._id === productId);
-  savedProducts[index].quantity = quantity;
+  savedProducts[index].quantity = parseInt(quantity);
   saveItems(Keys.CART_KEY, savedProducts);
 }
 

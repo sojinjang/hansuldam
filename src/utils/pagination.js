@@ -1,13 +1,13 @@
-const pagination = (page, perPage) => {
-  const skip = perPage * (page - 1);
-  const limit = perPage;
+const pagination = (page, perpage) => {
+  const skip = perpage * (page - 1);
+  const limit = perpage;
 
   return { skip, limit };
 };
-const totalPageCacul = (perPage, total) => {
-  const totalPage = Math.ceil(total / perPage);
+const totalPageCacul = (perpage, total) => {
+  const totalPage = Math.ceil(total / perpage);
 
-  return { totalPage };
+  return totalPage;
 };
 
 export { pagination, totalPageCacul };

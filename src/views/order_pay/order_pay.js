@@ -6,6 +6,7 @@ import { removeProductFromLocalDB } from "../utils/cart.js";
 import { getPureDigit } from "../utils/useful_functions.js";
 import { Keys } from "../constants/Keys.js";
 import { ApiUrl } from "../constants/ApiUrl.js";
+import { findAddress } from "../utils/findAddress.js";
 
 const $ = (seletor) => document.querySelector(seletor);
 const isLoggedIn = getCookieValue(Keys.TOKEN_KEY);
@@ -13,16 +14,21 @@ const isAdult = getCookieValue(Keys.IS_ADULT_KEY);
 const isCartOrder = getSavedItems(Keys.IS_CART_ORDER);
 
 function showProduct(item) {
+  const imageUrl = ".." + decodeURIComponent(item.image).split("views")[1];
   let product = undefined;
   product = document.createElement("div");
   product.setAttribute("class", "order-product");
   product.setAttribute("id", item._id);
   product.innerHTML = `<div class="thumbnail">
-    <img class="product-img" src="../img/redmonkey.jpeg" />
+    <a href="/product-detail/?id=${item._id}">
+      <img class="product-img" src="${imageUrl}" />
+    </a>
     <div>
+      <a href="/product-detail/?id=${item._id}">
         <p class="product-brand">${item.brand}</p>
         <p class="product-name">${item.name}</p>
         <p class="product-volume">${item.volume}ml</p>
+      </a>
     </div>
     
 </div>
@@ -85,9 +91,16 @@ async function getUserInfo() {
   }
 }
 
+async function insertFoundAddress() {
+  const { foundZoneCode, foundAddress } = await findAddress();
+  $(".user-postal-code").value = foundZoneCode;
+  $(".user-address1").value = foundAddress;
+}
+
 function writeUserInfo(userInfoObj) {
   $(".user-name").value = userInfoObj.fullName;
   $(".user-phoneNumber").value = userInfoObj.phoneNumber;
+  $(".user-postal-code").value = userInfoObj.address.postalCode;
   $(".user-address1").value = userInfoObj.address.address1;
   $(".user-address2").value = userInfoObj.address.address2;
 }
@@ -138,6 +151,7 @@ function makeOrderInfoObj() {
     fullName: $(".user-name").value,
     phoneNumber: $(".user-phoneNumber").value,
     address: {
+      postalCode: $(".user-postal-code").value,
       address1: $(".user-address1").value,
       address2: $(".user-address2").value,
     },
@@ -203,3 +217,4 @@ $("#card-select").addEventListener("change", showInput);
 $(".creditCardBtn").addEventListener("click", showCardInfoForm);
 
 $(".pay-button").addEventListener("click", sendPayInfo);
+$(".find-address-button").addEventListener("click", insertFoundAddress);

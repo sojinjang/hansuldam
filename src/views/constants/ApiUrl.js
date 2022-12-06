@@ -1,6 +1,7 @@
 export const ApiUrl = Object.freeze({
   LOGIN: "/api/user/login",
   NAVER_LOGIN: "/api/naver/login",
+  NAVER_OAUTH: "/api/naver",
   REGISTER: "/api/user/register",
   TEMPORARY_PASSWORD: "/api/user/random-password",
   ADMIN_USER_INFORMATION: "/api/users/admin",
@@ -12,10 +13,13 @@ export const ApiUrl = Object.freeze({
   ADMIN_PRODUCTS: "/api/products/admin",
   PRODUCTS: "/api/products",
   PRODUCTS_OVERALL_INFORMATION: "/api/products?page=",
+  PRODUCTS_FILTER: "/api/products/filter-search?key=",
+  PRODUCTS_SEARCH: "/api/products/search?key=description,name&str=",
   ORDERS: "/api/orders",
   USER_ORDERS: "/api/orders/auth",
   ADMIN_ORDERS: "/api/orders/admin",
   CART: "/api/cart/auth",
-  COMMENTS: "/api/comments/auth",
+  COMMENTS: "/api/comments",
+  AUTH_COMMENTS: "/api/comments/auth",
   ADMIN_COMMENTS: "/api/comments/admin",
 });

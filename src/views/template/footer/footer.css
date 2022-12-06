@@ -1,21 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Jua&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap");
+@import url("../main_style.css");
 
-:root {
-  --hover-background-color: #f5f5f5;
-}
+@media screen and (max-width: 680px) {
+  .footer-container {
+    padding: 12px 3vw 40px 3vw;
+  }
 
-/* reset */
-* {
-  margin: 0; padding:0;
-  font-family: "IBM Plex Sans KR", sans-serif;
+  .footer-container .footer-policy .policy-item .footer-item-text {
+    margin-right: 10px !important;
+  }
 }
-li {list-style: none;}
-a {
-  text-decoration: none;
-}
-button{all:unset;}
 
 /* footer */
 .footer-container {
@@ -39,14 +35,14 @@ button{all:unset;}
 }
 
 .footer-container .footer-policy .policy-item .footer-item-text {
-  font-size: 17px;
+  font-size: var(--font-sm);
   margin-right: 40px;
   text-decoration: none;
   color: black;
 }
 
 .footer-info li .footer-item-text {
-  font-size: 8px;
+  font-size: var(--font-xs);
 }
 
 .footer-info .info-item {

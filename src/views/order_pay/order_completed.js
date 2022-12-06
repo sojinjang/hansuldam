@@ -28,9 +28,13 @@ async function writeOrderInfo() {
   username.innerText = orderInfoObj["fullName"];
   phoneNumber.innerText = orderInfoObj["phoneNumber"];
   address.innerText =
-    orderInfoObj["address"]["address1"] + orderInfoObj["address"]["address2"];
+    orderInfoObj["address"]["address1"] +
+    orderInfoObj["address"]["address2"] +
+    "\n (" +
+    orderInfoObj["address"]["postalCode"] +
+    ")";
   cardType.innerText = orderInfoObj["payment"]["detail"] + "카드";
-  cardNumber.innerText = orderInfoObj["payment"]["number"];
+  cardNumber.innerText = orderInfoObj["payment"]["number"].slice(0, 4) + "-****-****-****";
   totalPrice.innerText = `${orderInfoObj["totalPrice"].toLocaleString("ko-KR")}원`;
 }
 

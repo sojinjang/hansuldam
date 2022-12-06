@@ -5,7 +5,7 @@ import { getCartInfoFromDB } from "../utils/cart.js";
 import { Keys } from "../constants/Keys.js";
 
 const loginBtn = document.querySelector("#submitButton");
-const buttonSection = document.querySelector(".login-form-text");
+const buttonSection = document.querySelector(".login-form-button");
 
 async function showNaverLoginButton() {
   try {
@@ -16,8 +16,10 @@ async function showNaverLoginButton() {
     naverWrapper.innerHTML =
       "<a href='" +
       naverApiUrl +
-      "'><img height='40' src='http://static.nid.naver.com/oauth/small_g_in.PNG'/></a>";
-    buttonSection.append(naverWrapper);
+      "'>" +
+      `<img src=../img/naver_btnG_아이콘사각.png />` +
+      "네이버 로그인</a>";
+    buttonSection.after(naverWrapper);
   } catch (err) {
     alert(err.message);
   }
@@ -35,8 +37,9 @@ async function logIn(e) {
   const loginInput = { email, password };
 
   try {
-    const token = await api.post("/api/user/login", loginInput);
-    setCookie(Keys.TOKEN_KEY, token);
+    const response = await api.post("/api/user/login", loginInput);
+    setCookie(Keys.TOKEN_KEY, response.token);
+    setCookie(Keys.USER_ID_KEY, response.userId);
     await getCartInfoFromDB();
     window.location.href = "/";
   } catch (err) {

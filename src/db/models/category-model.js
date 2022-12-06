@@ -4,6 +4,11 @@ import { CategorySchema } from "../schemas/category-schema";
 const Category = model("categories", CategorySchema);
 
 export class CategoryModel {
+  async totalCount(filterObj) {
+    const totalCount = await Category.count(filterObj);
+    return totalCount;
+  }
+
   async create(categoryInfo) {
     const createdNewCategory = await Category.create(categoryInfo);
     return createdNewCategory;
@@ -21,11 +26,7 @@ export class CategoryModel {
 
   async update(filterObj, updateObj) {
     const option = { returnOriginal: false };
-    const updatedCategory = await Category.findOneAndUpdate(
-      filterObj,
-      updateObj,
-      option
-    );
+    const updatedCategory = await Category.findOneAndUpdate(filterObj, updateObj, option);
     return updatedCategory;
   }
 

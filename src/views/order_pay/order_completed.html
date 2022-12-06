@@ -5,12 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>주문완료 - 한술담 🍶</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+      @import url("https://fonts.googleapis.com/css2?family=Jua&display=swap");
     </style>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
-    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
     <script
       defer
       src="https://kit.fontawesome.com/9daa42bcef.js"
@@ -19,47 +16,67 @@
     <script src="../template/getHeaderFooter.js" type="module" defer></script>
     <script src="order_completed.js" type="module"></script>
     <link rel="stylesheet" href="order_completed.css" />
+    <link rel="stylesheet" href="../template/main_style.css" />
     <link rel="stylesheet" href="../template/footer/footer.css" />
     <link rel="stylesheet" href="../template/header/header.css" />
   </head>
   <body>
     <section class="body-container">
+      <div class="order-status-wrapper">
+        <ol class="order-status-bar">
+          <li class="order-status">01</li>
+          <li class="order-status">SHOPPNIG BAG</li>
+          <li class="order-status">02</li>
+          <li class="order-status">ORDER</li>
+          <li class="order-status-highlighted">03</li>
+          <li class="order-status-highlighted">ORDER CONFIRMED</li>
+        </ol>
+      </div>
+      <div class="order-info-container">
         <div class="order-head-container">
-            <div class="order-liquor-icon"><img src="../img/ricewine_icon.png"></div>
-            <div class="order-greeting-info">
-                <ul>
-                    <li class="order-greeting">주문이 성공적으로 완료되었습니다. 🎉</li>
-                    <li class="order-info num">주문번호</li>
-                    <li class="order-info date">주문일자</li>
-                </ul>
-            </div>
+          <div class="order-liquor-icon"><img src="../img/ricewine_icon.png" /></div>
+          <div class="order-greeting-info">
+            <ul>
+              <li class="order-greeting">결제가 완료되었습니다. 🎉</li>
+              <li class="order-info num">주문번호</li>
+              <li class="order-info date">주문일자</li>
+            </ul>
+          </div>
         </div>
         <div class="order-details">
-            <table class="order-table">
+          <table class="order-table">
             <tbody>
-                <tr>
-                  <td class="table-content-title" style='font-family: "Jua", sans-serif'>배송지</td>
-                  <td class="table-content" style='font-family: "Jua", sans-serif'><p class="name"></p><p class="phoneNumber"></p><p class="address"></p></td>
-                </tr>
-                <tr>
-                  <td class="table-content-title" style='font-family: "Jua", sans-serif'>배송방법</td>
-                  <td class="table-content" style='font-family: "Jua", sans-serif'><p>택배</p></td>
-                </tr>
-                <tr>
-                  <td class="table-content-title" style='font-family: "Jua", sans-serif'>결제정보</td>
-                  <td class="table-content" style='font-family: "Jua", sans-serif'><p class="cardType"></p><p class="cardNumber"></p></td>
-                </tr>
-                <tr>
-                  <td class="table-content-title" style='font-family: "Jua", sans-serif'>결제금액</td>
-                  <td class="table-content-bold" style='font-family: "Jua", sans-serif'><p class="totalPrice"></p></td>
-                </tr>
-                <tr>
-                  <td class="table-content-button" style='font-family: "Jua", sans-serif'><a href="/">Home</a></td>
-                  <td class="table-content-button" style='font-family: "Jua", sans-serif'><a href="">My Page</a></td>
-                </tr>
+              <tr>
+                <td class="table-content-title">배송지</td>
+                <td class="table-content">
+                  <p class="name"></p>
+                  <p class="phoneNumber"></p>
+                  <p class="address"></p>
+                </td>
+              </tr>
+              <tr>
+                <td class="table-content-title">배송방법</td>
+                <td class="table-content"><p>택배</p></td>
+              </tr>
+              <tr>
+                <td class="table-content-title">결제정보</td>
+                <td class="table-content">
+                  <p class="cardType"></p>
+                  <p class="cardNumber"></p>
+                </td>
+              </tr>
+              <tr>
+                <td class="table-content-title">결제금액</td>
+                <td class="table-content-bold"><p class="totalPrice"></p></td>
+              </tr>
+              <tr>
+                <td class="table-content-button" onClick="location.href='/'">Home</td>
+                <td class="table-content-button" onClick="location.href='/my-page'">My Page</td>
+              </tr>
             </tbody>
-            </table>
-          </div>
+          </table>
+        </div>
+      </div>
     </section>
   </body>
 </html>

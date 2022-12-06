@@ -14,7 +14,11 @@ const CommentSchema = new Schema(
     },
     content: {
       type: String,
-      required: true,
+      default: null,
+    },
+    image: {
+      type: String,
+      default: null,
     },
   },
   {
