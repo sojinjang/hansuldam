@@ -90,6 +90,7 @@ categoryRouter.get("/:categoryId", async (req, res, next) => {
   }
 });
 
+//카테고리 상품목록 가져오기
 categoryRouter.get("/:categoryId/products", async (req, res, next) => {
   try {
     const { categoryId } = req.params;
@@ -98,29 +99,15 @@ categoryRouter.get("/:categoryId/products", async (req, res, next) => {
     }
     const page = Number(req.query.page || 1);
     const perPage = Number(req.query.perPage || 9);
+    const pageObj = { page, perPage };
 
-    const { products } = await categoryService.getCategoryById(categoryId);
-    let productList = await productService.getProductList(products);
-    // 페이지네이션
-    let arr = [];
-    for (let i = 0; i < productList.length; i++) {
-      arr.push(productList[i]);
-    }
-
-    const productsPerPage = arr.slice(perPage * (page - 1), perPage * (page - 1) + perPage);
-
-    const total = arr.length;
-    const totalPage = Math.ceil(total / perPage);
-    productList = productsPerPage;
-
-    const result = {
-      totalPage,
-      total,
-      productList,
-    };
+    const { products, totalPage } = await categoryService.getProductsByCategoryId(
+      pageObj,
+      categoryId
+    );
 
     // 주문 목록(배열)을 JSON 형태로 프론트에 보냄
-    res.status(200).json(result);
+    res.status(200).json({ productList: products, totalPage });
   } catch (error) {
     next(error);
   }
