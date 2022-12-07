@@ -38,6 +38,7 @@ async function setOrderListContainer(orderId) {
 
       getDeliveryFee(orderList);
       getTotalPrice(orderList);
+      getAllTotalPrice(orderList);
 
       selectId(`${orderList._id}-detail-info-btn`).addEventListener(
         "click",
@@ -162,7 +163,7 @@ async function setOrderListContainer(orderId) {
 setOrderListContainer(orderId);
 
 function getDeliveryFee(item) {
-  const deliveryFee = item.totalPrice < 50000 ? (item.totalPrice > 0 ? 3000 : 0) : 0;
+  const deliveryFee = item.totalPrice < 53000 ? (item.totalPrice > 0 ? 3000 : 0) : 0;
   selectId(`${item._id}-delivery-fee`).innerText = `(+) ${deliveryFee.toLocaleString(
     "ko-KR"
   )}원`;
@@ -171,11 +172,22 @@ function getDeliveryFee(item) {
 
 function getTotalPrice(item) {
   const TotalProductsPrice = item.totalPrice;
-  const deliveryFee = TotalProductsPrice < 50000 ? (TotalProductsPrice > 0 ? 3000 : 0) : 0;
 
-  selectId(`${item._id}-total-pay`).innerHTML = `${(
-    TotalProductsPrice + deliveryFee
-  ).toLocaleString("ko-KR")}원`;
+  TotalProductsPrice < 53000
+    ? (selectId(`${item._id}-products-pay`).innerHTML = `${(
+        TotalProductsPrice - 3000
+      ).toLocaleString("ko-KR")}원`)
+    : (selectId(`${item._id}-products-pay`).innerHTML = `${TotalProductsPrice.toLocaleString(
+        "ko-KR"
+      )}원`);
+}
+
+function getAllTotalPrice(item) {
+  const TotalProductsPrice = item.totalPrice;
+
+  selectId(`${item._id}-total-pay`).innerHTML = `${TotalProductsPrice.toLocaleString(
+    "ko-KR"
+  )}원`;
 }
 
 function createSingleOrderContainer(item = "") {
@@ -265,7 +277,7 @@ function createPaymentInformationContainer(item) {
   page.innerHTML = `<div class="payment-text">결제정보</div>
   <div class="payment-wrapper">
     <span class="payment-info-text">상품 금액</span>
-    <span class="products-pay">${item.totalPrice.toLocaleString("ko-KR")}원</span>
+    <span class="products-pay" id="${item._id}-products-pay">[총 상품 금액]</span>
   </div>
   <div class="payment-wrapper">
     <span class="payment-info-text">배송비</span>
