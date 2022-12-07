@@ -101,13 +101,10 @@ categoryRouter.get("/:categoryId/products", async (req, res, next) => {
     const perPage = Number(req.query.perPage || 9);
     const pageObj = { page, perPage };
 
-    const { products, totalPage } = await categoryService.getProductsByCategoryId(
-      pageObj,
-      categoryId
-    );
+    const result = await categoryService.getProductsByCategoryId(pageObj, categoryId);
 
     // 주문 목록(배열)을 JSON 형태로 프론트에 보냄
-    res.status(200).json({ productList: products, totalPage });
+    res.status(200).json(result);
   } catch (error) {
     next(error);
   }
