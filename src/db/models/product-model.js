@@ -29,10 +29,13 @@ export class ProductModel {
     return product;
   }
 
-  async findByIdArray(idArray) {
-    const products = await Product.find({ _id: { $in: idArray } }).sort({
-      _id: 1,
-    });
+  async findByIdArray(idArray, skip = 0, limit = 0) {
+    const products = await Product.find({ _id: { $in: idArray } })
+      .sort({
+        _id: 1,
+      })
+      .skip(skip)
+      .limit(limit);
     return products;
   }
 
