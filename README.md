@@ -80,8 +80,8 @@
 | 소진 [@sojinjang](https://github.com/sojinjang) | 로그인/네이버 로그인 기능, 회원가입 기능, 장바구니 페이지, 결제 및 주문완료 페이지 | 회원 장바구니 기능, 장바구니 기능 개선, 후기 게시판 기능(상품 구매자 판별, 이미지 및 리뷰 업로드 기능, 리뷰 작성자 해당 리뷰 수정/삭제 기능), 반응형 웹 적용 |
 | 재웅 [@wooooooongs](https://github.com/wooooooongs) | 홈, 관리자 페이지, 상품 카테고리 페이지, 상품 상세 페이지, 헤더, 푸터 | multer 기반 이미지 업로드, 반응형 웹 적용, 페이지네이션 적용 |
 | 지안 [@HelloJianii](https://github.com/HelloJianii) | 비밀번호 찾기 페이지, 주문내역 페이지, 마이페이지 | 반응형 웹 적용, 주문내역 페이지 기능개선(주문정보 보기, 주문취소, 우편번호 찾기 버튼), 비회원/회원 마이페이지 |
-| 동준 [@dejaikeem](https://github.com/dejaikeem) | BE: 페이지네이션, Nodemailer 비밀번호 찾기 기능, erd 구조도, 서비스 흐름도 | FE: 다음 주소 검색 API, 키워드 검색 페이지, 홈 화면 주종 별 필터 페이지, 반응형 웹적용 |
-| 상준 [@ahosang](https://github.com/ahosang) | RESTful API 설계, 기본적인 데이터 모델 CRUD, 권한에 따른 서비스 인가 기능, JWT 토큰 방식 로그인,에러코드 | 필터 및 검색기능, Auth 로그인, 리소스 개선 리팩토링, multer 기반 이미지 CRUD, AWS 배포 |
+| 동준 [@dejaikeem](https://github.com/dejaikeem) | BE: 기초 CRUD(카테고리, 주문), schema 설계, 페이지네이션, Nodemailer 비밀번호 찾기 기능, erd 구조도, 서비스 흐름도 | FE: 다음 주소 검색 API, 키워드 검색 페이지, 홈 화면 주종 별 필터 페이지, 반응형 웹적용 |
+| 상준 [@ahosang](https://github.com/ahosang) | RESTful API 설계, 전반적인 데이터 모델 CRUD, 권한에 따른 서비스 인가 기능, JWT 토큰 방식 로그인,에러코드 | 필터 및 검색기능, Auth 로그인, 리소스 개선 리팩토링, multer 기반 이미지 CRUD, AWS 배포 |
 
 ## 🗂 디렉토리 구조
 ```
