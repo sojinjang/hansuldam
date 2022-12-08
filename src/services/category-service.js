@@ -1,5 +1,6 @@
 import { categoryModel, productModel } from "../db";
 import { BadRequest, NotFound } from "../utils/errorCodes";
+import { pagination, totalPageCacul } from "../utils";
 
 class CategoryService {
   constructor(categoryModel, productModel) {
@@ -25,6 +26,19 @@ class CategoryService {
   async getCategoryById(categoryId) {
     const category = await this.categoryModel.findByObj({ _id: categoryId });
     return category;
+  }
+
+  async getProductsByCategoryId(pageObj, categoryId) {
+    const { products: productsList } = await this.categoryModel.findByObj({ _id: categoryId });
+    const { page, perpage } = pageObj;
+    const { skip, limit } = pagination(page, perpage);
+
+    const products = await this.productModel.findByIdArray(productsList, skip, limit);
+
+    const total = productsList.length;
+    const totalPage = totalPageCacul(perpage, total);
+
+    return { products, totalPage };
   }
 
   async updateCategory(categoryId, name) {
