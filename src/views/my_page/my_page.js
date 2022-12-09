@@ -6,7 +6,6 @@ import { isName, isNum } from "../utils/validator.js";
 import { findAddress } from "../utils/findAddress.js";
 
 const $ = (selector) => document.querySelector(selector);
-const selectId = (selector) => document.getElementById(selector);
 
 const loginTOKEN = getCookieValue(Keys.TOKEN_KEY);
 
@@ -62,12 +61,13 @@ async function showOrderListPage() {
   productList.forEach(createProductListContainer);
   createShowDetailInformationButton();
   createDeliveryInformationContainer(orderData);
-  createChangeDeliveryInformationContainer();
+  createChangeDeliveryInformationContainer(orderData);
   createPaymentInformationContainer(orderData);
   createButtonContainer();
 
-  getDeliveryFee(orderData);
-  getTotalPrice(orderData);
+  getDeliveryFee(orderData, productList);
+  getTotalPrice(orderData, productList);
+  getUserInformation(orderData);
 
   $(".find-address-btn").addEventListener("click", insertFoundAddress);
   $(".info-change-btn").addEventListener("click", clickChangeButton);
@@ -186,21 +186,36 @@ async function insertFoundAddress() {
   $(".address1-input").value = foundAddress;
 }
 
-function getDeliveryFee(item) {
-  const deliveryFee = item.totalPrice < 50000 ? (item.totalPrice > 0 ? 3000 : 0) : 0;
-  selectId(`${item._id}-delivery-fee`).innerText = `(+) ${deliveryFee.toLocaleString(
-    "ko-KR"
-  )}원`;
+function getDeliveryFee(list, item) {
+  const deliveryFee = getTotalPrice(list, item) < 50000 ? (list.totalPrice > 0 ? 3000 : 0) : 0;
+  $(".delivery-fee").innerText = `(+) ${deliveryFee.toLocaleString("ko-KR")}원`;
   return deliveryFee;
 }
 
-function getTotalPrice(item) {
-  const TotalProductsPrice = item.totalPrice;
-  const deliveryFee = TotalProductsPrice < 50000 ? (TotalProductsPrice > 0 ? 3000 : 0) : 0;
+function getTotalPrice(list, item) {
+  const TotalProductsList = list.productsInOrder;
+  let TotalPrice = 0;
+  const productsQuantity = [];
 
-  selectId(`${item._id}-total-pay`).innerHTML = `${(
-    TotalProductsPrice + deliveryFee
-  ).toLocaleString("ko-KR")}원`;
+  TotalProductsList.forEach((product) => {
+    productsQuantity.push(product.quantity);
+  });
+
+  item.forEach((product, index) => {
+    TotalPrice += product.price * productsQuantity[index];
+  });
+
+  $(".products-pay").innerHTML = `${TotalPrice.toLocaleString("ko-KR")}원`;
+
+  return TotalPrice;
+}
+
+function getUserInformation(info) {
+  $(".name-input").value = info.fullName;
+  $(".phoneNumber-input").value = info.phoneNumber;
+  $(".postalCode-input").value = info.address.postalCode;
+  $(".address1-input").value = info.address.address1;
+  $(".address2-input").value = info.address.address2;
 }
 
 function createUserPageContainer() {
@@ -305,7 +320,7 @@ function createPaymentInformationContainer(item) {
   page.innerHTML = `<div class="payment-text">결제정보</div>
   <div class="payment-wrapper">
     <span class="payment-info-text">상품 금액</span>
-    <span class="products-pay">${item.totalPrice.toLocaleString("ko-KR")}원</span>
+    <span class="products-pay">[총 상품 금액]</span>
   </div>
   <div class="payment-wrapper">
     <span class="payment-info-text">배송비</span>
@@ -313,7 +328,9 @@ function createPaymentInformationContainer(item) {
   </div>
   <div class="payment-wrapper">
     <span class="payment-info-text">결제 금액</span>
-    <span class="total-pay" id="${item._id}-total-pay">[총 결제 금액]</span>
+    <span class="total-pay" id="${item._id}-total-pay">${item.totalPrice.toLocaleString(
+    "ko-KR"
+  )}원</span>
   </div>
   <div class="payment-wrapper" id="payment-method-wrapper">
     <span class="payment-info-text">결제 방법</span>
@@ -331,7 +348,7 @@ function createPaymentInformationContainer(item) {
   $(".order-list-container").append(page);
 }
 
-function createChangeDeliveryInformationContainer() {
+function createChangeDeliveryInformationContainer(item) {
   let page = undefined;
   page = document.createElement("div");
   page.setAttribute("class", "user-change-container");
@@ -395,7 +412,7 @@ function createButtonContainer() {
   let page = undefined;
   page = document.createElement("div");
   page.setAttribute("class", "button-container");
-  page.innerHTML = `<button class="info-change-btn">배송지 수정</button>
+  page.innerHTML = `<button class="info-change-btn">정보 수정하기</button>
   <button class="cancel-order-btn">주문 취소하기</button>`;
   $(".order-list-container").append(page);
 }
