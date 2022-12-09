@@ -36,9 +36,9 @@ async function setOrderListContainer(orderId) {
         createChangeInformationButtonContainer(orderList)
       );
 
-      getDeliveryFee(orderList);
-      getTotalPrice(orderList);
-      getAllTotalPrice(orderList);
+      getDeliveryFee(orderList, productList);
+      getTotalPrice(orderList, productList);
+      getUserInformation(orderList);
 
       selectId(`${orderList._id}-detail-info-btn`).addEventListener(
         "click",
@@ -91,7 +91,7 @@ async function setOrderListContainer(orderId) {
         if (selectId(`${orderList._id}-input-phoneNumber`).value.length < 11) {
           alert("휴대폰 번호를 다시 확인해주세요 📱");
           return;
-        } else if (!isNum($(".phoneNumber-input").value)) {
+        } else if (!isNum(selectId(`${orderList._id}-input-phoneNumber`).value)) {
           alert("숫자만 입력 가능합니다 🔢");
           return;
         }
@@ -162,32 +162,38 @@ async function setOrderListContainer(orderId) {
 
 setOrderListContainer(orderId);
 
-function getDeliveryFee(item) {
-  const deliveryFee = item.totalPrice < 53000 ? (item.totalPrice > 0 ? 3000 : 0) : 0;
-  selectId(`${item._id}-delivery-fee`).innerText = `(+) ${deliveryFee.toLocaleString(
+function getDeliveryFee(list, item) {
+  const deliveryFee = getTotalPrice(list, item) < 50000 ? (list.totalPrice > 0 ? 3000 : 0) : 0;
+  selectId(`${list._id}-delivery-fee`).innerText = `(+) ${deliveryFee.toLocaleString(
     "ko-KR"
   )}원`;
   return deliveryFee;
 }
 
-function getTotalPrice(item) {
-  const TotalProductsPrice = item.totalPrice;
+function getTotalPrice(list, item) {
+  const TotalProductsList = list.productsInOrder;
+  let TotalPrice = 0;
+  const productsQuantity = [];
 
-  TotalProductsPrice < 53000
-    ? (selectId(`${item._id}-products-pay`).innerHTML = `${(
-        TotalProductsPrice - 3000
-      ).toLocaleString("ko-KR")}원`)
-    : (selectId(`${item._id}-products-pay`).innerHTML = `${TotalProductsPrice.toLocaleString(
-        "ko-KR"
-      )}원`);
+  TotalProductsList.forEach((product) => {
+    productsQuantity.push(product.quantity);
+  });
+
+  item.forEach((product, index) => {
+    TotalPrice += product.price * productsQuantity[index];
+  });
+
+  selectId(`${list._id}-products-pay`).innerHTML = `${TotalPrice.toLocaleString("ko-KR")}원`;
+
+  return TotalPrice;
 }
 
-function getAllTotalPrice(item) {
-  const TotalProductsPrice = item.totalPrice;
-
-  selectId(`${item._id}-total-pay`).innerHTML = `${TotalProductsPrice.toLocaleString(
-    "ko-KR"
-  )}원`;
+function getUserInformation(info) {
+  selectId(`${info._id}-input-name`).value = info.fullName;
+  selectId(`${info._id}-input-phoneNumber`).value = info.phoneNumber;
+  selectId(`${info._id}-input-postalCode`).value = info.address.postalCode;
+  selectId(`${info._id}-input-address1`).value = info.address.address1;
+  selectId(`${info._id}-input-address2`).value = info.address.address2;
 }
 
 function createSingleOrderContainer(item = "") {
@@ -285,7 +291,9 @@ function createPaymentInformationContainer(item) {
   </div>
   <div class="payment-wrapper">
     <span class="payment-info-text">결제 금액</span>
-    <span class="total-pay" id="${item._id}-total-pay">[총 결제 금액]</span>
+    <span class="total-pay" id="${item._id}-total-pay">${item.totalPrice.toLocaleString(
+    "ko-KR"
+  )}원</span>
   </div>
   <div class="payment-wrapper" id="payment-method-wrapper">
     <span class="payment-info-text">결제 상세</span>
