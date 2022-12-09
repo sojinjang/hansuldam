@@ -127,7 +127,7 @@ async function clickSliderButton() {
 
   $(".slider-left-button").addEventListener("click", () => {
     if (count > 0) {
-      sliderXValue += 210;
+      sliderXValue += 207.5;
       count -= 1;
       productsContainer.style.transform = `transLateX(${sliderXValue}px)`;
     }
@@ -135,7 +135,7 @@ async function clickSliderButton() {
 
   $(".slider-right-button").addEventListener("click", () => {
     if (count < maxSlidePage) {
-      sliderXValue -= 210;
+      sliderXValue -= 207.5;
       count += 1;
       productsContainer.style.transform = `transLateX(${sliderXValue}px)`;
     }
