@@ -42,11 +42,11 @@
   PORT="<포트번호>"
   JWT_SECERT_KEY="<랜덤 문자열>"
 
-  GMAIL_ID= "hansuldam@gmail.com"
-  GMAIL_PASSWORD= "qyzriroefrrftjmy"
+  GMAIL_ID= "<google develope 아이디>"
+  GMAIL_PASSWORD= "<google develope 앱 비밀번호>"
 
-  Naver_clientID="s9FiQEn_oNjmniDng5pR"
-  Naver_clientSecret= "TaweIapn6j"
+  Naver_clientID="<naver develope 아이디>"
+  Naver_clientSecret= "<naver develope 앱 비밀번호>"
   ```
 4. express 앱을 실행
    ```
