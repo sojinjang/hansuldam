@@ -6,7 +6,6 @@ import { isName, isNum } from "../utils/validator.js";
 import { findAddress } from "../utils/findAddress.js";
 
 const $ = (selector) => document.querySelector(selector);
-const selectId = (selector) => document.getElementById(selector);
 
 const loginTOKEN = getCookieValue(Keys.TOKEN_KEY);
 
