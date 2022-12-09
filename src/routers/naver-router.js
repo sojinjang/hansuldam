@@ -4,9 +4,8 @@ import { userService } from "../services";
 import { BadRequest } from "../utils/errorCodes";
 
 const naverRouter = Router();
-const PORT = process.env.PORT || 5000;
 
-const HSD_url = `http://localhost:${PORT}`;
+const HSD_url = process.env.HSD_url;
 var client_id = process.env.Naver_clientID;
 var client_secret = process.env.Naver_clientSecret;
 var state = "RAMDOM_STATE";

@@ -1,8 +1,6 @@
 import { Router } from "express";
-
 import { BadRequest } from "../utils/errorCodes";
 import { upload } from "../utils";
-
 import { productService, commentService } from "../services";
 
 const imageRouter = Router();
