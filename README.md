@@ -1,25 +1,23 @@
-## 🍶 프로젝트 소개
-한국의 전통주를 판매하는 사이트 한술담입니다.
+<p align="middle" >
+  <img width="300" alt="grape_8" src="https://user-images.githubusercontent.com/111125577/205091531-1dd8426d-ba7b-4ca2-afeb-eed0bbcbc7fc.jpeg">
+</p>
+<p align="middle">
+   <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> 
+   <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> 
+   <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
+</p>
+<p align="middle">
+   <img src="https://img.shields.io/badge/mongoDB-47A248?style=for-the-badge&logo=MongoDB&logoColor=white"> 
+   <img src="https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white"> 
+   <img src="https://img.shields.io/badge/express-000000?style=for-the-badge&logo=express&logoColor=white">
+   <img src="https://img.shields.io/badge/amazonaws-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white"> 
+</p>
 
-[<img src="https://user-images.githubusercontent.com/111125577/205091531-1dd8426d-ba7b-4ca2-afeb-eed0bbcbc7fc.jpeg" height="120px"/>](http://ec2-43-201-84-245.ap-northeast-2.compute.amazonaws.com)
-<br/>
-<img src="https://user-images.githubusercontent.com/111125577/205299490-16e61094-93b0-4ffe-b7e4-918c7eb75be2.gif" width="430">
-<img src="https://user-images.githubusercontent.com/111125577/205297553-bc1f4766-bf4f-47ef-872e-06596c5bff38.gif" width="220">
 
-## 🛠기술 스택
-
-**프론트엔드**
-
-<img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
-
-**백엔드**
-
-<img src="https://img.shields.io/badge/mongoDB-47A248?style=for-the-badge&logo=MongoDB&logoColor=white"> <img src="https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white"> <img src="https://img.shields.io/badge/express-000000?style=for-the-badge&logo=express&logoColor=white">
-
-**기타**
-
-<img src="https://img.shields.io/badge/amazonaws-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white"> <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"> <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
-
+<p align="middle">
+   <img src="https://user-images.githubusercontent.com/111125577/205299490-16e61094-93b0-4ffe-b7e4-918c7eb75be2.gif" width="430">
+   <img src="https://user-images.githubusercontent.com/111125577/205297553-bc1f4766-bf4f-47ef-872e-06596c5bff38.gif" width="220">
+</p>
 
 ## :runner: 로컬 실행 방법
 
@@ -37,17 +35,18 @@
 
 3. `.env` 설정
 
-  ```bash
-  MONGODB_URL="<개인 로컬 혹은 Atlas 서버 URL>"
-  PORT="<포트번호>"
-  JWT_SECERT_KEY="<랜덤 문자열>"
+     ```bash
+     MONGODB_URL="<개인 로컬 혹은 Atlas 서버 URL>"
+     PORT="<포트번호>"
+     JWT_SECERT_KEY="<랜덤 문자열>"
 
-  GMAIL_ID= "<google develope 아이디>"
-  GMAIL_PASSWORD= "<google develope 앱 비밀번호>"
+     GMAIL_ID= "<google develope 아이디>"
+     GMAIL_PASSWORD= "<google develope 앱 비밀번호>"
 
-  Naver_clientID="<naver develope 아이디>"
-  Naver_clientSecret= "<naver develope 앱 비밀번호>"
-  ```
+     Naver_clientID="<naver develope 아이디>"
+     Naver_clientSecret= "<naver develope 앱 비밀번호>"
+     ```
+  
 4. express 앱을 실행
    ```
    npm run start
