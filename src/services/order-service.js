@@ -1,5 +1,5 @@
 import { orderModel, productModel, userModel } from "../db";
-import { NotFound, Forbidden } from "../utils/errorCodes";
+import { NotFound, Forbidden } from "../utils/error-codes";
 import { sortingCart } from "../utils";
 
 class OrderService {

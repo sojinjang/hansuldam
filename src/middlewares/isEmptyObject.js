@@ -1,4 +1,4 @@
-import { BadRequest } from "../utils/errorCodes";
+import { BadRequest } from "../utils/error-codes";
 
 function isEmptyObject(req, res, next) {
   if (Object.keys(req.body).length === 0 && req.body.constructor === Object) {

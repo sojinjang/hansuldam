@@ -2,7 +2,7 @@ import { Router } from "express";
 import { isEmptyObject, loginRequired, adminRequired } from "../middlewares";
 import { userService } from "../services";
 import { generateRandomPassword, sendRandomPassword } from "../utils";
-import { BadRequest } from "../utils/errorCodes";
+import { BadRequest } from "../utils/error-codes";
 
 import bcrypt from "bcrypt";
 

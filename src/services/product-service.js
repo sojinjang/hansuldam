@@ -1,6 +1,6 @@
 import fs from "fs";
 import { productModel, categoryModel, commentModel } from "../db";
-import { BadRequest, NotFound } from "../utils/errorCodes";
+import { BadRequest, NotFound } from "../utils/error-codes";
 import { pagination, totalPageCacul, makeFilterObj, makeKeywordObj } from "../utils";
 
 class ProductService {

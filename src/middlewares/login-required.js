@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { Unauthorized } from "../utils/errorCodes";
+import { Unauthorized } from "../utils/error-codes";
 
 function loginRequired(req, res, next) {
   // request 헤더로부터 authorization bearer 토큰을 받음.

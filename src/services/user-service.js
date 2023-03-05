@@ -1,5 +1,5 @@
 import { userModel } from "../db";
-import { BadRequest, Unauthorized, NotFound } from "../utils/errorCodes";
+import { BadRequest, Unauthorized, NotFound } from "../utils/error-codes";
 
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";

@@ -1,5 +1,5 @@
 import { userModel, productModel } from "../db";
-import { BadRequest, NotFound } from "../utils/errorCodes";
+import { BadRequest, NotFound } from "../utils/error-codes";
 import { sortingCart } from "../utils";
 
 class CartService {
@@ -13,10 +13,7 @@ class CartService {
     // 객체 destructuring
     const { userId, productsInCart } = userInfo;
     // 이메일 중복 확인
-    const updateCart = await this.userModel.update(
-      { _id: userId },
-      { productsInCart }
-    );
+    const updateCart = await this.userModel.update({ _id: userId }, { productsInCart });
 
     return updateCart;
   }
@@ -30,10 +27,7 @@ class CartService {
     const products = await this.productModel.findByIdArray(productIdArr);
 
     if (products.length !== productIdArr.length) {
-      throw new NotFound(
-        "There is something missing on the product list",
-        4304
-      );
+      throw new NotFound("There is something missing on the product list", 4304);
     }
 
     const productsIn = sortingCart(products, productsInCart);

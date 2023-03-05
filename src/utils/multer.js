@@ -1,6 +1,6 @@
 import multer from "multer";
 import path from "path";
-import { BadRequest } from "./errorCodes";
+import { BadRequest } from "./error-codes";
 
 const Location = {
   PRODUCT: "products",

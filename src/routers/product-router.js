@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { productService } from "../services";
-import { BadRequest } from "../utils/errorCodes";
+import { BadRequest } from "../utils/error-codes";
 import { isEmptyObject, loginRequired, adminRequired } from "../middlewares";
 
 const productRouter = Router();

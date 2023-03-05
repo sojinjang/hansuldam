@@ -1,6 +1,6 @@
 import fs from "fs";
 import { commentModel } from "../db";
-import { BadRequest, Unauthorized, NotFound } from "../utils/errorCodes";
+import { BadRequest, Unauthorized, NotFound } from "../utils/error-codes";
 
 class CommentService {
   constructor(commentModel) {

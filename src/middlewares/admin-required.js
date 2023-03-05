@@ -1,4 +1,4 @@
-import { Forbidden } from "../utils/errorCodes";
+import { Forbidden } from "../utils/error-codes";
 
 function adminRequired(req, res, next) {
   const { userRole } = req.currentUser;
