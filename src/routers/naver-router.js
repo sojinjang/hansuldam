@@ -1,7 +1,7 @@
 import { Router } from "express";
 import request from "request";
 import { userService } from "../services";
-import { BadRequest } from "../utils/errorCodes";
+import { BadRequest } from "../utils/error-codes";
 
 const naverRouter = Router();
 

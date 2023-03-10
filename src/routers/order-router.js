@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { isEmptyObject, loginRequired, adminRequired } from "../middlewares";
 import { orderService } from "../services";
-import { BadRequest } from "../utils/errorCodes";
+import { BadRequest } from "../utils/error-codes";
 
 const orderRouter = Router();
 const authRouter = Router();
@@ -84,15 +84,8 @@ authRouter.post("/", isEmptyObject, async (req, res, next) => {
     const userId = req.currentUser.userId;
 
     // req (request)의 body 에서 데이터 가져오기
-    const {
-      fullName,
-      address,
-      shipping,
-      payment,
-      productsInOrder,
-      totalPrice,
-      phoneNumber,
-    } = req.body;
+    const { fullName, address, shipping, payment, productsInOrder, totalPrice, phoneNumber } =
+      req.body;
 
     // 위 데이터를 주문 db에 추가하기
     const newOrder = await orderService.authAddOrder({
@@ -116,15 +109,8 @@ authRouter.post("/", isEmptyObject, async (req, res, next) => {
 orderRouter.post("/", isEmptyObject, async (req, res, next) => {
   try {
     // req (request)의 body 에서 데이터 가져오기
-    const {
-      fullName,
-      address,
-      shipping,
-      payment,
-      productsInOrder,
-      totalPrice,
-      phoneNumber,
-    } = req.body;
+    const { fullName, address, shipping, payment, productsInOrder, totalPrice, phoneNumber } =
+      req.body;
 
     // 위 데이터를 주문 db에 추가하기
     const newOrder = await orderService.addOrder({
@@ -150,14 +136,7 @@ orderRouter.patch("/:orderId", isEmptyObject, async (req, res, next) => {
     if (!orderId) {
       throw new BadRequest("Undefined params", 4005);
     }
-    const {
-      fullName,
-      productsInOrder,
-      phoneNumber,
-      address,
-      payment,
-      totalPrice,
-    } = req.body;
+    const { fullName, productsInOrder, phoneNumber, address, payment, totalPrice } = req.body;
 
     // 위 데이터를 카테고리 db에 추가하기
     const updateOrder = await orderService.updateOrder(orderId, {

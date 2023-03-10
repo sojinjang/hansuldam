@@ -1,7 +1,6 @@
 import { Router } from "express";
 import { isEmptyObject, loginRequired, adminRequired } from "../middlewares";
-import { BadRequest } from "../utils/errorCodes";
-
+import { BadRequest } from "../utils/error-codes";
 import { commentService } from "../services";
 
 const commentRouter = Router();

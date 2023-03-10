@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { BadRequest } from "../utils/errorCodes";
+import { BadRequest } from "../utils/error-codes";
 import { upload } from "../utils";
 import { productService, commentService } from "../services";
 
