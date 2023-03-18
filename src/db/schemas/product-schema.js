@@ -19,7 +19,6 @@ const ProductSchema = new Schema(
       type: Number,
       required: true,
     },
-    // 이하 나중에 구현할?
     volume: {
       type: Number,
       required: false,

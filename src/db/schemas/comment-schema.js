@@ -4,7 +4,7 @@ const CommentSchema = new Schema(
   {
     productId: {
       type: Schema.Types.ObjectId,
-      ref: "proucts",
+      ref: "products",
       required: true,
     },
     userId: {
